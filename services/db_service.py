@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Dịch vụ: Cơ Sở Dữ Liệu Trung Tâm & Odoo XML-RPC Gateway
-Định vị: D:\YOURDREAM.VN\services\db_service.py
+Định vị: .\services\db_service.py
 Tiêu chuẩn: Tự động hóa Schema | Đa luồng | XML-RPC API | Fail-Fast
 """
 
@@ -11,7 +11,7 @@ import xmlrpc.client
 from pathlib import Path
 
 # Cứu điểm gốc của dự án Local-First
-BASE_DIR = Path(r"D:\YOURDREAM.VN")
+BASE_DIR = Path(r".")
 DB_MASTER = BASE_DIR / "yourdream.db"
 
 SATELLITES = {

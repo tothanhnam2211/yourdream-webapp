@@ -3,7 +3,7 @@
 Notification Service & Async Task Queue (Bước 8/20)
 ================================================================================
 Dự án        : YourDream.vn (EduMap Art & Bản Đồ Học Tập)
-Định vị      : D:\YOURDREAM.VN\services\notification_service.py
+Định vị      : .\services\notification_service.py
 Tiêu chuẩn   : GDPT 2018 | Zalo ZNS Official API | Async Task Queue | uocmocuacon.vn
 Mô tả        : Quản trị trung tâm thông báo đa kênh và hàng đợi tác vụ bất đồng bộ:
                1. send_zalo_zns_notification: Gửi thông báo Zalo ZNS về tiến độ học tập,
@@ -22,7 +22,7 @@ import json
 import time
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-BASE_DIR = r"D:\YOURDREAM.VN"
+BASE_DIR = r"."
 SERVICES_DIR = os.path.join(BASE_DIR, "services")
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)

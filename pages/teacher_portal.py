@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Pages: Teacher Portal (Cổng Giáo Viên - Phòng 1)
-Định vị: D:\YOURDREAM.VN\pages\teacher_portal.py
+Định vị: .\pages\teacher_portal.py
 Tiêu chuẩn: Stateless | Infra-Diagnostic | Badge Identity | Zero-Disk I/O
 """
 
@@ -12,7 +12,7 @@ from pathlib import Path
 # =====================================================================
 # 1. THIẾT LẬP LÔ CỐT & KHUNG CHẨN ĐOÁN HẠ TẦNG (Fail-Fast)
 # =====================================================================
-BASE_DIR = Path(r"D:\YOURDREAM.VN")
+BASE_DIR = Path(r".")
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 

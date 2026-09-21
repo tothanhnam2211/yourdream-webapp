@@ -1,14 +1,14 @@
 ﻿# -*- coding: utf-8 -*-
 """
 Lõi: Agent 09 - Parent Empathy (Thấu Cảm Phụ Huynh)
-Định vị: D:\YOURDREAM.VN\agents\agent_9_parent.py
+Định vị: .\agents\agent_9_parent.py
 Chức năng: Sinh kịch bản "Bữa tối thấu cảm" dựa trên dữ liệu học tập (Stateless).
 """
 
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path(r"D:\YOURDREAM.VN\yourdream.db")
+DB_PATH = Path(r".\yourdream.db")
 
 class AgentParent:
     def __init__(self):

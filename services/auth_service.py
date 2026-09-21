@@ -3,7 +3,7 @@
 Auth Service - Ma trận Phân quyền RBAC & Quản trị Mã PIN Phụ huynh (Bước 7/20)
 ================================================================================
 Dự án        : YourDream.vn (EduMap Art & Bản Đồ Học Tập)
-Định vị      : D:\YOURDREAM.VN\services\auth_service.py
+Định vị      : .\services\auth_service.py
 Tiêu chuẩn   : GDPT 2018 | Role-Based Access Control (RBAC) | SQLite Local Overrides
 Mô tả        : Quản trị an ninh và phân quyền cho 4 vai trò trong hệ thống:
                - ADMIN: Full 100% quyền kiểm soát học liệu, người dùng, cấu hình.
@@ -24,7 +24,7 @@ import time
 import hashlib
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-BASE_DIR = r"D:\YOURDREAM.VN"
+BASE_DIR = r"."
 SERVICES_DIR = os.path.join(BASE_DIR, "services")
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)

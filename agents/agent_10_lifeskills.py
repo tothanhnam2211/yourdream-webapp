@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional
 from pathlib import Path
 
 # Vượt rào Import
-BASE_DIR = Path(r"D:\YOURDREAM.VN")
+BASE_DIR = Path(r".")
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 

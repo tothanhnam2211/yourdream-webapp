@@ -5,7 +5,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 import edge_tts
 
-BASE_DIR = Path(r"D:\YOURDREAM.VN")
+BASE_DIR = Path(r".")
 MEDIA_DIR = BASE_DIR / "03_ASSETS" / "media"
 FONTS_DIR = BASE_DIR / "03_ASSETS" / "fonts"
 

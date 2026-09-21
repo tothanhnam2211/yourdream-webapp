@@ -47,7 +47,7 @@ Tích hợp 5 lá chắn bảo vệ hệ thống khi 10.000 học sinh đăng nh
 
 ### 3.1. Cấu Trúc Thư Mục Chuẩn Obsidian Enterprise Vault
 ```text
-D:\YOURDREAM.VN\
+.\
 ├── 📁 00_INBOX/                      <-- Nhận tài liệu thô, đề bài, ảnh chụp
 ├── 📁 00_NGUON_THONG_NHAT/            <-- Kho PDF/Word SGK 12 khối lớp GDPT 2018
 ├── 📁 01_MOC_ATLAS/                  <-- Bản đồ Chỉ mục Nút tri thức (Catalog & Index)
@@ -172,6 +172,6 @@ CREATE INDEX IF NOT EXISTS idx_node_items ON learning_items(node_id);
 ### 💻 CÂU LỆNH POWERSHELL KHỞI CHẠY DỰ ÁN TRÊN WINDOWS
 ```powershell
 # Chạy trạm điều hướng Blank Canvas 4 Cổng tên miền
-cd /d D:\YOURDREAM.VN
+cd /d .
 streamlit run app.py --server.port 8501
 ```

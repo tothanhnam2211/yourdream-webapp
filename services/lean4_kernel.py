@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 # =====================================================================
 # THIẾT LẬP MÔI TRƯỜNG & KHÓA BẢO MẬT HUGGING FACE
 # =====================================================================
-BASE_DIR = Path(r"D:\YOURDREAM.VN")
+BASE_DIR = Path(r".")
 load_dotenv(BASE_DIR / ".env")
 
 HF_TOKEN = os.getenv("HF_TOKEN")

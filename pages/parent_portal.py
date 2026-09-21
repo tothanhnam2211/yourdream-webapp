@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Pages: Parent Portal (Cổng Phụ Huynh - Phòng 3B)
-Định vị: D:\YOURDREAM.VN\pages\parent_portal.py
+Định vị: .\pages\parent_portal.py
 Tiêu chuẩn: Stateless | Fail-Fast UX | Security Timeout | Contextual Empathy
 """
 
@@ -13,7 +13,7 @@ from pathlib import Path
 # =====================================================================
 # 1. THIẾT LẬP LÔ CỐT & TRIỆU HỒI TÁC TỬ (Fail-Fast Trực quan)
 # =====================================================================
-BASE_DIR = Path(r"D:\YOURDREAM.VN")
+BASE_DIR = Path(r".")
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 

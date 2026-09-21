@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 Dịch vụ: Wheel of Life (Bánh Xe Cuộc Đời)
-Định vị: D:\YOURDREAM.VN\services\wheel_of_life_service.py
+Định vị: .\services\wheel_of_life_service.py
 Chức năng: Tính toán điểm cân bằng và Streak Days từ CSDL Master (yourdream.db).
 """
 
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path(r"D:\YOURDREAM.VN\yourdream.db")
+DB_PATH = Path(r".\yourdream.db")
 
 class WheelOfLifeService:
     def __init__(self):

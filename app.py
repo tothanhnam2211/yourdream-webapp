@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 """
 Lõi: Bộ Định Tuyến Trung Tâm (Central Router)
-Định vị: D:\YOURDREAM.VN\app.py
+Định vị: .\app.py
 Tiêu chuẩn: SPA (Single Page Application) | Fail-Fast Import | Session State Routing
 """
 
@@ -19,7 +19,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-BASE_DIR = Path(r"D:\YOURDREAM.VN")
+BASE_DIR = Path(r".")
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 

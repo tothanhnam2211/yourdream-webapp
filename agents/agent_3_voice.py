@@ -3,7 +3,7 @@
 Agent 3: Gamification Engine (Kỹ sư Quản trị Game hóa & Thúc đẩy Động lực)
 ================================================================================
 Dự án        : YourDream.vn (EduMap Art & Bản Đồ Học Tập)
-Định vị      : D:\YOURDREAM.VN\agents\agent_3_gamification.py
+Định vị      : .\agents\agent_3_gamification.py
 Tiêu chuẩn   : GDPT 2018 | Socratic Scaffolding | Canvas 120Hz
 Mô tả        : Quản trị hệ thống phần thưởng, ví Gems Nghị Lực, tiến hóa Linh thú:
                1. add_energy_gems: Tích lũy Gems Nghị Lực vào ví học sinh và ghi nhật ký.
@@ -16,7 +16,7 @@ Mô tả        : Quản trị hệ thống phần thưởng, ví Gems Nghị L�
 
 import json, os, sys, time
 
-BASE_DIR = r"D:\YOURDREAM.VN"
+BASE_DIR = r"."
 SERVICES_DIR = os.path.join(BASE_DIR, "services")
 AGENTS_DIR = os.path.join(BASE_DIR, "agents")
 for path in [BASE_DIR, SERVICES_DIR, AGENTS_DIR]:

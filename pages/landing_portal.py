@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Pages: Landing Portal (Trang Chủ Hệ Sinh Thái)
-Định vị: D:\YOURDREAM.VN\pages\landing_portal.py
+Định vị: .\pages\landing_portal.py
 Tiêu chuẩn: Fail-Fast (Health Monitor) | Live Metrics (5s Cache) | Zero-Disk I/O
 """
 
@@ -14,7 +14,7 @@ from pathlib import Path
 # =====================================================================
 # 1. THIẾT LẬP LÔ CỐT & KHUNG GIÁM SÁT HẠ TẦNG (Fail-Fast)
 # =====================================================================
-BASE_DIR = Path(r"D:\YOURDREAM.VN")
+BASE_DIR = Path(r".")
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
@@ -31,7 +31,7 @@ try:
 except ImportError:
     infra_status["missing"].append("agent_8_socratic")
 
-DB_PATH = Path(r"D:\YOURDREAM.VN\yourdream.db")
+DB_PATH = Path(r".\yourdream.db")
 
 # =====================================================================
 # DANH MỤC 9 THẺ ƯỚC MƠ (DREAM CARDS) - GDPT 2018

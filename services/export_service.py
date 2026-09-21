@@ -6,7 +6,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-BASE_DIR = Path(r"D:\YOURDREAM.VN")
+BASE_DIR = Path(r".")
 EXPORTS_DIR = BASE_DIR / "05_EXPORTS_5512"
 ASSETS_DIR = BASE_DIR / "03_ASSETS"
 

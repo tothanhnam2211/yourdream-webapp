@@ -3,7 +3,7 @@
 Pages: Student Portal (Cổng Học Sinh - EduMap Art & Bản Đồ Học Tập)
 ================================================================================
 Dự án        : YourDream.vn (EduMap Art & Bản Đồ Học Tập)
-Định vị      : D:\YOURDREAM.VN\pages\student_portal.py
+Định vị      : .\pages\student_portal.py
 Tiêu chuẩn   : GDPT 2018 | Dynamic Canvas 120Hz | Socratic Scaffolding | Fog-of-War
 Mô tả        : Module giao diện Cổng Học Sinh (Student Portal) trong Streamlit:
                1. Header Sinh thái & Ví Gems:
@@ -28,7 +28,7 @@ import json, os, sys, time
 from typing import Any, Dict, List, Optional, Union
 
 # Nạp đường dẫn import chuẩn hệ thống
-BASE_DIR = r"D:\YOURDREAM.VN"
+BASE_DIR = r"."
 for sub in ["services", "agents", "pages"]:
     path = os.path.join(BASE_DIR, sub)
     if path not in sys.path:

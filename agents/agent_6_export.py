@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 """
 Lõi: Agent 06 - Xuất bản 1-Click (In-Memory Export Engine)
-Định vị: D:\YOURDREAM.VN\agents\agent_6_export.py
+Định vị: .\agents\agent_6_export.py
 Tiêu chuẩn: Zero-Disk I/O | Dynamic Merging | Fail-Fast | CV-5512
 """
 
@@ -19,7 +19,7 @@ try:
 except ImportError:
     raise ImportError("python-docx")
 
-DB_PATH = Path(r"D:\YOURDREAM.VN\yourdream.db")
+DB_PATH = Path(r".\yourdream.db")
 
 class AgentExport:
     def __init__(self):

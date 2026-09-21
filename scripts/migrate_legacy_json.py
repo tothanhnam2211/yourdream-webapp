@@ -1,7 +1,7 @@
 ﻿import os, sys, json, sqlite3, time
 from pathlib import Path
 
-BASE_DIR = Path(r'D:\YOURDREAM.VN')
+BASE_DIR = Path(r'.')
 LEGACY_DIR = Path(r'D:\YOURDREAM_ARCHIVE\local_data\atomic_nodes')
 DB_PATH = BASE_DIR / 'yourdream.db'
 

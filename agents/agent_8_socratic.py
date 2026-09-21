@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 """
 Lõi: Agent 08 - Socratic Diagnostic (Chẩn đoán Tự luận)
-Định vị: D:\YOURDREAM.VN\agents\agent_8_socratic.py
+Định vị: .\agents\agent_8_socratic.py
 Chức năng: Xử lý luồng ByteIO từ Webcam (Zero Disk I/O) và chẩn đoán Barem.
 """
 
@@ -9,7 +9,7 @@ import io
 from pathlib import Path
 
 # TODO: Đề xuất nâng cấp kết nối API thị giác máy tính sau khi hoàn thiện luồng cơ bản
-DB_PATH = Path(r"D:\YOURDREAM.VN\yourdream.db")
+DB_PATH = Path(r".\yourdream.db")
 
 class AgentSocratic:
     def __init__(self):

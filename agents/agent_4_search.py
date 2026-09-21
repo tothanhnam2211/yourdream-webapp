@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 """
 Lõi: Agent 04 - Bốc Cào Học Liệu (Search Engine)
-Định vị: D:\YOURDREAM.VN\agents\agent_4_search.py
+Định vị: .\agents\agent_4_search.py
 Tiêu chuẩn: Zero-Disk I/O | Teacher-Context Aware | Fail-Fast
 """
 
@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 # Khóa mục tiêu CSDL Master
-DB_PATH = Path(r"D:\YOURDREAM.VN\yourdream.db")
+DB_PATH = Path(r".\yourdream.db")
 
 class AgentSearch:
     def __init__(self):

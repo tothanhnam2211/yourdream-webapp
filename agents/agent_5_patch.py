@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 """
 Lõi: Agent 05 - Bản Vá Độc Lập (Local Overrides Engine)
-Định vị: D:\YOURDREAM.VN\agents\agent_5_patch.py
+Định vị: .\agents\agent_5_patch.py
 Tiêu chuẩn: Zero-Overwrite Master DB | Self-Healing Schema | Fail-Fast
 """
 
@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Dict, Any
 
 # Khóa mục tiêu CSDL Master
-DB_PATH = Path(r"D:\YOURDREAM.VN\yourdream.db")
+DB_PATH = Path(r".\yourdream.db")
 
 class AgentPatch:
     def __init__(self):
