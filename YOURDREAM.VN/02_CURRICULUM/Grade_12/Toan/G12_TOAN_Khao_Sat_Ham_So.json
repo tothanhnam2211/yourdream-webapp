@@ -1,0 +1,79 @@
+{
+  "lesson_info": {
+    "grade": 12,
+    "chapter": "Ứng dụng Đạo hàm khảo sát hàm số",
+    "lesson_title": "Bài 1: Tính đơn điệu & Cực trị hàm số (Trọng điểm thi Tốt nghiệp THPT & Đại học)",
+    "core_theorem": "f'(x) >= 0 trên K => f(x) đồng biến trên K"
+  },
+  "tier_1_healing_room3a": {
+    "fill_in_blanks": [
+      "Hàm số y = f(x) có đạo hàm f'(x) > 0 trên khoảng (a; b) thì hàm số ... trên khoảng đó.",
+      "Điểm x0 là điểm cực đại nếu f'(x) đổi dấu từ ... sang ... khi đi qua x0.",
+      "Em đã tự tin lập bảng xét dấu đạo hàm bậc hai."
+    ],
+    "rescue_video_script": "Rồng Socratic: Câu 1 đề thi THPT Quốc gia luôn kiểm tra dấu của đạo hàm. Nhớ quy tắc: Trong trái - Ngoài cùng với tam thức bậc hai!",
+    "hole_recovered_pct": 86
+  },
+  "tier_2_core_arena_room2": {
+    "trap_zero": "Bẫy số 0: Quên xét dấu bằng tại hữu hạn điểm hoặc nhầm lẫn giữa giá trị cực trị y_ct và điểm cực trị x_ct.",
+    "barem_steps": [
+      {
+        "step": "Bước 1 (0.25đ)",
+        "action": "Tìm tập xác định D và tính đạo hàm y' = f'(x)."
+      },
+      {
+        "step": "Bước 2 (0.25đ)",
+        "action": "Giải phương trình f'(x) = 0 tìm nghiệm x_i thuộc D."
+      },
+      {
+        "step": "Bước 3 (0.25đ)",
+        "action": "Lập bảng biến thiên xét dấu đạo hàm f'(x)."
+      },
+      {
+        "step": "Bước 4 (0.25đ)",
+        "action": "Kết luận các khoảng đơn điệu và toạ độ điểm cực trị."
+      }
+    ],
+    "socratic_hint": "Đạo hàm y' là đa thức bậc mấy? Nghiệm của phương trình y' = 0 là bao nhiêu?",
+    "mindmap_nodes": [
+      {
+        "id": "root",
+        "label": "Khảo Sát Hàm Số 12",
+        "color": "#38bdf8",
+        "isRoot": true
+      },
+      {
+        "id": "n1",
+        "label": "Quy tắc 1 (Xét dấu y')",
+        "color": "#38bdf8"
+      },
+      {
+        "id": "n2",
+        "label": "Quy tắc 2 (Dùng y'')",
+        "color": "#c084fc"
+      },
+      {
+        "id": "n3",
+        "label": "Bẫy Cực Trị vs Giá Trị",
+        "color": "#f87171"
+      },
+      {
+        "id": "n4",
+        "label": "Barem Điểm Thi ĐH",
+        "color": "#34d399"
+      }
+    ]
+  },
+  "tier_3_stem_lab_room5": {
+    "real_world_context": "Bài toán tối ưu hóa chi phí sản xuất: Tìm kích thước lon nước ngọt có dung tích 330ml tốn ít nhôm nhất.",
+    "geometry_3d_type": "Cylinder",
+    "parameters": {
+      "x1_radius": 330.0,
+      "x2_height": 55.0,
+      "x3_angle": 10.0,
+      "x4_slice": 0.0
+    },
+    "formula_latex": "f'(x_0) = 0 \\land f''(x_0) < 0 \\implies x_0 \\text{ là điểm cực đại}",
+    "lean4_spec": "import Mathlib.Analysis.Calculus.Deriv.Basic\n\ntheorem local_max_deriv_zero (f : ℝ → ℝ) (x : ℝ) (h : IsLocalMax f x) (hd : DifferentiableAt ℝ f x) : deriv f x = 0 := by\n  exact h.deriv_eq_zero hd"
+  }
+}

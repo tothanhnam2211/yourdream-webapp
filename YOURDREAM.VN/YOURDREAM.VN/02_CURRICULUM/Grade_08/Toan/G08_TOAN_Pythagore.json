@@ -1,0 +1,84 @@
+{
+  "lesson_info": {
+    "grade": 8,
+    "chapter": "Chương 3: Định lý Pythagore",
+    "lesson_title": "Bài 2: Ứng dụng Định lý Pythagore & Tam giác vuông",
+    "core_theorem": "Định lý Pythagore thuận & đảo: c² = a² + b²"
+  },
+  "tier_1_healing_room3a": {
+    "fill_in_blanks": [
+      "Trong một tam giác vuông, bình phương của cạnh huyền bằng tổng bình phương của hai cạnh góc vuông: c² = a² + ...",
+      "Nếu tam giác có ba cạnh thỏa mãn a² + b² = c² thì tam giác đó là tam giác ...",
+      "Hôm nay em đã tự tin phân biệt được cạnh huyền và cạnh góc vuông."
+    ],
+    "rescue_video_script": "Rồng Socratic: Chào con! Đừng áp lực với hình học. Hãy nhớ cạnh đối diện góc 90 độ luôn là cạnh dài nhất mang tên cạnh huyền!",
+    "hole_recovered_pct": 85
+  },
+  "tier_2_core_arena_room2": {
+    "trap_zero": "Cảnh báo Bẫy số 0: Quên đặt điều kiện c > 0 khi khai căn và quên ghi đơn vị đo (cm).",
+    "barem_steps": [
+      {
+        "step": "Bước 1 (0.25đ)",
+        "action": "Xét tam giác ABC vuông tại A theo giả thiết."
+      },
+      {
+        "step": "Bước 2 (0.25đ)",
+        "action": "Áp dụng định lý Pythagore: BC² = AB² + AC² (Mỗi dấu bằng mở 1 ổ khóa)."
+      },
+      {
+        "step": "Bước 3 (0.25đ)",
+        "action": "Thay số: BC² = 3² + 4² = 9 + 16 = 25."
+      },
+      {
+        "step": "Bước 4 (0.25đ)",
+        "action": "Khai căn: Vì BC > 0 nên BC = √25 = 5 (cm). Kết luận."
+      }
+    ],
+    "socratic_hint": "Quan sát tam giác vuông ABC: Em đã có độ dài 2 cạnh góc vuông AB và AC. Cạnh huyền BC có mối liên hệ thế nào với 2 cạnh này?",
+    "mindmap_nodes": [
+      {
+        "id": "root",
+        "label": "Định lý Pythagore",
+        "color": "#38bdf8",
+        "isRoot": true
+      },
+      {
+        "id": "n1",
+        "label": "Định nghĩa Thuận",
+        "color": "#38bdf8"
+      },
+      {
+        "id": "n2",
+        "label": "Định lý Đảo",
+        "color": "#c084fc"
+      },
+      {
+        "id": "n3",
+        "label": "Bẫy Số 0 (Điều kiện > 0)",
+        "color": "#f87171"
+      },
+      {
+        "id": "n4",
+        "label": "Barem 4 Bước 0.25đ",
+        "color": "#34d399"
+      },
+      {
+        "id": "n5",
+        "label": "Bộ Ba Số Pythagore (3-4-5)",
+        "color": "#fbbf24"
+      }
+    ]
+  },
+  "tier_3_stem_lab_room5": {
+    "real_world_context": "Tính chiều dài dây cáp néo cột ăng-ten từ đỉnh cao 3m xuống đất cách chân cột 4m.",
+    "geometry_3d_type": "Cone",
+    "parameters": {
+      "x1_radius": 350.0,
+      "x2_height": 23.5,
+      "x3_angle": 0.0,
+      "x4_slice": 0.0
+    },
+    "formula_latex": "c = \\sqrt{a^2 + b^2}",
+    "lean4_spec": "import Mathlib.Data.Real.Basic\n\ntheorem pythagorean_theorem (a b c : ℝ) (ha : a > 0) (hb : b > 0) (h_rect : c^2 = a^2 + b^2) :\n  c = Real.sqrt (a^2 + b^2) := by\n  sorry"
+  }
+}

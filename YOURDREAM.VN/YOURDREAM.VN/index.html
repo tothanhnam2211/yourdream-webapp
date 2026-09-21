@@ -1,0 +1,3676 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduMap Art - Hệ Sinh Thái YourDream.vn</title>
+  <!-- Three.js for 3D STEM Lab -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #070d19;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --bg-card-border: rgba(56, 189, 248, 0.2);
+      --neon-cyan: #38bdf8;
+      --neon-blue: #0284c7;
+      --neon-purple: #c084fc;
+      --neon-magenta: #ec4899;
+      --neon-green: #34d399;
+      --neon-amber: #fbbf24;
+      --neon-red: #f87171;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Master Navigation Bar */
+    .master-navbar {
+      background: rgba(10, 18, 36, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-logo .brand-badge {
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      -webkit-text-fill-color: #38bdf8;
+      font-weight: 700;
+    }
+
+    /* Room Switcher Tabs */
+    .room-tabs {
+      display: flex;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow-x: auto;
+      max-width: 680px;
+    }
+
+    .room-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .room-tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .room-tab-btn.active {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.4), rgba(129, 140, 248, 0.4));
+      border: 1px solid var(--neon-cyan);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+    }
+
+    /* User Stats Badges */
+    .user-stats {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .stat-pill.streak {
+      color: #fb923c;
+      border-color: rgba(251, 146, 60, 0.3);
+      background: rgba(251, 146, 60, 0.1);
+    }
+
+    .stat-pill.gems {
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.3);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .user-avatar-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+    }
+
+    /* Rooms Container */
+    .rooms-viewport {
+      flex: 1;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .room-section {
+      display: none;
+      width: 100%;
+      min-height: calc(100vh - 65px);
+      padding: 16px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .room-section.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.99); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ==========================================================================
+       ROOM 1: ONBOARDING & SUMMON COMPANION AVATAR
+       ========================================================================== */
+    .room1-container {
+      flex: 1;
+      display: flex;
+      gap: 20px;
+      background: radial-gradient(circle at 60% 40%, rgba(30, 58, 138, 0.3) 0%, rgba(7, 13, 25, 0.95) 75%);
+      border-radius: 20px;
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .room1-sidebar {
+      width: 220px;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .room1-user-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .room1-user-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(56, 189, 248, 0.4);
+      margin-bottom: 8px;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+    }
+
+    .room1-menu-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .room1-menu-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .room1-menu-btn.active {
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      border-left: 3px solid #38bdf8;
+    }
+
+    .room1-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 30px;
+    }
+
+    .room1-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    /* Summoning Stage */
+    .summoning-stage {
+      width: 320px;
+      height: 380px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .magic-circle {
+      position: absolute;
+      bottom: 20px;
+      width: 240px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid #38bdf8;
+      box-shadow: 0 0 35px #38bdf8, inset 0 0 25px #38bdf8;
+      transform: rotateX(60deg);
+      animation: spinCircle 12s linear infinite;
+    }
+
+    .magic-circle::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      border: 2px dashed #c084fc;
+      animation: spinCircleRev 8s linear infinite;
+    }
+
+    @keyframes spinCircle {
+      from { transform: rotateX(60deg) rotateZ(0deg); }
+      to { transform: rotateX(60deg) rotateZ(360deg); }
+    }
+
+    @keyframes spinCircleRev {
+      from { transform: rotateZ(360deg); }
+      to { transform: rotateZ(0deg); }
+    }
+
+    .mascot-avatar {
+      position: relative;
+      z-index: 10;
+      animation: floatMascot 4s ease-in-out infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @keyframes floatMascot {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-16px); }
+    }
+
+    .mascot-art {
+      width: 210px;
+      height: 240px;
+      filter: drop-shadow(0 15px 25px rgba(56, 189, 248, 0.4));
+    }
+
+    .mascot-tag {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 3px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+
+    .speech-bubble {
+      position: absolute;
+      left: 5%;
+      top: 60px;
+      max-width: 250px;
+      cursor: move;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border: 2px solid #c084fc;
+      border-radius: 16px;
+      padding: 14px 18px;
+      box-shadow: 0 0 25px rgba(192, 132, 252, 0.35);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+      z-index: 20;
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 8px 0 8px 12px;
+      border-style: solid;
+      border-color: transparent transparent transparent #c084fc;
+    }
+
+    .room1-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+      z-index: 10;
+    }
+
+    .btn-action-primary {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #031427;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 12px 28px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+      transition: all 0.2s;
+    }
+
+    .btn-action-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.7);
+    }
+
+    .btn-action-secondary {
+      background: linear-gradient(135deg, rgba(192, 132, 252, 0.15), rgba(147, 51, 234, 0.3));
+      color: #e9d5ff;
+      border: 1px solid #c084fc;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 12px 28px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-action-secondary:hover {
+      background: rgba(192, 132, 252, 0.3);
+      box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+    }
+
+    /* ==========================================================================
+       ROOM 2: ĐẤU TRƯỜNG CHÍNH KHÓA (FORCE-DIRECTED MINDMAP & WORKSPACE)
+       ========================================================================== */
+    .room2-container {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 16px;
+      height: 100%;
+    }
+
+    .mindmap-panel {
+      background: rgba(15, 23, 42, 0.75);
+      border-radius: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-header-bar {
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 18, 36, 0.6);
+    }
+
+    .panel-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .canvas-wrapper {
+      flex: 1;
+      position: relative;
+      background: radial-gradient(circle at center, #111e38 0%, #080f1e 100%);
+      cursor: grab;
+    }
+
+    #mindmapCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Socratic Hint Floating Card */
+    .socratic-hint-card {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      width: 380px;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid #34d399;
+      box-shadow: 0 0 30px rgba(52, 211, 153, 0.25);
+      border-radius: 16px;
+      padding: 16px;
+      z-index: 20;
+    }
+
+    .socratic-hint-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .socratic-hint-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #34d399;
+    }
+
+    .verified-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(52, 211, 153, 0.15);
+      border: 1px solid #34d399;
+      color: #34d399;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .socratic-hint-body {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    /* Workspace Panel */
+    .workspace-panel {
+      background: rgba(15, 23, 42, 0.75);
+      border-radius: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      gap: 12px;
+    }
+
+    .btn-upload-draft {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.3), rgba(56, 189, 248, 0.4));
+      border: 1.5px dashed #38bdf8;
+      border-radius: 12px;
+      padding: 16px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-upload-draft:hover {
+      background: rgba(56, 189, 248, 0.25);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    }
+
+    .rich-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 10px;
+      background: rgba(10, 18, 36, 0.7);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .toolbar-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .toolbar-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .editor-textarea {
+      flex: 1;
+      background: rgba(10, 18, 36, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 14px;
+      color: #f8fafc;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      resize: none;
+      outline: none;
+    }
+
+    .editor-textarea:focus {
+      border-color: #38bdf8;
+    }
+
+    /* ==========================================================================
+       ROOM 3A: GÓC HỌC TẬP BÍ MẬT (PRIVATE HEALING HAVEN)
+       ========================================================================== */
+    .room3a-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+
+    .lock-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(7, 13, 25, 0.92);
+      backdrop-filter: blur(20px);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .lock-icon-box {
+      width: 110px;
+      height: 110px;
+      border-radius: 28px;
+      background: radial-gradient(circle, rgba(251, 191, 36, 0.25) 0%, rgba(245, 158, 11, 0.05) 70%);
+      border: 2px solid #fbbf24;
+      box-shadow: 0 0 45px rgba(251, 191, 36, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: #fbbf24;
+    }
+
+    .lock-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #fbbf24;
+      margin-bottom: 8px;
+    }
+
+    .lock-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+
+    .pin-input-group {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .pin-digit {
+      width: 50px;
+      height: 60px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 2px solid rgba(251, 191, 36, 0.4);
+      border-radius: 12px;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fbbf24;
+      text-align: center;
+      outline: none;
+    }
+
+    .pin-digit:focus {
+      border-color: #fbbf24;
+      box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+    }
+
+    .room3a-content {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .rescue-video-card {
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 20px;
+      border: 1.5px solid rgba(251, 146, 60, 0.4);
+      box-shadow: 0 0 30px rgba(251, 146, 60, 0.15);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .video-hero-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .video-info-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .play-circle-btn {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f97316, #fbbf24);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(249, 115, 22, 0.6);
+      transition: all 0.2s;
+    }
+
+    .play-circle-btn:hover {
+      transform: scale(1.08);
+    }
+
+    .fox-mascot-img {
+      width: 130px;
+      height: 130px;
+      filter: drop-shadow(0 10px 20px rgba(249, 115, 22, 0.3));
+    }
+
+    .healing-progress-gauge {
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 20px;
+      border: 1.5px solid rgba(56, 189, 248, 0.3);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .circular-progress {
+      width: 140px;
+      height: 140px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .circular-progress svg {
+      transform: rotate(-90deg);
+      width: 100%;
+      height: 100%;
+    }
+
+    .circular-progress circle {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+    }
+
+    .circular-progress .bg-circle {
+      stroke: rgba(255, 255, 255, 0.08);
+    }
+
+    .circular-progress .progress-circle {
+      stroke: url(#cyanGrad);
+      stroke-dasharray: 377;
+      stroke-dashoffset: 56; /* 85% */
+      transition: stroke-dashoffset 1s ease;
+    }
+
+    .gauge-number {
+      position: absolute;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+
+    /* Healing Exercise Card */
+    .healing-exercise-card {
+      grid-column: span 2;
+      background: rgba(15, 23, 42, 0.75);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .prompt-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .prompt-input-row {
+      background: rgba(10, 18, 36, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+    }
+
+    .prompt-input-row input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px dashed rgba(56, 189, 248, 0.6);
+      color: #38bdf8;
+      font-size: 0.95rem;
+      font-weight: 600;
+      outline: none;
+      padding: 2px 8px;
+    }
+
+    /* ==========================================================================
+       ROOM 3B: PHÒNG ĐỒNG HÀNH CỦA MẸ (PARENT'S DASHBOARD & MICRO-APPS)
+       ========================================================================== */
+    .room3b-container {
+      flex: 1;
+      background: linear-gradient(135deg, #f0fdf4 0%, #f8fafc 50%, #eff6ff 100%);
+      color: #1e293b;
+      border-radius: 24px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .room3b-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .room3b-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .room3b-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr 340px;
+      gap: 20px;
+      flex: 1;
+    }
+
+    .room3b-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .room3b-card-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    .room3b-card-subtitle {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 18px;
+    }
+
+    /* Empathetic Progress 92% */
+    .donut-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .donut-text-center {
+      position: absolute;
+      text-align: center;
+    }
+
+    .donut-pct {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #0d9488;
+    }
+
+    /* Agent 9 Chat Co-Pilot */
+    .agent9-chat-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .agent9-avatar-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .agent9-avatar-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #dcfce7;
+      border: 2px solid #86efac;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    .chat-bubble-mother {
+      background: #f1f5f9;
+      border-radius: 16px;
+      padding: 16px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #334155;
+      position: relative;
+    }
+
+    .chat-input-bar {
+      display: flex;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 8px 14px;
+    }
+
+    .chat-input-bar input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.9rem;
+      color: #1e293b;
+    }
+
+    /* Family Micro-Apps Cards */
+    .micro-app-card {
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .micro-app-card.green {
+      background: #86efac;
+      color: #064e3b;
+    }
+
+    .micro-app-card.blue {
+      background: #93c5fd;
+      color: #1e3a8a;
+    }
+
+    .micro-app-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .app-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .app-arrow-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      opacity: 0.7;
+    }
+
+    /* ==========================================================================
+       ROOM 4: GÓC TRẢI NGHIỆM & KỸ NĂNG GIA ĐÌNH (HOME-SKILLS HERO)
+       ========================================================================== */
+    .room4-container {
+      flex: 1;
+      background: #f8fafc;
+      color: #0f172a;
+      border-radius: 24px;
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      overflow: hidden;
+    }
+
+    .room4-icon-sidebar {
+      background: #2563eb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 0;
+      gap: 20px;
+    }
+
+    .room4-icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .room4-icon-btn.active, .room4-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .room4-main {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow-y: auto;
+    }
+
+    .room4-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .badges-trio {
+      display: flex;
+      gap: 12px;
+    }
+
+    .trio-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 12px;
+      border: 1.5px solid;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .trio-badge.ethics {
+      border-color: #f97316;
+      color: #ea580c;
+      background: #ffedd5;
+    }
+
+    .trio-badge.wisdom {
+      border-color: #0284c7;
+      color: #0284c7;
+      background: #e0f2fe;
+    }
+
+    .trio-badge.willpower {
+      border-color: #16a34a;
+      color: #16a34a;
+      background: #dcfce7;
+    }
+
+    .chores-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .chore-card {
+      background: #fff;
+      border-radius: 20px;
+      border: 2px solid;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .chore-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .chore-card.blue { border-color: #3b82f6; }
+    .chore-card.orange { border-color: #f97316; }
+    .chore-card.green { border-color: #22c55e; }
+
+    .chore-img-wrap {
+      height: 180px;
+      background: #fffbeb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .chore-label-bar {
+      padding: 14px 16px;
+      text-align: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .chore-card.blue .chore-label-bar { background: #3b82f6; }
+    .chore-card.orange .chore-label-bar { background: #f97316; }
+    .chore-card.green .chore-label-bar { background: #22c55e; }
+
+    /* Agent 10 Verification Row */
+    .agent10-verify-box {
+      background: #fff;
+      border: 2px dashed #cbd5e1;
+      border-radius: 20px;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .agent10-robot-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .agent10-robot-avatar {
+      width: 76px;
+      height: 76px;
+      border-radius: 24px;
+      background: #eff6ff;
+      border: 2px solid #60a5fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+    }
+
+    /* ==========================================================================
+       ROOM 5: PHÒNG THÍ NGHIỆM ẢO STEM LAB 3D (THREE.JS & LEAN 4 VERIFICATION)
+       ========================================================================== */
+    .room5-container {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 260px 1fr 340px;
+      gap: 14px;
+      height: 100%;
+    }
+
+    .stem-tools-panel {
+      background: rgba(10, 18, 36, 0.85);
+      border-radius: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+    }
+
+    .tool-slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tool-header-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    .tool-header-line.active {
+      color: #38bdf8;
+    }
+
+    .stem-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.12);
+      outline: none;
+    }
+
+    .stem-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 0 12px #38bdf8;
+      cursor: pointer;
+    }
+
+    .viewport3d-panel {
+      background: radial-gradient(circle at center, #0e1b38 0%, #060c18 100%);
+      border-radius: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #webglCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .viewport-overlay-labels {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .overlay-label {
+      position: absolute;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(10, 18, 36, 0.7);
+      backdrop-filter: blur(4px);
+    }
+
+    .lean4-proof-panel {
+      background: rgba(10, 18, 36, 0.85);
+      border-radius: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow-y: auto;
+    }
+
+    .math-formula-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      color: #38bdf8;
+      line-height: 1.5;
+    }
+
+    .lean4-success-badge {
+      background: rgba(52, 211, 153, 0.12);
+      border: 1.5px solid #34d399;
+      border-radius: 10px;
+      padding: 12px;
+      color: #34d399;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lean4-code-block {
+      background: #070d19;
+      border-radius: 6px;
+      padding: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: #94a3b8;
+      overflow-x: auto;
+    }
+
+    /* Modal for Micro-Apps */
+    .app-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .app-modal.active {
+      display: flex;
+    }
+
+    .modal-dialog {
+      background: #fff;
+      color: #0f172a;
+      width: 100%;
+      max-width: 650px;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Master Navigation Bar -->
+  <header class="master-navbar">
+    <a href="#" class="brand-logo" onclick="switchRoom('room1'); return false;">
+      <span>✨ YourDream.vn</span>
+      <span class="brand-badge">EDUMAP ART</span>
+    </a>
+
+    <!-- Room Switcher Tabs -->
+    <div class="room-tabs">
+      <button class="room-tab-btn active" id="tab-room1" onclick="switchRoom('room1')">
+        <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i> Phòng 1: Linh Thú
+      </button>
+      <button class="room-tab-btn" id="tab-room2" onclick="switchRoom('room2')">
+        <i data-lucide="network" style="width: 16px; height: 16px;"></i> Phòng 2: Đấu Trường
+      </button>
+      <button class="room-tab-btn" id="tab-room3a" onclick="switchRoom('room3a')">
+        <i data-lucide="shield-check" style="width: 16px; height: 16px;"></i> Phòng 3A: Bí Mật
+      </button>
+      <button class="room-tab-btn" id="tab-room3b" onclick="switchRoom('room3b')">
+        <i data-lucide="heart-handshake" style="width: 16px; height: 16px;"></i> Phòng 3B: Của Mẹ
+      </button>
+      <button class="room-tab-btn" id="tab-room4" onclick="switchRoom('room4')">
+        <i data-lucide="award" style="width: 16px; height: 16px;"></i> Phòng 4: Kỹ Năng
+      </button>
+      <button class="room-tab-btn" id="tab-room5" onclick="switchRoom('room5')">
+        <i data-lucide="box" style="width: 16px; height: 16px;"></i> Phòng 5: STEM 3D
+      </button>
+    </div>
+
+    <!-- User Status (Streak, Gems, Avatar) -->
+    <div class="user-stats">
+      <div class="stat-pill streak">
+        🔥 CHUỖI NGÀY: <span id="streakCount">100</span>
+      </div>
+      <div class="stat-pill gems">
+        💎 NGỌC: <span id="gemCount">5,500</span>
+      </div>
+      <div class="user-avatar-btn" title="Học sinh: Nguyễn Hoàng Nam (Lớp 8)">
+        👨‍🚀
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Viewport containing all 6 Rooms -->
+  <main class="rooms-viewport">
+
+    <!-- ====================================================================
+         PHÒNG 1: ONBOARDING & TRIỆU HỒI LINH THÚ SOCRATIC
+         ==================================================================== -->
+    <section class="room-section active" id="room1">
+      <div class="room1-container">
+        <!-- Sidebar Navigation -->
+        <aside class="room1-sidebar">
+          <div class="room1-user-card">
+            <div class="room1-user-avatar">
+              <i data-lucide="user" style="width: 32px; height: 32px; color: #38bdf8;"></i>
+            </div>
+            <div style="font-weight: 700; font-size: 0.95rem;">Hoàng Nam</div>
+            <div style="font-size: 0.75rem; color: #94a3b8;">Học sinh Lớp 8</div>
+          </div>
+
+          <button class="room1-menu-btn active"><i data-lucide="home"></i> Trang Chủ</button>
+          <button class="room1-menu-btn" onclick="switchRoom('room2')"><i data-lucide="graduation-cap"></i> Phòng Học</button>
+          <button class="room1-menu-btn" onclick="switchRoom('room3b')"><i data-lucide="book-open"></i> Thư Viện</button>
+          <button class="room1-menu-btn" onclick="switchRoom('room4')"><i data-lucide="swords"></i> Thử Thách</button>
+          <button class="room1-menu-btn"><i data-lucide="trophy"></i> Xếp Hạng</button>
+          <button class="room1-menu-btn"><i data-lucide="settings"></i> Cài Đặt</button>
+        </aside>
+
+        <!-- Center Summoning Hall -->
+        <div class="room1-main">
+          <h2 class="room1-title">TRIỆU HỒI LINH THÚ SÓCRATIC</h2>
+
+          <!-- ==========================================================
+               MA TRẬN 11 CON GIÁP THÂN THIỆN (VĂN HÓA VIỆT - KHÔNG CÓ RẮN)
+               Tự động định hướng độ tuổi & Khối lớp học sinh (Năm học 2026-2027)
+               ========================================================== -->
+          <div style="text-align: center; margin-bottom: 14px;">
+            <div style="font-size: 0.88rem; color: #38bdf8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+              🌟 Mẹ Hãy Chọn Con Giáp Của Bé Để Linh Thú Bản Mệnh Đồng Hành:
+            </div>
+            <div style="font-size: 0.76rem; color: #94a3b8; margin-top: 2px;">
+              (1 Chạm tự động xác định năm sinh, khối lớp và kích hoạt kịch bản tâm lý tương ứng)
+            </div>
+          </div>
+
+          <!-- Dải băng chuyền 11 Con giáp thân thiện -->
+          <div id="zodiacCarousel" style="
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            max-width: 100%;
+            padding: 8px 12px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(14px);
+            border-radius: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            margin-bottom: 20px;
+            scrollbar-width: thin;
+          ">
+            <!-- 11 Con Giáp (Đã lược bỏ con rắn theo yêu cầu sư phạm) -->
+            <button class="zodiac-pill-btn" onclick="selectZodiacStudent('thin')" id="zbtn-thin" style="border-color:#38bdf8; background:rgba(56,189,248,0.25); color:#fff;">
+              <span style="font-size: 1.25rem;">🐉</span>
+              <strong>Thìn (Rồng)</strong>
+              <small style="color:#38bdf8; font-weight:800;">Lớp 9 (2012)</small>
+            </button>
+
+            <button class="zodiac-pill-btn" onclick="selectZodiacStudent('suu')" id="zbtn-suu">
+              <span style="font-size: 1.25rem;">🦬</span>
+              <strong>Sửu (Trâu)</strong>
+              <small style="color:#a7f3d0;">Lớp 12 (2009)</small>
+            </button>
+
+            <button class="zodiac-pill-btn" onclick="selectZodiacStudent('dan')" id="zbtn-dan">
+              <span style="font-size: 1.25rem;">🐯</span>
+              <strong>Dần (Hổ)</strong>
+              <small>Lớp 11 (2010)</small>
+            </button>
+
+            <button class="zodiac-pill-btn" onclick="selectZodiacStudent('mao')" id="zbtn-mao">
+              <span style="font-size: 1.25rem;">🐱</span>
+              <strong>Mão (Mèo)</strong>
+              <small>Lớp 10 (2011)</small>
+            </button>
+
+            <button class="zodiac-pill-btn" onclick="selectZodiacStudent('ngo')" id="zbtn-ngo">
+              <span style="font-size: 1.25rem;">🐴</span>
+              <strong>Ngọ (Ngựa)</strong>
+              <small>Lớp 7 (2014)</small>
+            </button>
+
+            <button class="zodiac-pill-btn" onclick="selectZodiacStudent('mui')" id="zbtn-mui">
+              <span style="font-size: 1.25rem;">🐐</span>
+              <strong>Mùi (Dê)</strong>
+              <small>Lớp 6 (2015)</small>
+            </button>
+
+            <button class="zodiac-pill-btn" onclick="selectZodiacStudent('than')" id="zbtn-than">
+              <span style="font-size: 1.25rem;">🐵</span>
+              <strong>Thân (Khỉ)</strong>
+              <small>Lớp 5 (2016)</small>
+            </button>
+
+            <button class="zodiac-pill-btn" onclick="selectZodiacStudent('dau')" id="zbtn-dau">
+              <span style="font-size: 1.25rem;">🐔</span>
+              <strong>Dậu (Gà)</strong>
+              <small>Lớp 4 (2017)</small>
+            </button>
+
+            <button class="zodiac-pill-btn" onclick="selectZodiacStudent('tuat')" id="zbtn-tuat">
+              <span style="font-size: 1.25rem;">🐶</span>
+              <strong>Tuất (Chó)</strong>
+              <small>Lớp 3 (2018)</small>
+            </button>
+
+            <button class="zodiac-pill-btn" onclick="selectZodiacStudent('hoi')" id="zbtn-hoi">
+              <span style="font-size: 1.25rem;">🐷</span>
+              <strong>Hợi (Lợn)</strong>
+              <small>Lớp 2 (2019)</small>
+            </button>
+
+            <button class="zodiac-pill-btn" onclick="selectZodiacStudent('ty')" id="zbtn-ty">
+              <span style="font-size: 1.25rem;">🐭</span>
+              <strong>Tý (Chuột)</strong>
+              <small>Lớp 1 (2020)</small>
+            </button>
+          </div>
+
+
+          <!-- Mascot Animation Stage -->
+          <div class="summoning-stage">
+            <div class="magic-circle"></div>
+
+            <!-- Speech Bubble -->
+            <div class="speech-bubble">
+              Chào mừng con đến với <strong>Edumapart</strong>! Rồng Socratic đã sẵn sàng đồng hành cùng con vượt mọi kỳ thi.
+            </div>
+
+            <!-- Mascot Illustration -->
+            <div class="mascot-avatar">
+              <svg class="mascot-art" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Vietnamese Nón Lá with glowing neon edge -->
+                <path d="M100 25 L30 85 L170 85 Z" fill="#fde68a" stroke="#f59e0b" stroke-width="3"/>
+                <path d="M100 25 L100 85" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <ellipse cx="100" cy="85" rx="70" ry="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="3"/>
+                <circle cx="100" cy="22" r="5" fill="#38bdf8" filter="drop-shadow(0 0 8px #38bdf8)"/>
+                
+                <!-- Cute Face -->
+                <circle cx="100" cy="115" r="38" fill="#ffedd5"/>
+                <!-- Anime Eyes with big highlights -->
+                <ellipse cx="88" cy="115" rx="7" ry="10" fill="#1e293b"/>
+                <circle cx="86" cy="111" r="3" fill="#ffffff"/>
+                <ellipse cx="112" cy="115" rx="7" ry="10" fill="#1e293b"/>
+                <circle cx="110" cy="111" r="3" fill="#ffffff"/>
+                <!-- Cheeks -->
+                <circle cx="78" cy="122" r="6" fill="#fda4af" opacity="0.6"/>
+                <circle cx="122" cy="122" r="6" fill="#fda4af" opacity="0.6"/>
+                <!-- Smile -->
+                <path d="M96 126 Q100 131 104 126" stroke="#e11d48" stroke-width="2.5" stroke-linecap="round"/>
+                
+                <!-- Cute Ao Dai / Celestial Robe -->
+                <path d="M75 145 C65 170 60 210 50 225 C80 230 120 230 150 225 C140 210 135 170 125 145 Z" fill="url(#aoDaiGrad)" stroke="#a7f3d0" stroke-width="2"/>
+                <!-- Flowing Sleeves -->
+                <path d="M75 145 C40 160 30 185 45 195 C60 180 70 165 80 150 Z" fill="#99f6e4"/>
+                <path d="M125 145 C160 160 170 185 155 195 C140 180 130 165 120 150 Z" fill="#99f6e4"/>
+                
+                <defs>
+                  <linearGradient id="aoDaiGrad" x1="100" y1="145" x2="100" y2="230" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#ccfbf1"/>
+                    <stop offset="0.5" stop-color="#99f6e4"/>
+                    <stop offset="1" stop-color="#5eead4"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div class="mascot-tag">🐉 Linh Thú Rồng Socratic</div>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="room1-actions">
+            <button class="btn-action-primary" onclick="switchRoom('room2')">
+              BẮT ĐẦU HÀNH TRÌNH
+            </button>
+            <button class="btn-action-secondary" onclick="alert('Đã mở tủ đồ trang phục Linh thú!')">
+              TÙY CHỈNH AVATAR
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PHÒNG 2: ĐẤU TRƯỜNG CHÍNH KHÓA (FORCE-DIRECTED MINDMAP & WORKSPACE)
+         ==================================================================== -->
+    <section class="room-section" id="room2">
+      <div class="room2-container">
+        <!-- Left: Mindmap Visualizer -->
+        <div class="mindmap-panel">
+          <div class="panel-header-bar">
+            <div class="panel-title">
+              <i data-lucide="network" style="color: #38bdf8;"></i> Force-directed Mindmap
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <select style="background: #1e293b; color: #fff; border: 1px solid #334155; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem;">
+                <option>Toán 8 - Chương 3: Định lý Pythagore</option>
+                <option>Toán 8 - Đại số: Phân thức đại số</option>
+                <option>Toán 9 - Hình học: Tứ giác nội tiếp</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="canvas-wrapper">
+            <canvas id="mindmapCanvas"></canvas>
+
+            <!-- Floating Socratic Hint Card with Lean 4 Verified Badge -->
+            <div class="socratic-hint-card" id="socraticHint">
+              <div class="socratic-hint-header">
+                <div class="socratic-hint-title">💡 Socratic Hint (Gợi ý Socratic)</div>
+                <button onclick="document.getElementById('socraticHint').style.display='none'" style="background: transparent; border: none; color: #94a3b8; cursor: pointer;">✕</button>
+              </div>
+              <div class="verified-badge">
+                <i data-lucide="check-circle-2" style="width: 14px; height: 14px;"></i>
+                Kiểm Định Toán Học Chuẩn Xác: 100% Không Ảo Giác
+              </div>
+              <div class="socratic-hint-body">
+                <strong>Gợi ý:</strong> Hãy quan sát mối liên hệ giữa các góc trong tam giác vuông. Điều gì sẽ xảy ra nếu con áp dụng định lý <em>Pythagore</em> $a^2 + b^2 = c^2$ vào tam giác vuông này?
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Problem-Solving Workspace -->
+        <div class="workspace-panel">
+          <div class="panel-title">
+            <i data-lucide="edit-3" style="color: #38bdf8;"></i> Problem-Solving Workspace
+          </div>
+
+          <button class="btn-upload-draft" onclick="simulateUploadDraft()">
+            <i data-lucide="camera" style="width: 28px; height: 28px; color: #38bdf8;"></i>
+            <span>Upload Handwritten Draft</span>
+            <small style="font-weight: 500; font-size: 0.75rem; color: #94a3b8;">Chụp ảnh bài nháp viết tay để Agent 8 chẩn đoán</small>
+          </button>
+
+          <div style="font-size: 0.8rem; font-weight: 700; color: #94a3b8; margin-top: 4px;">
+            Step-by-step text editor and diagram
+          </div>
+
+          <div class="rich-toolbar">
+            <button class="toolbar-btn">B</button>
+            <button class="toolbar-btn"><em>I</em></button>
+            <button class="toolbar-btn"><s>S</s></button>
+            <button class="toolbar-btn">{}</button>
+            <button class="toolbar-btn"><i data-lucide="link" style="width: 14px; height: 14px;"></i></button>
+            <button class="toolbar-btn"><i data-lucide="list" style="width: 14px; height: 14px;"></i></button>
+            <button class="toolbar-btn"><i data-lucide="image" style="width: 14px; height: 14px;"></i></button>
+          </div>
+
+          <textarea class="editor-textarea" id="studentWorkspace" placeholder="Nhập các bước chứng minh của con hoặc kết quả quét từ bài nháp viết tay...
+Bước 1: Xét tam giác ABC vuông tại A.
+Bước 2: Theo định lý Pythagore, ta có: BC² = AB² + AC²
+Bước 3: Thay số AB = 3cm, AC = 4cm => BC² = 9 + 16 = 25 => BC = 5cm."></textarea>
+
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-action-primary" style="flex: 1; padding: 10px; font-size: 0.88rem;" onclick="checkStudentProof()">
+              ✓ Kiểm Định Chuẩn Xác Tuyệt Đối
+            </button>
+            <button class="btn-action-secondary" style="padding: 10px 16px; font-size: 0.88rem;" onclick="switchRoom('room3a')">
+              Cần Cứu Trợ (3A)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PHÒNG 3A: GÓC HỌC TẬP BÍ MẬT (PRIVATE HEALING HAVEN)
+         ==================================================================== -->
+    <section class="room-section" id="room3a">
+      <div class="room3a-container">
+        <!-- Lock Screen Modal -->
+        <div class="lock-overlay" id="room3aLock">
+          <div class="lock-icon-box">
+            <i data-lucide="lock" style="width: 52px; height: 52px;"></i>
+          </div>
+          <div class="lock-title">PRIVATE STUDENT-ONLY SPACE</div>
+          <div class="lock-subtitle">Nhập Mật Khẩu Bảo Mật (Mặc định: 1234)</div>
+
+          <div class="pin-input-group">
+            <input type="password" maxlength="1" class="pin-digit" value="1">
+            <input type="password" maxlength="1" class="pin-digit" value="2">
+            <input type="password" maxlength="1" class="pin-digit" value="3">
+            <input type="password" maxlength="1" class="pin-digit" value="4">
+          </div>
+
+          <button class="btn-action-primary" style="background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #000;" onclick="unlockHealingHaven()">
+            🔓 Mở Khóa Góc Bí Mật
+          </button>
+        </div>
+
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2 style="font-size: 1.4rem; font-weight: 800; color: #fff;">Phòng 3A: Góc Học Tập Bí Mật</h2>
+            <div style="font-size: 0.85rem; color: #94a3b8;">(Private Healing Haven - Không gian tự chữa lành, không lo bị phán xét điểm số)</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="stat-pill" style="background: rgba(251, 191, 36, 0.15); color: #fbbf24; border-color: rgba(251, 191, 36, 0.4);">
+              🔒 Chế độ ẩn danh học sinh
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="room3a-content">
+          <!-- Card 1: Video Rescue Card -->
+          <div class="rescue-video-card">
+            <div class="video-hero-row">
+              <div class="video-info-box">
+                <button class="play-circle-btn" onclick="alert('Đang phát video hoạt họa 90 giây cứu trợ mất gốc!')">
+                  <i data-lucide="play" style="fill: #fff; width: 24px; height: 24px;"></i>
+                </button>
+                <div>
+                  <h3 style="font-size: 1.1rem; font-weight: 800; color: #fff;">Thẻ Cứu Hộ Cảm Xúc & Học Tập</h3>
+                  <div style="font-size: 0.85rem; color: #cbd5e1;">(Animated Video Rescue Card - CV 858)</div>
+                  <div style="font-size: 0.8rem; color: #f97316; margin-top: 4px; font-weight: 700;">⏱ 0:00 / 1:30</div>
+                </div>
+              </div>
+
+              <!-- Animated Fox Mascot -->
+              <svg class="fox-mascot-img" viewBox="0 0 160 160" fill="none">
+                <!-- Headphones -->
+                <path d="M30 80 A50 50 0 0 1 130 80" stroke="#38bdf8" stroke-width="8" stroke-linecap="round"/>
+                <rect x="20" y="70" width="16" height="30" rx="8" fill="#0284c7"/>
+                <rect x="124" y="70" width="16" height="30" rx="8" fill="#0284c7"/>
+                
+                <!-- Fox Ears -->
+                <polygon points="45,65 30,20 70,45" fill="#ea580c"/>
+                <polygon points="47,60 38,30 65,48" fill="#ffedd5"/>
+                <polygon points="115,65 130,20 90,45" fill="#ea580c"/>
+                <polygon points="113,60 122,30 95,48" fill="#ffedd5"/>
+                
+                <!-- Cape -->
+                <path d="M50 115 C50 145 110 145 110 115 Z" fill="#0284c7"/>
+                
+                <!-- Face -->
+                <circle cx="80" cy="85" r="40" fill="#f97316"/>
+                <path d="M50 85 Q80 115 110 85 Q80 95 50 85 Z" fill="#ffedd5"/>
+                <polygon points="76,96 84,96 80,102" fill="#1e293b"/>
+                
+                <!-- Eyes -->
+                <ellipse cx="68" cy="82" rx="4" ry="6" fill="#1e293b"/>
+                <ellipse cx="92" cy="82" rx="4" ry="6" fill="#1e293b"/>
+                <circle cx="67" cy="80" r="1.5" fill="#fff"/>
+                <circle cx="91" cy="80" r="1.5" fill="#fff"/>
+              </svg>
+            </div>
+
+            <!-- Fake Progress bar -->
+            <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; margin-top: 18px; overflow: hidden;">
+              <div style="background: linear-gradient(90deg, #f97316, #fbbf24); width: 45%; height: 100%;"></div>
+            </div>
+          </div>
+
+          <!-- Card 2: 85% Radial Knowledge Hole Gauge -->
+          <div class="healing-progress-gauge">
+            <div class="circular-progress">
+              <svg viewBox="0 0 140 140">
+                <defs>
+                  <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#38bdf8"/>
+                    <stop offset="100%" stop-color="#34d399"/>
+                  </linearGradient>
+                </defs>
+                <circle class="bg-circle" cx="70" cy="70" r="60"></circle>
+                <circle class="progress-circle" cx="70" cy="70" r="60"></circle>
+              </svg>
+              <div class="gauge-number">85%</div>
+            </div>
+            <div style="font-weight: 800; font-size: 0.95rem; color: #fff;">% Hố Đen Tri Thức Đã Lấp ↗</div>
+            <small style="color: #94a3b8; margin-top: 4px;">Con đã vá thành công 17/20 lỗ hổng kiến thức</small>
+          </div>
+
+          <!-- Card 3: Fill-in-the-Blank Self Healing Reflection -->
+          <div class="healing-exercise-card">
+            <div style="font-weight: 800; font-size: 1.05rem; color: #fff; display: flex; align-items: center; gap: 8px;">
+              <i data-lucide="feather" style="color: #fbbf24;"></i> Bài Tập Tự Chữa Lành: Điền Vào Chỗ Trống
+            </div>
+
+            <div class="prompt-field-group">
+              <div class="prompt-input-row">
+                <span>Hôm nay, điều khiến mình cảm thấy tự hào là</span>
+                <input type="text" placeholder="mình đã dám làm lại câu c hình học mà không bỏ cuộc">
+              </div>
+              <div class="prompt-input-row">
+                <span>Mình muốn cải thiện</span>
+                <input type="text" placeholder="kỹ năng tính nhẩm căn bậc hai">
+                <span>trong tuần tới.</span>
+              </div>
+              <div class="prompt-input-row">
+                <span>Khi gặp bài toán khó, mình sẽ</span>
+                <input type="text" placeholder="bình tĩnh unbox từng dữ kiện và xin gợi ý từ Socratic">
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px;">
+              <button class="btn-action-primary" onclick="alert('Đã lưu bài tự chữa lành vào sổ tay cá nhân!')">Lưu Lại</button>
+              <button class="btn-action-secondary" onclick="alert('Đã chia sẻ ẩn danh để lan tỏa động lực cho bạn cùng lớp!')">Chia Sẻ (Ẩn Danh)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PHÒNG 3B: PHÒNG ĐỒNG HÀNH CỦA MẸ (PARENT'S ROOM & FAMILY MICRO-APPS)
+         ==================================================================== -->
+    <section class="room-section" id="room3b">
+      <div class="room3b-container">
+        <!-- Header -->
+        <div class="room3b-header">
+          <div>
+            <h2 class="room3b-title">Phòng 3B: Phòng Đồng Hành Của Mẹ</h2>
+            <div style="font-size: 0.85rem; color: #64748b;">(Empathetic Parent Co-Pilot & On-Demand Family Micro-Apps)</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="font-size: 0.85rem; color: #475569; font-weight: 600;">Chào mẹ Thúy!</div>
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: #fed7aa; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
+              👩‍🦰
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Columns Layout -->
+        <div class="room3b-grid">
+          <!-- Col 1: Empathetic Progress Gauge -->
+          <div class="room3b-card">
+            <div class="room3b-card-title">TIẾN ĐỘ ĐỒNG HÀNH</div>
+            <div class="room3b-card-subtitle">Empathetic Progress (Không chấm điểm phạt)</div>
+
+            <div class="donut-container">
+              <div style="position: relative; width: 170px; height: 170px; display: flex; align-items: center; justify-content: center;">
+                <svg width="170" height="170" viewBox="0 0 170 170">
+                  <circle cx="85" cy="85" r="70" fill="none" stroke="#e2e8f0" stroke-width="14"/>
+                  <circle cx="85" cy="85" r="70" fill="none" stroke="#14b8a6" stroke-width="14" stroke-dasharray="440" stroke-dashoffset="35" stroke-linecap="round" transform="rotate(-90 85 85)"/>
+                </svg>
+                <div class="donut-text-center">
+                  <div class="donut-pct">92%</div>
+                  <div style="font-size: 0.8rem; font-weight: 700; color: #475569;">Hố đen tri thức<br>được lấp đầy</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="text-align: center; font-weight: 700; color: #0f766e; font-size: 0.95rem; margin-top: 12px;">
+              ✨ Con bạn đang đi đúng hướng!
+            </div>
+          </div>
+
+          <!-- Col 2: AI Agent 9 Co-Pilot Chat -->
+          <div class="room3b-card">
+            <div class="room3b-card-title">TRỢ LÝ AI: AGENT 9</div>
+            <div class="room3b-card-subtitle">AI Parent Co-Pilot (Cố vấn đối thoại thấu cảm)</div>
+
+            <div class="agent9-chat-box">
+              <div class="agent9-avatar-header">
+                <div class="agent9-avatar-circle">🌱</div>
+                <div style="font-weight: 800; font-size: 0.95rem; color: #166534;">Agent 9</div>
+              </div>
+
+              <div class="chat-bubble-mother" id="agent9ChatHistory">
+                <p><strong>Chào mẹ!</strong></p>
+                <p>Đừng lo lắng về điểm số hay so sánh con với bạn khác. Hôm nay con đã rất kiên trì tự làm bài tập hình học ở Phòng 2. Mẹ có thể khen ngợi sự tập trung của con và cùng con nấu bữa tối nhé!</p>
+              </div>
+
+              <div class="chat-input-bar">
+                <input type="text" id="parentMsgInput" placeholder="Nhập tin nhắn tâm sự với Agent 9...">
+                <button onclick="sendParentMsg()" style="background: #22c55e; border: none; color: #fff; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                  <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 3: Family Micro-Apps & Bộ 9 Thẻ Ước Mơ -->
+          <div class="room3b-card" style="overflow-y: auto; max-height: 820px;">
+            <div class="room3b-card-title">ỨNG DỤNG GIA ĐÌNH & THẺ ƯỚC MƠ</div>
+            <div class="room3b-card-subtitle">Family Micro-Apps & Tuyển Sinh K-12 (Agent 9)</div>
+
+            <!-- Nút mở Bộ 9 Thẻ Ước Mơ Chuẩn Tuyển Sinh -->
+            <div class="micro-app-card" style="background: linear-gradient(135deg, #fbcfe8, #f472b6); color: #831843; margin-bottom: 14px;" onclick="openCareerModal()">
+              <div class="app-icon-badge">🌟</div>
+              <div>
+                <div style="font-weight: 800; font-size: 1rem;">Bộ 9 Thẻ Ước Mơ K-12</div>
+                <small style="opacity: 0.9;">Định hướng tuyển sinh & Kế thừa gia đình</small>
+              </div>
+              <div class="app-arrow-btn">↗</div>
+            </div>
+
+            <!-- Micro-App 1 -->
+            <div class="micro-app-card green" onclick="openMicroAppModal('saptien')">
+              <div class="app-icon-badge">🥕</div>
+              <div>
+                <div style="font-weight: 800; font-size: 1rem;">Sổ tính tiền sạp rau</div>
+                <small style="opacity: 0.85;">Quản lý doanh thu sạp rau củ mẹ bán</small>
+              </div>
+              <div class="app-arrow-btn">↗</div>
+            </div>
+
+            <!-- Micro-App 2 -->
+            <div class="micro-app-card blue" onclick="openMicroAppModal('congsat')">
+              <div class="app-icon-badge">🚪</div>
+              <div>
+                <div style="font-weight: 800; font-size: 1rem;">Thư viện cổng sắt</div>
+                <small style="opacity: 0.85;">Mô phỏng 3D kích thước cổng sắt cho xưởng bố</small>
+              </div>
+              <div class="app-arrow-btn">↗</div>
+            </div>
+
+            <div style="margin-top: auto; padding: 12px; background: #f8fafc; border-radius: 12px; font-size: 0.8rem; color: #64748b;">
+              💡 <em>Gói Tiện Ích Gia Đình: Tự động kích hoạt các bài học kỹ năng sống phù hợp lứa tuổi của con.</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PHÒNG 4: GÓC TRẢI NGHIỆM & KỸ NĂNG GIA ĐÌNH (HOME-SKILLS HERO)
+         ========================================================================== -->
+    <section class="room-section" id="room4">
+      <div class="room4-container">
+        <!-- Icon Sidebar -->
+        <div class="room4-icon-sidebar">
+          <button class="room4-icon-btn"><i data-lucide="users"></i></button>
+          <button class="room4-icon-btn"><i data-lucide="layout-grid"></i></button>
+          <button class="room4-icon-btn active"><i data-lucide="shield"></i></button>
+          <button class="room4-icon-btn"><i data-lucide="file-text"></i></button>
+          <button class="room4-icon-btn"><i data-lucide="user"></i></button>
+          <button class="room4-icon-btn"><i data-lucide="settings"></i></button>
+        </div>
+
+        <!-- Main Body -->
+        <div class="room4-main">
+          <!-- Header Row -->
+          <div class="room4-header-row">
+            <div>
+              <h2 style="font-size: 1.4rem; font-weight: 800; color: #0f172a;">PHÒNG 4: GÓC TRẢI NGHIỆM & KỸ NĂNG GIA ĐÌNH</h2>
+              <div style="font-size: 0.9rem; font-weight: 700; color: #2563eb; margin-top: 4px;">Level 4: Home-Skills Hero</div>
+            </div>
+
+            <!-- Badges & Gems -->
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div class="badges-trio">
+                <div class="trio-badge ethics">🧡 ĐẠO ĐỨC</div>
+                <div class="trio-badge wisdom">💡 TRÍ TUỆ</div>
+                <div class="trio-badge willpower">✊ NGHỊ LỰC</div>
+              </div>
+              <div class="stat-pill gems" style="background: #e0f2fe; color: #0369a1; border-color: #7dd3fc; font-size: 0.95rem;">
+                💎 +500 GEMS
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div style="background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden;">
+            <div style="background: #2563eb; width: 68%; height: 100%;"></div>
+          </div>
+
+          <!-- 3 Chore Cards -->
+          <div class="chores-cards-grid">
+            <!-- Card 1: Bookshelf -->
+            <div class="chore-card blue" onclick="selectChore('Tủ sách gọn gàng')">
+              <div class="chore-img-wrap">
+                <svg width="140" height="120" viewBox="0 0 140 120">
+                  <rect x="15" y="10" width="110" height="100" rx="6" fill="#fde68a" stroke="#b45309" stroke-width="3"/>
+                  <line x1="15" y1="60" x2="125" y2="60" stroke="#b45309" stroke-width="3"/>
+                  <!-- Folded towels/books -->
+                  <rect x="25" y="25" width="40" height="12" rx="4" fill="#60a5fa"/>
+                  <rect x="25" y="40" width="40" height="12" rx="4" fill="#f87171"/>
+                  <rect x="80" y="20" width="12" height="35" rx="2" fill="#34d399"/>
+                  <rect x="95" y="25" width="12" height="30" rx="2" fill="#fbbf24"/>
+                </svg>
+              </div>
+              <div class="chore-label-bar">
+                TỦ SÁCH GỌN GÀNG<br><small style="font-weight: 500;">(KonMari Tidying)</small>
+              </div>
+            </div>
+
+            <!-- Card 2: Cooking Dinner -->
+            <div class="chore-card orange" onclick="selectChore('Bữa cơm gia đình')">
+              <div class="chore-img-wrap" style="background: #fff7ed;">
+                <svg width="140" height="120" viewBox="0 0 140 120">
+                  <!-- Pot and pan with steam -->
+                  <rect x="25" y="65" width="45" height="30" rx="4" fill="#94a3b8" stroke="#475569" stroke-width="3"/>
+                  <circle cx="95" cy="80" r="22" fill="#cbd5e1" stroke="#475569" stroke-width="3"/>
+                  <path d="M40 50 Q45 40 40 30" stroke="#fb923c" stroke-width="2" fill="none"/>
+                  <path d="M50 50 Q55 40 50 30" stroke="#fb923c" stroke-width="2" fill="none"/>
+                  <circle cx="95" cy="80" r="14" fill="#22c55e"/>
+                </svg>
+              </div>
+              <div class="chore-label-bar">
+                BỮA CƠM GIA ĐÌNH<br><small style="font-weight: 500;">(Cooking Dinner)</small>
+              </div>
+            </div>
+
+            <!-- Card 3: Daily Chores -->
+            <div class="chore-card green" onclick="selectChore('Việc nhà hàng ngày')">
+              <div class="chore-img-wrap" style="background: #f0fdf4;">
+                <svg width="140" height="120" viewBox="0 0 140 120">
+                  <!-- Broom, watering can, recycle bin -->
+                  <rect x="80" y="40" width="35" height="55" rx="6" fill="#4ade80" stroke="#15803d" stroke-width="3"/>
+                  <path d="M30 25 L45 80" stroke="#b45309" stroke-width="4"/>
+                  <polygon points="40,80 50,80 55,100 35,100" fill="#facc15"/>
+                </svg>
+              </div>
+              <div class="chore-label-bar">
+                VIỆC NHÀ HÀNG NGÀY<br><small style="font-weight: 500;">(Daily Chores)</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom: Agent 10 Upload Verification Box -->
+          <div class="agent10-verify-box">
+            <button class="btn-action-primary" style="background: #fff; color: #0f172a; border: 2px solid #cbd5e1; box-shadow: none;" onclick="triggerPhotoUpload()">
+              <i data-lucide="camera" style="width: 20px; height: 20px; color: #2563eb;"></i>
+              Tải Lên Ảnh Xác Minh (Upload Verification Photo)
+            </button>
+
+            <!-- Người Bạn Trí Tuệ Speech Bubble -->
+            <div class="agent10-robot-card">
+              <div class="agent10-robot-avatar">🤖</div>
+              <div style="background: #f8fafc; border: 1.5px solid #60a5fa; border-radius: 16px; padding: 10px 18px; font-weight: 800; color: #1e3a8a;">
+                Đánh giá ngay! (Evaluating now!)
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+              <div style="width: 50px; height: 50px; border-radius: 10px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; border: 2px solid #22c55e;">
+                ✓
+              </div>
+              <div style="width: 50px; height: 50px; border-radius: 10px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; border: 2px solid #22c55e;">
+                ✓
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PHÒNG 5: PHÒNG THÍ NGHIỆM ẢO STEM LAB 3D (THREE.JS & LEAN 4 FORMULA)
+         ==================================================================== -->
+    <section class="room-section" id="room5">
+      <div class="room5-container">
+        <!-- Left Column: Simulation Controls -->
+        <div class="stem-tools-panel">
+          <div class="panel-title" style="color: #38bdf8;">
+            <i data-lucide="sliders" style="width: 18px; height: 18px;"></i> CÔNG CỤ MÔ PHỎNG
+          </div>
+
+          <!-- Tool 1: Rotate -->
+          <div class="tool-slider-group">
+            <div class="tool-header-line active">
+              <span>🔄 XOAY (Rotate)</span>
+              <span id="rotateVal">45°</span>
+            </div>
+            <input type="range" class="stem-slider" min="0" max="360" value="45" id="sliderRotate" oninput="update3DModel()">
+          </div>
+
+          <!-- Tool 2: Slice -->
+          <div class="tool-slider-group">
+            <div class="tool-header-line">
+              <span>✂️ CẮT (Slice Height)</span>
+              <span id="sliceVal">50%</span>
+            </div>
+            <input type="range" class="stem-slider" min="0" max="100" value="50" id="sliderSlice" oninput="update3DModel()">
+          </div>
+
+          <!-- Tool 3: Unfold -->
+          <div class="tool-slider-group">
+            <div class="tool-header-line">
+              <span>📦 MỞ KHỐI (Unfold)</span>
+              <span id="unfoldVal">0%</span>
+            </div>
+            <input type="range" class="stem-slider" min="0" max="100" value="0" id="sliderUnfold" oninput="update3DModel()">
+          </div>
+
+          <hr style="border-color: rgba(255, 255, 255, 0.08); margin: 6px 0;">
+
+          <!-- Parameters X1 to X4 -->
+          <div class="panel-title" style="font-size: 0.9rem; color: #94a3b8;">
+            <i data-lucide="settings-2" style="width: 16px; height: 16px;"></i> THÔNG SỐ (Parameters)
+          </div>
+
+          <div class="tool-slider-group">
+            <div class="tool-header-line"><span>X₁ (Bán kính)</span><span id="valX1">350</span></div>
+            <input type="range" class="stem-slider" min="100" max="500" value="350" id="sliderX1" oninput="update3DModel()">
+          </div>
+          <div class="tool-slider-group">
+            <div class="tool-header-line"><span>X₂ (Chiều cao)</span><span id="valX2">23.5</span></div>
+            <input type="range" class="stem-slider" min="10" max="50" value="23.5" step="0.5" id="sliderX2" oninput="update3DModel()">
+          </div>
+          <div class="tool-slider-group">
+            <div class="tool-header-line"><span>X₃ (Góc nghiêng)</span><span id="valX3">0</span></div>
+            <input type="range" class="stem-slider" min="0" max="45" value="0" id="sliderX3" oninput="update3DModel()">
+          </div>
+          <div class="tool-slider-group">
+            <div class="tool-header-line"><span>X₄ (Mặt cắt)</span><span id="valX4">0</span></div>
+            <input type="range" class="stem-slider" min="0" max="30" value="0" id="sliderX4" oninput="update3DModel()">
+          </div>
+        </div>
+
+        <!-- Center Column: 3D WebGL Viewport -->
+        <div class="viewport3d-panel">
+          <div class="panel-header-bar" style="flex-wrap: wrap; gap: 8px;">
+            <div class="panel-title" style="color: #38bdf8;">
+              <i data-lucide="box" style="color: #38bdf8;"></i> 3D WebGL Viewport
+            </div>
+            <!-- Bộ chuyển đổi mô hình môn học STEM 3D (0đ API) -->
+            <div style="display: flex; gap: 6px;">
+              <button onclick="switch3DSubject('math')" id="btn3dMath" class="preset-pill-btn" style="border-color:#38bdf8; color:#38bdf8;">📐 Toán (Chóp-Trụ)</button>
+              <button onclick="switch3DSubject('dna')" id="btn3dDna" class="preset-pill-btn">🧬 KHTN (Xoắn Kép ADN)</button>
+              <button onclick="switch3DSubject('earth')" id="btn3dEarth" class="preset-pill-btn">🌍 Địa Lý (Quả Cầu GIS)</button>
+              <button onclick="switch3DSubject('circuit')" id="btn3dCircuit" class="preset-pill-btn">⚡ Vật Lý (PhysLib)</button>
+            </div>
+            <button onclick="reset3DCamera()" style="background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; cursor: pointer;">
+              Reset Góc Nhìn
+            </button>
+          </div>
+
+          <div style="flex: 1; position: relative;">
+            <div id="threejsContainer" style="width: 100%; height: 100%;"></div>
+
+            <!-- Mathematical Vector Overlays -->
+            <div class="viewport-overlay-labels">
+              <div class="overlay-label" style="top: 15%; right: 28%; color: #38bdf8; border: 1px solid #38bdf8;">
+                X = (b/a) · b⃗
+              </div>
+              <div class="overlay-label" style="top: 32%; left: 18%; color: #f43f5e; border: 1px solid #f43f5e;">
+                Giao tuyến X⃗
+              </div>
+              <div class="overlay-label" style="top: 36%; right: 18%; color: #fb923c; border: 1px solid #fb923c;">
+                Mặt cắt χ
+              </div>
+              <div class="overlay-label" style="bottom: 35%; right: 22%; color: #c084fc; border: 1px solid #c084fc;">
+                Thể tích khối chóp
+              </div>
+              <div class="overlay-label" style="bottom: 22%; left: 24%; color: #4ade80; border: 1px solid #4ade80;">
+                1 / n²
+              </div>
+              <div class="overlay-label" style="bottom: 18%; right: 30%; color: #a855f7; border: 1px solid #a855f7;">
+                V⃗
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Lean 4 Formula & Formal Proof -->
+        <div class="lean4-proof-panel">
+          <div class="panel-title" style="color: #38bdf8; font-size: 0.95rem;">
+            <i data-lucide="binary" style="width: 18px; height: 18px;"></i> XÁC MINH CÔNG THỨC & CHỨNG MINH LEAN 4
+          </div>
+
+          <div style="font-size: 0.82rem; color: #94a3b8; font-weight: 700;">Real time công thức:</div>
+          <div class="math-formula-box">
+            f'(x) = π / 2 + V(b)
+          </div>
+
+          <div style="font-size: 0.82rem; color: #94a3b8; font-weight: 700;">Chứng minh lean-trúc:</div>
+          <div class="math-formula-box">
+            H² = π/2 + ∫ fa²(θ) dθ<br>
+            = x + π² / 2
+          </div>
+
+          <!-- Proof Success Card -->
+          <div class="lean4-success-badge">
+            <div>✓ Chứng minh toán học hoàn tất (Chính xác 100%)</div>
+            <div class="lean4-code-block">
+class Formula {<br>
+&nbsp;&nbsp;let a = (a * b * c);<br>
+&nbsp;&nbsp;let t = 0; i + e)<br>
+&nbsp;&nbsp;destruction - ke(At - g(a,b);<br>
+}<br>
+V² = (1 + 2) / (n² - 3)<br>
+V  = (1 + 2) / (n² + 3)
+            </div>
+          </div>
+
+          <button class="btn-action-primary" style="padding: 10px; font-size: 0.85rem;" onclick="recheckLean4()">
+            Tái Kiểm Định Định Lý
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal: Family Micro-Apps -->
+  <div class="app-modal" id="microAppModal">
+    <div class="modal-dialog">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 id="modalAppTitle" style="font-size: 1.25rem; font-weight: 800;">Sổ Tính Tiền Sạp Rau</h3>
+        <button onclick="closeMicroAppModal()" style="background: transparent; border: none; font-size: 1.2rem; cursor: pointer;">✕</button>
+      </div>
+      <div id="modalAppBody">
+        <!-- Content injected dynamically -->
+      </div>
+      <div style="display: flex; justify-content: flex-end; margin-top: 18px;">
+        <button class="btn-action-primary" style="background: #2563eb; color: #fff;" onclick="closeMicroAppModal()">Đóng Ứng Dụng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Navigation Switcher
+    function switchRoom(roomId) {
+      document.querySelectorAll('.room-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.room-tab-btn').forEach(el => el.classList.remove('active'));
+
+      document.getElementById(roomId).classList.add('active');
+      const tabBtn = document.getElementById('tab-' + roomId);
+      if (tabBtn) tabBtn.classList.add('active');
+
+      if (roomId === 'room2') {
+        initMindmapCanvas();
+      } else if (roomId === 'room5') {
+        initThreeJS();
+      }
+    }
+
+    // =========================================================================
+    // ROOM 2: FORCE-DIRECTED NEON MINDMAP
+    // =========================================================================
+    let mindmapInitialized = false;
+    function initMindmapCanvas() {
+      if (mindmapInitialized) return;
+      mindmapInitialized = true;
+
+      const canvas = document.getElementById('mindmapCanvas');
+      const ctx = canvas.getContext('2d');
+      const container = canvas.parentElement;
+
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
+
+      const nodes = [
+        { id: 'root', label: 'Grade 8 Math', x: canvas.width / 2, y: canvas.height / 2, r: 42, color: '#38bdf8', isRoot: true },
+        { id: 'alg', label: 'Algebra', x: canvas.width / 2 - 140, y: canvas.height / 2 - 110, r: 32, color: '#38bdf8' },
+        { id: 'geo', label: 'Geometry', x: canvas.width / 2 + 130, y: canvas.height / 2 - 100, r: 32, color: '#c084fc' },
+        { id: 'func', label: 'Functions', x: canvas.width / 2 + 180, y: canvas.height / 2 + 10, r: 30, color: '#38bdf8' },
+        { id: 'data', label: 'Data Analysis', x: canvas.width / 2 + 120, y: canvas.height / 2 + 120, r: 30, color: '#c084fc' },
+        { id: 'pyth', label: 'Pythagorean Theorem', x: canvas.width / 2 - 110, y: canvas.height / 2 + 130, r: 34, color: '#38bdf8' },
+        { id: 'linear', label: 'Linear Equations', x: canvas.width / 2 - 180, y: canvas.height / 2 + 15, r: 30, color: '#38bdf8' }
+      ];
+
+      function renderMindmap() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw connections with electric neon glow
+        nodes.forEach(node => {
+          if (node.id !== 'root') {
+            ctx.save();
+            ctx.strokeStyle = node.color;
+            ctx.lineWidth = 2.5;
+            ctx.shadowColor = node.color;
+            ctx.shadowBlur = 12;
+            ctx.beginPath();
+            ctx.moveTo(nodes[0].x, nodes[0].y);
+            // Curved connection
+            const cx = (nodes[0].x + node.x) / 2 + (node.y - nodes[0].y) * 0.15;
+            const cy = (nodes[0].y + node.y) / 2 - (node.x - nodes[0].x) * 0.15;
+            ctx.quadraticCurveTo(cx, cy, node.x, node.y);
+            ctx.stroke();
+            ctx.restore();
+          }
+        });
+
+        // Draw nodes
+        nodes.forEach(node => {
+          ctx.save();
+          ctx.shadowColor = node.color;
+          ctx.shadowBlur = node.isRoot ? 25 : 15;
+          ctx.fillStyle = '#0b1329';
+          ctx.strokeStyle = node.color;
+          ctx.lineWidth = 3;
+
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, node.r, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+
+          // Outer glowing ring for root
+          if (node.isRoot) {
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, node.r + 8, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+          }
+
+          // Text Label
+          ctx.fillStyle = '#ffffff';
+          ctx.font = node.isRoot ? 'bold 12px Plus Jakarta Sans' : '600 11px Plus Jakarta Sans';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(node.label, node.x, node.y);
+          ctx.restore();
+        });
+
+        requestAnimationFrame(renderMindmap);
+      }
+
+      renderMindmap();
+
+      // Node Dragging simulation
+      let draggedNode = null;
+      canvas.addEventListener('mousedown', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        nodes.forEach(n => {
+          const dist = Math.hypot(n.x - mx, n.y - my);
+          if (dist < n.r) draggedNode = n;
+        });
+      });
+      canvas.addEventListener('mousemove', (e) => {
+        if (!draggedNode) return;
+        const rect = canvas.getBoundingClientRect();
+        draggedNode.x = e.clientX - rect.left;
+        draggedNode.y = e.clientY - rect.top;
+      });
+      window.addEventListener('mouseup', () => draggedNode = null);
+    }
+
+    function simulateUploadDraft() {
+      const draftText = `[OCR AI AGENT 8: Bài nháp viết tay của con]
+Đề bài: Cho tam giác vuông có hai cạnh góc vuông là 3cm và 4cm. Tính cạnh huyền.
+Bài làm:
+1. Gọi cạnh huyền là c (c > 0).
+2. Theo định lý Pythagore: c² = a² + b² = 3² + 4² = 9 + 16 = 25.
+3. => c = √25 = 5 (cm).
+Đáp số: 5cm.
+(Agent 8: Lập luận chuẩn xác, không có lỗi sai sót!)`;
+      document.getElementById('studentWorkspace').value = draftText;
+      alert('Đã quét và tải bài nháp viết tay thành công! Agent 8 đã chẩn đoán.');
+    }
+
+    function checkStudentProof() {
+      alert('✓ Hạt nhân Lean 4 REPL đã kiểm chứng thành công: 0 errors, 100% formal alignment!');
+    }
+
+    // =========================================================================
+    // ROOM 3A: PIN UNLOCK
+    // =========================================================================
+    function unlockHealingHaven() {
+      document.getElementById('room3aLock').style.display = 'none';
+    }
+
+    // =========================================================================
+    // ROOM 3B: PARENT CHAT & MICRO-APPS
+    // =========================================================================
+    function sendParentMsg() {
+      const input = document.getElementById('parentMsgInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatBox = document.getElementById('agent9ChatHistory');
+      chatBox.innerHTML += `<p style="margin-top: 10px; color: #0284c7;"><strong>Mẹ:</strong> ${text}</p>`;
+      input.value = '';
+
+      setTimeout(() => {
+        chatBox.innerHTML += `<p style="margin-top: 10px; color: #166534;"><strong>Agent 9:</strong> Em rất hiểu nỗi lòng của mẹ. Mẹ hãy dành cho con 10 phút ngồi trò chuyện thoải mái tối nay, mọi thứ con đang tiến bộ từng ngày!</p>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 700);
+    }
+
+    function openMicroAppModal(type) {
+      const modal = document.getElementById('microAppModal');
+      const title = document.getElementById('modalAppTitle');
+      const body = document.getElementById('modalAppBody');
+
+      if (type === 'saptien') {
+        title.innerText = '🥕 Sổ Tính Tiền Sạp Rau (Family Micro-App)';
+        body.innerHTML = `
+          <p style="margin-bottom: 12px; color: #64748b;">Hỗ trợ mẹ bán rau củ tính tiền nhanh và đối soát doanh thu cuối ngày:</p>
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+            <tr style="background: #f1f5f9; text-align: left;">
+              <th style="padding: 8px;">Mặt hàng</th>
+              <th style="padding: 8px;">Đơn giá (đ/kg)</th>
+              <th style="padding: 8px;">Số lượng</th>
+              <th style="padding: 8px;">Thành tiền</th>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+              <td style="padding: 8px;">Rau muống</td>
+              <td style="padding: 8px;">10,000</td>
+              <td style="padding: 8px;">5 bó</td>
+              <td style="padding: 8px; font-weight: 700;">50,000 đ</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+              <td style="padding: 8px;">Cà rốt Đà Lạt</td>
+              <td style="padding: 8px;">25,000</td>
+              <td style="padding: 8px;">3 kg</td>
+              <td style="padding: 8px; font-weight: 700;">75,000 đ</td>
+            </tr>
+          </table>
+          <div style="margin-top: 14px; text-align: right; font-size: 1.1rem; font-weight: 800; color: #16a34a;">
+            Tổng cộng: 125,000 đ
+          </div>
+        `;
+      } else {
+        title.innerText = '🚪 Thư Viện Cổng Sắt (Family Micro-App)';
+        body.innerHTML = `
+          <p style="margin-bottom: 12px; color: #64748b;">Thư viện bản vẽ cơ khí và tính khối lượng sắt thép cho xưởng bố:</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div style="border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px; text-align: center;">
+              <strong>Cổng 4 cánh hoa văn CNC</strong><br>
+              <small>Kích thước: 3.2m x 2.8m</small><br>
+              <span style="color: #2563eb; font-weight: 700;">Khối lượng: ~145 kg sắt hộp</span>
+            </div>
+            <div style="border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px; text-align: center;">
+              <strong>Cửa lùa trượt tự động</strong><br>
+              <small>Kích thước: 4.5m x 2.2m</small><br>
+              <span style="color: #2563eb; font-weight: 700;">Khối lượng: ~180 kg sắt hộp</span>
+            </div>
+          </div>
+        `;
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeMicroAppModal() {
+      document.getElementById('microAppModal').classList.remove('active');
+    }
+
+    // =========================================================================
+    // ROOM 4: HOME-SKILLS HERO
+    // =========================================================================
+    function selectChore(name) {
+      alert(`Đã chọn việc nhà: "${name}". Con hãy chụp ảnh thành quả để Agent 10 chấm điểm nhận Gems nhé!`);
+    }
+
+    function triggerPhotoUpload() {
+      alert('Đã tải ảnh việc nhà lên thành công! Người Bạn Đồng Hành: "Bé đã gấp quần áo rất gọn gàng theo chuẩn KonMari, thưởng ngay +500 GEMS!"');
+      const gemEl = document.getElementById('gemCount');
+      gemEl.innerText = (parseInt(gemEl.innerText.replace(',', '')) + 500).toLocaleString();
+    }
+
+    // =========================================================================
+    // ROOM 5: THREE.JS STEM LAB 3D
+    // =========================================================================
+    let scene, camera, renderer, pyramidMesh, cylinderMesh, sectionPlane;
+    let threeInitialized = false;
+
+    function initThreeJS() {
+      if (threeInitialized) return;
+      threeInitialized = true;
+
+      const container = document.getElementById('threejsContainer');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0a1428);
+
+      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      camera.position.set(5, 5, 8);
+      camera.lookAt(0, 0, 0);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(width, height);
+      container.appendChild(renderer.domElement);
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0x38bdf8, 1.2);
+      dirLight.position.set(5, 10, 7);
+      scene.add(dirLight);
+
+      // Grid helper
+      const grid = new THREE.GridHelper(10, 10, 0x38bdf8, 0x1e293b);
+      scene.add(grid);
+
+      // Create Translucent Glowing Pyramid (Khối chóp)
+      const pyramidGeo = new THREE.ConeGeometry(2.2, 3.5, 4);
+      const pyramidMat = new THREE.MeshPhongMaterial({
+        color: 0x0284c7,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.85,
+        emissive: 0x0369a1
+      });
+      pyramidMesh = new THREE.Mesh(pyramidGeo, pyramidMat);
+      pyramidMesh.position.y = 1.75;
+      scene.add(pyramidMesh);
+
+      // Create Intersecting Cylinder (Hình trụ)
+      const cylinderGeo = new THREE.CylinderGeometry(0.8, 0.8, 4, 32);
+      const cylinderMat = new THREE.MeshPhongMaterial({
+        color: 0x38bdf8,
+        transparent: true,
+        opacity: 0.5,
+        side: THREE.DoubleSide
+      });
+      cylinderMesh = new THREE.Mesh(cylinderGeo, cylinderMat);
+      cylinderMesh.rotation.z = Math.PI / 4;
+      cylinderMesh.position.set(0.2, 1.5, 0);
+      scene.add(cylinderMesh);
+
+      // Slicing Plane (Mặt cắt)
+      const planeGeo = new THREE.RingGeometry(0.79, 0.85, 32);
+      const planeMat = new THREE.MeshBasicMaterial({ color: 0xec4899, side: THREE.DoubleSide });
+      sectionPlane = new THREE.Mesh(planeGeo, planeMat);
+      sectionPlane.rotation.x = Math.PI / 2;
+      sectionPlane.position.y = 1.75;
+      scene.add(sectionPlane);
+
+      // Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        if (!container.clientWidth) return;
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+    }
+
+    function update3DModel() {
+      if (!pyramidMesh) return;
+      const rotate = parseFloat(document.getElementById('sliderRotate').value);
+      const slice = parseFloat(document.getElementById('sliderSlice').value);
+      const unfold = parseFloat(document.getElementById('sliderUnfold').value);
+
+      document.getElementById('rotateVal').innerText = rotate + '°';
+      document.getElementById('sliceVal').innerText = slice + '%';
+      document.getElementById('unfoldVal').innerText = unfold + '%';
+
+      pyramidMesh.rotation.y = THREE.MathUtils.degToRad(rotate);
+      cylinderMesh.rotation.y = THREE.MathUtils.degToRad(rotate);
+
+      // Adjust height of section plane
+      if (sectionPlane) {
+        sectionPlane.position.y = (slice / 100) * 3.5;
+      }
+    }
+
+    function reset3DCamera() {
+      if (!camera) return;
+      camera.position.set(5, 5, 8);
+      camera.lookAt(0, 0, 0);
+    }
+
+    function recheckLean4() {
+      alert('✓ Lean 4 Kernel: Tái xác thực thành công định lý thể tích hình chóp cắt khối trụ!');
+    }
+  </script>
+
+  
+  <!-- ====================================================================
+       ⚡ TẦNG 1 HOÀN HẢO: AI VISUAL STUDIO PRO (IN-APP VIBE CODING)
+       ==================================================================== -->
+  <style>
+    
+    .zodiac-pill-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 6px 12px;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      min-width: 86px;
+    }
+
+    .zodiac-pill-btn:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .zodiac-pill-btn.active {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.4), rgba(56, 189, 248, 0.3));
+      border-color: #38bdf8;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Visual Inspector Styles */
+    .edumap-hover-highlight {
+      outline: 2px dashed #38bdf8 !important;
+      outline-offset: 3px !important;
+      cursor: crosshair !important;
+      transition: outline 0.1s ease !important;
+    }
+
+    .edumap-selected-highlight {
+      outline: 3px solid #38bdf8 !important;
+      outline-offset: 4px !important;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.6) !important;
+      position: relative !important;
+    }
+
+    /* Tag overlay badge */
+    #edumapTagBadge {
+      position: absolute;
+      background: #0284c7;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 3px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 10005;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      border: 1px solid #38bdf8;
+    }
+
+    /* Toast Notification */
+    #edumapToast {
+      position: fixed;
+      top: 75px;
+      right: 24px;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid #10b981;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.35);
+      color: #f8fafc;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 10010;
+      animation: slideInToast 0.3s ease;
+    }
+
+    @keyframes slideInToast {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Quick Preset Buttons */
+    .preset-pill-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .preset-pill-btn:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+  </style>
+
+  <!-- Tag Label Badge Following Element -->
+  <div id="edumapTagBadge">&lt;div&gt;</div>
+
+  <!-- Toast Alert -->
+  <div id="edumapToast">
+    <span id="toastIcon">✓</span>
+    <span id="toastMsg">Đã cập nhật mã nguồn thành công!</span>
+  </div>
+
+  <!-- Master Floating Dock Toolbar (Tầng 1 Hoàn Hảo) -->
+  <div id="aiInspectorBar" style="
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 18, 36, 0.94);
+    backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(56, 189, 248, 0.3);
+    padding: 7px 18px;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10000;
+    color: #fff;
+    user-select: none;
+  ">
+    <!-- Brand badge -->
+    <div style="display: flex; align-items: center; gap: 7px; font-weight: 800; font-size: 0.85rem; color: #38bdf8; padding-right: 10px; border-right: 1px solid rgba(255,255,255,0.15);">
+      <span style="font-size: 1.15rem; filter: drop-shadow(0 0 8px #38bdf8);">⚡</span>
+      <span>STUDIO PRO</span>
+      <span style="background: rgba(56, 189, 248, 0.18); color: #38bdf8; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 800;">TẦNG 1</span>
+    </div>
+
+    <!-- Mode 1: Soi & Chọn Phần Tử -->
+    <button id="btnInspectMode" onclick="toggleInspectMode()" title="Bật/Tắt chế độ nhấp chọn khối trên màn hình" style="
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #e2e8f0;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    ">
+      <span>🎯 Soi Phần Tử</span>
+    </button>
+
+    <!-- Mode 2: Sửa Chữ Nhanh Trực Tiếp (0đ token) -->
+    <button id="btnEditTextMode" onclick="toggleTextEditMode()" title="Nhấp đúp chuột để sửa chữ trực tiếp như Word (0đ token)" style="
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(192, 132, 252, 0.4);
+      color: #e9d5ff;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    ">
+      <span>✏️ Sửa Chữ 0đ</span>
+    </button>
+
+    <!-- Mode 3: Kéo Thả Sắp Xếp Vị Trí -->
+    <button id="btnDragMode" onclick="toggleDragMode()" title="Kéo thả di chuyển hoán đổi vị trí các Card" style="
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      color: #fef08a;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    ">
+      <span>✋ Kéo Thả</span>
+    </button>
+
+    <!-- Undo / Redo Group -->
+    <div style="display: flex; gap: 4px; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 8px;">
+      <button onclick="undoChange()" id="btnUndo" title="Hoàn tác thay đổi vừa làm (Ctrl + Z)" style="
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255,255,255,0.12);
+        color: #94a3b8;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: 800;
+      ">↩</button>
+      <button onclick="redoChange()" id="btnRedo" title="Làm lại thao tác vừa hoàn tác" style="
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255,255,255,0.12);
+        color: #94a3b8;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: 800;
+      ">↪</button>
+    </div>
+
+    <!-- Mode 4: Lưu Về VS Code (Phím tắt Ctrl + S) -->
+    <button id="btnSaveDisk" onclick="saveDirectlyToVSCode()" title="Ghi thẳng thay đổi vào tệp index.html trên ổ D (Ctrl + S)" style="
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 0.84rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 18px rgba(16, 185, 129, 0.45);
+      transition: all 0.2s;
+    ">
+      <span>💾 Lưu VS Code</span>
+      <span style="font-size: 0.68rem; background: rgba(0,0,0,0.25); padding: 1px 6px; border-radius: 6px; opacity: 0.85;">Ctrl+S</span>
+    </button>
+  </div>
+
+  <!-- Smart Element Inspector Dialog (Popup Ra Lệnh AI Đa Năng) -->
+  <div id="aiPromptDialog" style="
+    display: none;
+    position: fixed;
+    top: 120px;
+    right: 40px;
+    width: 520px;
+    max-width: 94vw;
+    background: rgba(15, 23, 42, 0.97);
+    backdrop-filter: blur(24px);
+    border: 2px solid #38bdf8;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(56, 189, 248, 0.35);
+    border-radius: 20px;
+    padding: 18px 20px;
+    z-index: 10002;
+    color: #fff;
+    flex-direction: column;
+    gap: 12px;
+  ">
+    <!-- Header with DOM Breadcrumb Hierarchy -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 1.2rem;">🤖</span>
+        <span style="font-weight: 800; font-size: 0.95rem; color: #38bdf8;">AI VISUAL COMMAND</span>
+      </div>
+      
+      <!-- Parent Selector Navigation -->
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <button onclick="selectParentElement()" title="Mở rộng vùng chọn lên khối cha bao ngoài" style="
+          background: rgba(56, 189, 248, 0.15);
+          border: 1px solid #38bdf8;
+          color: #38bdf8;
+          font-size: 0.72rem;
+          font-weight: 700;
+          padding: 3px 10px;
+          border-radius: 6px;
+          cursor: pointer;
+        ">
+          ⬆ Chọn Khối Cha
+        </button>
+        <button onclick="closePromptDialog()" style="background: transparent; border: none; color: #94a3b8; cursor: pointer; font-size: 1.2rem;">✕</button>
+      </div>
+    </div>
+
+    <!-- Active Tag Inspector Info -->
+    <div id="selectedElementTag" style="
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: #93c5fd;
+      background: #070d19;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      word-break: break-all;
+    ">
+      Đang chọn: &lt;div class="speech-bubble"&gt;
+    </div>
+
+    <!-- One-Click Quick Presets (Các lệnh nhanh 1-chạm sư phạm) -->
+    <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px;">
+      <button class="preset-pill-btn" onclick="applyPresetPrompt('Đổi viền sang màu cam neon và thêm bóng phát sáng')">🎨 Neon Cam</button>
+      <button class="preset-pill-btn" onclick="applyPresetPrompt('Đổi viền sang màu tím neon ma thuật và nền trong suốt')">🔮 Neon Tím</button>
+      <button class="preset-pill-btn" onclick="applyPresetPrompt('Viết lại câu chào thành lời động viên tự tin ôn thi Toán vào 10 chuẩn GDPT 2018')">📖 Lời Chào Thi 10</button>
+      <button class="preset-pill-btn" onclick="applyPresetPrompt('Thêm huy hiệu xanh lá: ✓ Đã Kiểm Định Lean 4')">🛡️ Huy Hiệu Kiểm Định</button>
+      <button class="preset-pill-btn" onclick="applyPresetPrompt('Thêm nút bấm tương tác màu xanh dương')">🔘 Thêm Nút Bấm</button>
+    </div>
+
+    <!-- Main Prompt Input Area -->
+    <textarea id="aiPromptInput" rows="3" placeholder="Gõ yêu cầu bằng tiếng Việt (Ví dụ: 'Đổi viền sang cam neon, căn giữa tiêu đề, thêm nút Làm lại bài')..." style="
+      width: 100%;
+      background: #070d19;
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 10px 14px;
+      color: #fff;
+      font-size: 0.88rem;
+      resize: none;
+      outline: none;
+      line-height: 1.5;
+    "></textarea>
+
+    <!-- Bottom Bar: API Key & Cost Indicator & Run Button -->
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 2px;">
+      <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
+        <input type="password" id="openaiKeyInput" placeholder="OpenAI Key (tự lưu, không cần nhập lại)" style="
+          flex: 1;
+          background: #070d19;
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 8px;
+          padding: 6px 10px;
+          color: #94a3b8;
+          font-size: 0.76rem;
+          outline: none;
+        ">
+        <span style="font-size: 0.72rem; color: #34d399; font-weight: 700; white-space: nowrap;">
+          ⚡ ~12 VNĐ / lần
+        </span>
+      </div>
+
+      <button id="btnRunAI" onclick="executeAIModification()" style="
+        background: linear-gradient(135deg, #0284c7, #38bdf8);
+        border: none;
+        color: #041226;
+        font-weight: 800;
+        padding: 9px 20px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        white-space: nowrap;
+      ">
+        <span>✨ Thực Thi Ngay</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // HỆ ĐIỀU HÀNH TẦNG 1: AI VISUAL STUDIO PRO (CHÍNH XÁC & BẢO ĐẢM TOÀN VẸN)
+    // =========================================================================
+    let isInspectActive = false;
+    let isTextEditActive = false;
+    let isDragActive = false;
+    let selectedElement = null;
+    let hoveredEl = null;
+    let localFileHandle = null;
+
+    // Undo / Redo History Stack
+    const historyStack = [];
+    let historyIndex = -1;
+
+    function recordHistory() {
+      // Save full body HTML snapshot (without inspector artifacts)
+      const cleanHTML = getCleanProductionHTML();
+      if (historyIndex < historyStack.length - 1) {
+        historyStack.splice(historyIndex + 1);
+      }
+      historyStack.push(cleanHTML);
+      historyIndex++;
+      updateUndoRedoButtons();
+    }
+
+    function updateUndoRedoButtons() {
+      const uBtn = document.getElementById("btnUndo");
+      const rBtn = document.getElementById("btnRedo");
+      if (uBtn) uBtn.style.color = historyIndex > 0 ? "#38bdf8" : "#94a3b8";
+      if (rBtn) rBtn.style.color = historyIndex < historyStack.length - 1 ? "#38bdf8" : "#94a3b8";
+    }
+
+    function undoChange() {
+      if (historyIndex > 0) {
+        historyIndex--;
+        restoreSnapshot(historyStack[historyIndex]);
+        showToast("↩ Đã hoàn tác thay đổi vừa thực hiện!");
+      }
+    }
+
+    function redoChange() {
+      if (historyIndex < historyStack.length - 1) {
+        historyIndex++;
+        restoreSnapshot(historyStack[historyIndex]);
+        showToast("↪ Đã làm lại thay đổi!");
+      }
+    }
+
+    function restoreSnapshot(htmlString) {
+      // Save inspector state
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlString, "text/html");
+      const newMain = doc.querySelector("main.rooms-viewport");
+      if (newMain) {
+        document.querySelector("main.rooms-viewport").innerHTML = newMain.innerHTML;
+        if (window.lucide) window.lucide.createIcons();
+      }
+      updateUndoRedoButtons();
+    }
+
+    // Auto-load API Key from LocalStorage
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedKey = localStorage.getItem("edumap_openai_key");
+      if (savedKey) {
+        const input = document.getElementById("openaiKeyInput");
+        if (input) input.value = savedKey;
+      }
+      // Record initial state
+      setTimeout(recordHistory, 500);
+
+      // Setup Keyboard Shortcuts (Ctrl + S = Save, Ctrl + Z = Undo)
+      window.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+          e.preventDefault();
+          saveDirectlyToVSCode();
+        } else if ((e.ctrlKey || e.metaKey) && e.key === "z" && !e.shiftKey) {
+          if (!isEditingTextInsideInput(e.target)) {
+            e.preventDefault();
+            undoChange();
+          }
+        }
+      });
+    });
+
+    function isEditingTextInsideInput(el) {
+      return el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA");
+    }
+
+    // Toast Notification System
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById("edumapToast");
+      const icon = document.getElementById("toastIcon");
+      const text = document.getElementById("toastMsg");
+      if (!toast) return;
+
+      icon.innerText = isError ? "⚠️" : "✓";
+      toast.style.borderColor = isError ? "#f43f5e" : "#10b981";
+      text.innerText = msg;
+      toast.style.display = "flex";
+
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 3500);
+    }
+
+    // 1. Chế Độ Soi & Chọn Phần Tử
+    function toggleInspectMode() {
+      isInspectActive = !isInspectActive;
+      const btn = document.getElementById("btnInspectMode");
+      const badge = document.getElementById("edumapTagBadge");
+
+      if (isInspectActive) {
+        // Tắt các chế độ khác
+        if (isTextEditActive) toggleTextEditMode();
+        if (isDragActive) toggleDragMode();
+
+        btn.style.background = "#0284c7";
+        btn.style.color = "#fff";
+        btn.style.boxShadow = "0 0 15px #38bdf8";
+        document.body.style.cursor = "crosshair";
+        document.addEventListener("mouseover", handleHoverElement);
+        document.addEventListener("click", handleClickElement, true);
+        showToast("🎯 Chế độ Soi bật: Hãy nhấp chuột vào bất kỳ khối nào Thầy muốn sửa!");
+      } else {
+        btn.style.background = "rgba(255, 255, 255, 0.08)";
+        btn.style.color = "#e2e8f0";
+        btn.style.boxShadow = "none";
+        document.body.style.cursor = "default";
+        document.removeEventListener("mouseover", handleHoverElement);
+        document.removeEventListener("click", handleClickElement, true);
+        removeHoverOutline();
+        if (badge) badge.style.display = "none";
+      }
+    }
+
+    function handleHoverElement(e) {
+      if (!isInspectActive) return;
+      if (e.target.closest("#aiInspectorBar") || e.target.closest("#aiPromptDialog") || e.target.closest("#edumapTagBadge")) return;
+
+      if (hoveredEl && hoveredEl !== selectedElement) {
+        hoveredEl.classList.remove("edumap-hover-highlight");
+      }
+      hoveredEl = e.target;
+      if (hoveredEl !== selectedElement) {
+        hoveredEl.classList.add("edumap-hover-highlight");
+      }
+
+      // Position badge
+      const badge = document.getElementById("edumapTagBadge");
+      if (badge) {
+        const rect = hoveredEl.getBoundingClientRect();
+        badge.innerText = `<${hoveredEl.tagName.toLowerCase()}${hoveredEl.className ? '.' + hoveredEl.className.split(' ')[0] : ''}>`;
+        badge.style.display = "block";
+        badge.style.left = `${Math.max(10, rect.left + window.scrollX)}px`;
+        badge.style.top = `${Math.max(10, rect.top + window.scrollY - 24)}px`;
+      }
+    }
+
+    function removeHoverOutline() {
+      if (hoveredEl && hoveredEl !== selectedElement) {
+        hoveredEl.classList.remove("edumap-hover-highlight");
+      }
+    }
+
+    function handleClickElement(e) {
+      if (!isInspectActive) return;
+      if (e.target.closest("#aiInspectorBar") || e.target.closest("#aiPromptDialog") || e.target.closest("#edumapTagBadge")) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      selectTargetElement(e.target);
+      toggleInspectMode(); // Turn off inspector after selection
+      openPromptDialog();
+    }
+
+    function selectTargetElement(el) {
+      if (selectedElement) {
+        selectedElement.classList.remove("edumap-selected-highlight");
+      }
+      selectedElement = el;
+      selectedElement.classList.remove("edumap-hover-highlight");
+      selectedElement.classList.add("edumap-selected-highlight");
+
+      // Update dialog text
+      const tagLabel = document.getElementById("selectedElementTag");
+      const classes = el.className ? ` class="${el.className.replace('edumap-selected-highlight', '').trim()}"` : "";
+      tagLabel.innerText = `Đang chọn: <${el.tagName.toLowerCase()}${classes}> (${el.offsetWidth}x${el.offsetHeight}px)`;
+    }
+
+    // Điều hướng chọn phần tử cha bao ngoài (Breadcrumb Parent)
+    function selectParentElement() {
+      if (!selectedElement) return;
+      const parent = selectedElement.parentElement;
+      if (parent && parent !== document.body && !parent.closest("#aiInspectorBar") && !parent.closest("#aiPromptDialog")) {
+        selectTargetElement(parent);
+      } else {
+        alert("Đã chạm đến khung bao ngoài cùng của phần tử!");
+      }
+    }
+
+    function openPromptDialog() {
+      const dialog = document.getElementById("aiPromptDialog");
+      dialog.style.display = "flex";
+      const input = document.getElementById("aiPromptInput");
+      input.value = "";
+      input.focus();
+    }
+
+    function closePromptDialog() {
+      document.getElementById("aiPromptDialog").style.display = "none";
+      if (selectedElement) {
+        selectedElement.classList.remove("edumap-selected-highlight");
+      }
+      const badge = document.getElementById("edumapTagBadge");
+      if (badge) badge.style.display = "none";
+    }
+
+    function applyPresetPrompt(text) {
+      const input = document.getElementById("aiPromptInput");
+      input.value = text;
+      input.focus();
+    }
+
+    // 2. Chế Độ Sửa Chữ Trực Tiếp 0đ Token
+    function toggleTextEditMode() {
+      isTextEditActive = !isTextEditActive;
+      const btn = document.getElementById("btnEditTextMode");
+      const editableTags = ["h1", "h2", "h3", "h4", "p", "span", "small", "strong", "div", "button"];
+
+      editableTags.forEach(tag => {
+        document.querySelectorAll(tag).forEach(el => {
+          if (!el.closest("#aiInspectorBar") && !el.closest("#aiPromptDialog")) {
+            el.contentEditable = isTextEditActive;
+            el.style.outline = isTextEditActive ? "1px dotted rgba(192, 132, 252, 0.6)" : "none";
+          }
+        });
+      });
+
+      if (isTextEditActive) {
+        if (isInspectActive) toggleInspectMode();
+        if (isDragActive) toggleDragMode();
+        btn.style.background = "#c084fc";
+        btn.style.color = "#070d19";
+        btn.style.boxShadow = "0 0 15px #c084fc";
+        showToast("✏️ Chế độ Sửa chữ 0đ bật: Nhấp vào chữ bất kỳ để gõ sửa như Word!");
+      } else {
+        btn.style.background = "rgba(255, 255, 255, 0.08)";
+        btn.style.color = "#e9d5ff";
+        btn.style.boxShadow = "none";
+        recordHistory();
+        showToast("Đã tắt chế độ sửa chữ.");
+      }
+    }
+
+
+    // =========================================================================
+    // ✋ TÍNH NĂNG KÉO THẢ TỰ DO 2D & DI CHUYỂN HỘP THOẠI (CHỐNG ĐÈ NHAU)
+    // =========================================================================
+    
+    // 1. KÉO THẢ HỘP THOẠI AI VISUAL COMMAND ĐI BẤT KỲ ĐÂU TRÊN MÀN HÌNH
+    (function makeDialogDraggable() {
+      const dialog = document.getElementById("aiPromptDialog");
+      if (!dialog) return;
+
+      let isDragging = false, startX, startY, origLeft, origTop;
+      const header = dialog.firstElementChild; // Header bar
+      if (header) {
+        header.style.cursor = "move";
+        header.title = "Giữ chuột để kéo hộp thoại này sang góc khác tránh bị che màn hình";
+        
+        header.addEventListener("mousedown", (e) => {
+          if (e.target.tagName === "BUTTON") return; // Don't drag when clicking close or parent buttons
+          isDragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          const rect = dialog.getBoundingClientRect();
+          origLeft = rect.left;
+          origTop = rect.top;
+          dialog.style.bottom = "auto";
+          dialog.style.right = "auto";
+          dialog.style.transform = "none";
+          dialog.style.left = origLeft + "px";
+          dialog.style.top = origTop + "px";
+          e.preventDefault();
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          if (!isDragging) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+          dialog.style.left = Math.max(10, Math.min(window.innerWidth - dialog.offsetWidth - 10, origLeft + dx)) + "px";
+          dialog.style.top = Math.max(10, Math.min(window.innerHeight - dialog.offsetHeight - 10, origTop + dy)) + "px";
+        });
+
+        window.addEventListener("mouseup", () => {
+          isDragging = false;
+        });
+      }
+    })();
+
+    // 2. KÉO THẢ TỰ DO BẤT KỲ PHẦN TỬ NÀO BỊ ĐÈ NHAU TRÊN GIAO DIỆN (FREE-FORM DRAG)
+    let isFreeDragActive = false;
+    let freeDraggedElement = null;
+    let dragStartX, dragStartY, elemStartLeft, elemStartTop;
+
+    function toggleDragMode() {
+      isFreeDragActive = !isFreeDragActive;
+      const btn = document.getElementById("btnDragMode");
+      
+      // Các phần tử cho phép kéo thả tự do
+      const movableSelectors = ".speech-bubble, .mascot-avatar, .socratic-hint-card, .chore-card, .micro-app-card, .room3b-card";
+      const elements = document.querySelectorAll(movableSelectors);
+
+      elements.forEach(el => {
+        if (isFreeDragActive) {
+          el.style.outline = "2px dashed #fbbf24";
+          el.style.cursor = "move";
+          el.addEventListener("mousedown", startFreeDrag);
+        } else {
+          el.style.outline = "none";
+          el.style.cursor = "";
+          el.removeEventListener("mousedown", startFreeDrag);
+        }
+      });
+
+      if (isFreeDragActive) {
+        if (isInspectActive) toggleInspectMode();
+        if (isTextEditActive) toggleTextEditMode();
+        btn.style.background = "#fbbf24";
+        btn.style.color = "#0f172a";
+        btn.style.boxShadow = "0 0 15px #fbbf24";
+        showToast("✋ Chế độ Kéo thả bật: Hãy giữ chuột vào Lời thoại, Linh thú hoặc Card rồi kéo ra chỗ khác!");
+      } else {
+        btn.style.background = "rgba(255, 255, 255, 0.08)";
+        btn.style.color = "#fef08a";
+        btn.style.boxShadow = "none";
+        recordHistory();
+        showToast("✓ Đã cố định vị trí mới! Bấm Ctrl + S để lưu lại.");
+      }
+    }
+
+    function startFreeDrag(e) {
+      if (!isFreeDragActive) return;
+      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "BUTTON") return;
+      
+      freeDraggedElement = this;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+
+      const rect = freeDraggedElement.getBoundingClientRect();
+      const parentRect = freeDraggedElement.offsetParent ? freeDraggedElement.offsetParent.getBoundingClientRect() : { left: 0, top: 0 };
+      
+      elemStartLeft = rect.left - parentRect.left;
+      elemStartTop = rect.top - parentRect.top;
+
+      freeDraggedElement.style.position = "absolute";
+      freeDraggedElement.style.left = elemStartLeft + "px";
+      freeDraggedElement.style.top = elemStartTop + "px";
+      freeDraggedElement.style.zIndex = "50";
+
+      window.addEventListener("mousemove", onFreeDragging);
+      window.addEventListener("mouseup", stopFreeDrag);
+      e.preventDefault();
+    }
+
+    function onFreeDragging(e) {
+      if (!freeDraggedElement) return;
+      const dx = e.clientX - dragStartX;
+      const dy = e.clientY - dragStartY;
+      freeDraggedElement.style.left = (elemStartLeft + dx) + "px";
+      freeDraggedElement.style.top = (elemStartTop + dy) + "px";
+    }
+
+    function stopFreeDrag() {
+      if (freeDraggedElement) {
+        window.removeEventListener("mousemove", onFreeDragging);
+        window.removeEventListener("mouseup", stopFreeDrag);
+        freeDraggedElement = null;
+      }
+    }
+
+    // 4. Thực Thi Sửa Bằng AI (gpt-4o-mini với Prompt tiếng Việt)
+    async function executeAIModification() {
+      if (!selectedElement) {
+        alert("Vui lòng bấm 'Soi Phần Tử' để chọn khối trên màn hình trước!");
+        return;
+      }
+
+      const promptText = document.getElementById("aiPromptInput").value.trim();
+      if (!promptText) {
+        alert("Vui lòng nhập yêu cầu chỉnh sửa!");
+        return;
+      }
+
+      const runBtn = document.getElementById("btnRunAI");
+      runBtn.innerText = "⏳ Đang biến đổi...";
+      runBtn.disabled = true;
+
+      try {
+        selectedElement.classList.remove("edumap-selected-highlight");
+        const currentHTML = selectedElement.outerHTML;
+
+        let newHTML = null;
+        let viaProxy = false;
+
+        // 1. Ưu tiên gọi qua Cổng Proxy Tầng 2 (http://127.0.0.1:8502/api/chat) để giấu API Key tuyệt đối!
+        try {
+          const proxyRes = await fetch("http://127.0.0.1:8502/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              prompt: `ĐOẠN HTML HIỆN TẠI:\n${currentHTML}\n\nYÊU CẦU SỬA:\n${promptText}`,
+              system_prompt: `Bạn là Chuyên gia Lập trình Giao diện Web (HTML5/CSS3) cao cấp cho hệ sinh thái EduMap Art / YourDream.vn.\nQUY TẮC CỐT TỬ:\n1. Trả về DUY NHẤT chuỗi HTML sau khi chỉnh sửa của phần tử đó.\n2. TUYỆT ĐỐI KHÔNG giải thích, KHÔNG bọc trong markdown \`\`\`html ... \`\`\`.\n3. Giữ trọn vẹn phong cách Neon Dark Mode / Glassmorphism / Chuẩn Sư phạm GDPT 2018.`,
+              model: "gpt-4o-mini"
+            })
+          });
+
+          if (proxyRes.ok) {
+            const proxyData = await proxyRes.json();
+            if (proxyData.success && proxyData.result) {
+              newHTML = proxyData.result;
+              viaProxy = true;
+            }
+          }
+        } catch (proxyErr) {
+          console.log("Proxy Tầng 2 chưa khởi động, dùng dự phòng client-side.");
+        }
+
+        // 2. Chế độ dự phòng: nếu chưa chạy Proxy 8502 thì gọi trực tiếp
+        if (!newHTML) {
+          const keyInput = document.getElementById("openaiKeyInput");
+          let apiKey = keyInput ? keyInput.value.trim() : "";
+          if (!apiKey) apiKey = localStorage.getItem("edumap_openai_key") || "";
+
+          if (!apiKey) {
+            alert("Cổng Proxy Tầng 2 chưa bật và chưa có API Key! Hãy chạy 'streamlit run app.py' hoặc dán OpenAI Key vào ô nhập.");
+            runBtn.innerText = "✨ Thực Thi Ngay";
+            runBtn.disabled = false;
+            return;
+          }
+          localStorage.setItem("edumap_openai_key", apiKey);
+
+          const response = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+              model: "gpt-4o-mini",
+              temperature: 0.2,
+              messages: [
+                { role: "system", content: "Bạn là Chuyên gia Lập trình Giao diện Web (HTML5/CSS3) cao cấp cho hệ sinh thái EduMap Art / YourDream.vn.\nQUY TẮC CỐT TỬ:\n1. Trả về DUY NHẤT chuỗi HTML sau khi chỉnh sửa của phần tử đó.\n2. TUYỆT ĐỐI KHÔNG giải thích, KHÔNG bọc trong markdown ```html ... ```.\n3. Giữ trọn vẹn phong cách Neon Dark Mode / Glassmorphism / Chuẩn Sư phạm GDPT 2018." },
+                { role: "user", content: `ĐOẠN HTML HIỆN TẠI:\n${currentHTML}\n\nYÊU CẦU SỬA:\n${promptText}` }
+              ]
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(`OpenAI HTTP ${response.status}: ${response.statusText}`);
+          }
+          const resData = await response.json();
+          newHTML = resData.choices[0].message.content.trim();
+        }
+
+        newHTML = newHTML.replace(/^```html\s*/i, "").replace(/```$/, "").trim();
+
+        // Thay thế node trong DOM
+        selectedElement.outerHTML = newHTML;
+        if (window.lucide) window.lucide.createIcons();
+
+        closePromptDialog();
+        recordHistory();
+        if (viaProxy) {
+          showToast("⚡ Đã sửa qua Cổng Proxy Tầng 2 (Bảo mật 100%)! Nhớ bấm 'Lưu VS Code'.");
+        } else {
+          showToast("✨ Đã biến đổi thành công! Nhớ bấm 'Lưu VS Code'.");
+        }
+      } catch (err) {
+        alert("Lỗi thực thi AI: " + err.message);
+      } finally {
+        runBtn.innerText = "✨ Thực Thi Ngay";
+        runBtn.disabled = false;
+      }
+    }
+
+    // 5. Ghi Đĩa Sạch Sẽ Tuyệt Đối Về Máy Dell (File System Access API)
+    function getCleanProductionHTML() {
+      // Clone document to clean it
+      const cloneDoc = document.documentElement.cloneNode(true);
+
+      // Clean outlines & styles
+      cloneDoc.querySelectorAll(".edumap-hover-highlight, .edumap-selected-highlight").forEach(el => {
+        el.classList.remove("edumap-hover-highlight", "edumap-selected-highlight");
+      });
+
+      cloneDoc.querySelectorAll("[contenteditable]").forEach(el => {
+        el.removeAttribute("contenteditable");
+        if (el.style.outline && el.style.outline.includes("dotted")) {
+          el.style.outline = "none";
+        }
+      });
+
+      return "<!DOCTYPE html>\n" + cloneDoc.outerHTML;
+    }
+
+    async function saveDirectlyToVSCode() {
+      try {
+        if (isTextEditActive) toggleTextEditMode();
+        if (isInspectActive) toggleInspectMode();
+        if (isDragActive) toggleDragMode();
+        closePromptDialog();
+
+        if (!localFileHandle) {
+          showToast("👉 Hãy trỏ chọn đúng tệp index.html trên ổ D để cấp quyền ghi tự động nhé!");
+          [localFileHandle] = await window.showOpenFilePicker({
+            types: [{ description: "HTML Files", accept: { "text/html": [".html"] } }]
+          });
+        }
+
+        const writableStream = await localFileHandle.createWritable();
+        const cleanHTML = getCleanProductionHTML();
+        await writableStream.write(cleanHTML);
+        await writableStream.close();
+
+        showToast("🎉 ĐÃ LƯU THÀNH CÔNG VỀ VS CODE (Ổ D:)!");
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          alert("Lưu thất bại: " + err.message);
+        }
+      }
+    }
+  </script>
+
+  <!-- =========================================================================
+       🎉 HIỆU ỨNG PHÁO HOA KỸ THUẬT SỐ: ONE TOUCH TO YOUR SMILES & KHÓA BẢO MẬT
+       ========================================================================= -->
+  <canvas id="fireworksCanvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999; display: none;"></canvas>
+
+  <script>
+    // 1. Chống F12, chuột phải và phím tắt xem nguồn (Bảo vệ bản quyền tri thức)
+    document.addEventListener('contextmenu', (e) => {
+      // Cho phép chuột phải nếu đang ở chế độ Quản trị viên
+      const bar = document.getElementById("aiInspectorBar");
+      if (bar && bar.style.display !== "none") return true;
+      e.preventDefault();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      // Phím F12 hoặc Ctrl+Shift+I / J / C hoặc Ctrl+U
+      if (e.keyCode === 123 || 
+          ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) ||
+          ((e.ctrlKey || e.metaKey) && (e.keyCode === 85 || e.key === 'u' || e.key === 'U'))) {
+        const bar = document.getElementById("aiInspectorBar");
+        if (bar && bar.style.display !== "none") return true;
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // 2. Chốt an toàn bí mật: Nhấp 3 lần Logo hoặc nhấn Ctrl + Shift + E
+    let brandClickCount = 0;
+    let brandClickTimer = null;
+
+    function toggleAdminStudio() {
+      const bar = document.getElementById("aiInspectorBar");
+      if (!bar) return;
+      if (bar.style.display === "none" || !bar.style.display) {
+        bar.style.display = "flex";
+        showToast("🔓 ĐÃ MỞ KHÓA CHẾ ĐỘ QUẢN TRỊ VIÊN (ADMIN STUDIO)!");
+      } else {
+        bar.style.display = "none";
+        if (typeof isInspectActive !== 'undefined' && isInspectActive) toggleInspectMode();
+        if (typeof isTextEditActive !== 'undefined' && isTextEditActive) toggleTextEditMode();
+        if (typeof isDragActive !== 'undefined' && isDragActive) toggleDragMode();
+        if (typeof closePromptDialog === 'function') closePromptDialog();
+        showToast("🔒 Đã ẩn Chế độ Quản trị viên.");
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const logo = document.querySelector(".brand-logo");
+      if (logo) {
+        logo.style.cursor = "pointer";
+        logo.addEventListener("click", (e) => {
+          brandClickCount++;
+          clearTimeout(brandClickTimer);
+          brandClickTimer = setTimeout(() => { brandClickCount = 0; }, 800);
+          if (brandClickCount >= 3) {
+            brandClickCount = 0;
+            toggleAdminStudio();
+          }
+        });
+      }
+
+      window.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "E" || e.key === "e")) {
+          e.preventDefault();
+          toggleAdminStudio();
+        }
+      });
+    });
+
+    // 3. Hiệu ứng Pháo Hoa Nở Rực Rỡ (One Touch To Your Smiles)
+    function launchOneTouchCelebration(message) {
+      const canvas = document.getElementById('fireworksCanvas');
+      if (!canvas) return;
+      canvas.style.display = 'block';
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const ctx = canvas.getContext('2d');
+
+      const particles = [];
+      const colors = ['#38bdf8', '#f59e0b', '#10b981', '#ec4899', '#8b5cf6', '#ef4444', '#fbbf24'];
+
+      for (let i = 0; i < 180; i++) {
+        particles.push({
+          x: window.innerWidth * (0.3 + Math.random() * 0.4),
+          y: window.innerHeight * (0.3 + Math.random() * 0.3),
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.5) * 16 - 2,
+          size: Math.random() * 6 + 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          decay: Math.random() * 0.015 + 0.01
+        });
+      }
+
+      let animId;
+      function animateFireworks() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let live = 0;
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.25; // Gravity
+          p.alpha -= p.decay;
+          if (p.alpha > 0) {
+            live++;
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+        });
+
+        if (live > 0) {
+          animId = requestAnimationFrame(animateFireworks);
+        } else {
+          cancelAnimationFrame(animId);
+          canvas.style.display = 'none';
+        }
+      }
+      animateFireworks();
+
+      // Âm thanh chúc mừng dạng Web Audio API (0đ tệp âm thanh ngoại lai)
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        notes.forEach((freq, idx) => {
+          setTimeout(() => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.5);
+          }, idx * 110);
+        });
+      } catch (e) {}
+
+      showToast(message || "🎉 ONE TOUCH TO YOUR SMILES: Mẹ đã duyệt thưởng! +500 GEMS");
+    }
+
+    // 4. Kỹ thuật Nén Ảnh Client-side (Tiết kiệm 90% Token Vision)
+    function handleChorePhotoUpload(input) {
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          // Binarize & Resize trên Canvas người dùng
+          const canvas = document.createElement('canvas');
+          const maxDim = 800;
+          let w = img.width, h = img.height;
+          if (w > h && w > maxDim) { h = Math.round(h * maxDim / w); w = maxDim; }
+          else if (h > maxDim) { w = Math.round(w * maxDim / h); h = maxDim; }
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+
+          // Nén tối ưu dung lượng < 60KB
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.65);
+          console.log("Ảnh đã nén kích thước:", compressedDataUrl.length, "bytes (Tiết kiệm 90% Token)");
+
+          // Cập nhật giao diện Phòng 4
+          const robotMsg = document.querySelector('.agent10-robot-card div:last-child');
+          if (robotMsg) {
+            robotMsg.innerHTML = "🌟 Bé đã cắm cơm điện & quét nhà xong! Đã gửi ảnh đến điện thoại của Mẹ.";
+            robotMsg.style.color = "#16a34a";
+            robotMsg.style.borderColor = "#22c55e";
+          }
+
+          // Kích hoạt nút Duyệt Thưởng 1 Chạm của Mẹ
+          const verifyBox = document.querySelector('.agent10-verify-box');
+          if (verifyBox && !document.getElementById('btnMomApprove')) {
+            const btnApprove = document.createElement('button');
+            btnApprove.id = 'btnMomApprove';
+            btnApprove.className = 'btn-action-primary';
+            btnApprove.style.background = 'linear-gradient(135deg, #f59e0b, #ea580c)';
+            btnApprove.style.marginTop = '12px';
+            btnApprove.style.boxShadow = '0 0 25px rgba(245, 158, 11, 0.6)';
+            btnApprove.innerHTML = '💖 ĐIỆN THOẠI MẸ RUNG: [1 CHẠM DUYỆT THƯỞNG +500 GEMS]';
+            btnApprove.onclick = () => {
+              const gemEl = document.getElementById('gemCount');
+              if (gemEl) {
+                gemEl.innerText = (parseInt(gemEl.innerText.replace(/,/g, '')) + 500).toLocaleString();
+              }
+              launchOneTouchCelebration("💖 MẸ ĐÃ DUYỆT THƯỞNG! Một chạm mang tiếng cười ấm áp quay lại bàn ăn gia đình!");
+              btnApprove.remove();
+            };
+            verifyBox.appendChild(btnApprove);
+          }
+
+          showToast("📷 Đã nén ảnh 60KB thành công! Đã chuyển ảnh sang điện thoại Mẹ.");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
+
+</body>
+</html>

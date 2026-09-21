@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Template B — Bảng Điều Hướng Đa Vai Trò</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { background: #F4F4F0; color: #1F2421; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        .top-bar { background: #FFFFFF; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E0E0DA; }
+        .role-pills { display: flex; gap: 0.5rem; background: #EEEEE9; padding: 0.3rem; border-radius: 30px; }
+        .pill { padding: 0.5rem 1.2rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; color: #666; }
+        .pill.active { background: #36AB83; color: white; }
+        .container { padding: 2.5rem 5%; }
+        .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+        .panel { background: #FFFFFF; padding: 1.8rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #E5E5DF; }
+        .btn-act { background: #36AB83; color: white; border: none; padding: 0.8rem 1.4rem; border-radius: 8px; font-weight: 600; width: 100%; margin-top: 1rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div style="font-weight: 800; font-size: 1.4rem; color: #36AB83;">YOURDREAM.VN</div>
+        <div class="role-pills">
+            <div class="pill active">🎒 Cổng Học Sinh</div>
+            <div class="pill">👨‍👩‍👧 Cổng Phụ Huynh</div>
+            <div class="pill">👩‍🏫 Cổng Giáo Viên</div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="grid">
+            <div class="panel">
+                <h2 style="margin-top: 0; color: #1F2421;">📸 Nộp Bài Tự Luận 1-Chạm</h2>
+                <p style="color: #666;">Chụp ảnh bài nháp tự luận viết tay. Kính lúp soi barem 0.25đ sẽ phủ mực đỏ dịu dàng chỉ ra chỗ nhầm dấu và đưa câu hỏi gợi mở!</p>
+                <div style="border: 2px dashed #36AB83; padding: 2rem; text-align: center; border-radius: 8px; background: #F9F9F6; color: #36AB83; font-weight: 600;">
+                    Kéo thả ảnh bài làm tự luận vào đây (hoặc Bấm để tải ảnh)
+                </div>
+            </div>
+            <div class="panel" style="background: #FFFDF9; border-color: #F0E6D2;">
+                <h3 style="margin-top: 0; color: #CC584F;">💌 Báo Cáo Thấu Cảm Cha Mẹ</h3>
+                <p style="font-size: 0.9rem; color: #555;">Hôm nay con đã kiên trì thử lại 3 lần bài toán dấu ngoặc. Tối nay Bố Mẹ hãy khen nỗ lực tự lập của con nhé!</p>
+                <button class="btn-act">Gửi Lời Động Viên 1-Chạm 💖</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Template A — Indochine Di Sản & Tối Giản</title>
+    <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { background: #EEEEE9; color: #1F2421; font-family: 'Inter', sans-serif; margin: 0; padding: 2rem 5%; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #36AB83; padding-bottom: 1rem; }
+        .logo { font-family: 'Eczar', serif; font-size: 2rem; color: #36AB83; font-weight: 700; }
+        .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: center; }
+        .title { font-family: 'Eczar', serif; font-size: 3rem; line-height: 1.2; color: #1F2421; }
+        .title span { color: #36AB83; }
+        .dongson-svg { width: 100%; max-width: 380px; margin: 0 auto; display: block; animation: spin 120s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .card { background: #FFFFFF; padding: 1.5rem; border-radius: 8px; border: 1px solid #D3D3CD; }
+        .card-tag { color: #CC584F; font-weight: 700; font-size: 0.8rem; }
+        .card-h { font-family: 'Eczar', serif; font-size: 1.2rem; margin: 0.5rem 0; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">YOURDREAM.VN</div>
+        <div style="font-weight: 600; color: #36AB83;">TEMPLATE A: INDOCHINE HERITAGE</div>
+    </div>
+    <div class="hero">
+        <div>
+            <h1 class="title">Cuộc sống ở đâu,<br><span>Ứng dụng ở đó.</span></h1>
+            <p style="font-size: 1.1rem; color: #4A4A45;">Cứu trợ mất gốc và mở ra ước mơ cho con trong 30 giây. Đồ họa SVG siêu nhẹ 0đ Data, mượt mà trên mọi điện thoại.</p>
+            <button style="background: #36AB83; color: white; border: none; padding: 0.8rem 1.8rem; border-radius: 6px; font-weight: 600; cursor: pointer;">Cổng Thời Gian 30s 🚀</button>
+        </div>
+        <div>
+            <svg class="dongson-svg" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="95" fill="none" stroke="#36AB83" stroke-width="2"/>
+                <circle cx="100" cy="100" r="75" fill="none" stroke="#CC584F" stroke-width="1.5" stroke-dasharray="4 2"/>
+                <circle cx="100" cy="100" r="45" fill="none" stroke="#36AB83" stroke-width="1"/>
+                <polygon points="100,10 105,80 120,20 110,85 140,35 112,90 160,60 110,98 170,100 110,102 160,140 112,110 140,165 110,115 120,180 105,120 100,190 95,120 80,180 90,115 60,165 88,110 40,140 90,102 30,100 90,98 40,60 88,90 60,35 90,85 80,20 95,80" fill="#36AB83"/>
+            </svg>
+        </div>
+    </div>
+    <div class="card-grid">
+        <div class="card"><div class="card-tag">BẢN ĐỒ TRI THỨC</div><div class="card-h">Bước Chân Tự Lập</div><p style="font-size: 0.9rem;">Tự mình vỡ oạc kiến thức từng bước nhỏ trên trang giấy thật.</p></div>
+        <div class="card"><div class="card-tag">HỌC TẬP NHẸ NHÀNG</div><div class="card-h">Cổng Vá Gốc 30s</div><p style="font-size: 0.9rem;">Tháo gỡ điểm ngộ nhận kinh điển bằng hình vẽ hoạt họa sinh động.</p></div>
+        <div class="card"><div class="card-tag">GIA ĐÌNH ĐỒNG HÀNH</div><div class="card-h">Vòng Lặp Yêu Thương</div><p style="font-size: 0.9rem;">Báo cáo thấu cảm khen ngợi nỗ lực tự sửa sai của con về máy cha mẹ.</p></div>
+    </div>
+</body>
+</html>

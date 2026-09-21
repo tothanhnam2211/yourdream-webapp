@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Cổng So Sánh 3 Mẫu Giao Diện YourDream.vn</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; background: #111; color: white; }
+        .nav-switcher { background: #222; padding: 0.8rem 2rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #36AB83; }
+        .btn-sw { background: #333; color: white; border: 1px solid #555; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 600; margin-left: 0.5rem; }
+        .btn-sw.active { background: #36AB83; border-color: #36AB83; }
+        iframe { width: 100%; height: calc(100vh - 60px); border: none; }
+    </style>
+</head>
+<body>
+    <div class="nav-switcher">
+        <div style="font-weight: bold; color: #36AB83;">YOURDREAM.VN — CỔNG SO SÁNH 3 TEMPLATES</div>
+        <div>
+            <button class="btn-sw active" onclick="loadT('template_a.html', this)">Template A (Indochine Di Sản)</button>
+            <button class="btn-sw" onclick="loadT('template_b.html', this)">Template B (Đa Vai Trò Tinh Gọn)</button>
+            <button class="btn-sw" onclick="loadT('template_c.html', this)">Template C (Khảo Thí Tự Luận)</button>
+        </div>
+    </div>
+    <iframe id="view-frame" src="template_a.html"></iframe>
+    <script>
+        function loadT(url, btn) {
+            document.getElementById('view-frame').src = url;
+            document.querySelectorAll('.btn-sw').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
+</body>
+</html>

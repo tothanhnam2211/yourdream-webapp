@@ -1,0 +1,84 @@
+{
+  "lesson_info": {
+    "grade": 9,
+    "chapter": "Chương 1: Hệ thức lượng trong tam giác vuông",
+    "lesson_title": "Bài 1: Một số hệ thức về cạnh và đường cao",
+    "core_theorem": "Hệ thức b² = ab', h² = b'c', ah = bc"
+  },
+  "tier_1_healing_room3a": {
+    "fill_in_blanks": [
+      "Trong tam giác vuông, bình phương mỗi cạnh góc vuông bằng tích của cạnh huyền và ... của nó trên cạnh huyền.",
+      "Công thức liên hệ đường cao và 2 hình chiếu là: h² = ...",
+      "Em đã phân biệt được hình chiếu b' và c' trên cạnh huyền."
+    ],
+    "rescue_video_script": "Rồng Socratic: Để thi vào 10 môn Toán, hệ thức lượng là câu ăn điểm 0.75 đầu tiên. Hãy vẽ tam giác vuông với đường cao hạ từ góc vuông!",
+    "hole_recovered_pct": 90
+  },
+  "tier_2_core_arena_room2": {
+    "trap_zero": "Bẫy số 0: Áp dụng hệ thức lượng cho tam giác không vuông hoặc đường cao không xuất phát từ đỉnh góc vuông.",
+    "barem_steps": [
+      {
+        "step": "Bước 1 (0.25đ)",
+        "action": "Xét tam giác ABC vuông tại A, đường cao AH (H thuộc BC)."
+      },
+      {
+        "step": "Bước 2 (0.25đ)",
+        "action": "Áp dụng hệ thức: AH² = BH · CH (Hệ thức lượng trong tam giác vuông)."
+      },
+      {
+        "step": "Bước 3 (0.25đ)",
+        "action": "Thay số: AH² = 4 · 9 = 36."
+      },
+      {
+        "step": "Bước 4 (0.25đ)",
+        "action": "Vì AH > 0 nên AH = √36 = 6 (cm). Kết luận."
+      }
+    ],
+    "socratic_hint": "Đường cao AH chia cạnh huyền BC thành hai đoạn nào? Công thức nào liên hệ giữa đường cao và hai đoạn đó?",
+    "mindmap_nodes": [
+      {
+        "id": "root",
+        "label": "Hệ thức lượng Toán 9",
+        "color": "#38bdf8",
+        "isRoot": true
+      },
+      {
+        "id": "n1",
+        "label": "Định lý 1 (b² = ab')",
+        "color": "#38bdf8"
+      },
+      {
+        "id": "n2",
+        "label": "Định lý 2 (h² = b'c')",
+        "color": "#34d399"
+      },
+      {
+        "id": "n3",
+        "label": "Định lý 3 (ah = bc)",
+        "color": "#c084fc"
+      },
+      {
+        "id": "n4",
+        "label": "Bẫy Số 0 Vào 10",
+        "color": "#f87171"
+      },
+      {
+        "id": "n5",
+        "label": "Barem Điểm 0.75đ",
+        "color": "#fbbf24"
+      }
+    ]
+  },
+  "tier_3_stem_lab_room5": {
+    "real_world_context": "Xác định chiều cao tòa nhà Landmark 81 bằng giác kế và thước dây.",
+    "geometry_3d_type": "Cylinder",
+    "parameters": {
+      "x1_radius": 280.0,
+      "x2_height": 45.0,
+      "x3_angle": 15.0,
+      "x4_slice": 10.0
+    },
+    "formula_latex": "AH = \\sqrt{BH \\cdot CH}",
+    "lean4_spec": "import Mathlib.Data.Real.Basic\n\ntheorem altitude_theorem (h b_prime c_prime : ℝ) (h_pos : h > 0) (h_geom : h^2 = b_prime * c_prime) :\n  h = Real.sqrt (b_prime * c_prime) := by\n  sorry"
+  }
+}

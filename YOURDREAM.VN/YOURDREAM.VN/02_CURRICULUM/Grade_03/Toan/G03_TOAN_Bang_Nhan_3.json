@@ -1,0 +1,74 @@
+{
+  "lesson_info": {
+    "grade": 3,
+    "chapter": "Bảng nhân & Bảng chia",
+    "lesson_title": "Bài 1: Khám phá Bảng nhân 3 qua Trò chơi Chia Kẹo",
+    "core_theorem": "3 x n = Tổng của n số 3 cộng lại"
+  },
+  "tier_1_healing_room3a": {
+    "fill_in_blanks": [
+      "Mỗi đĩa có 3 quả táo. 4 đĩa như thế có tất cả ... quả táo.",
+      "Phép nhân 3 x 5 có kết quả bằng ...",
+      "Hôm nay em đã tự tính nhẩm được số bánh chia cho các bạn."
+    ],
+    "rescue_video_script": "Linh thú Rồng Socratic: Bé ơi, phép nhân 3 x 4 thực chất là lấy 3 cộng 3, cộng 3, rồi cộng thêm 3 nữa thôi. Đếm cùng bạn Rồng nhé!",
+    "hole_recovered_pct": 100
+  },
+  "tier_2_core_arena_room2": {
+    "trap_zero": "Bẫy số 0: Nhầm lẫn giữa 3 x 0 = 0 và 3 + 0 = 3.",
+    "barem_steps": [
+      {
+        "step": "Bước 1",
+        "action": "Đọc đề và xác định số lượng trong một nhóm (3 cái kẹo)."
+      },
+      {
+        "step": "Bước 2",
+        "action": "Đếm số nhóm (4 bạn nhỏ)."
+      },
+      {
+        "step": "Bước 3",
+        "action": "Viết phép tính nhân: 3 x 4 = 12 (cái kẹo)."
+      },
+      {
+        "step": "Bước 4",
+        "action": "Đáp số: 12 cái kẹo."
+      }
+    ],
+    "socratic_hint": "Mỗi bạn được chia 3 cái kẹo, có 4 bạn thì lấy số 3 lặp lại mấy lần?",
+    "mindmap_nodes": [
+      {
+        "id": "root",
+        "label": "Bảng Nhân 3",
+        "color": "#fbbf24",
+        "isRoot": true
+      },
+      {
+        "id": "n1",
+        "label": "Ý nghĩa phép cộng lặp lại",
+        "color": "#38bdf8"
+      },
+      {
+        "id": "n2",
+        "label": "Bẫy Nhân Với Số 0",
+        "color": "#f87171"
+      },
+      {
+        "id": "n3",
+        "label": "Đố vui đếm hoa quả",
+        "color": "#34d399"
+      }
+    ]
+  },
+  "tier_3_stem_lab_room5": {
+    "real_world_context": "Xếp các khối rubik và đếm số ô vuông trên mặt bàn cờ.",
+    "geometry_3d_type": "Box",
+    "parameters": {
+      "x1_radius": 150.0,
+      "x2_height": 20.0,
+      "x3_angle": 0.0,
+      "x4_slice": 0.0
+    },
+    "formula_latex": "3 \\times n = \\underbrace{3 + 3 + \\dots + 3}_{n \\text{ lần}}",
+    "lean4_spec": "theorem mul_three (n : ℕ) : 3 * n = n + n + n := by ring"
+  }
+}
