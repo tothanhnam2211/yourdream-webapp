@@ -9,7 +9,7 @@ BASE_DIR = Path(r".")
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
-from agents.agent_5_overrides import agent_5
+from agents.agent_5_patch import agent_5
 from agents.agent_8_socratic import proxy_llm
 
 class MediaConductorAgent:

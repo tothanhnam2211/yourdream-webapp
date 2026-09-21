@@ -106,7 +106,7 @@ except (ImportError, ModuleNotFoundError):
 try:
     from agents.agent_1_content import content_agent
     from agents.agent_2_media import media_agent
-    from agents.agent_3_gamification import gamification_agent
+    from agents.agent_3_voice import gamification_agent
     from agents.agent_7_layout import layout_agent
     from agents.agent_8_socratic import socratic_agent
     from services.wheel_of_life_service import wheel_service

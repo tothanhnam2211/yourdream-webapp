@@ -8,7 +8,7 @@ BASE_DIR = Path(r".")
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
-from agents.agent_4_harvester import agent_4
+from agents.agent_4_search import agent_4
 
 class DynamicCanvasLayoutAgent:
     """AGENT 07: Động cơ Bố cục Không gian Đồ họa & Sơ đồ Tư duy 120Hz
