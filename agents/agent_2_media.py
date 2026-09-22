@@ -9,8 +9,12 @@ BASE_DIR = Path(r".")
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
-from agents.agent_5_patch import agent_5
-from agents.agent_8_socratic import proxy_llm
+from agents.agent_5_patch import agent_patch as agent_5
+from dotenv import load_dotenv
+from openai import OpenAI
+
+load_dotenv(BASE_DIR / ".env")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 class MediaConductorAgent:
     """AGENT 02: Kỹ sư Đạo diễn Đa phương tiện & Hạ tải Thích ứng.
@@ -21,7 +25,13 @@ class MediaConductorAgent:
         self.assets_dir = BASE_DIR / "03_ASSETS"
         self.assets_dir.mkdir(exist_ok=True)
         (self.assets_dir / "rescue_videos").mkdir(exist_ok=True)
-        self.llm = proxy_llm 
+        
+        # Tự khởi tạo lõi AI độc lập, không phụ thuộc vào Agent 8
+        class ProxyLLM:
+            def __init__(self):
+                self.openai_client = OpenAI(api_key=OPENAI_API_KEY)
+                self.openai_model = "gpt-4o-mini"
+        self.llm = ProxyLLM()
 
     def generate_visual_novel_script(self, node_id: str, teacher_id: str = None) -> dict:
         """Sinh kịch bản Visual Novel Động theo Ngữ cảnh Barem (Dual-Coding Theory)."""
