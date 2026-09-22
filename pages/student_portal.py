@@ -177,7 +177,17 @@ def render_student_portal(student_id: int = 101, grade: int = 6) -> dict:
     st.caption("Không gian Khám phá Tri thức & Rèn luyện Nghị lực Chuẩn GDPT 2018 | Dynamic Canvas 120Hz")
 
     # Lấy dữ liệu Mascot & Game hóa
-    mascot_info = gamification_agent.check_mascot_evolution(student_id)
+    try:
+        mascot_info = gamification_agent.check_mascot_evolution(student_id)
+    except Exception:
+        mascot_info = {
+            "mascot_name": "Bé Rồng Socratic (Dự phòng)",
+            "evolution_level": 1,
+            "evolution_stage": "Sơ Sinh",
+            "total_gems": 150,
+            "next_threshold": 500,
+            "remaining_to_next_level": 350
+        }
     mascot_name = mascot_info.get("mascot_name", "Bé Rồng Socratic")
     mascot_level = mascot_info.get("evolution_level", 1)
     mascot_stage = mascot_info.get("evolution_stage", "Sơ Sinh")
