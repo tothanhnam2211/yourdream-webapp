@@ -8,3 +8,4 @@ edge-tts>=6.1.12
 onnxruntime>=1.18.0
 pillow>=10.4.0
 redis>=5.0.8
+python-dotenv

@@ -20,12 +20,15 @@ if str(BASE_DIR) not in sys.path:
 infra_status = {"agent_4": False, "agent_5": False, "agent_6": False, "missing": []}
 
 try:
-from agents.agent_4_search import agent_search as agent_4
+    from agents.agent_4_search import agent_search as agent_4
     infra_status["agent_4"] = True
-from agents.agent_5_patch import agent_patch as agent_5
+    
+    from agents.agent_5_patch import agent_patch as agent_5
     infra_status["agent_5"] = True
-from agents.agent_6_export import agent_export as agent_
+    
+    from agents.agent_6_export import agent_export as agent_6
     infra_status["agent_6"] = True
+    
 except ImportError as e:
     missing_module = str(e).split("'")[1] if "'" in str(e) else str(e)
     infra_status["missing"].append(missing_module)
