@@ -20,7 +20,7 @@ if str(BASE_DIR) not in sys.path:
 infra_status = {"agent_4": False, "agent_5": False, "agent_6": False, "missing": []}
 
 try:
-    from agents.agent_4_search import agent_search
+   from agents.agent_4_search import agent_search as agent_4
     infra_status["agent_4"] = True
     from agents.agent_5_patch import agent_patch
     infra_status["agent_5"] = True
