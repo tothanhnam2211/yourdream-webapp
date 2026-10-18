@@ -1,6 +1,6 @@
-# YOURDREAM — WEBAPP MIDTERM1 PHASE C & HOTFIX · LIVE STAGING & BATCH 02A INTEGRATION QA REPORT
+# YOURDREAM — WEBAPP MIDTERM1 PHASE C, HOTFIX & FIVE CORE STUDENT ERROR TYPES · QA REPORT
 
-- **Checkpoint:** `v0.32 DRAFT` (cập nhật Hotfix trực tiếp từ `v0.31 DRAFT` / commit `f444a76af3192c7c14996916aed64c08d075268a`)
+- **Checkpoint:** `v0.33 DRAFT` (tiếp nối trực tiếp từ `v0.32 DRAFT` / commit `5b852201b7aa6aab59ee6ef3716c2475a23c420c`)
 - **Workspace:** `D:\YOURDREAM.VN\webapp-midterm1`
 - **Git Branch:** `feat/webapp-midterm1-phase-a` (không tự merge vào `main`)
 - **Live Cloudflare Staging URL (`workers.dev`):**
@@ -9,7 +9,7 @@
   - **Tùy chọn kiểm thử TEST FIXTURE (5 bài · 26 bước):** `https://yourdream-webapp-staging.tothanhnam.workers.dev/graph02-preview.html?profile=midterm1-fixture`
   - **Bộ luyện Căn thức (Production-compatible preview):** `https://yourdream-webapp-staging.tothanhnam.workers.dev/radicals.html`
   - **Bản đồ Toán vào 10 Hà Nội (Trang chủ):** `https://yourdream-webapp-staging.tothanhnam.workers.dev/`
-- **Cloudflare Worker Version ID (Phase C Hotfix):** `27d3a8fe-e9e6-4c22-ba42-1049693a7207` (trước Hotfix: `d859ddb8-b8b6-45ef-b1f4-5b8955f45a6b`)
+- **Cloudflare Worker Version ID (`v0.33 DRAFT`):** `5d16a361-e2f4-4eb6-8bbe-eb512a038845`
 
 ---
 
@@ -17,90 +17,57 @@
 
 - **Kết quả `npx wrangler whoami`:**
   - Tài khoản: `tothanhnam@gmail.com` (`Account ID: 88431d45cbbb0dea1c329bb28fa525e3`).
-  - Quyền OAuth Token: `workers (write)`, `d1 (write)`, `pages (write)`, `workers_routes (write)`, `workers_scripts (write)`.
-- **Kiểm tra toàn bộ Workers trong tài khoản:**
-  - Chỉ có 2 Workers: `bandohoctap` (cập nhật lần cuối `2026-10-13`, không có `/graph02-preview.html`) và `yourdream-webapp-staging`.
 - **Bảo toàn tuyệt đối Production:**
   - Giữ nguyên Worker/Pages `bandohoctap`, domain `yourdream.vn` và `bandohoctap.yourdream.vn`.
-  - Không sửa DNS, không ghi đè dữ liệu production, không phê duyệt `RELEASE`.
+  - Không sửa DNS, không ghi đè dữ liệu production, không sửa hợp đồng JSON nguồn (`midterm1-hanoi-exam01-preview.json` giữ nguyên SHA256 `25a9c543df43f8912176294ad4651390e8b4040aa89c281aeed2fa0a56291b99`), không gọi API trả phí, không tự phê duyệt `RELEASE`.
 
 ---
 
-## 2. Chẩn đoán Nguyên nhân & Khắc phục PHASE C HOTFIX (Tại sao Chrome hiển thị `TEST FIXTURE 5 bài / 26 bước`)
+## 2. Hệ thống 5 Nhóm Lỗi Cốt lõi của Học sinh (`YOURDREAM — FIVE CORE STUDENT ERROR TYPES`)
 
-### 2.1. Kiểm tra thực tế phiên bản Worker, URL query, Cache, Allowlist & Manifest SHA256
-1. **Manifest & SHA256 trên Worker:**
-   - `public/data/midterm1-hanoi-exam01-preview.json`: `117,176` bytes — SHA256 `25a9c543df43f8912176294ad4651390e8b4040aa89c281aeed2fa0a56291b99` (khớp 100%).
-   - `public/data/midterm1-fixture-preview.json`: SHA256 `6abeb7af79044bfc1a09f043ea2c0f7ecf5974ed3f2864ddd48e1c406749a8df` (khớp 100%).
-2. **Ba nguyên nhân thực tế đã tái hiện và khắc phục:**
-   - **Nguyên nhân 1 — Query `?profile=midterm1-fixture` dính trên thanh địa chỉ & không đồng bộ khi đổi `<select id="profile-select">`:**
-     - Ở Phase B, URL được mở với `?profile=midterm1-fixture` (và được Chrome lưu vào lịch sử gợi ý thanh địa chỉ). Trong bản `v0.31`, hàm `load(id)` của `public/graph02-preview.js` **không** cập nhật `location.search` qua `window.history.replaceState` khi người dùng chọn bộ học liệu khác trong `#profile-select`, và cũng không gán lại `$('profile-select').value = id` bên trong `load(id)`. Hệ quả là nếu URL đang có `?profile=midterm1-fixture`, ngay cả khi người dùng chọn `midterm1-hanoi-01` trên dropdown rồi bấm tải lại trang (`F5`), trang lập tức đọc lại `?profile=midterm1-fixture` trên thanh địa chỉ và quay về `TEST FIXTURE 5 bài / 26 bước`.
-   - **Nguyên nhân 2 — Thứ tự `profiles` trong `practice-preview-profiles.json` & Form State Restoration của Chrome:**
-     - Trong `v0.31`, `midterm1-hanoi-01` nằm ở vị trí cuối cùng (`profiles[4]`), không có trường `"default_profile"` tường minh trong JSON, thẻ `<select id="profile-select">` không có `autocomplete="off"` và thẻ `<option>` không gắn thuộc tính `selected` trong HTML render.
-   - **Nguyên nhân 3 — Cache tài nguyên tĩnh không gắn query phiên bản (`?v=...`) & `fetch()` dùng HTTP cache mặc định:**
-     - `graph02-preview.html` nạp `graph02-preview.js` và `graph02-preview.css` không có query chống cache (`?v=v031b`), đồng thời `fetch('data/practice-preview-profiles.json')` không truyền `{ cache: 'no-store' }`, khiến trình duyệt đã mở trang từ Phase B có thể giữ bản cache cũ.
+Đã triển khai mô-đun ánh xạ và giàn giáo nội bộ `public/midterm1-error-scaffolding.js` tích hợp trực tiếp với `public/graph02-preview.js`, `public/graph02-preview.html` và `public/graph02-preview.css`:
 
-### 2.2. Các thay đổi trong Phase C Hotfix (`v0.32 DRAFT`)
-1. **`public/data/practice-preview-profiles.json`:**
-   - Thêm trường `"default_profile": "midterm1-hanoi-01"`.
-   - Đưa `midterm1-hanoi-01` (5 bài · 24 bước · Batch 02A DRAFT) lên vị trí đầu tiên (`profiles[0]`).
-   - Giữ nguyên `midterm1-fixture` (5 bài · 26 bước) ở vị trí thứ hai (`profiles[1]`) với nhãn rõ ràng `"TEST FIXTURE · 5 bài / 26 bước (dữ liệu thử nghiệm kỹ thuật · tùy chọn kiểm thử)"`.
-2. **`public/graph02-preview.html`:**
-   - Thêm `autocomplete="off"` vào `<select id="profile-select" autocomplete="off" disabled></select>`.
-   - Gắn query chống cache `?v=v031b` cho `graph02-preview.css`, `radicals-engine.js`, `radicals-profiles.js`, `radicals-preview-journal.js`, `safe-math.js`, `graph02-preview.js`.
-3. **`public/graph02-preview.js`:**
-   - Thêm `{ credentials: 'same-origin', cache: 'no-store' }` cho cả `fetch('data/practice-preview-profiles.json', ...)` và `fetch(selected.path, ...)`.
-   - Đọc `meta.default_profile` (`midterm1-hanoi-01`), gắn thuộc tính `selected` cho `<option>` mặc định, và đồng bộ `$('profile-select').value = activeProfileId` trong cả `load(id)` và `draw()`.
-   - Đồng bộ tức thời `?profile=<id>` trên thanh địa chỉ trình duyệt bằng `window.history.replaceState` ngay khi `load(id)` chuyển profile, đảm bảo khi chuyển từ `?profile=midterm1-fixture` sang `midterm1-hanoi-01` rồi bấm `F5` (reload), trình duyệt giữ nguyên `midterm1-hanoi-01` (5 bài / 24 bước).
-   - Cập nhật động `document.title` theo profile đang mở (`5 bài / 24 bước` cho Batch 02A và `TEST FIXTURE · 5 bài / 26 bước` khi chọn fixture).
+### 2.1. Phân tầng Nguồn phát sinh lỗi (`ORIGIN_LAYERS`) & Thứ tự Ưu tiên Nguyên nhân Gốc
+1. **`INPUT_DATA_AND_SETUP` (Tầng 1 · Dữ liệu đầu vào & Dựng hình/Ký hiệu ban đầu):**
+   - `1. COPYING_ERROR` (`priority_rank: 1`) — Chép lại đề hoặc biểu thức sai (chép thiếu ngoặc khi thế biểu thức, hoán đổi hệ số $x, y$ hoặc tổng tiền, chép nhầm dấu phép toán giữa hai phân thức, đọc sót chi phí cố định 4 giáo viên).
+   - `5. DIAGRAM_ERROR` (`priority_rank: 2`) — Vẽ hình, đặt điểm, ký hiệu hoặc thể hiện quan hệ hình học sai (nhầm cạnh kề/đối/huyền đối với góc nghiêng $\alpha$, nhầm vị trí hai đoạn hình chiếu $BH$ và $CH$ trên cạnh huyền $BC$, xếp sai thứ tự đỉnh tương ứng $\triangle HBA \backsim \triangle ABC$).
+2. **`REASONING_AND_METHOD` (Tầng 2 · Chọn phương pháp & Lập luận biến đổi dấu/chiều):**
+   - `4. METHOD_GAP` (`priority_rank: 3`) — Không biết bắt đầu hoặc chọn phương pháp (mở gợi ý khi chưa làm được bước đầu, chia hai vế cho nhân tử chứa ẩn làm mất nghiệm, nhầm ĐKXĐ tử thức với mẫu thức, đặt sai chiều bất phương trình kinh phí $\le$, cộng mẫu với mẫu).
+   - `2. SIGN_ERROR` (`priority_rank: 4`) — Sai dấu, chuyển vế, phân phối dấu âm (bỏ quên dấu trừ trước $y$ trong $2x - y = 5$, phá ngoặc có dấu trừ đằng trước quên đổi dấu, chia hai vế bất phương trình cho số âm quên đổi chiều, hoặc nhập đáp số hữu tỉ trái dấu `-expected`).
+3. **`COMPUTATION_AND_EVALUATION` (Tầng 3 · Tính toán số học, Rút gọn & Thay số):**
+   - `3. ARITHMETIC_ERROR` (`priority_rank: 5`) — Sai phép tính, rút gọn, thay số (tính nhẩm lệch hằng số khi thu gọn, tra nhầm giá trị $\cos 60^\circ = 1/2$, khai triển $(a+b)^2 - 4ab$ thiếu hệ số $2ab$, hoặc tính sai giá trị số hữu tỉ).
 
----
+### 2.2. Cây quyết định Giàn giáo (`diagnoseStudentErrors`) — Nhiều lỗi đồng thời nhưng CHỈ 1 nhiệm vụ sửa mỗi lượt
+- Hệ thống ghi nhận đầy đủ mọi lỗi đang tồn đọng trên các bước trong phiên (`detected_errors`, `total_active_errors`, `queued_errors_count`).
+- Cây quyết định sắp xếp ưu tiên theo:
+  1. Bài đang làm hiện tại (`is_current_exercise`),
+  2. **Bước sớm nhất có bằng chứng trong Step Graph DAG (`step_order`)** để chặn lỗi dây chuyền từ bước đầu,
+  3. Thứ tự tầng nguyên nhân gốc (`COPYING_ERROR` $\rightarrow$ `DIAGRAM_ERROR` $\rightarrow$ `METHOD_GAP` $\rightarrow$ `SIGN_ERROR` $\rightarrow$ `ARITHMETIC_ERROR`).
+- Mỗi lượt chỉ xuất **đúng 1 nhiệm vụ sửa lỗi (`active_remediation_task`)** gồm đủ 5 thành phần bắt buộc:
+  1. **Câu hỏi phát hiện (`detection_question`)**
+  2. **Gợi ý giàn giáo mức 1–3 (`hints`)**
+  3. **Hoạt động tự sửa (`self_correction_activity`)** + nút chuyển thẳng tới bước cần sửa trên Step Graph
+  4. **Lời sửa mẫu (`model_correction`)**
+  5. **Quy tắc tránh lặp lại lỗi trong bài thi tiếp theo (`exam_prevention_rule`)**
+- Ngay khi học sinh sửa đúng bước ưu tiên số 1, cây quyết định tự động đôn lỗi tiếp theo trong hàng đợi lên làm nhiệm vụ hiện hành.
 
-## 3. Tích hợp Gói Đề Luyện tập Toán 9 Giữa kỳ I Hà Nội — Batch 02A (5 bài · 24 bước)
+### 2.3. Giới hạn Kiểm định Minh bạch & Chốt đối chiếu Hình học trước khi giải (`Geometry Pre-Solve Checklist`)
+- **Giới hạn kiểm định (`VERIFICATION_BOUNDARY_NOTICE`):** Hiển thị rõ hệ thống chỉ kết luận lỗi dựa trên bằng chứng xác định (`diagnosis_code`, kiểm tra giá trị/đấu số hữu tỉ, sự kiện `HINT_OPENED` và mục tự kiểm), **không** tự tuyên bố nhận diện lỗi từ văn bản tự do hay hình vẽ tay khi chưa có bộ kiểm định.
+- **Chốt đối chiếu Hình học (Bài IV — `YD-G09-MID1-01:G04`):** Hiển thị bảng 4 chốt kiểm tra Giả thiết – Ký hiệu vuông góc ($90^\circ$ tại chân tường, đỉnh $A$, chân đường cao $H \in BC$) – Vị trí cạnh Đối/Kề/Huyền & Hình chiếu $BH, CH$ – Thứ tự đỉnh đồng dạng $\triangle HBA \backsim \triangle ABC$ trước khi giải.
 
-1. **Nguồn dữ liệu Batch 02A đã đối chiếu mã băm SHA256:**
-   - Tệp gốc trên Google Drive: `G:\Drive của tôi\YD_G09_MIDTERM1_HANOI_PRACTICE_EXAM_01_v0_1_DRAFT.json`
-   - Tệp tích hợp trong Webapp: `public/data/midterm1-hanoi-exam01-preview.json`
-   - Dung lượng: `117,176` bytes
-   - Mã băm SHA256: `25a9c543df43f8912176294ad4651390e8b4040aa89c281aeed2fa0a56291b99`.
-2. **Cấu trúc học liệu Batch 02A (`YD-G09-MIDTERM1-HANOI-PRACTICE-EXAM-01`):**
-   - **5 bài toán (`5 + 6 + 5 + 5 + 3 = 24` bước giải, thang điểm 10,0):**
-     - **Bài I (2,0 điểm · 5 bước):** Giải hệ phương trình bậc nhất hai ẩn (phương pháp thế & cộng đại số).
-     - **Bài II (2,0 điểm · 6 bước):** Phương trình tích, phương trình chứa ẩn ở mẫu & bất phương trình bậc nhất một ẩn.
-     - **Bài III (2,0 điểm · 5 bước):** Giải bài toán thực tế bằng cách lập hệ phương trình & bất phương trình.
-     - **Bài IV (3,5 điểm · 5 bước):** Tỉ số lượng giác góc nhọn, hệ thức cạnh–góc & tam giác đồng dạng trong tam giác vuông.
-     - **Bài V (0,5 điểm · 3 bước):** Câu phân loại Vận dụng cao — Bất đẳng thức $\frac{1}{a} + \frac{1}{b} \ge \frac{4}{a+b}$ và tìm giá trị nhỏ nhất.
-   - **13 nút kỹ năng (`knowledge_nodes`):** `CAND-G09-04`..`CAND-G09-07`, `C08`..`C15`, `S07`.
+### 2.4. Bảo toàn Tờ đề tự luận, Sơ đồ tư duy từng bài, Lời giải mẫu hoàn chỉnh & Chế độ Thi thử
+- **Tờ đề tự luận (`#exam-paper-panel`):** Xem toàn bộ 5 bài tự luận chuẩn 90 phút và chuyển nhanh tới từng bài.
+- **Sơ đồ tư duy từng bài (`#exercise-mindmap`):** Tóm tắt 3 nhánh (Giả thiết & Điều kiện đầu vào → Luồng bước giải tư duy → Chốt chặn bẫy lỗi) ngay trên bản đồ DAG.
+- **Thư viện 5 Nhóm Bẫy lỗi của mỗi bài (`#exercise-trap-library`):** Đầy đủ cả 5 nhóm lỗi (`COPYING_ERROR`, `SIGN_ERROR`, `ARITHMETIC_ERROR`, `METHOD_GAP`, `DIAGRAM_ERROR`) gắn với từng `step_id` của mỗi bài.
+- **Lời giải mẫu hoàn chỉnh (`#model-solution-panel`):** Trình bày đầy đủ phép biến đổi `before -> after`, lý do và đáp số chuẩn của tất cả các bước trong bài.
+- **Chế độ Thi thử (`#exam-mode-btn` / `#submit-exam-btn`):** Cho phép học sinh làm thử các bước trên toàn đề mà không lộ gợi ý/đáp án/lời giải mẫu giữa chừng; khi bấm **"Nộp bài thi thử & Chẩn đoán 5 nhóm lỗi"**, hệ thống chấm toàn đề, mở Lời giải mẫu và kích hoạt Cây quyết định 5 nhóm lỗi.
 
 ---
 
-## 4. Cơ sở Dữ liệu D1 Staging Thật & Kết quả Kiểm thử Chrome Thật trên `workers.dev`
+## 3. Kết quả Kiểm thử Đơn vị & Kiểm thử Trình duyệt Chrome Thật trên `workers.dev`
 
-- **Cloudflare D1 Staging:** `yourdream-staging-d1` (`database_id: 4f22972a-ffe0-47d2-aeab-2304b26359d0`).
-- **Kết quả chạy `node tests/verify-staging-browser.cjs` bằng Google Chrome thật trên `https://yourdream-webapp-staging.tothanhnam.workers.dev` (Version ID `27d3a8fe-e9e6-4c22-ba42-1049693a7207`):**
-
-| Hạng mục kiểm thử trên `workers.dev` | Kết quả | Chi tiết xác minh thực tế |
-| :--- | :---: | :--- |
-| **Worker Routes & Real D1 API** | **PASS** | `GET /` (`200`), `GET /graph02-preview.html` (`200`), `GET /api/me/identity` (`401 {"error":"AUTH_REQUIRED"}`), `GET /api/me/progress` (`401`). |
-| **Nạp mặc định Batch 02A (`midterm1-hanoi-01`)** | **PASS** | Mở `/graph02-preview.html` (không query) tự động chọn `midterm1-hanoi-01` (`options[0]`), đồng bộ URL thành `?profile=midterm1-hanoi-01`, nạp đúng 5 bài / 24 bước (`5 + 6 + 5 + 5 + 3 = 24`), hiển thị `DRAFT · ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN (5 bài / 24 bước)`. |
-| **Tùy chọn `midterm1-fixture` (26 bước) & Chuyển đổi + Reload (`F5`)** | **PASS** | Mở `?profile=midterm1-fixture` hiển thị `DRAFT · TEST FIXTURE (5 bài / 26 bước)` (`0 / 26 bước`). Khi đổi `#profile-select` sang `midterm1-hanoi-01`, URL cập nhật thành `?profile=midterm1-hanoi-01`, hiển thị `5 bài / 24 bước`, và sau khi `Page.reload` (`F5`) vẫn giữ nguyên `midterm1-hanoi-01` (`5 bài / 24 bước`). |
-| **Theo dõi 13 Kỹ năng Batch 01 (`NOT_STARTED`)** | **PASS** | Hiển thị `Theo dõi 13 kỹ năng trên 5 bài (24 bước) [policy_version: PENDING]`, toàn bộ 13 kỹ năng khởi đầu ở trạng thái `Chưa học [NOT_STARTED]`. |
-| **Chọn sai & Phản hồi (`IN_PRACTICE_NEEDS_RETRY`)** | **PASS** | Chọn phương án sai ở Bài I Bước 1 (`G01:S01`) → phản hồi `.incorrect`, kỹ năng `CAND-G09-05` chuyển sang `Đang luyện · Cần sửa lỗi [IN_PRACTICE_NEEDS_RETRY]`. |
-| **Mở 3 gợi ý Socratic (`HINT_OPENED`)** | **PASS** | Bấm `#hint-button` 3 lần mở đủ 3 gợi ý tuần tự của `G01:S01`. |
-| **Sửa đúng sau gợi ý (`IN_PRACTICE_WITH_SUPPORT`)** | **PASS** | Chọn `sub_correct` ở `G01:S01` → phản hồi `.correct`, kỹ năng `CAND-G09-05` chuyển sang `Đang luyện · Đúng khi có gợi ý / từng sai [IN_PRACTICE_WITH_SUPPORT]`. |
-| **Nhập phân số tương đương & `INSUFFICIENT_EVIDENCE`** | **PASS** | Nhập `6/2` cho đáp án `3` ở `G01:S02` → `.correct`, tiến độ `2 / 24`, kỹ năng `CAND-G09-04` (đạt `1/3` bước) chuyển sang `Chưa đủ bằng chứng [INSUFFICIENT_EVIDENCE]`. |
-| **Giải sạch toàn bộ bước của kỹ năng (`CRITERIA_MET_IN_SESSION`)** | **PASS** | Chuyển sang Bài II (`G02`) giải sạch Bước 1 (`prod_correct`) và Bước 2 (`9/2`) ngay lần đầu không gợi ý → kỹ năng `C08` đạt `2/2` bước sạch, chuyển sang `Đã đạt tiêu chí trong phiên (tự giải sạch) [CRITERIA_MET_IN_SESSION]`, tiến độ `4 / 24`. |
-| **Làm lại bài (`ITEM_RESET`)** | **PASS** | Bấm `#reset-item` ở Bài II → tiến độ toàn đề quay về `2 / 24` (xóa riêng Bài II, bảo toàn 2 bước đã làm ở Bài I). |
-| **Browser Runtime Errors** | **PASS** | `0` lỗi console/exception trên trình duyệt. |
-| **Unit Test Suite (`tests/midterm1-phase-a.test.cjs`)** | **PASS** | `12/12` subtests PASS. |
-
----
-
-## 5. Phương án Rollback An toàn
-
-1. **Production (`bandohoctap`, `yourdream.vn`, `bandohoctap.yourdream.vn`):** Không bị tác động (0 thay đổi).
-2. **Staging Worker (`yourdream-webapp-staging`):**
-   - Rollback phiên bản Worker: `npx wrangler rollback --config wrangler.staging.json`
-   - Hoặc gỡ bỏ Worker staging: `npx wrangler delete --config wrangler.staging.json`
-3. **Git (`D:\YOURDREAM.VN`):**
-   - Nhánh làm việc `feat/webapp-midterm1-phase-a` tách biệt với `main`.
+- **Unit Test Suite (`node --test tests/midterm1-phase-a.test.cjs`):** **`15/15` subtests PASS** (`M1-01`..`M1-11`).
+- **Real Google Chrome Verification (`node tests/verify-staging-browser.cjs` trên `https://yourdream-webapp-staging.tothanhnam.workers.dev` — Version ID `5d16a361-e2f4-4eb6-8bbe-eb512a038845`):**
+  - Default profile `midterm1-hanoi-01` (5 bài / 24 bước), chuyển đổi `?profile=midterm1-fixture` ↔ `midterm1-hanoi-01` và giữ nguyên sau `F5` reload: **PASS**.
+  - Phân loại lỗi `SIGN_ERROR` trên `G01:S01`, hiển thị thẻ nhiệm vụ sửa lỗi duy nhất (`#active-remediation-card`), hiển thị đủ 5 nhóm lỗi trong `#trap-library-list`, 3 nhánh Sơ đồ tư duy (`#mindmap-branches`), 5 bước Lời giải mẫu (`#model-solution-list`), và 4 chốt Hình học trên Bài IV (`#geometry-precheck`): **PASS**.
+  - Browser runtime errors: **`0` lỗi**.

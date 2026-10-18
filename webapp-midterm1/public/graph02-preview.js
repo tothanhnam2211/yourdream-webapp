@@ -1,19 +1,36 @@
 (function(){'use strict';
-const $=id=>document.getElementById(id),E=window.RadicalEngine,L=window.RadicalProfiles,J=window.RadicalPreviewJournal,M=window.YourdreamMath;
+const $=id=>document.getElementById(id),E=window.RadicalEngine,L=window.RadicalProfiles,J=window.RadicalPreviewJournal,M=window.YourdreamMath,S=window.YourdreamErrorScaffolding;
 const validKey=k=>typeof k==='string'&&/^[A-Za-z0-9:._-]{1,100}$/.test(k)&&!['__proto__','constructor','prototype'].includes(k);
-let profiles=[],data=null,by=Object.create(null),state=null,journal=null,key='',complete=new Set(),mode=window.innerWidth<800?'list':'map',generation=0,storageOK=true,activeProfileId='';
+let profiles=[],data=null,by=Object.create(null),state=null,journal=null,key='',complete=new Set(),mode=window.innerWidth<800?'list':'map',examMode='practice',examSubmitted=false,examPaperOpen=false,generation=0,storageOK=true,activeProfileId='';
 const safe=s=>M.escape(s),math=s=>M.mixed(s,window.katex),graph=()=>data?data.graphs.find(g=>g.item_id===state?.itemId):null,step=()=>state?by[state.stepId]:null;
-const ready=s=>!!s&&s.requires.every(k=>complete.has(k)),status=s=>complete.has(s.step_id)?'Đã làm đúng':ready(s)?'Sẵn sàng':'Cần bước trước';
-function showStorage(){ $('storage-status').textContent=storageOK?'Đã lưu thử trên trình duyệt này · chưa lưu máy chủ.':'Chưa lưu được trên trình duyệt; trạng thái chỉ giữ khi trang còn mở.'; }
+const ready=s=>!!s&&(examMode==='exam'&&!examSubmitted?true:s.requires.every(k=>complete.has(k)));
+function stepErrorMap(){return data&&journal&&S&&typeof S.diagnoseStudentErrors==='function'&&(examMode!=='exam'||examSubmitted)?S.diagnoseStudentErrors(data,journal,complete,state?.itemId).by_step_id:Object.create(null);}
+function status(s,errMap){
+ if(examMode==='exam'&&!examSubmitted)return Object.hasOwn(state?.answers||{},s.step_id)?'Đã ghi bài làm':'Chưa trả lời';
+ if(complete.has(s.step_id))return 'Đã làm đúng';
+ const err=errMap&&errMap[s.step_id];
+ if(err)return `Cần sửa [${err.error_type}]`;
+ return ready(s)?'Sẵn sàng':'Cần bước trước';
+}
+function showStorage(){ if($('storage-status'))$('storage-status').textContent=storageOK?'Đã lưu thử trên trình duyệt này · chưa lưu máy chủ.':'Chưa lưu được trên trình duyệt; trạng thái chỉ giữ khi trang còn mở.'; }
 function disableWorkspace(){
  data=null;by=Object.create(null);state=null;journal=null;key='';complete=new Set();
- $('workspace').hidden=true;$('total-progress').textContent='';$('exercise-list').innerHTML='';$('answer-fields').innerHTML='';
- $('check-answer').disabled=true;$('hint-button').disabled=true;$('feedback').hidden=true;
+ if($('workspace'))$('workspace').hidden=true;
+ if($('exam-paper-panel'))$('exam-paper-panel').hidden=true;
+ if($('total-progress'))$('total-progress').textContent='';
+ if($('exercise-list'))$('exercise-list').innerHTML='';
+ if($('answer-fields'))$('answer-fields').innerHTML='';
+ if($('check-answer'))$('check-answer').disabled=true;
+ if($('hint-button'))$('hint-button').disabled=true;
+ if($('feedback'))$('feedback').hidden=true;
  if($('subquestion-tabs')){$('subquestion-tabs').hidden=true;$('subquestion-tabs').innerHTML='';}
+ if($('geometry-precheck'))$('geometry-precheck').hidden=true;
  if($('diagnosis-summary'))$('diagnosis-summary').textContent='';
  if($('diagnosis-list'))$('diagnosis-list').innerHTML='';
+ if($('active-remediation-card'))$('active-remediation-card').innerHTML='';
+ if($('trap-library-list'))$('trap-library-list').innerHTML='';
 }
-function save(){if(!data||!state||!journal)return;try{localStorage.setItem(key,JSON.stringify({...state,version:data.version,content_sha256:data.content_sha256,journal}));storageOK=true;}catch{storageOK=false;}showStorage();}
+function save(){if(!data||!state||!journal)return;try{localStorage.setItem(key,JSON.stringify({...state,geometryChecks:state.geometryChecks||{},version:data.version,content_sha256:data.content_sha256,journal}));storageOK=true;}catch{storageOK=false;}showStorage();}
 function record(type,id,details={}){if(!data||!journal||!state)return;J.append(data,journal,type,state.itemId,id,details);}
 function subLabel(k){return k==='main'?'Toàn bài':k==='shared_domain'?'ĐKXĐ chung':`Ý ${k}`;}
 function drawSubquestions(g){
@@ -32,6 +49,90 @@ function drawSubquestions(g){
   const target=ids.find(k=>!complete.has(k)&&ready(by[k]))||ids[0];
   selectStep(target);
  });
+}
+function drawExamPaper(){
+ const panel=$('exam-paper-panel'),listEl=$('exam-paper-list'),noteEl=$('exam-mode-status'),subBtn=$('submit-exam-btn'),pBtn=$('practice-mode-btn'),eBtn=$('exam-mode-btn'),tBtn=$('toggle-exam-paper');
+ if(pBtn)pBtn.setAttribute('aria-pressed',String(examMode==='practice'));
+ if(eBtn)eBtn.setAttribute('aria-pressed',String(examMode==='exam'));
+ const showPanel=examPaperOpen||(examMode==='exam'&&!examSubmitted);
+ if(tBtn)tBtn.setAttribute('aria-expanded',String(showPanel));
+ if(!panel||!listEl||!data)return;
+ panel.hidden=!showPanel;
+ if(subBtn)subBtn.hidden=!(examMode==='exam'&&!examSubmitted);
+ if(noteEl){
+  const answeredCount=data.steps.filter(s=>Object.hasOwn(state?.answers||{},s.step_id)).length;
+  noteEl.textContent=examMode==='exam'?(examSubmitted?`Đã nộp bài thi thử: đạt ${complete.size}/${data.steps.length} bước. Cây quyết định 5 nhóm lỗi và Lời giải mẫu đã mở bên dưới.`:`Đang ở Chế độ Thi thử (${answeredCount}/${data.steps.length} bước đã ghi bài làm): Gợi ý và Lời giải mẫu được khóa cho tới khi bấm "Nộp bài thi thử & Chẩn đoán 5 nhóm lỗi".`):'Tờ đề tự luận giúp học sinh đọc toàn bộ cấu trúc 5 bài trước khi giải chi tiết từng bước.';
+ }
+ listEl.innerHTML=data.graphs.map((g,i)=>{
+  const doneCnt=g.step_ids.filter(k=>complete.has(k)).length;
+  return `<div class="exam-paper-item"><strong>Bài ${i+1} (${g.step_ids.length} bước · Đã hoàn thành ${doneCnt}/${g.step_ids.length})</strong><div class="math-text">${math(g.prompt)}</div><small>Điều kiện / Xuất xứ: ${math(g.subtitle)}</small><div class="skill-actions" style="margin-top:8px"><button type="button" data-paper-item="${safe(g.item_id)}">Mở giải Bài ${i+1}</button></div></div>`;
+ }).join('');
+ listEl.querySelectorAll('[data-paper-item]').forEach(b=>b.onclick=()=>{selectItem(b.dataset.paperItem);if($('workspace'))$('workspace').focus?.();});
+}
+function drawGeometryPrecheck(g){
+ const box=$('geometry-precheck'),titleEl=$('geometry-precheck-title'),noteEl=$('geometry-precheck-notice'),listEl=$('geometry-precheck-list'),statEl=$('geometry-precheck-status');
+ if(!box||!listEl||!S||typeof S.getGeometryPrecheck!=='function')return;
+ const pre=S.getGeometryPrecheck(g);
+ if(!pre){box.hidden=true;listEl.innerHTML='';return;}
+ box.hidden=false;
+ if(!state.geometryChecks)state.geometryChecks=Object.create(null);
+ if(titleEl)titleEl.textContent=pre.title;
+ if(noteEl)noteEl.textContent=pre.notice;
+ const checkedCount=pre.checks.filter(c=>state.geometryChecks[c.check_id]===true).length;
+ listEl.innerHTML=pre.checks.map(c=>`<label class="precheck-item"><input type="checkbox" data-geo-check="${safe(c.check_id)}" ${state.geometryChecks[c.check_id]===true?'checked':''}><span>${safe(c.label)}</span></label>`).join('');
+ if(statEl)statEl.textContent=checkedCount===pre.checks.length?`Đã đối chiếu đủ ${checkedCount}/${pre.checks.length} chốt Giả thiết – Ký hiệu – Hình vẽ (Phòng ngừa DIAGRAM_ERROR).`:`Đã đối chiếu ${checkedCount}/${pre.checks.length} chốt hình học trước khi giải — hãy hoàn tất đủ ${pre.checks.length} chốt để tránh lỗi DIAGRAM_ERROR.`;
+ listEl.querySelectorAll('[data-geo-check]').forEach(chk=>chk.onchange=()=>{
+  const cid=chk.dataset.geoCheck;if(!validKey(cid))return;
+  state.geometryChecks[cid]=!!chk.checked;save();drawGeometryPrecheck(g);
+ });
+}
+function drawStudyResources(g){
+ if(!S||typeof S.buildExerciseStudyGuide!=='function')return;
+ const guide=S.buildExerciseStudyGuide(data,g.item_id);if(!guide)return;
+ const mmEl=$('mindmap-branches');
+ if(mmEl){
+  mmEl.innerHTML=guide.mindmap_branches.map(b=>`<div class="mindmap-card"><h4>${safe(b.title)}</h4><p>${math(b.summary)}</p><p><strong>Chốt phòng lỗi:</strong> ${safe(b.key_guard)}</p></div>`).join('');
+ }
+ const msNote=$('model-solution-note'),msList=$('model-solution-list');
+ if(msNote&&msList){
+  if(examMode==='exam'&&!examSubmitted){
+   msNote.textContent='Đang trong Chế độ Thi thử: Lời giải mẫu hoàn chỉnh được khóa cho đến khi em nộp bài thi thử.';
+   msList.innerHTML='';
+  }else{
+   msNote.textContent=`Lời giải mẫu hoàn chỉnh gồm ${guide.model_solution_steps.length} bước trình bày chuẩn tự luận (đối chiếu sau khi tự làm):`;
+   msList.innerHTML=guide.model_solution_steps.map(st=>`<div class="model-solution-item"><strong>Bước ${st.step_number}: ${safe(st.title)}</strong><div class="math-text" style="margin:6px 0">${M.formula(st.before,window.katex)} <span>→</span> ${M.formula(st.after,window.katex)}</div><p style="margin:4px 0;font-size:13.5px"><em>Lập luận trình bày:</em> ${math(st.justification)}</p><small><strong>Kết quả bước ${st.step_number}:</strong> ${math(String(st.expected_display))}</small></div>`).join('');
+  }
+ }
+}
+function drawErrorScaffolding(g){
+ const noticeEl=$('error-boundary-notice'),sumEl=$('error-tree-summary'),cardEl=$('active-remediation-card'),trapEl=$('trap-library-list');
+ if(!S||!data||!journal)return;
+ if(noticeEl)noticeEl.textContent=S.VERIFICATION_BOUNDARY_NOTICE;
+ const errDiag=S.diagnoseStudentErrors(data,journal,complete,g.item_id);
+ const traps=S.getExerciseTrapLibrary(data,g.item_id);
+ if(examMode==='exam'&&!examSubmitted){
+  if(sumEl)sumEl.textContent='Chế độ Thi thử đang diễn ra: Cây quyết định giàn giáo sẽ phân tích lỗi và giao từng nhiệm vụ sửa ngay sau khi em bấm "Nộp bài thi thử".';
+  if(cardEl)cardEl.innerHTML='';
+ }else if(sumEl&&cardEl){
+  const t=errDiag.active_remediation_task;
+  sumEl.textContent=t?`Phát hiện ${errDiag.total_active_errors} lỗi có bằng chứng trong phiên (${errDiag.queued_errors_count} lỗi xếp hàng chờ lượt sau) · Cây quyết định chỉ giao 1 nhiệm vụ sửa ưu tiên sớm nhất ở lượt này:`:`Hiện có 0 lỗi tồn đọng cần sửa trên các bước đã kiểm tra. Nếu gặp vướng mắc, hãy xem Thư viện 5 nhóm bẫy lỗi bên dưới.`;
+  if(t){
+   const hintsHtml=(t.hints||[]).map(h=>`<li>${math(h)}</li>`).join('');
+   cardEl.innerHTML=`<div class="remediation-card" data-active-error-type="${safe(t.error_type)}" data-active-error-step="${safe(t.step_id)}"><div class="remediation-meta"><span class="tag-badge error-tag">${safe(t.label_vi)}</span><span class="tag-badge layer-tag">${safe(t.origin_label_vi)}</span><span class="tag-badge">Ưu tiên bước sớm nhất: Bài ${t.exercise_index} · Bước ${t.step_order}</span></div><h4>Nhiệm vụ sửa lỗi lượt này: ${safe(t.trap_title)} (${safe(t.step_title)})</h4><p><strong>1. Câu hỏi phát hiện lỗi:</strong> ${math(t.detection_question)}</p><div><strong>2. Gợi ý giàn giáo 3 mức:</strong><ol>${hintsHtml}</ol></div><p><strong>3. Hoạt động tự sửa:</strong> ${math(t.self_correction_activity)}</p><p><strong>4. Lời sửa mẫu:</strong> ${math(t.model_correction)}</p><p><strong>5. Quy tắc tránh lặp lại trong bài thi tiếp theo:</strong> ${safe(t.exam_prevention_rule)}</p><div class="skill-actions"><button type="button" data-fix-item="${safe(t.item_id)}" data-fix-step="${safe(t.step_id)}">Chuyển tới bước này để tự sửa ngay</button></div></div>`;
+   cardEl.querySelectorAll('[data-fix-step]').forEach(b=>b.onclick=()=>{retrySkillStep(b.dataset.fixItem,b.dataset.fixStep,false);});
+  }else{
+   cardEl.innerHTML=`<div class="remediation-card clean"><strong>Trạng thái giàn giáo:</strong> Chưa phát hiện lỗi tồn đọng ở lượt hiện tại. Hãy tiếp tục giải các bước tiếp theo hoặc đối chiếu 5 nhóm bẫy lỗi của bài.</div>`;
+  }
+ }
+ if(trapEl){
+  const activeTypes=new Set(errDiag.detected_errors.filter(e=>e.item_id===g.item_id).map(e=>e.error_type));
+  trapEl.innerHTML=traps.map(tr=>{
+   const isHit=activeTypes.has(tr.error_type);
+   const hintsHtml=(tr.hints||[]).map(h=>`<li>${math(h)}</li>`).join('');
+   return `<div class="trap-card ${isHit?'active-trap':''}" data-trap-type="${safe(tr.error_type)}"><div class="remediation-meta"><span class="tag-badge error-tag">${safe(tr.label_vi)}</span><span class="tag-badge layer-tag">${safe(tr.origin_label_vi)}</span>${isHit?'<span class="tag-badge">Đang gặp ở bài này</span>':''}</div><h4>${safe(tr.trap_title)}</h4><p><small>Liên kết Step Graph: <code>${safe(tr.linked_step_id||'')}</code> — ${safe(tr.linked_step_title||'')}</small></p><p><strong>Câu hỏi phát hiện:</strong> ${math(tr.detection_question)}</p><details><summary>Xem gợi ý mức 1–3, hoạt động tự sửa &amp; lời sửa mẫu</summary><ol>${hintsHtml}</ol><p><strong>Hoạt động tự sửa:</strong> ${math(tr.self_correction_activity)}</p><p><strong>Lời sửa mẫu:</strong> ${math(tr.model_correction)}</p><p><strong>Phòng tránh ở bài thi tiếp theo:</strong> ${safe(tr.exam_prevention_rule)}</p></details>${tr.linked_step_id?`<div class="skill-actions" style="margin-top:8px"><button type="button" data-trap-step="${safe(tr.linked_step_id)}">Mở bước liên kết trên Step Graph</button></div>`:''}</div>`;
+  }).join('');
+  trapEl.querySelectorAll('[data-trap-step]').forEach(b=>b.onclick=()=>selectStep(b.dataset.trapStep));
+ }
 }
 function drawDiagnosis(){
  const sumEl=$('diagnosis-summary'),listEl=$('diagnosis-list');if(!sumEl||!listEl||!data||!journal||typeof J.diagnoseSkills!=='function')return;
@@ -73,17 +174,17 @@ function draw(){
  $('exercise-list').innerHTML=data.graphs.map((g,i)=>`<button type="button" data-item="${safe(g.item_id)}" aria-current="${g.item_id===state.itemId}"><strong>Bài ${i+1}. ${safe(g.title)}</strong><small>${g.step_ids.filter(k=>complete.has(k)).length}/${g.step_ids.length} bước${L.complete(g,complete)?' · Hoàn thành':''}</small></button>`).join('');
  $('exercise-list').querySelectorAll('[data-item]').forEach(b=>b.onclick=()=>selectItem(b.dataset.item));
  const g=graph();$('exercise-title').textContent=`Bài ${data.graphs.indexOf(g)+1} / ${data.graphs.length}${isFixture?' (TEST FIXTURE)':isBatch02A?' (Đề luyện tập tự biên soạn · DRAFT)':''}`;$('exercise-prompt').innerHTML=math(g.prompt);$('exercise-domain').innerHTML=math(g.subtitle);
- drawSubquestions(g);drawMap();drawStep();drawDiagnosis();
+ drawExamPaper();drawSubquestions(g);drawGeometryPrecheck(g);drawStudyResources(g);drawMap();drawStep();drawErrorScaffolding(g);drawDiagnosis();
 }
 function selectItem(id){if(!data||!validKey(id))return;const g=data.graphs.find(g=>g.item_id===id);if(!g)return;state.itemId=id;state.stepId=g.step_ids.find(k=>!complete.has(k)&&ready(by[k]))||g.step_ids[0];save();draw();}
-function selectStep(id){if(!data||!state||!validKey(id)||!Object.hasOwn(by,id)||by[id].item_id!==state.itemId)return;state.stepId=id;save();drawSubquestions(graph());drawMap();drawStep();$('practice').focus();}
+function selectStep(id){if(!data||!state||!validKey(id)||!Object.hasOwn(by,id)||by[id].item_id!==state.itemId)return;state.stepId=id;save();const g=graph();drawSubquestions(g);drawMap();drawStep();drawErrorScaffolding(g);$('practice').focus();}
 function drawMap(){
- const g=graph(),view=L.layout(g,by),p=view.points;
+ const g=graph(),view=L.layout(g,by),p=view.points,errMap=stepErrorMap();
  $('map-mode').setAttribute('aria-pressed',String(mode==='map'));$('list-mode').setAttribute('aria-pressed',String(mode==='list'));$('graph-scroll').hidden=mode!=='map';$('step-list').hidden=mode!=='list';
  $('step-map').setAttribute('viewBox',`0 0 ${view.width} ${view.height}`);$('step-map').setAttribute('width',String(view.width));$('step-map').setAttribute('height',String(view.height));
  const edges=g.edges.map(e=>{const a=p[e.from],b=p[e.to],sx=a[0]+123,ex=b[0]-123,mid=(sx+ex)/2;return `<path class="edge" d="M${sx} ${a[1]} C${mid} ${a[1]},${mid} ${b[1]},${ex} ${b[1]}" marker-end="url(#preview-arrow)"/>`;}).join('');
- $('step-map').innerHTML='<defs><marker id="preview-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#98ae8d"/></marker></defs>'+edges+g.step_ids.map((id,i)=>{const s=by[id],xy=p[id],cls=`${complete.has(id)?'is-correct ':''}${!ready(s)?'is-locked ':''}${state.stepId===id?'is-selected':''}`;return `<g class="node ${cls}" transform="translate(${xy[0]},${xy[1]})" role="button" tabindex="0" data-step="${safe(id)}" aria-pressed="${state.stepId===id}" aria-label="${safe(s.title)}. ${safe(status(s))}"><title>${safe(s.title)}</title><rect x="-120" y="-32" width="240" height="64" rx="10"/><text x="-107" y="-2">${i+1}. ${safe(s.title.length>27?s.title.slice(0,25)+'…':s.title)}</text><text class="node-state" x="-107" y="18">${status(s)}</text></g>`;}).join('');
- $('step-list').innerHTML=g.step_ids.map((id,i)=>`<button type="button" data-step="${safe(id)}" aria-pressed="${id===state.stepId}"><b>${i+1}</b><span>${safe(by[id].title)}</span><small>${status(by[id])}</small></button>`).join('');
+ $('step-map').innerHTML='<defs><marker id="preview-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#98ae8d"/></marker></defs>'+edges+g.step_ids.map((id,i)=>{const s=by[id],xy=p[id],stTxt=status(s,errMap),hasErr=!!errMap[id],cls=`${complete.has(id)&&(examMode!=='exam'||examSubmitted)?'is-correct ':''}${hasErr?'has-error ':''}${!ready(s)?'is-locked ':''}${state.stepId===id?'is-selected':''}`;return `<g class="node ${cls}" transform="translate(${xy[0]},${xy[1]})" role="button" tabindex="0" data-step="${safe(id)}" aria-pressed="${state.stepId===id}" aria-label="${safe(s.title)}. ${safe(stTxt)}"><title>${safe(s.title)}</title><rect x="-120" y="-32" width="240" height="64" rx="10"/><text x="-107" y="-2">${i+1}. ${safe(s.title.length>27?s.title.slice(0,25)+'…':s.title)}</text><text class="node-state" x="-107" y="18">${safe(stTxt)}</text></g>`;}).join('');
+ $('step-list').innerHTML=g.step_ids.map((id,i)=>`<button type="button" data-step="${safe(id)}" aria-pressed="${id===state.stepId}"><b>${i+1}</b><span>${safe(by[id].title)}</span><small>${safe(status(by[id],errMap))}</small></button>`).join('');
  for(const box of [$('step-map'),$('step-list')])box.querySelectorAll('[data-step]').forEach(b=>{b.onclick=()=>selectStep(b.dataset.step);b.onkeydown=e=>{if(b.tagName.toLowerCase()==='g'&&(e.key==='Enter'||e.key===' ')){e.preventDefault();selectStep(b.dataset.step);}};});
 }
 function field(name,label,value=''){return `<label>${safe(label)}<input type="text" name="${name}" maxlength="180" autocomplete="off" value="${safe(value)}"></label>`;}
@@ -95,15 +196,39 @@ function fields(s){
  return (a.answer_type==='domain_expression'?`<label>Biểu thức<select name="expression"><option value="">Chọn kết quả</option>${Object.entries(a.expression_choices||{sqrt_x_plus_1:'√x + 1',sqrt_x_minus_1:'√x − 1'}).map(([k,v])=>`<option value="${safe(k)}" ${old?.expression===k?'selected':''}>${safe(v)}</option>`).join('')}</select></label>`:'')+field('lower','Cận dưới',v.lower??'')+`<label><input type="checkbox" name="inclusive" ${v.lower_inclusive===true?'checked':''}>Lấy cận dưới</label>`+field('exclusions','Giá trị loại trừ (ngăn bởi ;)',(v.exclusions||[]).join(';'));
 }
 function read(){const s=step();if(!s)return null;const a=s.interaction,f=new FormData($('answer-form')),str=k=>String(f.get(k)||'').trim();if(a.answer_type==='rational')return str('value');if(a.answer_type==='choice')return f.get('choice');if(['linear','quadratic_pair'].includes(a.answer_type)){const x={constant:str('constant'),coefficient:str('coefficient')};if(a.answer_type==='quadratic_pair')x.radicand=3;return x;}const x={variable:'x',lower:str('lower'),lower_inclusive:f.get('inclusive')==='on',exclusions:str('exclusions').split(/[;,]/).map(s=>s.trim()).filter(Boolean)};if(a.answer_type==='domain_expression')x.expression=str('expression');return x;}
-function feedback(r){const el=$('feedback');el.hidden=!r||r.status==='LOCKED';if(el.hidden)return;el.className=r.status==='CORRECT'?'correct':r.status==='TRY_AGAIN'?'incorrect':'review';el.innerHTML=math(r.feedback||'Chưa kiểm tra được cách viết này.');}
+function feedback(r){
+ const el=$('feedback');if(!el)return;
+ if(examMode==='exam'&&!examSubmitted){
+  const s=step();
+  if(s&&Object.hasOwn(state?.answers||{},s.step_id)){el.hidden=false;el.className='review';el.innerHTML='Đã ghi nhận câu trả lời cho bước này trong Chế độ Thi thử. Bấm <strong>Nộp bài thi thử &amp; Chẩn đoán 5 nhóm lỗi</strong> khi hoàn thành.';}
+  else el.hidden=true;
+  return;
+ }
+ el.hidden=!r||r.status==='LOCKED';if(el.hidden)return;
+ el.className=r.status==='CORRECT'?'correct':r.status==='TRY_AGAIN'?'incorrect':'review';
+ let html=math(r.feedback||'Chưa kiểm tra được cách viết này.');
+ if(r.status!=='CORRECT'&&S&&typeof S.classifyCodeOrHeuristic==='function'){
+  const s=step(),rawAns=s&&Object.hasOwn(state?.answers||{},s.step_id)?JSON.stringify(state.answers[s.step_id]):null;
+  const info=S.classifyCodeOrHeuristic(r.diagnosis_code||null,s,rawAns,r.status);
+  if(info)html+=`<div class="feedback-error-link"><strong>Phân loại 5 nhóm lỗi cốt lõi:</strong> <code>${safe(info.error_type)}</code> (${safe(info.origin_label_vi)}) — <em>Câu hỏi tự phát hiện:</em> ${math(info.detection_question)}</div>`;
+ }
+ el.innerHTML=html;
+}
 function drawStep(){
- const s=step(),g=graph();if(!s||!g)return;const can=ready(s),count=state.hints[s.step_id]||0;
- $('step-title').textContent=s.title;$('step-state').textContent=status(s);$('step-question').innerHTML=math(s.interaction.prompt);$('locked-note').textContent=can?'':'Cần làm đúng: '+s.requires.filter(k=>!complete.has(k)).map(k=>by[k].title).join(' · ');
+ const s=step(),g=graph();if(!s||!g)return;const can=ready(s),count=state.hints[s.step_id]||0,errMap=stepErrorMap();
+ const inUnsubmittedExam=examMode==='exam'&&!examSubmitted;
+ $('step-title').textContent=s.title;$('step-state').textContent=status(s,errMap);$('step-question').innerHTML=math(s.interaction.prompt);
+ $('locked-note').textContent=can?'':'Cần làm đúng: '+s.requires.filter(k=>!complete.has(k)).map(k=>by[k].title).join(' · ');
  $('answer-fields').innerHTML=fields(s);$('answer-form').querySelectorAll('input,select,button').forEach(e=>e.disabled=!can);$('check-answer').disabled=!can;
- $('hint-button').disabled=!can||count>=3;$('hint-button').textContent=count>=3?'Đã mở đủ 3 gợi ý':`Mở gợi ý ${count+1} / 3`;$('hints').innerHTML=s.hints.slice(0,count).map(h=>`<li>${math(h.text)}</li>`).join('');
- $('explanation').hidden=!(complete.has(s.step_id)||count===3);$('explanation').open=complete.has(s.step_id);$('step-before').innerHTML=M.formula(s.before,window.katex);$('step-after').innerHTML=M.formula(s.after,window.katex);$('step-reason').innerHTML=math(s.justification);
+ $('check-answer').textContent=inUnsubmittedExam?'Ghi câu trả lời (Thi thử)':'Kiểm tra';
+ $('hint-button').disabled=!can||count>=3||inUnsubmittedExam;
+ $('hint-button').textContent=inUnsubmittedExam?'Gợi ý khóa khi Thi thử':count>=3?'Đã mở đủ 3 gợi ý':`Mở gợi ý ${count+1} / 3`;
+ $('hints').innerHTML=inUnsubmittedExam?'':s.hints.slice(0,count).map(h=>`<li>${math(h.text)}</li>`).join('');
+ $('explanation').hidden=inUnsubmittedExam||!(complete.has(s.step_id)||count===3);$('explanation').open=!inUnsubmittedExam&&complete.has(s.step_id);$('step-before').innerHTML=M.formula(s.before,window.katex);$('step-after').innerHTML=M.formula(s.after,window.katex);$('step-reason').innerHTML=math(s.justification);
  $('item-progress').textContent=L.complete(g,complete)?`Đã làm đúng ${g.step_ids.length}/${g.step_ids.length} bước. Hãy thử tự giải lại.`:`${g.step_ids.filter(k=>complete.has(k)).length}/${g.step_ids.length} bước đã làm đúng.`;
- const ev=J.evidence(journal,state.itemId,s.step_id);$('attempt-evidence').textContent=`${ev.attempts} lượt kiểm tra trong chu kỳ · ${ev.status}${ev.diagnosis_code?' ('+ev.diagnosis_code+')':''}. Đây là bằng chứng hiện có trong phiên, chưa phải đánh giá thành thạo tuyệt đối.`;
+ const ev=J.evidence(journal,state.itemId,s.step_id);
+ const errTag=errMap[s.step_id]?` · Nhóm lỗi: ${errMap[s.step_id].error_type}`:'';
+ $('attempt-evidence').textContent=`${ev.attempts} lượt kiểm tra trong chu kỳ · ${ev.status}${ev.diagnosis_code?' ('+ev.diagnosis_code+')':''}${errTag}. Đây là bằng chứng hiện có trong phiên, chưa phải đánh giá thành thạo tuyệt đối.`;
  feedback(Object.hasOwn(state.answers,s.step_id)?L.evaluate(E,data,s.step_id,state.answers[s.step_id],[...complete]):null);
 }
 async function load(id){
@@ -118,17 +243,37 @@ async function load(id){
   const next=L.load(JSON.parse(raw),selected.profile,E);if(gen!==generation)return;activeProfileId=id;if($('profile-select'))$('profile-select').value=id;
   data=next;data.content_sha256=digest;by=Object.assign(Object.create(null),Object.fromEntries(data.steps.map(s=>[s.step_id,s])));key='yd-eng-gap02-preview:'+id+':'+digest;
   let stored=null;try{const raw=localStorage.getItem(key);if(raw&&raw.length<1500000)stored=JSON.parse(raw);}catch{storageOK=false;}
-  if(stored?.content_sha256!==digest)stored=null;state=E.restore(data,stored);journal=J.restore(data,stored?.journal,crypto.randomUUID(),!!stored);complete=E.replay(data,state.answers);$('workspace').hidden=false;save();draw();
+  if(stored?.content_sha256!==digest)stored=null;state=E.restore(data,stored);state.geometryChecks=stored?.geometryChecks&&typeof stored.geometryChecks==='object'?stored.geometryChecks:Object.create(null);journal=J.restore(data,stored?.journal,crypto.randomUUID(),!!stored);complete=E.replay(data,state.answers);$('workspace').hidden=false;save();draw();
  }catch(e){if(gen!==generation)return;disableWorkspace();$('load-error').hidden=false;$('load-error').textContent=e.message||'Không mở được học liệu.';}
+}
+function setExamMode(nextMode){
+ if(nextMode!=='practice'&&nextMode!=='exam')return false;
+ examMode=nextMode;
+ if(examMode==='exam'){examSubmitted=false;examPaperOpen=true;}
+ draw();return true;
+}
+function submitMockExam(){
+ if(!data||!state)return null;
+ examSubmitted=true;complete=E.replay(data,state.answers);save();draw();
+ return S&&typeof S.diagnoseStudentErrors==='function'?S.diagnoseStudentErrors(data,journal,complete,state.itemId):null;
+}
+function toggleGeometryCheck(checkId,checked){
+ if(!state||!validKey(checkId))return false;
+ if(!state.geometryChecks)state.geometryChecks=Object.create(null);
+ state.geometryChecks[checkId]=!!checked;save();if(graph())drawGeometryPrecheck(graph());return true;
 }
 $('answer-form').onsubmit=e=>{e.preventDefault();if(!data||!state)return;const s=step();if(!ready(s))return;const answer=read();if(answer===null||answer===''){feedback({status:'TRY_AGAIN',feedback:'Hãy nhập hoặc chọn câu trả lời.'});return;}const result=L.evaluate(E,data,s.step_id,answer,[...complete]);state.answers[s.step_id]=answer;state.drafts[s.step_id]=answer;record('ANSWER_SUBMITTED',s.step_id,{answer,result_status:result.status,diagnosis_code:result.diagnosis_code||null,hint_level:state.hints[s.step_id]||0});complete=E.replay(data,state.answers);save();draw();feedback(result);};
 $('answer-form').oninput=()=>{if(!data||!state||!validKey(state.stepId))return;state.drafts[state.stepId]=read();save();};
-$('hint-button').onclick=()=>{if(!data||!state)return;const s=step();if(!ready(s)||(state.hints[s.step_id]||0)>=3)return;state.hints[s.step_id]=(state.hints[s.step_id]||0)+1;record('HINT_OPENED',s.step_id,{hint_level:state.hints[s.step_id]});save();drawStep();drawDiagnosis();};
-$('explanation').ontoggle=()=>{if(!data||!state)return;const s=step();if(!s||!$('explanation').open||$('explanation').hidden)return;const reset=journal.events.findLastIndex(e=>e.item_id===state.itemId&&e.type==='ITEM_RESET');if(!journal.events.slice(reset+1).some(e=>e.step_id===s.step_id&&e.type==='EXPLANATION_OPENED')){record('EXPLANATION_OPENED',s.step_id,{hint_level:state.hints[s.step_id]||0});save();drawDiagnosis();}};
+$('hint-button').onclick=()=>{if(!data||!state||(examMode==='exam'&&!examSubmitted))return;const s=step();if(!ready(s)||(state.hints[s.step_id]||0)>=3)return;state.hints[s.step_id]=(state.hints[s.step_id]||0)+1;record('HINT_OPENED',s.step_id,{hint_level:state.hints[s.step_id]});save();drawStep();if(graph())drawErrorScaffolding(graph());drawDiagnosis();};
+$('explanation').ontoggle=()=>{if(!data||!state||(examMode==='exam'&&!examSubmitted))return;const s=step();if(!s||!$('explanation').open||$('explanation').hidden)return;const reset=journal.events.findLastIndex(e=>e.item_id===state.itemId&&e.type==='ITEM_RESET');if(!journal.events.slice(reset+1).some(e=>e.step_id===s.step_id&&e.type==='EXPLANATION_OPENED')){record('EXPLANATION_OPENED',s.step_id,{hint_level:state.hints[s.step_id]||0});save();if(graph())drawErrorScaffolding(graph());drawDiagnosis();}};
 $('reset-item').onclick=()=>{if(!data||!state)return;const g=graph();if(!g)return;record('ITEM_RESET',null);for(const k of g.step_ids){delete state.answers[k];delete state.drafts[k];delete state.hints[k];}state.stepId=g.step_ids[0];complete=E.replay(data,state.answers);save();draw();};
 $('map-mode').onclick=()=>{if(!data||!state)return;mode='map';drawMap();};$('list-mode').onclick=()=>{if(!data||!state)return;mode='list';drawMap();};
 $('next-step').onclick=()=>{if(!data||!state)return;const g=graph();if(!g)return;const next=g.step_ids.find(k=>!complete.has(k)&&ready(by[k]));if(next)selectStep(next);else selectItem(data.graphs[(data.graphs.indexOf(g)+1)%data.graphs.length].item_id);};
 $('profile-select').onchange=()=>load($('profile-select').value);
+if($('practice-mode-btn'))$('practice-mode-btn').onclick=()=>setExamMode('practice');
+if($('exam-mode-btn'))$('exam-mode-btn').onclick=()=>setExamMode('exam');
+if($('toggle-exam-paper'))$('toggle-exam-paper').onclick=()=>{examPaperOpen=!examPaperOpen;drawExamPaper();};
+if($('submit-exam-btn'))$('submit-exam-btn').onclick=()=>submitMockExam();
 async function init(){try{const r=await fetch('data/practice-preview-profiles.json',{credentials:'same-origin',cache:'no-store'});if(!r.ok)throw Error('Không tải được danh mục.');const meta=await r.json();if(meta.status!=='DRAFT_LOCAL_PREVIEW_ONLY')throw Error('Danh mục không hợp lệ.');profiles=meta.profiles;const allowed=['data/radical-steps-v0.1.json','data/graph02-v1-preview.json','data/graph02-v2-preview.json','data/midterm1-fixture-preview.json','data/midterm1-hanoi-exam01-preview.json'];if(!Array.isArray(profiles)||!profiles.length||profiles.some(p=>!allowed.includes(p.path)||!['legacy-rad01','lesson-contract-v01'].includes(p.profile)||!/^[a-f0-9]{64}$/.test(p.sha256)))throw Error('Đường dẫn profile không được phép.');const requested=new URLSearchParams(location.search).get('profile'),defaultId=(validKey(meta.default_profile)&&profiles.some(p=>p.id===meta.default_profile))?meta.default_profile:(profiles.some(p=>p.id==='midterm1-hanoi-01')?'midterm1-hanoi-01':profiles[0].id),id=profiles.some(p=>p.id===requested)?requested:defaultId;$('profile-select').innerHTML=profiles.map(p=>`<option value="${safe(p.id)}"${p.id===id?' selected':''}>${safe(p.label)}</option>`).join('');$('profile-select').disabled=false;$('profile-select').value=id;await load(id);}catch(e){disableWorkspace();$('load-error').hidden=false;$('load-error').textContent=e.message;}}
-window.YourdreamPreview={ready:null,getData:()=>data,getState:()=>state,getJournal:()=>journal,getCompleted:()=>[...complete],getSkillDiagnosis:()=>data&&journal?J.diagnoseSkills(data,journal,complete):null,selectItem,selectStep,retrySkillStep,loadProfile:load};window.YourdreamPreview.ready=init();
+window.YourdreamPreview={ready:null,getData:()=>data,getState:()=>state,getJournal:()=>journal,getCompleted:()=>[...complete],getSkillDiagnosis:()=>data&&journal?J.diagnoseSkills(data,journal,complete):null,getErrorDiagnosis:()=>data&&journal&&S?S.diagnoseStudentErrors(data,journal,complete,state?.itemId):null,getExerciseTrapLibrary:itemId=>data&&S?S.getExerciseTrapLibrary(data,itemId||state?.itemId):[],getStudyGuide:itemId=>data&&S?S.buildExerciseStudyGuide(data,itemId||state?.itemId):null,setExamMode,submitMockExam,toggleGeometryCheck,selectItem,selectStep,retrySkillStep,loadProfile:load};window.YourdreamPreview.ready=init();
 })();

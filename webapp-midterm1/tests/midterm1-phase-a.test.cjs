@@ -24,6 +24,7 @@ function loadUmd(relPath, globalName) {
 const RadicalEngine = loadUmd('radicals-engine.js', 'RadicalEngine');
 const RadicalProfiles = loadUmd('radicals-profiles.js', 'RadicalProfiles');
 const RadicalPreviewJournal = loadUmd('radicals-preview-journal.js', 'RadicalPreviewJournal');
+const YourdreamErrorScaffolding = loadUmd('midterm1-error-scaffolding.js', 'YourdreamErrorScaffolding');
 const YourdreamMath = loadUmd('safe-math.js', 'YourdreamMath');
 const katex = loadUmd('vendor/katex/katex.min.js', 'katex');
 
@@ -336,6 +337,29 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
       'next-step',
       'reset-item',
       'profile-select',
+      'practice-mode-btn',
+      'exam-mode-btn',
+      'toggle-exam-paper',
+      'exam-paper-panel',
+      'submit-exam-btn',
+      'exam-mode-status',
+      'exam-paper-list',
+      'geometry-precheck',
+      'geometry-precheck-title',
+      'geometry-precheck-notice',
+      'geometry-precheck-list',
+      'geometry-precheck-status',
+      'exercise-mindmap',
+      'mindmap-branches',
+      'error-decision-tree',
+      'error-boundary-notice',
+      'error-tree-summary',
+      'active-remediation-card',
+      'exercise-trap-library',
+      'trap-library-list',
+      'model-solution-panel',
+      'model-solution-note',
+      'model-solution-list',
       'skill-diagnosis',
       'diagnosis-summary',
       'diagnosis-list',
@@ -358,6 +382,7 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
       RadicalEngine,
       RadicalProfiles,
       RadicalPreviewJournal,
+      YourdreamErrorScaffolding,
       YourdreamMath,
       katex,
       localStorage: {
@@ -480,5 +505,109 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     assert.equal(env.elements.get('workspace').hidden, true);
     assert.equal(env.elements.get('check-answer').disabled, true);
     assert.equal(env.elements.get('load-error').hidden, false);
+  });
+
+  await t.test('M1-09 Five Core Student Error Types (COPYING_ERROR, SIGN_ERROR, ARITHMETIC_ERROR, METHOD_GAP, DIAGRAM_ERROR) distinguish origin layers and populate every exercise trap library', () => {
+    const raw = readJson('data/midterm1-hanoi-exam01-preview.json');
+    const data = RadicalProfiles.load(raw, 'lesson-contract-v01', RadicalEngine);
+    assert.deepEqual(Array.from(YourdreamErrorScaffolding.ERROR_TYPE_IDS), [
+      'COPYING_ERROR',
+      'SIGN_ERROR',
+      'ARITHMETIC_ERROR',
+      'METHOD_GAP',
+      'DIAGRAM_ERROR',
+    ]);
+    assert.equal(YourdreamErrorScaffolding.CORE_ERROR_TYPES.COPYING_ERROR.origin_layer, 'INPUT_DATA_AND_SETUP');
+    assert.equal(YourdreamErrorScaffolding.CORE_ERROR_TYPES.DIAGRAM_ERROR.origin_layer, 'INPUT_DATA_AND_SETUP');
+    assert.equal(YourdreamErrorScaffolding.CORE_ERROR_TYPES.METHOD_GAP.origin_layer, 'REASONING_AND_METHOD');
+    assert.equal(YourdreamErrorScaffolding.CORE_ERROR_TYPES.SIGN_ERROR.origin_layer, 'REASONING_AND_METHOD');
+    assert.equal(YourdreamErrorScaffolding.CORE_ERROR_TYPES.ARITHMETIC_ERROR.origin_layer, 'COMPUTATION_AND_EVALUATION');
+
+    for (const g of data.graphs) {
+      const traps = YourdreamErrorScaffolding.getExerciseTrapLibrary(data, g.item_id);
+      assert.equal(traps.length, 5, `Exercise ${g.item_id} must have 5 core error traps`);
+      assert.deepEqual(
+        Array.from(traps, (tr) => tr.error_type),
+        ['COPYING_ERROR', 'SIGN_ERROR', 'ARITHMETIC_ERROR', 'METHOD_GAP', 'DIAGRAM_ERROR']
+      );
+      for (const tr of traps) {
+        assert.ok(tr.detection_question && tr.detection_question.length > 10);
+        assert.equal(tr.hints.length, 3);
+        assert.ok(tr.self_correction_activity && tr.self_correction_activity.length > 10);
+        assert.ok(tr.model_correction && tr.model_correction.length > 10);
+        assert.ok(tr.exam_prevention_rule && tr.exam_prevention_rule.length > 10);
+        assert.ok(g.step_ids.includes(tr.linked_step_id));
+      }
+    }
+  });
+
+  await t.test('M1-10 Scaffolding Decision Tree allows multiple concurrent errors but assigns ONLY 1 priority task per turn (earliest step with evidence first)', async () => {
+    const env = createMockDom(375);
+    const scriptCode = fs.readFileSync(path.join(PUBLIC_DIR, 'graph02-preview.js'), 'utf8');
+    vm.runInNewContext(scriptCode, env.windowObj);
+    await env.windowObj.YourdreamPreview.ready;
+
+    // 1. On Bài I Step 1 (G01:S01), submit "sub_no_paren" -> COPYING_ERROR at Step 1
+    env.setFormData({ choice: 'sub_no_paren' });
+    env.elements.get('answer-form').onsubmit({ preventDefault() {} });
+
+    // 2. Also on Bài I Step 3 (G01:S03, independent root step), submit "sys_std_const1" -> ARITHMETIC_ERROR at Step 3
+    env.windowObj.YourdreamPreview.selectStep('YD-G09-MID1-01:G01:S03');
+    env.setFormData({ choice: 'sys_std_const1' });
+    env.elements.get('answer-form').onsubmit({ preventDefault() {} });
+
+    const errDiag1 = env.windowObj.YourdreamPreview.getErrorDiagnosis();
+    assert.equal(errDiag1.total_active_errors, 2, 'Should record both concurrent errors');
+    assert.equal(errDiag1.queued_errors_count, 1, '1 error should be queued for the next turn');
+    assert.ok(errDiag1.active_remediation_task, 'Must emit a single active_remediation_task');
+    assert.equal(errDiag1.active_remediation_task.step_id, 'YD-G09-MID1-01:G01:S01', 'Earliest step (S01) must be prioritized first');
+    assert.equal(errDiag1.active_remediation_task.error_type, 'COPYING_ERROR');
+    assert.match(env.elements.get('active-remediation-card').innerHTML, /COPYING_ERROR/);
+
+    // 3. Student fixes Step 1 (G01:S01) with "sub_correct" -> active task advances to Step 3 (ARITHMETIC_ERROR)
+    env.windowObj.YourdreamPreview.selectStep('YD-G09-MID1-01:G01:S01');
+    env.setFormData({ choice: 'sub_correct' });
+    env.elements.get('answer-form').onsubmit({ preventDefault() {} });
+
+    const errDiag2 = env.windowObj.YourdreamPreview.getErrorDiagnosis();
+    assert.equal(errDiag2.total_active_errors, 1);
+    assert.equal(errDiag2.queued_errors_count, 0);
+    assert.equal(errDiag2.active_remediation_task.step_id, 'YD-G09-MID1-01:G01:S03');
+    assert.equal(errDiag2.active_remediation_task.error_type, 'ARITHMETIC_ERROR');
+  });
+
+  await t.test('M1-11 Geometry exercise (Bài IV) displays Pre-Solve Hypothesis/Symbol/Diagram Checklist, classifies DIAGRAM_ERROR, and supports Mock Exam Mode', async () => {
+    const env = createMockDom(375);
+    const scriptCode = fs.readFileSync(path.join(PUBLIC_DIR, 'graph02-preview.js'), 'utf8');
+    vm.runInNewContext(scriptCode, env.windowObj);
+    await env.windowObj.YourdreamPreview.ready;
+
+    // Switch to Bài IV (Geometry: YD-G09-MID1-01:G04)
+    env.windowObj.YourdreamPreview.selectItem('YD-G09-MID1-01:G04');
+    assert.equal(env.elements.get('geometry-precheck').hidden, false, 'Geometry pre-solve checklist must be visible on Bài IV');
+    assert.match(env.elements.get('geometry-precheck-status').textContent, /0\/4 chốt hình học/);
+
+    env.windowObj.YourdreamPreview.toggleGeometryCheck('GEO_CHK_01_RIGHT_ANGLES', true);
+    env.windowObj.YourdreamPreview.toggleGeometryCheck('GEO_CHK_02_LADDER_ANGLE', true);
+    env.windowObj.YourdreamPreview.toggleGeometryCheck('GEO_CHK_03_PROJECTIONS', true);
+    env.windowObj.YourdreamPreview.toggleGeometryCheck('GEO_CHK_04_SIMILARITY_ORDER', true);
+    assert.match(env.elements.get('geometry-precheck-status').textContent, /Đã đối chiếu đủ 4\/4 chốt/);
+
+    // Submit wrong choice on G04:S01 ("ladder_sin_30" -> C14_CONFUSE_ADJACENT_WITH_OPPOSITE_SIDE) -> DIAGRAM_ERROR
+    env.setFormData({ choice: 'ladder_sin_30' });
+    env.elements.get('answer-form').onsubmit({ preventDefault() {} });
+    const geoErr = env.windowObj.YourdreamPreview.getErrorDiagnosis();
+    assert.equal(geoErr.active_remediation_task.error_type, 'DIAGRAM_ERROR');
+    assert.equal(geoErr.active_remediation_task.origin_layer, 'INPUT_DATA_AND_SETUP');
+
+    // Test Mock Exam Mode: locks hints & model solution until submitMockExam()
+    env.windowObj.YourdreamPreview.setExamMode('exam');
+    assert.equal(env.elements.get('exam-paper-panel').hidden, false);
+    assert.equal(env.elements.get('hint-button').disabled, true);
+    assert.match(env.elements.get('model-solution-note').textContent, /Lời giải mẫu hoàn chỉnh được khóa/);
+
+    const examDiag = env.windowObj.YourdreamPreview.submitMockExam();
+    assert.ok(examDiag);
+    assert.match(env.elements.get('model-solution-note').textContent, /Lời giải mẫu hoàn chỉnh gồm 5 bước/);
   });
 });

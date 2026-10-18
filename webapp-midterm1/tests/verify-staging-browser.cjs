@@ -346,6 +346,11 @@ async function runVerification() {
       const afterWrong = {
         feedbackClass: document.getElementById('feedback')?.className,
         feedbackText: document.getElementById('feedback')?.textContent?.trim(),
+        activeErrorType: document.querySelector('#active-remediation-card [data-active-error-type]')?.getAttribute('data-active-error-type'),
+        activeRemediationText: document.getElementById('active-remediation-card')?.textContent?.trim(),
+        trapTypes: [...document.querySelectorAll('#trap-library-list [data-trap-type]')].map((el) => el.getAttribute('data-trap-type')),
+        mindmapCount: document.getElementById('mindmap-branches')?.children?.length || 0,
+        modelSolutionCount: document.getElementById('model-solution-list')?.children?.length || 0,
         diagnosisText: document.getElementById('skill-diagnosis')?.textContent?.trim()
       };
 
@@ -405,17 +410,41 @@ async function runVerification() {
         totalProgress: document.getElementById('total-progress')?.textContent?.trim()
       };
 
+      // 7. Switch to Bài IV (Geometry, index 3) and verify Geometry Pre-Solve Checklist + DIAGRAM_ERROR
+      document.querySelectorAll('#exercise-list [data-item]')[3].click();
+      const geoVisible = !document.getElementById('geometry-precheck')?.hidden;
+      const geoChecks = [...document.querySelectorAll('#geometry-precheck-list input[type="checkbox"]')];
+      geoChecks.forEach((chk) => {
+        chk.checked = true;
+        chk.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      const geoStatus = document.getElementById('geometry-precheck-status')?.textContent?.trim();
+
       return {
         afterWrong,
         hintCount,
         afterSupportedPass,
         afterRationalPass,
         afterCleanSkillPass,
-        afterItemReset
+        afterItemReset,
+        geoVisible,
+        geoCheckCount: geoChecks.length,
+        geoStatus
       };
     })()`);
 
     assert.strictEqual(interactionSnap.afterWrong.feedbackClass, 'incorrect', 'Wrong choice should render incorrect feedback');
+    assert.strictEqual(interactionSnap.afterWrong.activeErrorType, 'SIGN_ERROR', 'G01:S01 sub_sign_err must be classified as SIGN_ERROR');
+    assert.deepStrictEqual(
+      interactionSnap.afterWrong.trapTypes,
+      ['COPYING_ERROR', 'SIGN_ERROR', 'ARITHMETIC_ERROR', 'METHOD_GAP', 'DIAGRAM_ERROR'],
+      'Exercise trap library must render all 5 core error types'
+    );
+    assert.strictEqual(interactionSnap.afterWrong.mindmapCount, 3, 'Exercise mindmap must render 3 branches');
+    assert.strictEqual(interactionSnap.afterWrong.modelSolutionCount, 5, 'Bài I model solution must render 5 steps');
+    assert.strictEqual(interactionSnap.geoVisible, true, 'Geometry Pre-Solve Checklist must be visible on Bài IV');
+    assert.strictEqual(interactionSnap.geoCheckCount, 4, 'Geometry Pre-Solve Checklist must have 4 checks');
+    assert.ok(interactionSnap.geoStatus.includes('Đã đối chiếu đủ 4/4 chốt'), `Unexpected geoStatus: ${interactionSnap.geoStatus}`);
     assert.ok(
       interactionSnap.afterWrong.diagnosisText.includes('Đang luyện · Cần sửa lỗi [IN_PRACTICE_NEEDS_RETRY]'),
       'Wrong attempt must show Batch 01 state "Đang luyện · Cần sửa lỗi [IN_PRACTICE_NEEDS_RETRY]"'
