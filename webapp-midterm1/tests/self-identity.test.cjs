@@ -1,0 +1,7 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const {identityResponse,verificationPage}=require('../src/self-identity.cjs');
+test('anonymous and service-only callers get no subject',async()=>{for(const user of [null,{serviceToken:true},{userId:'id'}]){const r=identityResponse(user,'site');assert.equal(r.status,401);assert.deepEqual(await r.json(),{error:'AUTH_REQUIRED'});}});
+test('self identity includes only own site subject, never email or role',async()=>{const r=identityResponse({userId:'own-id',email:'own@example.test',role:'admin',token:'unused'},'site');assert.deepEqual(await r.json(),{authenticated:true,subject_id:'own-id',project_id:'site'});assert.equal(r.headers.get('cache-control'),'private, no-store');});
+test('anonymous page uses top-level platform sign-in link',async()=>{const r=verificationPage(null,'site'),html=await r.text();assert.ok(html.includes('target="_top" href="/signin-with-chatgpt?return_to=%2Fverify"'));assert.equal(r.headers.get('cache-control'),'private, no-store');});
+test('authenticated page escapes identity and email',async()=>{const r=verificationPage({userId:'<script>bad</script>',email:'a&b@example.test'},'site'),html=await r.text();assert.ok(!html.includes('<script>bad</script>'));assert.ok(html.includes('&lt;script&gt;bad&lt;/script&gt;'));assert.ok(html.includes('a&amp;b@example.test'));assert.ok(html.includes('chưa tự cấp quyền'));});

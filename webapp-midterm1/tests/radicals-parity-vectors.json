@@ -1,0 +1,322 @@
+[
+  {
+    "name": "RAD-001:S01 reference",
+    "step_id": "RAD-001:S01",
+    "answer": "3",
+    "completed": [],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-001:S02 reference",
+    "step_id": "RAD-001:S02",
+    "answer": "7",
+    "completed": [],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-001:S03 reference",
+    "step_id": "RAD-001:S03",
+    "answer": "4",
+    "completed": [],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-001:S04 reference",
+    "step_id": "RAD-001:S04",
+    "answer": "6",
+    "completed": [
+      "RAD-001:S01",
+      "RAD-001:S02",
+      "RAD-001:S03"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-002:S01 reference",
+    "step_id": "RAD-002:S01",
+    "answer": "absolute",
+    "completed": [],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-002:S02 reference",
+    "step_id": "RAD-002:S02",
+    "answer": "negative",
+    "completed": [
+      "RAD-002:S01"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-002:S03 reference",
+    "step_id": "RAD-002:S03",
+    "answer": {
+      "constant": "2",
+      "coefficient": "-1"
+    },
+    "completed": [
+      "RAD-002:S02"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-003:S01 reference",
+    "step_id": "RAD-003:S01",
+    "answer": {
+      "variable": "x",
+      "lower": "0",
+      "lower_inclusive": true,
+      "exclusions": [
+        "1"
+      ]
+    },
+    "completed": [],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-003:S02 reference",
+    "step_id": "RAD-003:S02",
+    "answer": "difference_squares",
+    "completed": [
+      "RAD-003:S01"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-003:S03 reference",
+    "step_id": "RAD-003:S03",
+    "answer": "sqrt_x_plus_1",
+    "completed": [
+      "RAD-003:S02"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-003:S04 reference",
+    "step_id": "RAD-003:S04",
+    "answer": {
+      "expression": "sqrt_x_plus_1",
+      "variable": "x",
+      "lower": "0",
+      "lower_inclusive": true,
+      "exclusions": [
+        "1"
+      ]
+    },
+    "completed": [
+      "RAD-003:S03"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-004:S01 reference",
+    "step_id": "RAD-004:S01",
+    "answer": "minus",
+    "completed": [],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-004:S02 reference",
+    "step_id": "RAD-004:S02",
+    "answer": "both",
+    "completed": [
+      "RAD-004:S01"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-004:S03 reference",
+    "step_id": "RAD-004:S03",
+    "answer": "2",
+    "completed": [
+      "RAD-004:S02"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "RAD-004:S04 reference",
+    "step_id": "RAD-004:S04",
+    "answer": {
+      "radicand": 3,
+      "constant": "-1/2",
+      "coefficient": "1/2"
+    },
+    "completed": [
+      "RAD-004:S03"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "rational equivalence",
+    "step_id": "RAD-001:S04",
+    "answer": "12/2",
+    "completed": [
+      "RAD-001:S01",
+      "RAD-001:S02",
+      "RAD-001:S03"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "wrong root coefficient",
+    "step_id": "RAD-001:S01",
+    "answer": "4",
+    "completed": [],
+    "expected_status": "TRY_AGAIN"
+  },
+  {
+    "name": "absolute-value sign error",
+    "step_id": "RAD-002:S03",
+    "answer": {
+      "constant": "-2",
+      "coefficient": "1"
+    },
+    "completed": [
+      "RAD-002:S02"
+    ],
+    "expected_status": "TRY_AGAIN"
+  },
+  {
+    "name": "linear equivalent fractions",
+    "step_id": "RAD-002:S03",
+    "answer": {
+      "constant": "4/2",
+      "coefficient": "-2/2"
+    },
+    "completed": [
+      "RAD-002:S02"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "lost exclusion",
+    "step_id": "RAD-003:S04",
+    "answer": {
+      "variable": "x",
+      "lower": "0",
+      "lower_inclusive": true,
+      "exclusions": [],
+      "expression": "sqrt_x_plus_1"
+    },
+    "completed": [
+      "RAD-003:S03"
+    ],
+    "expected_status": "TRY_AGAIN"
+  },
+  {
+    "name": "negative original domain",
+    "step_id": "RAD-003:S01",
+    "answer": {
+      "variable": "x",
+      "lower": "-1",
+      "lower_inclusive": true,
+      "exclusions": [
+        "1"
+      ]
+    },
+    "completed": [],
+    "expected_status": "TRY_AGAIN"
+  },
+  {
+    "name": "extra exclusions",
+    "step_id": "RAD-003:S01",
+    "answer": {
+      "variable": "x",
+      "lower": "0",
+      "lower_inclusive": true,
+      "exclusions": [
+        "1",
+        "2"
+      ]
+    },
+    "completed": [],
+    "expected_status": "TRY_AGAIN"
+  },
+  {
+    "name": "wrong conjugate",
+    "step_id": "RAD-004:S01",
+    "answer": "plus",
+    "completed": [],
+    "expected_status": "TRY_AGAIN"
+  },
+  {
+    "name": "quadratic equivalent fractions",
+    "step_id": "RAD-004:S04",
+    "answer": {
+      "radicand": 3,
+      "constant": "-2/4",
+      "coefficient": "3/6"
+    },
+    "completed": [
+      "RAD-004:S03"
+    ],
+    "expected_status": "CORRECT"
+  },
+  {
+    "name": "wrong conjugate sign",
+    "step_id": "RAD-004:S04",
+    "answer": {
+      "radicand": 3,
+      "constant": "1/2",
+      "coefficient": "1/2"
+    },
+    "completed": [
+      "RAD-004:S03"
+    ],
+    "expected_status": "TRY_AGAIN"
+  },
+  {
+    "name": "unsupported freeform",
+    "step_id": "RAD-004:S04",
+    "answer": "(sqrt(3)-1)/2",
+    "completed": [
+      "RAD-004:S03"
+    ],
+    "expected_status": "NEEDS_REVIEW"
+  },
+  {
+    "name": "unknown choice",
+    "step_id": "RAD-004:S01",
+    "answer": "different valid explanation",
+    "completed": [],
+    "expected_status": "NEEDS_REVIEW"
+  },
+  {
+    "name": "zero denominator",
+    "step_id": "RAD-001:S01",
+    "answer": "1/0",
+    "completed": [],
+    "expected_status": "NEEDS_REVIEW"
+  },
+  {
+    "name": "boolean not a number",
+    "step_id": "RAD-001:S01",
+    "answer": true,
+    "completed": [],
+    "expected_status": "NEEDS_REVIEW"
+  },
+  {
+    "name": "no executable text",
+    "step_id": "RAD-001:S01",
+    "answer": "__import__(\"os\")",
+    "completed": [],
+    "expected_status": "NEEDS_REVIEW"
+  },
+  {
+    "name": "oversize numeric text",
+    "step_id": "RAD-001:S01",
+    "answer": "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+    "completed": [],
+    "expected_status": "NEEDS_REVIEW"
+  },
+  {
+    "name": "parallel join locked",
+    "step_id": "RAD-001:S04",
+    "answer": "6",
+    "completed": [
+      "RAD-001:S01",
+      "RAD-001:S02"
+    ],
+    "expected_status": "LOCKED"
+  }
+]

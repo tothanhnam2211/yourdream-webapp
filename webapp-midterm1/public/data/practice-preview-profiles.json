@@ -1,0 +1,33 @@
+{
+  "status": "DRAFT_LOCAL_PREVIEW_ONLY",
+  "profiles": [
+    {
+      "id": "legacy",
+      "label": "Gói cũ · 4 bài / 15 bước",
+      "path": "data/radical-steps-v0.1.json",
+      "profile": "legacy-rad01",
+      "sha256": "a16d43b62b2b667422778ae140f610115625843319efefa513df65b2a4be25d2"
+    },
+    {
+      "id": "graph02-v1",
+      "label": "GRAPH02 v0.1 · đối chiếu",
+      "path": "data/graph02-v1-preview.json",
+      "profile": "lesson-contract-v01",
+      "sha256": "688c4fb1d365468cb324106f3748eec5bbd54b89f0d7d5bfdcc8d2e3f8240295"
+    },
+    {
+      "id": "graph02-v2",
+      "label": "GRAPH02 v0.2 · DRAFT (4 bài / 26 bước)",
+      "path": "data/graph02-v2-preview.json",
+      "profile": "lesson-contract-v01",
+      "sha256": "7e8f443ce6ea5a1eaee267d4712c57bf65d82c53d95051fd4e583e9974ce28b4"
+    },
+    {
+      "id": "midterm1-fixture",
+      "label": "Fixture Giữa kỳ I · 5 bài / 26 bước (chờ Batch 02A)",
+      "path": "data/midterm1-fixture-preview.json",
+      "profile": "lesson-contract-v01",
+      "sha256": "6abeb7af79044bfc1a09f043ea2c0f7ecf5974ed3f2864ddd48e1c406749a8df"
+    }
+  ]
+}

@@ -1,0 +1,2360 @@
+{
+  "schema_version": "yourdream.webapp.lesson.integration.0.1-DRAFT",
+  "package_id": "WEBAPP-MIDTERM1-FIXTURE-PHASE-A:v0.1",
+  "package_version": "0.1-DRAFT",
+  "status": "DRAFT",
+  "scope": {
+    "subject": "TOAN",
+    "locale": "vi-VN",
+    "region": "HANOI",
+    "admission_track": "NON_SPECIALIST",
+    "target_exam_year": null
+  },
+  "runtime_target": "PROPOSED_ADAPTER_NOT_IMPLEMENTED",
+  "supports_secure_assessment": false,
+  "input_snapshots": [
+    {
+      "artifact_ref": "evidence/STEP_GRAPHS_v0_2_DRAFT.json",
+      "sha256": "4edb86b1f1d12ce4d555f5203a219783530cb78621addcb5bc2499b424521543",
+      "package_id": "EXAM-GRAPH-02",
+      "version": "0.2.0-DRAFT"
+    },
+    {
+      "artifact_ref": "evidence/CANDIDATE_ITEMS_v0_2_DRAFT.json",
+      "sha256": "891a6ce545a5e95e86aac51dbb79fb6331ff50ec83f08d59115c8c0d7050b31c",
+      "package_id": "EXAM-SOURCE-02",
+      "version": "0.2.0-DRAFT"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+      "drive_file_id": "17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+      "title": "Căn bậc hai và căn bậc ba Toán 9 KNTT",
+      "sha256": "96155679dcd1c294839a3f4db8d1b8409a41c8b64dbab867ac2560c37c66d698",
+      "pdf_pages_1based": [
+        322,
+        323,
+        339
+      ],
+      "locator": "Bản trích và bindings trong EXAM-SOURCE-02 v0.2; vị trí từng bài giữ trong snapshot gốc.",
+      "verification": "PRODUCER_REVIEWED"
+    },
+    {
+      "source_id": "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+      "drive_file_id": "19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+      "title": "Chuyên đề rút gọn biểu thức và bài toán liên quan",
+      "sha256": "c5d255181c4b09a8b44104509b1e1dbeba3c62fd1c981f24f65ca045f7de3042",
+      "pdf_pages_1based": [
+        3,
+        4,
+        19,
+        6,
+        24
+      ],
+      "locator": "Bản trích và bindings trong EXAM-SOURCE-02 v0.2; vị trí từng bài giữ trong snapshot gốc.",
+      "verification": "PRODUCER_REVIEWED"
+    },
+    {
+      "source_id": "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI",
+      "drive_file_id": "1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI",
+      "title": "Rút gọn và bài toán liên quan ôn tuyển sinh 10",
+      "sha256": "db746ea1f7637fdd06d24c0457f204df5ffec62a5a234f02a8bb0e59d51734df",
+      "pdf_pages_1based": [
+        28,
+        30
+      ],
+      "locator": "Bản trích và bindings trong EXAM-SOURCE-02 v0.2; vị trí từng bài giữ trong snapshot gốc.",
+      "verification": "PRODUCER_REVIEWED"
+    }
+  ],
+  "knowledge_nodes": [
+    {
+      "node_id": "DRAFT:radical.skill.domain",
+      "canonical_node_id": null,
+      "title": "Điều kiện xác định của căn thức và phân thức",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "DRAFT:radical.skill.difference_squares",
+      "canonical_node_id": null,
+      "title": "Phân tích nhân tử bằng hằng đẳng thức hiệu hai bình phương với căn bậc hai",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "DRAFT:radical.skill.cancellation",
+      "canonical_node_id": null,
+      "title": "Rút gọn nhân tử chung khác 0 trên miền xác định",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "DRAFT:radical.skill.sign_condition",
+      "canonical_node_id": null,
+      "title": "Xét dấu biểu thức chứa căn theo điều kiện xác định",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "EXAM-GRAPH-02:skill.cube_root_numeric",
+      "canonical_node_id": null,
+      "title": "Khai căn bậc ba của số thực âm và dương",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "EXAM-GRAPH-02:skill.cube_root_power_identity",
+      "canonical_node_id": null,
+      "title": "Vận dụng hằng đẳng thức (∛a)³ = ∛(a³) = a trên ℝ",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "EXAM-GRAPH-02:skill.linear_inequality_negative_coeff",
+      "canonical_node_id": null,
+      "title": "Giải bất phương trình bậc nhất một ẩn khi chia cho hệ số âm",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "EXAM-GRAPH-02:skill.domain_intersection",
+      "canonical_node_id": null,
+      "title": "Lấy giao nhiều điều kiện xác định và nhận diện điều kiện bị bao hàm",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "EXAM-GRAPH-02:skill.rational_common_denominator",
+      "canonical_node_id": null,
+      "title": "Quy đồng mẫu thức và thu gọn tử thức chứa căn bậc hai",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "EXAM-GRAPH-02:skill.target_value_equation",
+      "canonical_node_id": null,
+      "title": "Giải phương trình biểu thức rút gọn bằng hằng số và đối chiếu ĐKXĐ gốc",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "EXAM-GRAPH-02:skill.evaluate_at_point",
+      "canonical_node_id": null,
+      "title": "Tính giá trị biểu thức chứa căn tại giá trị chính phương thuộc ĐKXĐ",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "EXAM-GRAPH-02:skill.difference_comparison_completing_square",
+      "canonical_node_id": null,
+      "title": "So sánh biểu thức với hằng số bằng phương pháp xét hiệu và tách bình phương đủ",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD",
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    }
+  ],
+  "knowledge_relations": [],
+  "lessons": [
+    {
+      "lesson_id": "WEBAPP-LEARNING-CONTRACT-001:lesson.P01",
+      "title": "Căn bậc ba — ví dụ đóng gói từ P01",
+      "objectives": [
+        "Khai căn bậc ba của số thực âm và dương, vận dụng đúng hằng đẳng thức ∛(a³) = a và (∛a)³ = a để rút gọn biểu thức số."
+      ],
+      "node_ids": [
+        "EXAM-GRAPH-02:skill.cube_root_numeric",
+        "EXAM-GRAPH-02:skill.cube_root_power_identity"
+      ],
+      "blocks": [
+        {
+          "block_id": "WEBAPP-LEARNING-CONTRACT-001:block.theory",
+          "kind": "THEORY",
+          "text_vi": "Các căn bậc ba xác định với mọi số thực (không cần điều kiện không âm như căn bậc hai).",
+          "latex": null,
+          "source_ids": [
+            "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD"
+          ],
+          "asset_ids": []
+        },
+        {
+          "block_id": "WEBAPP-LEARNING-CONTRACT-001:block.example",
+          "kind": "EXAMPLE",
+          "text_vi": "Vì 3^3 = 27 nên \\sqrt[3]{27} = \\sqrt[3]{3^3} = 3.",
+          "latex": "\\sqrt[3]{27} = 3",
+          "source_ids": [
+            "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD"
+          ],
+          "asset_ids": []
+        }
+      ],
+      "graph_ids": [
+        "EXAM-GRAPH-02:P01",
+        "EXAM-GRAPH-02:P02",
+        "EXAM-GRAPH-02:P03-A",
+        "EXAM-GRAPH-02:P03-B",
+        "EXAM-GRAPH-02:P04"
+      ],
+      "asset_ids": [],
+      "assessment_ids": []
+    }
+  ],
+  "step_graphs": [
+    {
+      "graph_id": "EXAM-GRAPH-02:P01",
+      "proposal_ref": "EXAM-SOURCE-02:P01",
+      "canonical_item_id": null,
+      "prompt": "Rút gọn biểu thức A = ∛27 − (∛(−4))³ + ∛(−64).",
+      "original_domain": "Các căn bậc ba xác định với mọi số thực (không cần điều kiện không âm như căn bậc hai).",
+      "source_ids": [
+        "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD"
+      ],
+      "subquestion_step_groups": {
+        "main": [
+          "EXAM-GRAPH-02:P01:S01",
+          "EXAM-GRAPH-02:P01:S02",
+          "EXAM-GRAPH-02:P01:S03",
+          "EXAM-GRAPH-02:P01:S04"
+        ]
+      },
+      "terminal_step_ids": [
+        "EXAM-GRAPH-02:P01:S04"
+      ],
+      "completion_policy": "ALL_STEPS_CORRECT",
+      "edges": [
+        {
+          "from": "EXAM-GRAPH-02:P01:S01",
+          "to": "EXAM-GRAPH-02:P01:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P01:S02",
+          "to": "EXAM-GRAPH-02:P01:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P01:S03",
+          "to": "EXAM-GRAPH-02:P01:S04",
+          "kind": "REQUIRES"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "EXAM-GRAPH-02:P01:S01",
+          "requires": [],
+          "title": "Tính căn bậc ba của 27",
+          "before": "\\sqrt[3]{27}",
+          "after": "3",
+          "justification": "Vì 3^3 = 27 nên \\sqrt[3]{27} = \\sqrt[3]{3^3} = 3.",
+          "conditions_in_context": [
+            "Các căn bậc ba xác định với mọi số thực a ∈ ℝ."
+          ],
+          "interaction": {
+            "prompt": "Tính giá trị của số hạng thứ nhất: $\\sqrt[3]{27}$ bằng bao nhiêu?",
+            "answer_type": "rational",
+            "expected": "3",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Tìm số nguyên $x$ sao cho $x^3 = 27$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta có $3^3 = 3 \\cdot 3 \\cdot 3 = 27$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Áp dụng $\\sqrt[3]{a^3} = a$, suy ra $\\sqrt[3]{27} = \\sqrt[3]{3^3} = 3$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $3^3 = 27$ nên $\\sqrt[3]{27} = 3$.",
+            "incorrect": "Kết quả chưa khớp. Hãy kiểm tra số thực $x$ thỏa mãn $x^3 = 27$ (chú ý phân biệt phép lập phương $x^3$ với phép nhân $3x$).",
+            "unknown": "Cách viết câu trả lời chưa thuộc định dạng số hữu tỉ của bước này; cần người hướng dẫn xem xét (NEEDS_REVIEW)."
+          },
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.cube_root_numeric"
+          ],
+          "source_ids": [
+            "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P01:S02",
+          "requires": [],
+          "title": "Tính lũy thừa bậc ba của căn bậc ba âm",
+          "before": "\\left(\\sqrt[3]{-4}\\right)^3",
+          "after": "-4",
+          "justification": "Theo tính chất căn bậc ba của mọi số thực a, ta có \\left(\\sqrt[3]{a}\\right)^3 = a, do đó \\left(\\sqrt[3]{-4}\\right)^3 = -4.",
+          "conditions_in_context": [
+            "Căn bậc ba của số thực âm xác định trên ℝ và giữ nguyên dấu âm."
+          ],
+          "interaction": {
+            "prompt": "Tính giá trị của biểu thức $\\left(\\sqrt[3]{-4}\\right)^3$ (chưa tính dấu trừ đứng trước ngoặc trong biểu thức $A$).",
+            "answer_type": "rational",
+            "expected": "-4",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Áp dụng trực tiếp tính chất $\\left(\\sqrt[3]{a}\\right)^3 = a$ với $a = -4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Khác với căn bậc hai, căn bậc ba xác định với cả số âm và không lấy giá trị tuyệt đối.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Do đó $\\left(\\sqrt[3]{-4}\\right)^3 = -4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Đúng: theo định nghĩa căn bậc ba, $\\left(\\sqrt[3]{-4}\\right)^3 = -4$.",
+            "incorrect": "Chưa đúng. Lưu ý tính riêng biểu thức $\\left(\\sqrt[3]{-4}\\right)^3 = -4$ (không đổi thành $+4$ như trị tuyệt đối của căn bậc hai).",
+            "unknown": "Cách viết câu trả lời chưa thuộc định dạng số hữu tỉ của bước này; cần người hướng dẫn xem xét (NEEDS_REVIEW)."
+          },
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.cube_root_power_identity"
+          ],
+          "source_ids": [
+            "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P01:S03",
+          "requires": [],
+          "title": "Tính căn bậc ba của -64",
+          "before": "\\sqrt[3]{-64}",
+          "after": "-4",
+          "justification": "Vì (-4)^3 = -64 nên \\sqrt[3]{-64} = \\sqrt[3]{(-4)^3} = -4.",
+          "conditions_in_context": [
+            "Các căn bậc ba xác định với mọi số thực a ∈ ℝ."
+          ],
+          "interaction": {
+            "prompt": "Tính giá trị của số hạng thứ ba: $\\sqrt[3]{-64}$ bằng bao nhiêu?",
+            "answer_type": "rational",
+            "expected": "-4",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Tìm số thực $x$ sao cho $x^3 = -64$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Vì cơ số âm mũ $3$ vẫn mang dấu âm và $4^3 = 64$, hãy xét $(-4)^3$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Ta có $(-4)^3 = -64$, suy ra $\\sqrt[3]{-64} = -4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $(-4)^3 = -64$ nên $\\sqrt[3]{-64} = -4$.",
+            "incorrect": "Chưa khớp. Hãy kiểm tra dấu âm của căn bậc ba và phân biệt $\\sqrt[3]{-64} = -4$ với $\\sqrt{64} = 8$.",
+            "unknown": "Cách viết câu trả lời chưa thuộc định dạng số hữu tỉ của bước này; cần người hướng dẫn xem xét (NEEDS_REVIEW)."
+          },
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.cube_root_numeric"
+          ],
+          "source_ids": [
+            "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P01:S04",
+          "requires": [
+            "EXAM-GRAPH-02:P01:S01",
+            "EXAM-GRAPH-02:P01:S02",
+            "EXAM-GRAPH-02:P01:S03"
+          ],
+          "title": "Thay kết quả ba nhánh và tính tổng đại số A",
+          "before": "A = \\sqrt[3]{27} - \\left(\\sqrt[3]{-4}\\right)^3 + \\sqrt[3]{-64}",
+          "after": "A = 3 - (-4) + (-4) = 3",
+          "justification": "Thay \\sqrt[3]{27} = 3, \\left(\\sqrt[3]{-4}\\right)^3 = -4 và \\sqrt[3]{-64} = -4 vào A, ta được A = 3 - (-4) + (-4) = 3 + 4 - 4 = 3.",
+          "conditions_in_context": [
+            "Các căn bậc ba xác định với mọi số thực a ∈ ℝ."
+          ],
+          "interaction": {
+            "prompt": "Thay ba giá trị vừa tìm được vào $A = \\sqrt[3]{27} - \\left(\\sqrt[3]{-4}\\right)^3 + \\sqrt[3]{-64}$ và tính giá trị cuối cùng của $A$.",
+            "answer_type": "rational",
+            "expected": "3",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Thay từng số hạng vào biểu thức: $A = 3 - (-4) + (-4)$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Chú ý dấu trừ đứng trước $\\left(\\sqrt[3]{-4}\\right)^3$: $-(-4) = +4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Tính tổng: $A = 3 + 4 - 4 = 3$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $A = 3 - (-4) + (-4) = 3 + 4 - 4 = 3$.",
+            "incorrect": "Kết quả chưa đúng. Hãy kiểm tra lại quy tắc đổi dấu khi trừ một số âm: $3 - (-4) + (-4) = 3 + 4 - 4$.",
+            "unknown": "Cách viết câu trả lời chưa thuộc định dạng số hữu tỉ của bước này; cần người hướng dẫn xem xét (NEEDS_REVIEW)."
+          },
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.cube_root_numeric",
+            "EXAM-GRAPH-02:skill.cube_root_power_identity"
+          ],
+          "source_ids": [
+            "drive:17i-bEZCQNEtbYUSX0Ik7ZXuB67g66HQD"
+          ]
+        }
+      ]
+    },
+    {
+      "graph_id": "EXAM-GRAPH-02:P02",
+      "proposal_ref": "EXAM-SOURCE-02:P02",
+      "canonical_item_id": null,
+      "prompt": "Tìm điều kiện xác định của biểu thức B = (3x − 2)/(x − 1) + 4/√(5 − 7x).",
+      "original_domain": "x − 1 ≠ 0 và 5 − 7x > 0 ⇔ x ≠ 1 và x < 5/7 ⇔ x < 5/7.",
+      "source_ids": [
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+      ],
+      "subquestion_step_groups": {
+        "main": [
+          "EXAM-GRAPH-02:P02:S01",
+          "EXAM-GRAPH-02:P02:S02",
+          "EXAM-GRAPH-02:P02:S03",
+          "EXAM-GRAPH-02:P02:S04",
+          "EXAM-GRAPH-02:P02:S05"
+        ]
+      },
+      "terminal_step_ids": [
+        "EXAM-GRAPH-02:P02:S05"
+      ],
+      "completion_policy": "ALL_STEPS_CORRECT",
+      "edges": [
+        {
+          "from": "EXAM-GRAPH-02:P02:S02",
+          "to": "EXAM-GRAPH-02:P02:S03",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P02:S01",
+          "to": "EXAM-GRAPH-02:P02:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P02:S03",
+          "to": "EXAM-GRAPH-02:P02:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P02:S04",
+          "to": "EXAM-GRAPH-02:P02:S05",
+          "kind": "REQUIRES"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "EXAM-GRAPH-02:P02:S01",
+          "requires": [],
+          "title": "Thiết lập điều kiện cho mẫu thức đa thức x - 1",
+          "before": "\\frac{3x - 2}{x - 1}",
+          "after": "x - 1 \\ne 0 \\Leftrightarrow x \\ne 1",
+          "justification": "Phân thức đại số (3x - 2)/(x - 1) xác định khi mẫu thức khác 0, tức là x - 1 \\ne 0 \\Leftrightarrow x \\ne 1.",
+          "conditions_in_context": [
+            "Biểu thức ban đầu: B = (3x - 2)/(x - 1) + 4/√(5 - 7x)."
+          ],
+          "interaction": {
+            "prompt": "Để phân thức thứ nhất $\\frac{3x - 2}{x - 1}$ xác định, điều kiện của $x$ là gì?",
+            "answer_type": "choice",
+            "expected": "x_ne_1",
+            "choices": {
+              "x_ne_1": "$x - 1 \\ne 0 \\Leftrightarrow x \\ne 1$",
+              "x_ge_1": "$x - 1 \\ge 0 \\Leftrightarrow x \\ge 1$",
+              "x_gt_1": "$x - 1 > 0 \\Leftrightarrow x > 1$",
+              "x_ne_2_3": "$3x - 2 \\ne 0 \\Leftrightarrow x \\ne \\frac{2}{3}$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Xét riêng phân thức $\\frac{3x - 2}{x - 1}$: mẫu số không chứa dấu căn.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Một phân thức $\\frac{A}{B}$ xác định khi mẫu thức $B \\ne 0$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Do đó $x - 1 \\ne 0 \\Leftrightarrow x \\ne 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Đúng: phân thức $\\frac{3x - 2}{x - 1}$ có mẫu là đa thức $x - 1$ nên điều kiện là $x - 1 \\ne 0 \\Leftrightarrow x \\ne 1$.",
+            "incorrect": "Chưa khớp. Phân thức $\\frac{A}{B}$ chỉ yêu cầu mẫu thức $B \\ne 0$ (không yêu cầu tử khác $0$ và không yêu cầu $x - 1 > 0$).",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "x_ne_1": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_POLYNOMIAL_DENOMINATOR_NONZERO",
+                "message": "Đúng: phân thức $\\frac{3x - 2}{x - 1}$ có mẫu là đa thức $x - 1$ nên điều kiện xác định là $x - 1 \\ne 0 \\Leftrightarrow x \\ne 1$."
+              },
+              "x_ge_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CONFUSE_POLYNOMIAL_DENOMINATOR_WITH_RADICAND",
+                "message": "Chưa đúng: mẫu thức $x - 1$ là đa thức không nằm dưới dấu căn bậc hai nên không đặt điều kiện $x - 1 \\ge 0$; chỉ cần $x - 1 \\ne 0$."
+              },
+              "x_gt_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CONFUSE_POLYNOMIAL_DENOMINATOR_WITH_DENOMINATOR_RADICAL",
+                "message": "Chưa đúng: mẫu thức $x - 1$ không chứa căn bậc hai ở mẫu nên không cần $x - 1 > 0$; phân thức xác định với mọi $x \\ne 1$ (kể cả khi $x - 1 < 0$)."
+              },
+              "x_ne_2_3": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "SET_NONZERO_CONDITION_ON_NUMERATOR",
+                "message": "Chưa đúng: $3x - 2$ là tử thức (tử thức có thể bằng $0$); điều kiện xác định của phân thức phải đặt cho mẫu thức $x - 1 \\ne 0$."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.domain"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P02:S02",
+          "requires": [],
+          "title": "Thiết lập điều kiện cho căn bậc hai ở mẫu số √(5 - 7x)",
+          "before": "\\frac{4}{\\sqrt{5 - 7x}}",
+          "after": "5 - 7x > 0",
+          "justification": "Phân thức 4/\\sqrt{5 - 7x} có dạng A/\\sqrt{C} nên vừa cần căn có nghĩa (5 - 7x \\ge 0) vừa cần mẫu khác 0 (\\sqrt{5 - 7x} \\ne 0), tức là 5 - 7x > 0.",
+          "conditions_in_context": [
+            "Biểu thức thứ hai có căn bậc hai nằm toàn bộ dưới mẫu số."
+          ],
+          "interaction": {
+            "prompt": "Để phân thức thứ hai $\\frac{4}{\\sqrt{5 - 7x}}$ xác định, biểu thức dưới dấu căn phải thỏa mãn điều kiện nào?",
+            "answer_type": "choice",
+            "expected": "rad_gt_0",
+            "choices": {
+              "rad_gt_0": "$5 - 7x > 0$",
+              "rad_ge_0": "$5 - 7x \\ge 0$",
+              "rad_ne_0": "$5 - 7x \\ne 0$",
+              "rad_lt_0": "$5 - 7x < 0$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Quan sát vị trí của $\\sqrt{5 - 7x}$: căn thức này nằm ở mẫu số của phân thức.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Căn bậc hai trên tử cần biểu thức dưới căn $\\ge 0$, nhưng căn bậc hai ở mẫu còn phải khác $0$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Kết hợp $5 - 7x \\ge 0$ và $5 - 7x \\ne 0$, ta được điều kiện dương hẳn $5 - 7x > 0$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: vì $\\sqrt{5 - 7x}$ nằm ở mẫu số nên biểu thức dưới dấu căn phải dương hẳn ($5 - 7x > 0$).",
+            "incorrect": "Chưa đúng. Hãy lưu ý $\\sqrt{5 - 7x}$ nằm dưới mẫu số nên không thể bằng $0$ (cần $5 - 7x > 0$, không phải $\\ge 0$ hay chỉ $\\ne 0$).",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "rad_gt_0": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_STRICT_POSITIVE_DENOMINATOR_RADICAND",
+                "message": "Chính xác: vì $\\sqrt{5 - 7x}$ nằm dưới mẫu số nên cần đồng thời $5 - 7x \\ge 0$ và $\\sqrt{5 - 7x} \\ne 0$, tức là $5 - 7x > 0$."
+              },
+              "rad_ge_0": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "OMIT_NONZERO_DENOMINATOR_AT_BOUNDARY",
+                "message": "Chưa đúng: điều kiện $5 - 7x \\ge 0$ chưa loại trường hợp $5 - 7x = 0$ làm mẫu số $\\sqrt{5 - 7x} = 0$; cần dấu dương hẳn $5 - 7x > 0$."
+              },
+              "rad_ne_0": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "OMIT_NONNEGATIVE_RADICAND_CONDITION",
+                "message": "Chưa đúng: chỉ đặt $5 - 7x \\ne 0$ thì chưa đảm bảo biểu thức dưới căn bậc hai dương; với $5 - 7x < 0$ căn bậc hai không xác định trên $\\mathbb{R}$."
+              },
+              "rad_lt_0": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "REVERSED_RADICAND_SIGN",
+                "message": "Chưa đúng: khi $5 - 7x < 0$ biểu thức dưới dấu căn bậc hai nhận giá trị âm nên $\\sqrt{5 - 7x}$ không xác định; cần $5 - 7x > 0$."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.domain"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P02:S03",
+          "requires": [
+            "EXAM-GRAPH-02:P02:S02"
+          ],
+          "title": "Giải bất phương trình bậc nhất hệ số âm 5 - 7x > 0",
+          "before": "5 - 7x > 0",
+          "after": "x < \\frac{5}{7}",
+          "justification": "Chuyển vế -7x > -5 và chia hai vế cho số âm -7 (đổi chiều bất đẳng thức), ta được x < \\frac{5}{7}.",
+          "conditions_in_context": [
+            "5 - 7x > 0"
+          ],
+          "interaction": {
+            "prompt": "Giải bất phương trình $5 - 7x > 0$, ta thu được điều kiện nào của $x$?",
+            "answer_type": "choice",
+            "expected": "x_lt_5_7",
+            "choices": {
+              "x_lt_5_7": "$x < \\frac{5}{7}$",
+              "x_gt_5_7": "$x > \\frac{5}{7}$",
+              "x_le_5_7": "$x \\le \\frac{5}{7}$",
+              "x_lt_neg_5_7": "$x < -\\frac{5}{7}$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Chuyển hạng tử tự do sang vế phải: $-7x > -5$ (hoặc chuyển $-7x$ sang vế phải: $5 > 7x$).",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Khi chia cả hai vế của bất phương trình cho số âm $-7$, chiều của bất đẳng thức phải đổi ngược lại.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Từ $-7x > -5$ suy ra $x < \\frac{-5}{-7}$, tức là $x < \\frac{5}{7}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $5 - 7x > 0 \\Leftrightarrow 7x < 5 \\Leftrightarrow x < \\frac{5}{7}$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra chiều của bất đẳng thức khi chia hai vế của $-7x > -5$ cho số âm $-7$ (phải đổi chiều thành $x < \\frac{5}{7}$).",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "x_lt_5_7": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_NEGATIVE_COEFF_INEQUALITY_SOLVED",
+                "message": "Chính xác: từ $5 - 7x > 0 \\Leftrightarrow -7x > -5$, chia hai vế cho $-7 < 0$ và đổi chiều bất đẳng thức được $x < \\frac{5}{7}$."
+              },
+              "x_gt_5_7": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "FORGET_FLIP_INEQUALITY_SIGN_ON_NEGATIVE_DIVISION",
+                "message": "Chưa đúng: khi chia cả hai vế của $-7x > -5$ cho số âm $-7$, chiều bất đẳng thức phải đổi từ $>$ sang $<$, tức là $x < \\frac{5}{7}$."
+              },
+              "x_le_5_7": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "NON_STRICT_INEQUALITY_INCLUDES_ZERO_DENOMINATOR",
+                "message": "Chưa đúng: bất phương trình ban đầu là $5 - 7x > 0$ (dấu ngặt) nên nghiệm là $x < \\frac{5}{7}$, không lấy dấu bằng tại $x = \\frac{5}{7}$."
+              },
+              "x_lt_neg_5_7": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "SIGN_ERROR_IN_RATIO_OF_NEGATIVES",
+                "message": "Chưa đúng: thương của hai số âm $\\frac{-5}{-7}$ là số dương $\\frac{5}{7}$, nên kết quả là $x < \\frac{5}{7}$ chứ không phải $x < -\\frac{5}{7}$."
+              }
+            }
+          },
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.linear_inequality_negative_coeff"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P02:S04",
+          "requires": [
+            "EXAM-GRAPH-02:P02:S01",
+            "EXAM-GRAPH-02:P02:S03"
+          ],
+          "title": "Lấy giao hai điều kiện x ≠ 1 và x < 5/7",
+          "before": "\\begin{cases} x \\ne 1 \\\\ x < \\frac{5}{7} \\end{cases}",
+          "after": "x < \\frac{5}{7} \\text{ (vì } \\frac{5}{7} < 1 \\text{ nên } x = 1 \\text{ nằm ngoài miền } x < \\frac{5}{7}\\text{)}",
+          "justification": "Biểu thức B xác định khi cả hai số hạng cùng xác định (lấy GIAO hai điều kiện). Vì \\frac{5}{7} < 1 nên mọi x < \\frac{5}{7} đều nhỏ hơn 1 và tự động thỏa mãn x \\ne 1.",
+          "conditions_in_context": [
+            "x \\ne 1",
+            "x < \\frac{5}{7}"
+          ],
+          "interaction": {
+            "prompt": "Khi lấy **giao** hai điều kiện $\\begin{cases} x \\ne 1 \\\\ x < \\frac{5}{7} \\end{cases}$, nhận xét nào sau đây về điểm $x = 1$ là đúng?",
+            "answer_type": "choice",
+            "expected": "inter_redundant_x1",
+            "choices": {
+              "inter_redundant_x1": "Vì $\\frac{5}{7} < 1$ nên điểm $x = 1$ nằm ngoài khoảng $\\left(-\\infty; \\frac{5}{7}\\right)$; giao hai điều kiện thu gọn thành $x < \\frac{5}{7}$",
+              "inter_keep_x1_inside": "Vì $\\frac{5}{7} > 1$ nên điểm $x = 1$ nằm trong miền $x < \\frac{5}{7}$ và phải viết tách $x < \\frac{5}{7}, x \\ne 1$",
+              "union_all_except_1": "Lấy hợp hai điều kiện nên mọi $x \\ne 1$ đều thỏa mãn",
+              "inter_x_lt_1": "Giao của $x \\ne 1$ và $x < \\frac{5}{7}$ là $x < 1$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "So sánh hai số $\\frac{5}{7}$ và $1$ trên trục số thực.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta có $\\frac{5}{7} < \\frac{7}{7} = 1$, nên mọi số thực $x < \\frac{5}{7}$ đều nhỏ hơn $1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Vì không có số nào vừa $< \\frac{5}{7}$ lại vừa bằng $1$, giao của hai điều kiện $\\left\\{x \\ne 1\\right\\} \\cap \\left\\{x < \\frac{5}{7}\\right\\}$ chính là $\\left\\{x < \\frac{5}{7}\\right\\}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: vì $\\frac{5}{7} < 1$, mọi $x < \\frac{5}{7}$ đều khác $1$ nên giao của hai điều kiện thu gọn thành $x < \\frac{5}{7}$.",
+            "incorrect": "Chưa đúng. Hãy so sánh $\\frac{5}{7}$ với $1$ ($\\frac{5}{7} < 1$) và lưu ý điều kiện xác định của tổng hai phân thức là phép **giao** (đồng thời thỏa mãn), không phải phép hợp.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "inter_redundant_x1": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_INTERSECTION_SUBSUMES_EXCLUSION",
+                "message": "Chính xác: vì $\\frac{5}{7} < 1$, mọi giá trị $x < \\frac{5}{7}$ đều nhỏ hơn $1$ (tức là đã thỏa mãn $x \\ne 1$), nên giao hai điều kiện thu gọn thành $x < \\frac{5}{7}$."
+              },
+              "inter_keep_x1_inside": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "MISCOMPARE_FRACTION_5_7_WITH_1",
+                "message": "Chưa đúng: tử số $5$ nhỏ hơn mẫu số $7$ nên $\\frac{5}{7} < 1$ (không phải $\\frac{5}{7} > 1$); điểm $x = 1$ không nằm trong khoảng $\\left(-\\infty; \\frac{5}{7}\\right)$."
+              },
+              "union_all_except_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CONFUSE_DOMAIN_INTERSECTION_WITH_UNION",
+                "message": "Chưa đúng: để tổng hai phân thức cùng xác định, $x$ phải thỏa mãn đồng thời cả hai điều kiện (lấy **giao**), không phải lấy hợp."
+              },
+              "inter_x_lt_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "RELAX_UPPER_BOUND_5_7_TO_1",
+                "message": "Chưa đúng: miền $x < 1$ chứa các giá trị như $x = \\frac{6}{7}$ làm cho $5 - 7x < 0$ (căn thức không xác định); phải giữ cận trên chặt hơn là $x < \\frac{5}{7}$."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.domain",
+            "EXAM-GRAPH-02:skill.domain_intersection"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P02:S05",
+          "requires": [
+            "EXAM-GRAPH-02:P02:S04"
+          ],
+          "title": "Kết luận điều kiện xác định của B và kiểm tra biên x = 5/7",
+          "before": "B = \\frac{3x - 2}{x - 1} + \\frac{4}{\\sqrt{5 - 7x}}",
+          "after": "\\text{ĐKXĐ: } x < \\frac{5}{7}",
+          "justification": "Kết luận điều kiện xác định tối giản của B là x < \\frac{5}{7} (tại biên x = \\frac{5}{7} mẫu \\sqrt{5 - 7x} = 0 nên bị loại).",
+          "conditions_in_context": [
+            "x < \\frac{5}{7}"
+          ],
+          "interaction": {
+            "prompt": "Kết luận cuối cùng về điều kiện xác định của biểu thức $B = \\frac{3x - 2}{x - 1} + \\frac{4}{\\sqrt{5 - 7x}}$ là gì?",
+            "answer_type": "choice",
+            "expected": "domain_x_lt_5_7",
+            "choices": {
+              "domain_x_lt_5_7": "$x < \\frac{5}{7}$",
+              "domain_x_le_5_7": "$x \\le \\frac{5}{7}$",
+              "domain_x_gt_5_7_ne_1": "$x > \\frac{5}{7}$ và $x \\ne 1$",
+              "domain_x_ge_0_ne_1": "$x \\ge 0$ và $x \\ne 1$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Xem lại kết quả giao hai điều kiện ở bước trước.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Kiểm tra tại $x = \\frac{5}{7}$: khi đó $5 - 7x = 0$ làm mẫu số $\\sqrt{5 - 7x} = 0$ nên $x = \\frac{5}{7}$ không thuộc ĐKXĐ.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Vậy điều kiện xác định của $B$ là $x < \\frac{5}{7}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: điều kiện xác định của biểu thức $B$ là $x < \\frac{5}{7}$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra lại dấu bất đẳng thức ngặt ($x < \\frac{5}{7}$) vì tại $x = \\frac{5}{7}$ mẫu số $\\sqrt{5 - 7x}$ bằng $0$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "domain_x_lt_5_7": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_FINAL_DOMAIN_P02",
+                "message": "Chính xác: điều kiện xác định của biểu thức $B$ là $x < \\frac{5}{7}$ (giá trị biên $x = \\frac{5}{7}$ bị loại vì làm mẫu $\\sqrt{5 - 7x} = 0$)."
+              },
+              "domain_x_le_5_7": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "INCLUDE_ZERO_DENOMINATOR_BOUNDARY_5_7",
+                "message": "Chưa đúng: tại giá trị biên $x = \\frac{5}{7}$, mẫu số $\\sqrt{5 - 7x} = 0$ nên phân thức thứ hai không xác định; phải dùng dấu nhỏ hơn hẳn $x < \\frac{5}{7}$."
+              },
+              "domain_x_gt_5_7_ne_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "REVERSED_INEQUALITY_DIRECTION_FINAL",
+                "message": "Chưa đúng: với $x > \\frac{5}{7}$ thì $5 - 7x < 0$ làm biểu thức dưới căn bậc hai âm; chiều đúng của bất đẳng thức là $x < \\frac{5}{7}$."
+              },
+              "domain_x_ge_0_ne_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "DEFAULT_TO_STANDARD_SQRTX_DOMAIN",
+                "message": "Chưa đúng: biểu thức chứa $\\sqrt{5 - 7x}$ dưới mẫu (không phải $\\sqrt{x}$), nên $x$ âm vẫn thỏa mãn còn mọi $x \\ge \\frac{5}{7}$ lại làm căn thức vô nghĩa; điều kiện đúng là $x < \\frac{5}{7}$."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.domain",
+            "EXAM-GRAPH-02:skill.domain_intersection"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        }
+      ]
+    },
+    {
+      "graph_id": "EXAM-GRAPH-02:P03-A",
+      "proposal_ref": "EXAM-SOURCE-02:P03",
+      "canonical_item_id": null,
+      "prompt": "Cho biểu thức A = 1/(2 + √x) + 1/(2 − √x) − 2√x/(4 − x) với x ≥ 0, x ≠ 4. Rút gọn A và tìm x để A = 1/3. (Bài 3a: Tìm ĐKXĐ và rút gọn biểu thức A)",
+      "original_domain": "x ≥ 0; x ≠ 4 (retained throughout, including after cancelling 2 - √x).",
+      "source_ids": [
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+      ],
+      "subquestion_step_groups": {
+        "a": [
+          "EXAM-GRAPH-02:P03:S01",
+          "EXAM-GRAPH-02:P03:S02",
+          "EXAM-GRAPH-02:P03:S03",
+          "EXAM-GRAPH-02:P03:S04",
+          "EXAM-GRAPH-02:P03:S05"
+        ]
+      },
+      "terminal_step_ids": [
+        "EXAM-GRAPH-02:P03:S05"
+      ],
+      "completion_policy": "ALL_STEPS_CORRECT",
+      "edges": [
+        {
+          "from": "EXAM-GRAPH-02:P03:S01",
+          "to": "EXAM-GRAPH-02:P03:S02",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P03:S02",
+          "to": "EXAM-GRAPH-02:P03:S03",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P03:S03",
+          "to": "EXAM-GRAPH-02:P03:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P03:S04",
+          "to": "EXAM-GRAPH-02:P03:S05",
+          "kind": "REQUIRES"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "EXAM-GRAPH-02:P03:S01",
+          "requires": [],
+          "title": "Xác nhận và khóa điều kiện xác định gốc của biểu thức A",
+          "before": "A = \\frac{1}{2 + \\sqrt{x}} + \\frac{1}{2 - \\sqrt{x}} - \\frac{2\\sqrt{x}}{4 - x}",
+          "after": "x \\ge 0,\\; x \\ne 4",
+          "justification": "Căn thức \\sqrt{x} có nghĩa khi x \\ge 0; các mẫu thức 2 + \\sqrt{x} > 0, 2 - \\sqrt{x} \\ne 0 và 4 - x \\ne 0 đòi hỏi x \\ne 4. Phải giữ nguyên điều kiện x \\ge 0, x \\ne 4 trong suốt bài toán.",
+          "conditions_in_context": [
+            "x \\ge 0",
+            "x \\ne 4"
+          ],
+          "interaction": {
+            "prompt": "Đề bài cho $A = \\frac{1}{2 + \\sqrt{x}} + \\frac{1}{2 - \\sqrt{x}} - \\frac{2\\sqrt{x}}{4 - x}$ với $x \\ge 0, x \\ne 4$. Vì sao phải giữ điều kiện $x \\ge 0, x \\ne 4$ trong toàn bộ quá trình rút gọn và tìm $x$?",
+            "answer_type": "choice",
+            "expected": "keep_x_ge_0_ne_4",
+            "choices": {
+              "keep_x_ge_0_ne_4": "Vì $\\sqrt{x}$ cần $x \\ge 0$ và các mẫu ban đầu $2 - \\sqrt{x}$, $4 - x$ bằng $0$ tại $x = 4$; mọi phép biến đổi tương đương chỉ hợp lệ trên miền $x \\ge 0, x \\ne 4$",
+              "only_x_ge_0": "Chỉ cần giữ $x \\ge 0$ vì sau khi rút gọn nhân tử $2 - \\sqrt{x}$ sẽ triệt tiêu",
+              "only_x_ne_4": "Chỉ cần giữ $x \\ne 4$, không cần điều kiện $x \\ge 0$",
+              "exclude_neg_4": "Điều kiện mẫu khác $0$ là $x \\ge 0, x \\ne \\pm 2$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Kiểm tra điều kiện có nghĩa của $\\sqrt{x}$ và giá trị làm các mẫu thức $2 - \\sqrt{x}$, $4 - x$ bằng $0$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta có $\\sqrt{x}$ xác định khi $x \\ge 0$, và $2 - \\sqrt{x} = 0 \\Leftrightarrow \\sqrt{x} = 2 \\Leftrightarrow x = 4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Biểu thức rút gọn chỉ bằng biểu thức ban đầu tại các giá trị $x$ mà biểu thức ban đầu xác định ($x \\ge 0, x \\ne 4$).",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: điều kiện gốc $x \\ge 0, x \\ne 4$ đảm bảo căn thức và cả ba mẫu thức ban đầu đều xác định, và phải được giữ nguyên ngay cả sau khi giản ước.",
+            "incorrect": "Chưa đúng. Dù biểu thức sau khi rút gọn có thể tính được tại $x = 4$, biểu thức ban đầu có mẫu $2 - \\sqrt{x}$ và $4 - x$ không xác định tại $x = 4$, nên bắt buộc giữ $x \\ge 0, x \\ne 4$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "keep_x_ge_0_ne_4": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_LOCK_ORIGINAL_DOMAIN_P03",
+                "message": "Chính xác: $\\sqrt{x}$ xác định khi $x \\ge 0$ và hai mẫu $2 - \\sqrt{x}$, $4 - x$ khác $0$ khi $x \\ne 4$; miền xác định gốc $x \\ge 0, x \\ne 4$ phải được giữ nguyên suốt bài."
+              },
+              "only_x_ge_0": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "DROP_EXCLUSION_AFTER_CANCELLATION",
+                "message": "Chưa đúng: tại $x = 4$ hai phân thức ban đầu có mẫu $2 - \\sqrt{x} = 0$ và $4 - x = 0$ nên $A$ không xác định; việc giản ước về sau không làm mở rộng miền xác định gốc."
+              },
+              "only_x_ne_4": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "OMIT_NONNEGATIVE_RADICAND_X_GE_0",
+                "message": "Chưa đúng: nếu thiếu điều kiện $x \\ge 0$ thì căn bậc hai $\\sqrt{x}$ không xác định với các giá trị $x < 0$."
+              },
+              "exclude_neg_4": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CONFUSE_SQRTX_EQ_2_WITH_X_EQ_PM2",
+                "message": "Chưa đúng: phương trình mẫu bằng $0$ là $2 - \\sqrt{x} = 0 \\Leftrightarrow \\sqrt{x} = 2 \\Leftrightarrow x = 4$ (không phải $x = \\pm 2$)."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.domain"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P03:S02",
+          "requires": [
+            "EXAM-GRAPH-02:P03:S01"
+          ],
+          "title": "Phân tích mẫu thức 4 - x thành nhân tử để chọn mẫu thức chung",
+          "before": "4 - x",
+          "after": "\\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)",
+          "justification": "Với x \\ge 0, ta có 4 = 2^2 và x = (\\sqrt{x})^2, nên 4 - x = 2^2 - (\\sqrt{x})^2 = (2 - \\sqrt{x})(2 + \\sqrt{x}).",
+          "conditions_in_context": [
+            "x \\ge 0",
+            "x \\ne 4"
+          ],
+          "interaction": {
+            "prompt": "Với $x \\ge 0, x \\ne 4$, mẫu thức thứ ba $4 - x$ được phân tích thành nhân tử như thế nào để làm mẫu thức chung?",
+            "answer_type": "choice",
+            "expected": "diff_sq_2_sqrtx",
+            "choices": {
+              "diff_sq_2_sqrtx": "$4 - x = \\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)$",
+              "diff_sq_4_sqrtx": "$4 - x = \\left(4 - \\sqrt{x}\\right)\\left(4 + \\sqrt{x}\\right)$",
+              "diff_sq_sqrtx_minus_2": "$4 - x = \\left(\\sqrt{x} - 2\\right)\\left(\\sqrt{x} + 2\\right)$",
+              "perfect_sq_2_minus_sqrtx": "$4 - x = \\left(2 - \\sqrt{x}\\right)^2$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Với $x \\ge 0$, hãy viết $4 = 2^2$ và $x = \\left(\\sqrt{x}\\right)^2$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Áp dụng hằng đẳng thức hiệu hai bình phương $a^2 - b^2 = (a - b)(a + b)$ với $a = 2, b = \\sqrt{x}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Ta được $4 - x = \\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)$ (chú ý thứ tự $2 - \\sqrt{x}$ để không bị ngược dấu).",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $4 - x = 2^2 - \\left(\\sqrt{x}\\right)^2 = \\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)$.",
+            "incorrect": "Chưa khớp. Hãy kiểm tra lại hằng đẳng thức $2^2 - \\left(\\sqrt{x}\\right)^2 = \\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)$ và thứ tự dấu của $4 - x$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "diff_sq_2_sqrtx": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_DIFF_OF_SQUARES_4_MINUS_X",
+                "message": "Chính xác: với $x \\ge 0$, ta có $4 - x = 2^2 - \\left(\\sqrt{x}\\right)^2 = \\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)$."
+              },
+              "diff_sq_4_sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "FORGET_SQUARE_ROOT_OF_CONSTANT_4",
+                "message": "Chưa đúng: khi khai triển $\\left(4 - \\sqrt{x}\\right)\\left(4 + \\sqrt{x}\\right)$ ta được $16 - x$ chứ không phải $4 - x$; cần viết $4 = 2^2$."
+              },
+              "diff_sq_sqrtx_minus_2": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "REVERSED_ORDER_X_MINUS_4",
+                "message": "Chưa đúng: tích $\\left(\\sqrt{x} - 2\\right)\\left(\\sqrt{x} + 2\\right)$ bằng $x - 4$, bị ngược dấu với mẫu thức $4 - x$ của đề bài."
+              },
+              "perfect_sq_2_minus_sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CONFUSE_DIFF_OF_SQUARES_WITH_SQUARE_OF_DIFFERENCE",
+                "message": "Chưa đúng: $\\left(2 - \\sqrt{x}\\right)^2 = 4 - 4\\sqrt{x} + x \\ne 4 - x$; đây là hiệu hai bình phương $a^2 - b^2 = (a - b)(a + b)$."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.difference_squares"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P03:S03",
+          "requires": [
+            "EXAM-GRAPH-02:P03:S02"
+          ],
+          "title": "Quy đồng mẫu thức 4 - x và thu gọn tử thức",
+          "before": "\\frac{1}{2 + \\sqrt{x}} + \\frac{1}{2 - \\sqrt{x}} - \\frac{2\\sqrt{x}}{4 - x}",
+          "after": "\\frac{4 - 2\\sqrt{x}}{\\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)}",
+          "justification": "Quy đồng với mẫu chung (2 - \\sqrt{x})(2 + \\sqrt{x}): tử thức là (2 - \\sqrt{x}) + (2 + \\sqrt{x}) - 2\\sqrt{x} = 4 - 2\\sqrt{x}.",
+          "conditions_in_context": [
+            "x \\ge 0",
+            "x \\ne 4"
+          ],
+          "interaction": {
+            "prompt": "Khi quy đồng cả ba phân thức với mẫu chung $4 - x = \\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)$, tử thức sau khi thu gọn bằng biểu thức nào?",
+            "answer_type": "choice",
+            "expected": "num_4_minus_2sqrtx",
+            "choices": {
+              "num_4_minus_2sqrtx": "$4 - 2\\sqrt{x}$",
+              "num_4_plus_2sqrtx": "$4 + 2\\sqrt{x}$",
+              "num_4": "$4$",
+              "num_2_minus_2sqrtx": "$2 - 2\\sqrt{x}$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Nhân tử phụ của phân thức thứ nhất là $\\left(2 - \\sqrt{x}\\right)$, của phân thức thứ hai là $\\left(2 + \\sqrt{x}\\right)$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Viết tử thức chung: $\\left(2 - \\sqrt{x}\\right) + \\left(2 + \\sqrt{x}\\right) - 2\\sqrt{x}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Thu gọn hai ngoặc đầu được $4$ (vì $-\\sqrt{x} + \\sqrt{x} = 0$), trừ tiếp $2\\sqrt{x}$ được tử số $4 - 2\\sqrt{x}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $\\left(2 - \\sqrt{x}\\right) + \\left(2 + \\sqrt{x}\\right) - 2\\sqrt{x} = 4 - 2\\sqrt{x}$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra lại tổng $\\left(2 - \\sqrt{x}\\right) + \\left(2 + \\sqrt{x}\\right) = 4$ rồi trừ đi $2\\sqrt{x}$ ở phân thức thứ ba.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "num_4_minus_2sqrtx": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_NUMERATOR_4_MINUS_2SQRTX",
+                "message": "Chính xác: tử thức chung là $\\left(2 - \\sqrt{x}\\right) + \\left(2 + \\sqrt{x}\\right) - 2\\sqrt{x} = 4 - 2\\sqrt{x}$."
+              },
+              "num_4_plus_2sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "SIGN_ERROR_ON_THIRD_FRACTION",
+                "message": "Chưa đúng: trước phân thức thứ ba $\\frac{2\\sqrt{x}}{4 - x}$ là dấu trừ, nên tử thức phải trừ $2\\sqrt{x}$ để được $4 - 2\\sqrt{x}$."
+              },
+              "num_4": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "OMIT_THIRD_NUMERATOR_TERM",
+                "message": "Chưa đúng: $4$ mới là tổng của hai tử thức đầu $\\left(2 - \\sqrt{x}\\right) + \\left(2 + \\sqrt{x}\\right)$; còn phải trừ đi $2\\sqrt{x}$ của phân thức thứ ba."
+              },
+              "num_2_minus_2sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "ARITHMETIC_ERROR_ADDING_CONSTANTS",
+                "message": "Chưa đúng: khi cộng hai ngoặc đầu $\\left(2 - \\sqrt{x}\\right) + \\left(2 + \\sqrt{x}\\right)$, phần hằng số là $2 + 2 = 4$ (không phải $2$)."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.difference_squares",
+            "EXAM-GRAPH-02:skill.rational_common_denominator"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P03:S04",
+          "requires": [
+            "EXAM-GRAPH-02:P03:S03"
+          ],
+          "title": "Đặt nhân tử chung 2(2 - √x) ở tử và kiểm tra điều kiện khử",
+          "before": "\\frac{4 - 2\\sqrt{x}}{\\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)}",
+          "after": "\\frac{2\\left(2 - \\sqrt{x}\\right)}{\\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)} \\quad \\left(2 - \\sqrt{x} \\ne 0 \\text{ do } x \\ne 4\\right)",
+          "justification": "Đặt nhân tử chung 2 ở tử số: 4 - 2\\sqrt{x} = 2(2 - \\sqrt{x}). Vì x \\ne 4 nên 2 - \\sqrt{x} \\ne 0, phép chia cả tử và mẫu cho (2 - \\sqrt{x}) là hợp lệ.",
+          "conditions_in_context": [
+            "x \\ge 0",
+            "x \\ne 4",
+            "2 - \\sqrt{x} \\ne 0"
+          ],
+          "interaction": {
+            "prompt": "Đặt nhân tử chung ở tử số $4 - 2\\sqrt{x}$ và nêu căn cứ cho phép khử nhân tử chung với mẫu số:",
+            "answer_type": "choice",
+            "expected": "factor_2_and_nonzero",
+            "choices": {
+              "factor_2_and_nonzero": "$4 - 2\\sqrt{x} = 2\\left(2 - \\sqrt{x}\\right)$; được phép khử $\\left(2 - \\sqrt{x}\\right)$ vì $x \\ne 4 \\Rightarrow 2 - \\sqrt{x} \\ne 0$",
+              "factor_2_unconditional": "$4 - 2\\sqrt{x} = 2\\left(2 - \\sqrt{x}\\right)$; khử $\\left(2 - \\sqrt{x}\\right)$ với mọi $x \\ge 0$ kể cả $x = 4$",
+              "factor_2_sqrtx_minus_2": "$4 - 2\\sqrt{x} = 2\\left(\\sqrt{x} - 2\\right)$; khử $\\left(\\sqrt{x} - 2\\right)$ vì $x \\ne 4$",
+              "factor_4_1_minus_sqrtx": "$4 - 2\\sqrt{x} = 4\\left(1 - \\sqrt{x}\\right)$; khử $\\left(1 - \\sqrt{x}\\right)$ vì $x \\ne 4$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Đặt thừa số chung $2$ ra ngoài biểu thức $4 - 2\\sqrt{x}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta có $4 - 2\\sqrt{x} = 2\\left(2 - \\sqrt{x}\\right)$, xuất hiện nhân tử chung $\\left(2 - \\sqrt{x}\\right)$ với mẫu số.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Nhờ điều kiện gốc $x \\ne 4$, nhân tử $2 - \\sqrt{x} \\ne 0$ nên ta được phép giản ước.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $4 - 2\\sqrt{x} = 2\\left(2 - \\sqrt{x}\\right)$ và phép khử $\\left(2 - \\sqrt{x}\\right)$ hợp lệ vì $x \\ne 4 \\Rightarrow 2 - \\sqrt{x} \\ne 0$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra cả dấu khi đặt nhân tử $2\\left(2 - \\sqrt{x}\\right)$ và điều kiện nhân tử chung phải khác $0$ ($x \\ne 4$) trước khi khử.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "factor_2_and_nonzero": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_FACTOR_AND_NONZERO_GUARD",
+                "message": "Chính xác: $4 - 2\\sqrt{x} = 2\\left(2 - \\sqrt{x}\\right)$ và phép chia cả tử lẫn mẫu cho $\\left(2 - \\sqrt{x}\\right)$ hợp lệ vì $x \\ne 4 \\Rightarrow 2 - \\sqrt{x} \\ne 0$."
+              },
+              "factor_2_unconditional": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CANCEL_FACTOR_AT_EXCLUDED_VALUE_X4",
+                "message": "Chưa đúng: tại $x = 4$ thì $2 - \\sqrt{x} = 0$, không thể chia cả tử và mẫu cho $0$; phép giản ước chỉ thực hiện được với điều kiện $x \\ne 4$."
+              },
+              "factor_2_sqrtx_minus_2": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "SIGN_REVERSAL_WHEN_FACTORING_2",
+                "message": "Chưa đúng: $2\\left(\\sqrt{x} - 2\\right) = 2\\sqrt{x} - 4$, bị ngược dấu với tử thức $4 - 2\\sqrt{x}$."
+              },
+              "factor_4_1_minus_sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "COEFFICIENT_DIVISION_ERROR_FACTORING_4",
+                "message": "Chưa đúng: khi nhân ngược lại $4\\left(1 - \\sqrt{x}\\right) = 4 - 4\\sqrt{x} \\ne 4 - 2\\sqrt{x}$; thừa số chung cần đặt là $2$."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.cancellation"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P03:S05",
+          "requires": [
+            "EXAM-GRAPH-02:P03:S04"
+          ],
+          "title": "Kết luận dạng rút gọn của A kèm điều kiện xác định gốc",
+          "before": "\\frac{2\\left(2 - \\sqrt{x}\\right)}{\\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)} \\quad (x \\ge 0,\\; x \\ne 4)",
+          "after": "A = \\frac{2}{2 + \\sqrt{x}} \\quad \\text{với } x \\ge 0,\\; x \\ne 4",
+          "justification": "Sau khi giản ước (2 - \\sqrt{x}), ta thu được A = 2/(2 + \\sqrt{x}) và giữ nguyên điều kiện xác định gốc x \\ge 0, x \\ne 4.",
+          "conditions_in_context": [
+            "x \\ge 0",
+            "x \\ne 4"
+          ],
+          "interaction": {
+            "prompt": "Kết quả rút gọn hoàn chỉnh của ý a (kèm miền xác định được bảo toàn) là:",
+            "answer_type": "choice",
+            "expected": "simp_2_over_2_plus_sqrtx_keep_domain",
+            "choices": {
+              "simp_2_over_2_plus_sqrtx_keep_domain": "$A = \\frac{2}{2 + \\sqrt{x}}$ với $x \\ge 0, x \\ne 4$",
+              "simp_2_over_2_plus_sqrtx_expand_x4": "$A = \\frac{2}{2 + \\sqrt{x}}$ với mọi $x \\ge 0$",
+              "simp_2_over_2_minus_sqrtx": "$A = \\frac{2}{2 - \\sqrt{x}}$ với $x \\ge 0, x \\ne 4$",
+              "simp_neg2_over_2_plus_sqrtx": "$A = \\frac{-2}{2 + \\sqrt{x}}$ với $x \\ge 0, x \\ne 4$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Sau khi chia cả tử và mẫu cho $\\left(2 - \\sqrt{x}\\right)$, dưới mẫu còn lại thừa số nào?",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Tử còn $2$, mẫu còn $2 + \\sqrt{x}$, tức là $A = \\frac{2}{2 + \\sqrt{x}}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Đừng quên ghi kèm điều kiện xác định gốc $x \\ge 0, x \\ne 4$ của đề bài.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $A = \\frac{2}{2 + \\sqrt{x}}$ với $x \\ge 0, x \\ne 4$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra thừa số còn lại dưới mẫu là $2 + \\sqrt{x}$ và nhớ giữ nguyên điều kiện gốc $x \\ge 0, x \\ne 4$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "simp_2_over_2_plus_sqrtx_keep_domain": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_SIMPLIFIED_A_WITH_ORIGINAL_DOMAIN",
+                "message": "Chính xác: khử nhân tử $\\left(2 - \\sqrt{x}\\right)$ còn lại $A = \\frac{2}{2 + \\sqrt{x}}$ với điều kiện gốc $x \\ge 0, x \\ne 4$."
+              },
+              "simp_2_over_2_plus_sqrtx_expand_x4": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "OMIT_EXCLUDED_POINT_X4_IN_CONCLUSION",
+                "message": "Chưa đúng: mặc dù phân thức $\\frac{2}{2 + \\sqrt{x}}$ có mẫu khác $0$ tại $x = 4$, biểu thức $A$ ban đầu không xác định tại $x = 4$ nên bắt buộc ghi kèm $x \\ge 0, x \\ne 4$."
+              },
+              "simp_2_over_2_minus_sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CANCEL_WRONG_DENOMINATOR_FACTOR",
+                "message": "Chưa đúng: nhân tử chung được giản ước là $\\left(2 - \\sqrt{x}\\right)$, nên dưới mẫu phải còn lại $\\left(2 + \\sqrt{x}\\right)$ chứ không phải $\\left(2 - \\sqrt{x}\\right)$."
+              },
+              "simp_neg2_over_2_plus_sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "UNWARRANTED_NEGATIVE_SIGN_ON_CANCELLATION",
+                "message": "Chưa đúng: tử số $2\\left(2 - \\sqrt{x}\\right)$ và mẫu số $\\left(2 - \\sqrt{x}\\right)\\left(2 + \\sqrt{x}\\right)$ có cùng nhân tử $\\left(2 - \\sqrt{x}\\right)$ cùng dấu nên kết quả giản ước mang dấu dương $\\frac{2}{2 + \\sqrt{x}}$."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.cancellation",
+            "DRAFT:radical.skill.domain"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        }
+      ]
+    },
+    {
+      "graph_id": "EXAM-GRAPH-02:P03-B",
+      "proposal_ref": "EXAM-SOURCE-02:P03",
+      "canonical_item_id": null,
+      "prompt": "Với biểu thức A = 2/(√x + 2) (ĐKXĐ: x ≥ 0, x ≠ 4 từ Bài 3a), tìm x để A = 1/3. (Bài 3b)",
+      "original_domain": "x ≥ 0; x ≠ 4 (retained throughout, including after cancelling 2 - √x).",
+      "source_ids": [
+        "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+      ],
+      "subquestion_step_groups": {
+        "b": [
+          "EXAM-GRAPH-02:P03:S06",
+          "EXAM-GRAPH-02:P03:S07",
+          "EXAM-GRAPH-02:P03:S08"
+        ]
+      },
+      "terminal_step_ids": [
+        "EXAM-GRAPH-02:P03:S08"
+      ],
+      "completion_policy": "ALL_STEPS_CORRECT",
+      "edges": [
+        {
+          "from": "EXAM-GRAPH-02:P03:S06",
+          "to": "EXAM-GRAPH-02:P03:S07",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P03:S06",
+          "to": "EXAM-GRAPH-02:P03:S08",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P03:S07",
+          "to": "EXAM-GRAPH-02:P03:S08",
+          "kind": "REQUIRES"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "EXAM-GRAPH-02:P03:S06",
+          "requires": [],
+          "title": "Thiết lập phương trình A = 1/3 và giải tìm √x",
+          "before": "A = \\frac{1}{3} \\Leftrightarrow \\frac{2}{2 + \\sqrt{x}} = \\frac{1}{3}",
+          "after": "\\sqrt{x} = 4",
+          "justification": "Từ 2/(2 + \\sqrt{x}) = 1/3 \\Leftrightarrow 2 + \\sqrt{x} = 6 \\Leftrightarrow \\sqrt{x} = 4.",
+          "conditions_in_context": [
+            "x \\ge 0",
+            "x \\ne 4"
+          ],
+          "interaction": {
+            "prompt": "Ở ý b, thay biểu thức rút gọn vào phương trình $A = \\frac{1}{3}$, tức là $\\frac{2}{2 + \\sqrt{x}} = \\frac{1}{3}$. Khi đó giá trị của $\\sqrt{x}$ bằng bao nhiêu?",
+            "answer_type": "rational",
+            "expected": "4",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Nhân chéo hai vế của phương trình $\\frac{2}{2 + \\sqrt{x}} = \\frac{1}{3}$ (mẫu $2 + \\sqrt{x} > 0$).",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta được $2 + \\sqrt{x} = 2 \\cdot 3 = 6$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Suy ra $\\sqrt{x} = 6 - 2 = 4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $2 + \\sqrt{x} = 6 \\Leftrightarrow \\sqrt{x} = 4$.",
+            "incorrect": "Chưa đúng. Từ $\\frac{2}{2 + \\sqrt{x}} = \\frac{1}{3}$, nhân chéo được $2 + \\sqrt{x} = 6$, rồi trừ $2$ để tìm $\\sqrt{x}$.",
+            "unknown": "Cách viết câu trả lời chưa thuộc định dạng số hữu tỉ của bước này; cần người hướng dẫn xem xét (NEEDS_REVIEW)."
+          },
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.target_value_equation"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P03:S07",
+          "requires": [
+            "EXAM-GRAPH-02:P03:S06"
+          ],
+          "title": "Bình phương hai vế từ √x = 4 để tìm x",
+          "before": "\\sqrt{x} = 4",
+          "after": "x = 16",
+          "justification": "Vì 4 \\ge 0 nên \\sqrt{x} = 4 \\Leftrightarrow x = 4^2 = 16.",
+          "conditions_in_context": [
+            "x \\ge 0",
+            "x \\ne 4"
+          ],
+          "interaction": {
+            "prompt": "Từ $\\sqrt{x} = 4$, tìm giá trị của $x$.",
+            "answer_type": "rational",
+            "expected": "16",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Để tìm $x$ khi biết $\\sqrt{x} = 4$ (với $4 \\ge 0$), ta bình phương hai vế.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Cẩn thận không nhầm lẫn giữa bình phương $4^2$ với phép khai căn $\\sqrt{4} = 2$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Ta có $x = 4^2 = 16$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $\\sqrt{x} = 4 \\Leftrightarrow x = 4^2 = 16$.",
+            "incorrect": "Chưa khớp. Từ $\\sqrt{x} = 4$, ta phải bình phương hai vế ($x = 4^2 = 16$), không phải lấy căn của $4$.",
+            "unknown": "Cách viết câu trả lời chưa thuộc định dạng số hữu tỉ của bước này; cần người hướng dẫn xem xét (NEEDS_REVIEW)."
+          },
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.target_value_equation"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P03:S08",
+          "requires": [
+            "EXAM-GRAPH-02:P03:S06",
+            "EXAM-GRAPH-02:P03:S07"
+          ],
+          "title": "Đối chiếu điều kiện gốc x ≥ 0, x ≠ 4 và kết luận nghiệm x = 16",
+          "before": "x = 16 \\text{ và ĐKXĐ: } x \\ge 0,\\; x \\ne 4",
+          "after": "\\text{Nhận } x = 16 \\text{ (thỏa mãn } x \\ge 0,\\; x \\ne 4\\text{ và } A(16) = \\frac{1}{3}\\text{)}",
+          "justification": "Đối chiếu với điều kiện gốc x \\ge 0, x \\ne 4: giá trị x = 16 thỏa mãn (16 \\ge 0 và 16 \\ne 4). Thử lại vào biểu thức ban đầu: A(16) = 1/6 + 1/(-2) - 8/(-12) = -1/3 + 2/3 = 1/3.",
+          "conditions_in_context": [
+            "x \\ge 0",
+            "x \\ne 4"
+          ],
+          "interaction": {
+            "prompt": "Đối chiếu giá trị $x = 16$ với điều kiện xác định gốc ($x \\ge 0, x \\ne 4$) và kết luận:",
+            "answer_type": "choice",
+            "expected": "accept_x16_valid",
+            "choices": {
+              "accept_x16_valid": "Nhận $x = 16$ vì $16 \\ge 0$ và $16 \\ne 4$",
+              "reject_x16_because_sqrtx_4": "Loại $x = 16$ vì $\\sqrt{16} = 4$ vi phạm điều kiện khác $4$",
+              "accept_without_domain_check": "Nhận $x = 16$ mà không cần đối chiếu với điều kiện $x \\ge 0, x \\ne 4$",
+              "accept_both_4_and_16": "Nhận cả $x = 4$ và $x = 16$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Kiểm tra xem $x = 16$ có thỏa mãn đồng thời $x \\ge 0$ và $x \\ne 4$ hay không.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Lưu ý điều kiện loại trừ của đề bài là $x \\ne 4$ (tức là $\\sqrt{x} \\ne 2$), còn tại $x = 16$ thì $\\sqrt{x} = 4 \\ne 2$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Vậy $x = 16$ thỏa mãn ĐKXĐ gốc, kết luận $x = 16$ là giá trị cần tìm.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $x = 16$ thỏa mãn $x \\ge 0, x \\ne 4$ và khi thế lại vào biểu thức ban đầu cho đúng $A = \\frac{1}{3}$.",
+            "incorrect": "Chưa đúng. Điều kiện của đề là $x \\ne 4$ (tức $\\sqrt{x} \\ne 2$); giá trị $x = 16$ có $\\sqrt{x} = 4 \\ne 2$ nên hoàn toàn thỏa mãn ĐKXĐ và phải đối chiếu rõ ràng trước khi kết luận.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "accept_x16_valid": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_ACCEPT_X16_AFTER_DOMAIN_CHECK",
+                "message": "Chính xác: $x = 16$ thỏa mãn cả $x \\ge 0$ và $x \\ne 4$ (thử lại vào biểu thức gốc: $A = \\frac{1}{6} - \\frac{1}{2} - \\frac{8}{-12} = \\frac{1}{3}$)."
+              },
+              "reject_x16_because_sqrtx_4": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CONFUSE_X_NE_4_WITH_SQRTX_NE_4",
+                "message": "Chưa đúng: điều kiện loại trừ là $x \\ne 4$ (tương đương $\\sqrt{x} \\ne 2$), không phải $\\sqrt{x} \\ne 4$; tại $x = 16$ thì $16 \\ne 4$ nên nghiệm này hợp lệ."
+              },
+              "accept_without_domain_check": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "SKIP_MANDATORY_DOMAIN_CHECK",
+                "message": "Chưa đúng: khi giải phương trình chứa ẩn ở mẫu và căn thức, bước đối chiếu với điều kiện xác định gốc ($x \\ge 0, x \\ne 4$) là bắt buộc trước khi kết luận nghiệm."
+              },
+              "accept_both_4_and_16": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "INCLUDE_EXCLUDED_VALUE_X4_AS_ROOT",
+                "message": "Chưa đúng: $x = 4$ không phải là nghiệm của phương trình $\\sqrt{x} = 4$ và cũng bị loại bởi điều kiện xác định $x \\ne 4$."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.domain",
+            "EXAM-GRAPH-02:skill.target_value_equation"
+          ],
+          "source_ids": [
+            "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89"
+          ]
+        }
+      ]
+    },
+    {
+      "graph_id": "EXAM-GRAPH-02:P04",
+      "proposal_ref": "EXAM-SOURCE-02:P04",
+      "canonical_item_id": null,
+      "prompt": "Cho hai biểu thức A = (x + 1)/(√x − 1) và B = (x + 1)/(x − √x) − 2/(√x − 1) với x > 0, x ≠ 1. 1) Tính giá trị của A khi x = 16. 2) Chứng minh rằng B = (√x − 1)/√x. 3) Cho P = A · B. So sánh giá trị của P với 1.",
+      "original_domain": "x > 0; x ≠ 1 (retained throughout all 3 subquestions).",
+      "source_ids": [
+        "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+      ],
+      "subquestion_step_groups": {
+        "shared_domain": [
+          "EXAM-GRAPH-02:P04:S01"
+        ],
+        "1": [
+          "EXAM-GRAPH-02:P04:S02"
+        ],
+        "2": [
+          "EXAM-GRAPH-02:P04:S03",
+          "EXAM-GRAPH-02:P04:S04",
+          "EXAM-GRAPH-02:P04:S05"
+        ],
+        "3": [
+          "EXAM-GRAPH-02:P04:S06",
+          "EXAM-GRAPH-02:P04:S07",
+          "EXAM-GRAPH-02:P04:S08",
+          "EXAM-GRAPH-02:P04:S09"
+        ]
+      },
+      "terminal_step_ids": [
+        "EXAM-GRAPH-02:P04:S02",
+        "EXAM-GRAPH-02:P04:S09"
+      ],
+      "completion_policy": "ALL_STEPS_CORRECT",
+      "edges": [
+        {
+          "from": "EXAM-GRAPH-02:P04:S01",
+          "to": "EXAM-GRAPH-02:P04:S02",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P04:S01",
+          "to": "EXAM-GRAPH-02:P04:S03",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P04:S03",
+          "to": "EXAM-GRAPH-02:P04:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P04:S04",
+          "to": "EXAM-GRAPH-02:P04:S05",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P04:S01",
+          "to": "EXAM-GRAPH-02:P04:S06",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P04:S05",
+          "to": "EXAM-GRAPH-02:P04:S06",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P04:S06",
+          "to": "EXAM-GRAPH-02:P04:S07",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P04:S07",
+          "to": "EXAM-GRAPH-02:P04:S08",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "EXAM-GRAPH-02:P04:S08",
+          "to": "EXAM-GRAPH-02:P04:S09",
+          "kind": "REQUIRES"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "EXAM-GRAPH-02:P04:S01",
+          "requires": [],
+          "title": "Xác nhận và giữ miền xác định gốc x > 0, x ≠ 1 cho cả 3 ý",
+          "before": "A = \\frac{x + 1}{\\sqrt{x} - 1},\\quad B = \\frac{x + 1}{x - \\sqrt{x}} - \\frac{2}{\\sqrt{x} - 1}",
+          "after": "x > 0,\\; x \\ne 1",
+          "justification": "Đề bài cho x > 0, x \\ne 1 để \\sqrt{x} có nghĩa và các mẫu \\sqrt{x} - 1 \\ne 0, x - \\sqrt{x} = \\sqrt{x}(\\sqrt{x} - 1) \\ne 0. Miền xác định x > 0, x \\ne 1 phải được giữ xuyên suốt cả 3 ý.",
+          "conditions_in_context": [
+            "x > 0",
+            "x \\ne 1"
+          ],
+          "interaction": {
+            "prompt": "Đề bài cho $A = \\frac{x + 1}{\\sqrt{x} - 1}$ và $B = \\frac{x + 1}{x - \\sqrt{x}} - \\frac{2}{\\sqrt{x} - 1}$ với $x > 0, x \\ne 1$. Vì sao miền xác định gốc phải là $x > 0, x \\ne 1$ (không lấy $x = 0$)?",
+            "answer_type": "choice",
+            "expected": "domain_x_gt_0_ne_1",
+            "choices": {
+              "domain_x_gt_0_ne_1": "Vì tại $x = 0$ mẫu thức $x - \\sqrt{x} = 0$, và tại $x = 1$ mẫu thức $\\sqrt{x} - 1 = 0$; phải giữ $x > 0, x \\ne 1$ cho cả 3 ý",
+              "domain_x_ge_0_ne_1": "Có thể lấy cả $x = 0$ vì $\\sqrt{0} = 0$ xác định",
+              "domain_all_real_ne_1": "Chỉ cần $x \\ne 1$ vì sau khi rút gọn $\\sqrt{x}$ triệt tiêu",
+              "domain_x_gt_1": "Bắt buộc $x > 1$ để $\\sqrt{x} - 1 > 0$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Kiểm tra mẫu thức $x - \\sqrt{x}$ của biểu thức $B$ tại $x = 0$ và $x = 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta có $x - \\sqrt{x} = \\sqrt{x}\\left(\\sqrt{x} - 1\\right) = 0$ khi $\\sqrt{x} = 0$ ($x = 0$) hoặc $\\sqrt{x} = 1$ ($x = 1$).",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Kết hợp điều kiện căn bậc hai $x \\ge 0$ với $x \\ne 0$ và $x \\ne 1$, ta được miền xác định gốc $x > 0, x \\ne 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: mẫu $x - \\sqrt{x} = \\sqrt{x}\\left(\\sqrt{x} - 1\\right)$ khác $0$ đòi hỏi cả $x > 0$ và $x \\ne 1$.",
+            "incorrect": "Chưa đúng. Tại $x = 0$ mẫu số $x - \\sqrt{x}$ của $B$ bằng $0$, nên $x = 0$ bị loại; miền xác định gốc phải là $x > 0, x \\ne 1$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "domain_x_gt_0_ne_1": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_LOCK_ORIGINAL_DOMAIN_P04",
+                "message": "Chính xác: tại $x = 0$ mẫu thức $x - \\sqrt{x} = 0$ và tại $x = 1$ mẫu thức $\\sqrt{x} - 1 = 0$, nên miền xác định gốc là $x > 0, x \\ne 1$ cho cả 3 ý."
+              },
+              "domain_x_ge_0_ne_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "ALLOW_X_EQ_0_ZERO_DENOMINATOR_IN_B",
+                "message": "Chưa đúng: tuy $\\sqrt{0} = 0$ có nghĩa nhưng tại $x = 0$ mẫu thức $x - \\sqrt{x}$ của $B$ bằng $0$, nên $x = 0$ không thuộc miền xác định."
+              },
+              "domain_all_real_ne_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "OMIT_POSITIVE_X_CONDITION",
+                "message": "Chưa đúng: biểu thức chứa $\\sqrt{x}$ và mẫu $x - \\sqrt{x}$ nên không xác định khi $x \\le 0$; bắt buộc phải có $x > 0, x \\ne 1$."
+              },
+              "domain_x_gt_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CONFUSE_NONZERO_DENOMINATOR_WITH_POSITIVE_DENOMINATOR",
+                "message": "Chưa đúng: mẫu thức $\\sqrt{x} - 1$ không nằm dưới dấu căn nên chỉ cần $\\sqrt{x} - 1 \\ne 0$ ($x \\ne 1$), các giá trị $0 < x < 1$ vẫn thỏa mãn ĐKXĐ."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.domain"
+          ],
+          "source_ids": [
+            "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P04:S02",
+          "requires": [
+            "EXAM-GRAPH-02:P04:S01"
+          ],
+          "title": "Tính giá trị của A khi x = 16 (Ý 1 — nhánh độc lập với Ý 2 & 3)",
+          "before": "A = \\frac{x + 1}{\\sqrt{x} - 1} \\text{ tại } x = 16",
+          "after": "A = \\frac{16 + 1}{\\sqrt{16} - 1} = \\frac{17}{3}",
+          "justification": "Giá trị x = 16 thỏa mãn ĐKXĐ (16 > 0, 16 \\ne 1). Thay x = 16 (\\Rightarrow \\sqrt{x} = 4) vào A, ta được A = (16 + 1)/(4 - 1) = 17/3.",
+          "conditions_in_context": [
+            "x = 16 \\text{ thỏa mãn } x > 0,\\; x \\ne 1"
+          ],
+          "interaction": {
+            "prompt": "Ý 1: Thay $x = 16$ (thỏa mãn ĐKXĐ) vào biểu thức $A = \\frac{x + 1}{\\sqrt{x} - 1}$. Giá trị của $A$ bằng bao nhiêu (viết dưới dạng phân số tối giản `a/b`)?",
+            "answer_type": "rational",
+            "expected": "17/3",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Với $x = 16$ (thỏa mãn $x > 0, x \\ne 1$), hãy tính $\\sqrt{16}$ trước khi thay vào $A$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta có $\\sqrt{16} = 4$; tử số là $x + 1 = 16 + 1 = 17$, mẫu số là $\\sqrt{x} - 1 = 4 - 1 = 3$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Vậy $A = \\frac{17}{3}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: với $x = 16$, ta có $\\sqrt{x} = 4$ và $A = \\frac{16 + 1}{4 - 1} = \\frac{17}{3}$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra lại: ở tử số là $x + 1 = 16 + 1 = 17$ (không phải $\\sqrt{16} + 1$), còn ở mẫu số là $\\sqrt{16} - 1 = 4 - 1 = 3$.",
+            "unknown": "Cách viết câu trả lời chưa thuộc định dạng số hữu tỉ/phân số của bước này; cần người hướng dẫn xem xét (NEEDS_REVIEW)."
+          },
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.evaluate_at_point"
+          ],
+          "source_ids": [
+            "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P04:S03",
+          "requires": [
+            "EXAM-GRAPH-02:P04:S01"
+          ],
+          "title": "Phân tích mẫu thức x - √x thành nhân tử √x(√x - 1) (Ý 2)",
+          "before": "x - \\sqrt{x}",
+          "after": "\\sqrt{x}\\left(\\sqrt{x} - 1\\right)",
+          "justification": "Với x > 0, ta có x = (\\sqrt{x})^2 nên x - \\sqrt{x} = \\sqrt{x}(\\sqrt{x} - 1), đây chính là mẫu thức chung của biểu thức B.",
+          "conditions_in_context": [
+            "x > 0",
+            "x \\ne 1"
+          ],
+          "interaction": {
+            "prompt": "Ý 2: Để rút gọn $B = \\frac{x + 1}{x - \\sqrt{x}} - \\frac{2}{\\sqrt{x} - 1}$ (với $x > 0, x \\ne 1$), ta phân tích mẫu thức $x - \\sqrt{x}$ thành nhân tử như thế nào?",
+            "answer_type": "choice",
+            "expected": "factor_sqrtx_sqrtx_minus_1",
+            "choices": {
+              "factor_sqrtx_sqrtx_minus_1": "$x - \\sqrt{x} = \\sqrt{x}\\left(\\sqrt{x} - 1\\right)$",
+              "factor_x_1_minus_sqrtx": "$x - \\sqrt{x} = x\\left(1 - \\sqrt{x}\\right)$",
+              "factor_diff_sq_x_1": "$x - \\sqrt{x} = \\left(\\sqrt{x} - 1\\right)\\left(\\sqrt{x} + 1\\right)$",
+              "factor_sqrtx_x_minus_1": "$x - \\sqrt{x} = \\sqrt{x}(x - 1)$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Với $x > 0$, hãy viết $x = \\left(\\sqrt{x}\\right)^2$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Đặt nhân tử chung $\\sqrt{x}$ ra ngoài hiệu $\\left(\\sqrt{x}\\right)^2 - \\sqrt{x}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Ta thu được $x - \\sqrt{x} = \\sqrt{x}\\left(\\sqrt{x} - 1\\right)$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $x - \\sqrt{x} = \\sqrt{x}\\left(\\sqrt{x} - 1\\right)$, do đó mẫu thức chung của $B$ là $\\sqrt{x}\\left(\\sqrt{x} - 1\\right)$.",
+            "incorrect": "Chưa khớp. Với $x > 0$, vì $x = \\left(\\sqrt{x}\\right)^2$ nên đặt $\\sqrt{x}$ làm nhân tử chung ta được $\\sqrt{x}\\left(\\sqrt{x} - 1\\right)$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "factor_sqrtx_sqrtx_minus_1": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_FACTOR_X_MINUS_SQRTX",
+                "message": "Chính xác: vì $x = \\left(\\sqrt{x}\\right)^2$ (với $x > 0$), đặt $\\sqrt{x}$ làm nhân tử chung ta được $x - \\sqrt{x} = \\sqrt{x}\\left(\\sqrt{x} - 1\\right)$."
+              },
+              "factor_x_1_minus_sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "FACTOR_OUT_X_INSTEAD_OF_SQRTX",
+                "message": "Chưa đúng: khi nhân ngược lại $x\\left(1 - \\sqrt{x}\\right) = x - x\\sqrt{x} \\ne x - \\sqrt{x}$; thừa số chung của $x = \\left(\\sqrt{x}\\right)^2$ và $\\sqrt{x}$ là $\\sqrt{x}$."
+              },
+              "factor_diff_sq_x_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CONFUSE_X_MINUS_SQRTX_WITH_X_MINUS_1",
+                "message": "Chưa đúng: tích $\\left(\\sqrt{x} - 1\\right)\\left(\\sqrt{x} + 1\\right)$ bằng $x - 1$, trong khi mẫu thức ở đây là $x - \\sqrt{x}$."
+              },
+              "factor_sqrtx_x_minus_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "LEAVE_X_INSTEAD_OF_SQRTX_INSIDE_PAREN",
+                "message": "Chưa đúng: khi nhân ngược lại $\\sqrt{x}(x - 1) = x\\sqrt{x} - \\sqrt{x} \\ne x - \\sqrt{x}$; chia $x$ cho $\\sqrt{x}$ chỉ còn $\\sqrt{x}$."
+              }
+            }
+          },
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.rational_common_denominator"
+          ],
+          "source_ids": [
+            "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P04:S04",
+          "requires": [
+            "EXAM-GRAPH-02:P04:S03"
+          ],
+          "title": "Quy đồng mẫu thức của B và đưa tử số về hằng đẳng thức (√x - 1)²",
+          "before": "B = \\frac{x + 1}{\\sqrt{x}\\left(\\sqrt{x} - 1\\right)} - \\frac{2\\sqrt{x}}{\\sqrt{x}\\left(\\sqrt{x} - 1\\right)}",
+          "after": "B = \\frac{x - 2\\sqrt{x} + 1}{\\sqrt{x}\\left(\\sqrt{x} - 1\\right)} = \\frac{\\left(\\sqrt{x} - 1\\right)^2}{\\sqrt{x}\\left(\\sqrt{x} - 1\\right)}",
+          "justification": "Nhân cả tử và mẫu của 2/(\\sqrt{x} - 1) với \\sqrt{x}, tử thức của B trở thành x + 1 - 2\\sqrt{x} = (\\sqrt{x} - 1)^2.",
+          "conditions_in_context": [
+            "x > 0",
+            "x \\ne 1"
+          ],
+          "interaction": {
+            "prompt": "Khi quy đồng $B$ với mẫu chung $\\sqrt{x}\\left(\\sqrt{x} - 1\\right)$, tử thức thu được và dạng hằng đẳng thức tương ứng là gì?",
+            "answer_type": "choice",
+            "expected": "num_sqrtx_minus_1_sq",
+            "choices": {
+              "num_sqrtx_minus_1_sq": "$x - 2\\sqrt{x} + 1 = \\left(\\sqrt{x} - 1\\right)^2$",
+              "num_x_minus_1": "$x - 1 = \\left(\\sqrt{x} - 1\\right)\\left(\\sqrt{x} + 1\\right)$",
+              "num_sqrtx_plus_1_sq": "$x + 2\\sqrt{x} + 1 = \\left(\\sqrt{x} + 1\\right)^2$",
+              "num_x_minus_2sqrtx_minus_1": "$x - 2\\sqrt{x} - 1$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Phân thức thứ hai $\\frac{2}{\\sqrt{x} - 1}$ cần nhân cả tử và mẫu với nhân tử phụ $\\sqrt{x}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Tử thức chung là $x + 1 - 2\\sqrt{x} = \\left(\\sqrt{x}\\right)^2 - 2\\sqrt{x} + 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Theo hằng đẳng thức bình phương của một hiệu, $\\left(\\sqrt{x}\\right)^2 - 2\\sqrt{x} + 1 = \\left(\\sqrt{x} - 1\\right)^2$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: tử thức là $x - 2\\sqrt{x} + 1 = \\left(\\sqrt{x} - 1\\right)^2$.",
+            "incorrect": "Chưa đúng. Nhớ nhân tử số $2$ của phân thức thứ hai với nhân tử phụ $\\sqrt{x}$ để được tử thức $x - 2\\sqrt{x} + 1 = \\left(\\sqrt{x} - 1\\right)^2$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "num_sqrtx_minus_1_sq": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_PERFECT_SQUARE_NUMERATOR_B",
+                "message": "Chính xác: nhân tử và mẫu của $\\frac{2}{\\sqrt{x} - 1}$ với $\\sqrt{x}$, tử thức chung là $x + 1 - 2\\sqrt{x} = \\left(\\sqrt{x} - 1\\right)^2$."
+              },
+              "num_x_minus_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "FORGET_MULTIPLY_SECOND_NUMERATOR_BY_SQRTX",
+                "message": "Chưa đúng: mẫu của phân thức thứ hai là $\\sqrt{x} - 1$ nên khi quy đồng với mẫu chung $\\sqrt{x}\\left(\\sqrt{x} - 1\\right)$ phải nhân tử số $2$ với $\\sqrt{x}$ (được $-2\\sqrt{x}$, không phải $-2$)."
+              },
+              "num_sqrtx_plus_1_sq": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "SIGN_ERROR_PLUS_INSTEAD_OF_MINUS_2SQRTX",
+                "message": "Chưa đúng: giữa hai phân thức của $B$ là phép trừ nên hạng tử giữa là $-2\\sqrt{x}$, dẫn đến $\\left(\\sqrt{x} - 1\\right)^2$ chứ không phải $\\left(\\sqrt{x} + 1\\right)^2$."
+              },
+              "num_x_minus_2sqrtx_minus_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "SIGN_ERROR_ON_CONSTANT_PLUS_1",
+                "message": "Chưa đúng: tử thức của phân thức đầu là $x + 1$ (mang dấu $+1$), nên sau khi trừ $2\\sqrt{x}$ tử thức là $x - 2\\sqrt{x} + 1$."
+              }
+            }
+          },
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.rational_common_denominator"
+          ],
+          "source_ids": [
+            "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P04:S05",
+          "requires": [
+            "EXAM-GRAPH-02:P04:S04"
+          ],
+          "title": "Khử nhân tử chung (√x - 1) để hoàn tất chứng minh B = (√x - 1)/√x",
+          "before": "B = \\frac{\\left(\\sqrt{x} - 1\\right)^2}{\\sqrt{x}\\left(\\sqrt{x} - 1\\right)} \\quad (x > 0,\\; x \\ne 1)",
+          "after": "B = \\frac{\\sqrt{x} - 1}{\\sqrt{x}} \\quad (x > 0,\\; x \\ne 1)",
+          "justification": "Vì x \\ne 1 nên \\sqrt{x} - 1 \\ne 0; chia cả tử và mẫu cho (\\sqrt{x} - 1), ta chứng minh được B = (\\sqrt{x} - 1)/\\sqrt{x} trên miền x > 0, x \\ne 1.",
+          "conditions_in_context": [
+            "x > 0",
+            "x \\ne 1",
+            "\\sqrt{x} - 1 \\ne 0"
+          ],
+          "interaction": {
+            "prompt": "Từ $B = \\frac{\\left(\\sqrt{x} - 1\\right)^2}{\\sqrt{x}\\left(\\sqrt{x} - 1\\right)}$, bước rút gọn kết thúc chứng minh ý 2 như thế nào?",
+            "answer_type": "choice",
+            "expected": "prove_B_keep_domain",
+            "choices": {
+              "prove_B_keep_domain": "Vì $x \\ne 1 \\Rightarrow \\sqrt{x} - 1 \\ne 0$, khử $\\left(\\sqrt{x} - 1\\right)$ ta được $B = \\frac{\\sqrt{x} - 1}{\\sqrt{x}}$ với $x > 0, x \\ne 1$",
+              "prove_B_drop_x_ne_1": "Khử $\\left(\\sqrt{x} - 1\\right)$ được $B = \\frac{\\sqrt{x} - 1}{\\sqrt{x}}$ với mọi $x > 0$",
+              "prove_B_cancel_sqrtx": "Khử $\\sqrt{x}$ được $B = \\frac{\\sqrt{x} - 1}{\\sqrt{x} - 1} = 1$ với $x > 0, x \\ne 1$",
+              "prove_B_inverted": "Khử $\\left(\\sqrt{x} - 1\\right)$ được $B = \\frac{\\sqrt{x}}{\\sqrt{x} - 1}$ với $x > 0, x \\ne 1$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Quan sát nhân tử chung $\\left(\\sqrt{x} - 1\\right)$ ở cả tử số $\\left(\\sqrt{x} - 1\\right)^2$ và mẫu số $\\sqrt{x}\\left(\\sqrt{x} - 1\\right)$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Do $x \\ne 1$ nên $\\sqrt{x} - 1 \\ne 0$, cho phép chia cả tử và mẫu cho $\\left(\\sqrt{x} - 1\\right)$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Ta thu được $B = \\frac{\\sqrt{x} - 1}{\\sqrt{x}}$ trên miền gốc $x > 0, x \\ne 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: nhờ $x \\ne 1 \\Rightarrow \\sqrt{x} - 1 \\ne 0$, giản ước $\\left(\\sqrt{x} - 1\\right)$ cho ta $B = \\frac{\\sqrt{x} - 1}{\\sqrt{x}}$ với $x > 0, x \\ne 1$.",
+            "incorrect": "Chưa đúng. Khi giản ước $\\left(\\sqrt{x} - 1\\right)$, trên tử còn $\\sqrt{x} - 1$, dưới mẫu còn $\\sqrt{x}$, và bắt buộc giữ nguyên miền xác định $x > 0, x \\ne 1$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "prove_B_keep_domain": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_PROVE_B_WITH_RETAINED_DOMAIN",
+                "message": "Chính xác: vì $x \\ne 1 \\Rightarrow \\sqrt{x} - 1 \\ne 0$, chia cả tử và mẫu cho $\\left(\\sqrt{x} - 1\\right)$ ta được $B = \\frac{\\sqrt{x} - 1}{\\sqrt{x}}$ với $x > 0, x \\ne 1$."
+              },
+              "prove_B_drop_x_ne_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "DROP_EXCLUSION_X_NE_1_AFTER_SIMPLIFYING_B",
+                "message": "Chưa đúng: biểu thức $B$ ban đầu không xác định tại $x = 1$, nên sau khi khử $\\left(\\sqrt{x} - 1\\right)$ vẫn phải giữ điều kiện $x > 0, x \\ne 1$."
+              },
+              "prove_B_cancel_sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "INVALID_CANCELLATION_OF_SQRTX",
+                "message": "Chưa đúng: $\\sqrt{x}$ không phải là nhân tử chung của tử thức $\\left(\\sqrt{x} - 1\\right)^2$; nhân tử chung cần khử là $\\left(\\sqrt{x} - 1\\right)$."
+              },
+              "prove_B_inverted": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "INVERT_NUMERATOR_AND_DENOMINATOR_OF_B",
+                "message": "Chưa đúng: trên tử có $\\left(\\sqrt{x} - 1\\right)^2$ và dưới mẫu có $\\sqrt{x}\\left(\\sqrt{x} - 1\\right)$, nên sau khi khử $\\left(\\sqrt{x} - 1\\right)$ tử số là $\\sqrt{x} - 1$ và mẫu số là $\\sqrt{x}$."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.cancellation"
+          ],
+          "source_ids": [
+            "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P04:S06",
+          "requires": [
+            "EXAM-GRAPH-02:P04:S01",
+            "EXAM-GRAPH-02:P04:S05"
+          ],
+          "title": "Tính tích P = A · B trên miền gốc x > 0, x ≠ 1 (Ý 3)",
+          "before": "P = A \\cdot B = \\frac{x + 1}{\\sqrt{x} - 1} \\cdot \\frac{\\sqrt{x} - 1}{\\sqrt{x}}",
+          "after": "P = \\frac{x + 1}{\\sqrt{x}} \\quad (x > 0,\\; x \\ne 1)",
+          "justification": "Với x > 0, x \\ne 1 thì \\sqrt{x} - 1 \\ne 0, khử nhân tử (\\sqrt{x} - 1) trong tích A \\cdot B ta được P = (x + 1)/\\sqrt{x} và giữ nguyên miền gốc x > 0, x \\ne 1.",
+          "conditions_in_context": [
+            "x > 0",
+            "x \\ne 1"
+          ],
+          "interaction": {
+            "prompt": "Ý 3: Thay $A = \\frac{x + 1}{\\sqrt{x} - 1}$ và $B = \\frac{\\sqrt{x} - 1}{\\sqrt{x}}$ vào $P = A \\cdot B$. Sau khi rút gọn, biểu thức $P$ và miền xác định của nó là:",
+            "answer_type": "choice",
+            "expected": "P_x_plus_1_over_sqrtx_keep_domain",
+            "choices": {
+              "P_x_plus_1_over_sqrtx_keep_domain": "$P = \\frac{x + 1}{\\sqrt{x}}$ với $x > 0, x \\ne 1$",
+              "P_x_plus_1_over_sqrtx_drop_x1": "$P = \\frac{x + 1}{\\sqrt{x}}$ với mọi $x > 0$",
+              "P_x_plus_1_over_x_minus_sqrtx": "$P = \\frac{x + 1}{\\sqrt{x} - 1}$ với $x > 0, x \\ne 1$",
+              "P_sqrtx_plus_1": "$P = \\sqrt{x} + 1$ với $x > 0, x \\ne 1$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Viết tích $P = \\frac{x + 1}{\\sqrt{x} - 1} \\cdot \\frac{\\sqrt{x} - 1}{\\sqrt{x}}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Vì $x \\ne 1 \\Rightarrow \\sqrt{x} - 1 \\ne 0$, ta giản ước nhân tử $\\left(\\sqrt{x} - 1\\right)$ ở tử và mẫu.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Thu được $P = \\frac{x + 1}{\\sqrt{x}}$ và giữ nguyên điều kiện xác định gốc $x > 0, x \\ne 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $P = \\frac{x + 1}{\\sqrt{x}}$ với $x > 0, x \\ne 1$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra phép giản ước $\\left(\\sqrt{x} - 1\\right)$ trong tích $\\frac{x + 1}{\\sqrt{x} - 1} \\cdot \\frac{\\sqrt{x} - 1}{\\sqrt{x}}$ và nhớ bảo toàn miền gốc $x > 0, x \\ne 1$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "P_x_plus_1_over_sqrtx_keep_domain": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_PRODUCT_P_WITH_RETAINED_DOMAIN",
+                "message": "Chính xác: giản ước nhân tử $\\left(\\sqrt{x} - 1\\right) \\ne 0$ trong tích $A \\cdot B$, ta được $P = \\frac{x + 1}{\\sqrt{x}}$ với $x > 0, x \\ne 1$."
+              },
+              "P_x_plus_1_over_sqrtx_drop_x1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "DROP_EXCLUSION_X_NE_1_IN_PRODUCT_P",
+                "message": "Chưa đúng: vì $P = A \\cdot B$ mà cả $A$ và $B$ đều không xác định tại $x = 1$, nên vẫn phải giữ điều kiện $x > 0, x \\ne 1$."
+              },
+              "P_x_plus_1_over_x_minus_sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "RETAIN_CANCELED_FACTOR_INSTEAD_OF_SQRTX",
+                "message": "Chưa đúng: thừa số $\\left(\\sqrt{x} - 1\\right)$ ở mẫu của $A$ đã giản ước với tử của $B$; mẫu số còn lại của tích $A \\cdot B$ là $\\sqrt{x}$."
+              },
+              "P_sqrtx_plus_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "SPLIT_FRACTION_DIVISION_ERROR",
+                "message": "Chưa đúng: $\\frac{x + 1}{\\sqrt{x}} = \\sqrt{x} + \\frac{1}{\\sqrt{x}}$ chứ không bằng $\\sqrt{x} + 1$ (hạng tử $1$ khi chia cho $\\sqrt{x}$ là $\\frac{1}{\\sqrt{x}}$)."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.cancellation",
+            "DRAFT:radical.skill.domain"
+          ],
+          "source_ids": [
+            "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P04:S07",
+          "requires": [
+            "EXAM-GRAPH-02:P04:S06"
+          ],
+          "title": "Lập hiệu P - 1 và quy đồng về một phân thức",
+          "before": "P - 1 = \\frac{x + 1}{\\sqrt{x}} - 1",
+          "after": "P - 1 = \\frac{x - \\sqrt{x} + 1}{\\sqrt{x}}",
+          "justification": "Theo phương pháp xét hiệu để so sánh P với 1, ta tính P - 1 = (x + 1)/\\sqrt{x} - 1 = (x - \\sqrt{x} + 1)/\\sqrt{x}.",
+          "conditions_in_context": [
+            "x > 0",
+            "x \\ne 1"
+          ],
+          "interaction": {
+            "prompt": "Để so sánh $P$ với $1$ bằng phương pháp xét hiệu, ta biến đổi hiệu $P - 1$ thành phân thức nào?",
+            "answer_type": "choice",
+            "expected": "diff_x_minus_sqrtx_plus_1_over_sqrtx",
+            "choices": {
+              "diff_x_minus_sqrtx_plus_1_over_sqrtx": "$P - 1 = \\frac{x - \\sqrt{x} + 1}{\\sqrt{x}}$",
+              "diff_x_over_sqrtx": "$P - 1 = \\frac{x}{\\sqrt{x}}$",
+              "diff_x_plus_sqrtx_plus_1_over_sqrtx": "$P - 1 = \\frac{x + \\sqrt{x} + 1}{\\sqrt{x}}$",
+              "diff_x_minus_2sqrtx_plus_1_over_sqrtx": "$P - 1 = \\frac{x - 2\\sqrt{x} + 1}{\\sqrt{x}}$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Để so sánh $P$ với $1$, hãy xét dấu của hiệu $P - 1 = \\frac{x + 1}{\\sqrt{x}} - 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Quy đồng số $-1 = -\\frac{\\sqrt{x}}{\\sqrt{x}}$ với mẫu số $\\sqrt{x}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Ta được $P - 1 = \\frac{x + 1 - \\sqrt{x}}{\\sqrt{x}} = \\frac{x - \\sqrt{x} + 1}{\\sqrt{x}}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $P - 1 = \\frac{x - \\sqrt{x} + 1}{\\sqrt{x}}$.",
+            "incorrect": "Chưa đúng. Khi quy đồng $\\frac{x + 1}{\\sqrt{x}} - 1$, phải nhân $1$ với mẫu $\\sqrt{x}$ để được tử số $x + 1 - \\sqrt{x} = x - \\sqrt{x} + 1$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "diff_x_minus_sqrtx_plus_1_over_sqrtx": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_DIFFERENCE_P_MINUS_1",
+                "message": "Chính xác: quy đồng $P - 1 = \\frac{x + 1}{\\sqrt{x}} - \\frac{\\sqrt{x}}{\\sqrt{x}} = \\frac{x - \\sqrt{x} + 1}{\\sqrt{x}}$."
+              },
+              "diff_x_over_sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "SUBTRACT_1_WITHOUT_COMMON_DENOMINATOR",
+                "message": "Chưa đúng: không thể lấy tử số $x + 1$ trừ thẳng $1$; khi quy đồng với mẫu $\\sqrt{x}$, số $1$ được viết thành $\\frac{\\sqrt{x}}{\\sqrt{x}}$."
+              },
+              "diff_x_plus_sqrtx_plus_1_over_sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "SIGN_ERROR_ADDING_SQRTX_INSTEAD_OF_SUBTRACTING",
+                "message": "Chưa đúng: ta đang xét hiệu $P - 1$ nên trên tử phải trừ $\\sqrt{x}$ (thu được $x - \\sqrt{x} + 1$, không phải $x + \\sqrt{x} + 1$)."
+              },
+              "diff_x_minus_2sqrtx_plus_1_over_sqrtx": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CONFUSE_P_MINUS_1_WITH_P_MINUS_2",
+                "message": "Chưa đúng: biểu thức $\\frac{x - 2\\sqrt{x} + 1}{\\sqrt{x}}$ là hiệu $P - 2$; ở đây đề bài yêu cầu so sánh $P$ với $1$ nên hiệu là $P - 1 = \\frac{x - \\sqrt{x} + 1}{\\sqrt{x}}$."
+              }
+            }
+          },
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.difference_comparison_completing_square"
+          ],
+          "source_ids": [
+            "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P04:S08",
+          "requires": [
+            "EXAM-GRAPH-02:P04:S07"
+          ],
+          "title": "Tách bình phương đủ ở tử thức và xét dấu tử, mẫu của P - 1",
+          "before": "P - 1 = \\frac{x - \\sqrt{x} + 1}{\\sqrt{x}}",
+          "after": "P - 1 = \\frac{\\left(\\sqrt{x} - \\frac{1}{2}\\right)^2 + \\frac{3}{4}}{\\sqrt{x}} > 0",
+          "justification": "Tử thức x - \\sqrt{x} + 1 = (\\sqrt{x} - 1/2)^2 + 3/4 \\ge 3/4 > 0 với mọi x \\ge 0; mẫu thức \\sqrt{x} > 0 với mọi x > 0. Do đó P - 1 > 0 trên toàn bộ miền x > 0, x \\ne 1.",
+          "conditions_in_context": [
+            "x > 0",
+            "x \\ne 1"
+          ],
+          "interaction": {
+            "prompt": "Biến đổi tử thức $x - \\sqrt{x} + 1$ và xét dấu của phân thức $P - 1 = \\frac{x - \\sqrt{x} + 1}{\\sqrt{x}}$ với $x > 0, x \\ne 1$:",
+            "answer_type": "choice",
+            "expected": "complete_sq_pos_over_pos",
+            "choices": {
+              "complete_sq_pos_over_pos": "$x - \\sqrt{x} + 1 = \\left(\\sqrt{x} - \\frac{1}{2}\\right)^2 + \\frac{3}{4} > 0$ và mẫu $\\sqrt{x} > 0$, suy ra $P - 1 > 0$",
+              "perfect_sq_sqrtx_minus_1": "$x - \\sqrt{x} + 1 = \\left(\\sqrt{x} - 1\\right)^2 > 0$ và mẫu $\\sqrt{x} > 0$, suy ra $P - 1 > 0$",
+              "complete_sq_can_be_zero": "$x - \\sqrt{x} + 1 = \\left(\\sqrt{x} - \\frac{1}{2}\\right)^2 \\ge 0$ nên $P - 1 \\ge 0$ (bằng $0$ khi $x = \\frac{1}{4}$)",
+              "sign_indeterminate": "Vì có hạng tử $-\\sqrt{x}$ nên $P - 1$ đổi dấu khi $0 < x < 1$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Tách tử thức $x - \\sqrt{x} + 1$ thành bình phương của một hiệu cộng với một hằng số dương: $\\left(\\sqrt{x}\\right)^2 - 2 \\cdot \\sqrt{x} \\cdot \\frac{1}{2} + \\left(\\frac{1}{2}\\right)^2 + \\frac{3}{4}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta được $x - \\sqrt{x} + 1 = \\left(\\sqrt{x} - \\frac{1}{2}\\right)^2 + \\frac{3}{4} \\ge \\frac{3}{4} > 0$ với mọi $x > 0, x \\ne 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Kết hợp với mẫu $\\sqrt{x} > 0$ (do $x > 0$), thương của hai số dương luôn dương: $P - 1 > 0$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $x - \\sqrt{x} + 1 = \\left(\\sqrt{x} - \\frac{1}{2}\\right)^2 + \\frac{3}{4} > 0$ và $\\sqrt{x} > 0$ nên $P - 1 > 0$ với mọi $x > 0, x \\ne 1$.",
+            "incorrect": "Chưa đúng. Chú ý $x - \\sqrt{x} + 1$ không phải là $\\left(\\sqrt{x} - 1\\right)^2$; cần tách bình phương đủ $\\left(\\sqrt{x} - \\frac{1}{2}\\right)^2 + \\frac{3}{4} > 0$ và kết hợp $\\sqrt{x} > 0$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "complete_sq_pos_over_pos": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_COMPLETING_SQUARE_STRICTLY_POSITIVE",
+                "message": "Chính xác: $x - \\sqrt{x} + 1 = \\left(\\sqrt{x} - \\frac{1}{2}\\right)^2 + \\frac{3}{4} \\ge \\frac{3}{4} > 0$ và mẫu $\\sqrt{x} > 0$ với mọi $x > 0, x \\ne 1$, nên $P - 1 > 0$."
+              },
+              "perfect_sq_sqrtx_minus_1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "CONFUSE_WITH_SQUARE_OF_SQRTX_MINUS_1",
+                "message": "Chưa đúng: $\\left(\\sqrt{x} - 1\\right)^2 = x - 2\\sqrt{x} + 1 \\ne x - \\sqrt{x} + 1$; cần tách $x - \\sqrt{x} + 1 = \\left(\\sqrt{x} - \\frac{1}{2}\\right)^2 + \\frac{3}{4}$."
+              },
+              "complete_sq_can_be_zero": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "OMIT_CONSTANT_REMAINDER_3_4_IN_COMPLETING_SQUARE",
+                "message": "Chưa đúng: $\\left(\\sqrt{x} - \\frac{1}{2}\\right)^2 = x - \\sqrt{x} + \\frac{1}{4}$, nên còn dư $+\\frac{3}{4} > 0$; vì vậy tử thức luôn $\\ge \\frac{3}{4} > 0$ và không bằng $0$ tại $x = \\frac{1}{4}$."
+              },
+              "sign_indeterminate": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "FAIL_TO_COMPLETE_SQUARE_FOR_SIGN_ANALYSIS",
+                "message": "Chưa đúng: khi viết $x - \\sqrt{x} + 1 = \\left(\\sqrt{x} - \\frac{1}{2}\\right)^2 + \\frac{3}{4}$, ta thấy tử thức luôn dương với mọi $x > 0$ (kể cả trên khoảng $0 < x < 1$)."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.sign_condition",
+            "EXAM-GRAPH-02:skill.difference_comparison_completing_square"
+          ],
+          "source_ids": [
+            "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+          ]
+        },
+        {
+          "step_id": "EXAM-GRAPH-02:P04:S09",
+          "requires": [
+            "EXAM-GRAPH-02:P04:S08"
+          ],
+          "title": "Kết luận so sánh P với 1 trên miền xác định gốc x > 0, x ≠ 1",
+          "before": "P - 1 > 0 \\quad \\text{với } x > 0,\\; x \\ne 1",
+          "after": "P > 1 \\quad \\text{với mọi } x > 0,\\; x \\ne 1",
+          "justification": "Vì P - 1 > 0 với mọi x > 0, x \\ne 1 nên P > 1 với mọi x > 0, x \\ne 1.",
+          "conditions_in_context": [
+            "x > 0",
+            "x \\ne 1"
+          ],
+          "interaction": {
+            "prompt": "Từ $P - 1 > 0$, kết luận cuối cùng khi so sánh $P$ với $1$ trên miền xác định gốc là:",
+            "answer_type": "choice",
+            "expected": "conclude_P_gt_1_on_domain",
+            "choices": {
+              "conclude_P_gt_1_on_domain": "$P > 1$ với mọi $x > 0, x \\ne 1$",
+              "conclude_P_lt_1_on_domain": "$P < 1$ với mọi $x > 0, x \\ne 1$",
+              "conclude_P_gt_1_all_x_ge_0": "$P > 1$ với mọi $x \\ge 0$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Theo lý thuyết so sánh hai biểu thức: nếu $P - 1 > 0$ thì $P$ như thế nào so với $1$?",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Vì $\\left(\\sqrt{x} - \\frac{1}{2}\\right)^2 + \\frac{3}{4} \\ge \\frac{3}{4} > 0$, hiệu $P - 1$ dương hẳn (không thể bằng $0$).",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Vậy $P > 1$ với mọi $x > 0, x \\ne 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác: $P > 1$ với mọi $x > 0, x \\ne 1$.",
+            "incorrect": "Chưa đúng. Từ $P - 1 > 0$ (dương hẳn vì tử $\\ge \\frac{3}{4} > 0$), ta kết luận $P > 1$ trên đúng miền xác định gốc $x > 0, x \\ne 1$.",
+            "unknown": "Lựa chọn hoặc cách trình bày chưa nằm trong danh mục kiểm tra tự động; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "conclude_P_gt_1_on_domain": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "TARGET_STRICT_INEQUALITY_P_GT_1_ON_DOMAIN",
+                "message": "Chính xác: từ $P - 1 > 0$ với mọi $x > 0, x \\ne 1$, ta kết luận $P > 1$ với mọi $x > 0, x \\ne 1$."
+              },
+              "conclude_P_lt_1_on_domain": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "REVERSED_COMPARISON_FROM_POSITIVE_DIFFERENCE",
+                "message": "Chưa đúng: hiệu $P - 1 > 0$ có nghĩa là $P$ lớn hơn $1$ ($P > 1$), không phải $P < 1$."
+              },
+              "conclude_P_gt_1_all_x_ge_0": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "EXPAND_CONCLUSION_BEYOND_ORIGINAL_DOMAIN",
+                "message": "Chưa đúng: tại $x = 0$ và $x = 1$ các biểu thức ban đầu không xác định; kết luận phải phát biểu trên đúng miền xác định gốc $x > 0, x \\ne 1$."
+              }
+            }
+          },
+          "node_ids": [
+            "DRAFT:radical.skill.sign_condition",
+            "DRAFT:radical.skill.domain",
+            "EXAM-GRAPH-02:skill.difference_comparison_completing_square"
+          ],
+          "source_ids": [
+            "drive:1GvvIIS82iLB0ziU_IydN6-yxsGnXejbI"
+          ]
+        }
+      ]
+    }
+  ],
+  "assets": [],
+  "videos": [],
+  "assessments": [],
+  "review": {
+    "source": {
+      "status": "PENDING",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Chưa phê duyệt profile chuyển đổi; đối chiếu nguyên bản và checkpoint trước khi phát hành."
+    },
+    "technical": {
+      "status": "PENDING",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Chưa phê duyệt profile chuyển đổi; đối chiếu nguyên bản và checkpoint trước khi phát hành."
+    },
+    "math": {
+      "status": "PENDING",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Chưa phê duyệt profile chuyển đổi; đối chiếu nguyên bản và checkpoint trước khi phát hành."
+    },
+    "visual": {
+      "status": "PENDING",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Chưa phê duyệt profile chuyển đổi; đối chiếu nguyên bản và checkpoint trước khi phát hành."
+    },
+    "pedagogy": {
+      "status": "PENDING",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Chưa phê duyệt profile chuyển đổi; đối chiếu nguyên bản và checkpoint trước khi phát hành."
+    },
+    "release": {
+      "status": "PENDING",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Chưa phê duyệt profile chuyển đổi; đối chiếu nguyên bản và checkpoint trước khi phát hành."
+    }
+  }
+}

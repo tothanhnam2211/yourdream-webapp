@@ -1,0 +1,36 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),E=require('../vendor/radicals-engine.cjs'),J=(require('../public/radicals-journal.js'),globalThis.RadicalJournal),data=JSON.parse(fs.readFileSync(__dirname+'/../public/data/radical-steps-v0.1.json'));
+let count=0;function test(name,fn){fn();count++;}
+const mutate=(name,fn)=>test(name,()=>{const d=structuredClone(data);fn(d);assert.throws(()=>E.validate(d));});
+mutate('missing graph step',d=>d.graphs[0].step_ids.pop());
+mutate('unknown endpoint',d=>d.graphs[0].edges[0].to='UNKNOWN');
+mutate('missing dependency arrows',d=>d.graphs[0].edges=[]);
+mutate('duplicate graph item',d=>d.graphs[1].item_id=d.graphs[0].item_id);
+mutate('duplicate listed step',d=>d.graphs[0].step_ids.push(d.graphs[0].step_ids[0]));
+mutate('duplicate edge',d=>d.graphs[0].edges.push(d.graphs[0].edges[0]));
+mutate('extra nondependency edge',d=>d.graphs[0].edges.push({from:'RAD-001:S01',to:'RAD-001:S02'}));
+mutate('cross item step',d=>d.graphs[0].step_ids[0]='RAD-002:S01');
+mutate('duplicate dependency',d=>d.steps[3].requires.push(d.steps[3].requires[0]));
+mutate('cycle even with matching arrows',d=>{d.steps[0].requires=['RAD-001:S04'];d.graphs[0].edges.push({from:'RAD-001:S04',to:'RAD-001:S01'});});
+mutate('malformed graphs',d=>d.graphs=null);
+mutate('duplicate authored step ID',d=>d.steps[1].step_id=d.steps[0].step_id);
+mutate('unknown item unsupported by layout',d=>d.graphs[0].item_id='RAD-999');
+mutate('unsupported layout size',d=>{const a=d.graphs[0].step_ids.pop();d.graphs[1].step_ids.push(a);});
+test('original data still valid',()=>assert.equal(E.validate(data),true));
+const item='RAD-001',step='RAD-001:S01';
+function answer(j,result='CORRECT',hint=0){return J.append(data,j,'ANSWER_SUBMITTED',item,step,{answer:'3',result_status:result,hint_level:hint});}
+test('fresh success has bounded no-support evidence',()=>{const j=J.create(data,'session');answer(j);assert.equal(J.evidence(j,item,step).status,'CORRECT_WITHOUT_RECORDED_SUPPORT');assert.equal(j.events[0].content_sha256,J.HASH);});
+test('hint before success records support',()=>{const j=J.create(data,'session');J.append(data,j,'HINT_OPENED',item,step,{hint_level:1});answer(j,'CORRECT',1);assert.equal(J.evidence(j,item,step).status,'CORRECT_WITH_SUPPORT');});
+test('explanation before success records support',()=>{const j=J.create(data,'session');J.append(data,j,'EXPLANATION_OPENED',item,step);answer(j);assert.equal(J.evidence(j,item,step).status,'CORRECT_WITH_SUPPORT');});
+test('explanation after success does not rewrite previous evidence',()=>{const j=J.create(data,'session');answer(j);J.append(data,j,'EXPLANATION_OPENED',item,step);assert.equal(J.evidence(j,item,step).status,'CORRECT_WITHOUT_RECORDED_SUPPORT');answer(j);assert.equal(J.evidence(j,item,step).status,'CORRECT_WITH_SUPPORT');});
+test('wrong and unsupported submissions retained with attempts',()=>{const j=J.create(data,'session');answer(j,'TRY_AGAIN');answer(j,'NEEDS_REVIEW');assert.deepEqual(J.evidence(j,item,step),{status:'NEEDS_REVIEW',attempts:2});});
+test('legacy history remains unknown until explicit reset',()=>{const j=J.create(data,'session',true);answer(j);assert.equal(J.evidence(j,item,step).status,'UNKNOWN');J.append(data,j,'ITEM_RESET',item,null);answer(j);assert.equal(J.evidence(j,item,step).status,'CORRECT_WITHOUT_RECORDED_SUPPORT');assert.equal(j.events.length,3);assert.equal(J.evidence(j,item,step).attempts,1);});
+test('reset one item keeps other item evidence',()=>{const j=J.create(data,'session');J.append(data,j,'ANSWER_SUBMITTED','RAD-002','RAD-002:S01',{answer:'abs_x_minus_2',result_status:'CORRECT'});J.append(data,j,'ITEM_RESET',item,null);assert.equal(J.evidence(j,'RAD-002','RAD-002:S01').status,'CORRECT_WITHOUT_RECORDED_SUPPORT');});
+test('restore preserves sequence and support snapshot',()=>{const j=J.create(data,'session');answer(j,'CORRECT',2);const r=J.restore(data,JSON.parse(JSON.stringify(j)),'new',true);assert.equal(r.session_id,'session');assert.equal(r.events[0].hint_level,2);assert.equal(answer(r).sequence,2);});
+test('unknown content hash discards evidence conservatively',()=>{const j=J.create(data,'session');answer(j);j.content_sha256='wrong';const r=J.restore(data,j,'new',true);answer(r);assert.equal(J.evidence(r,item,step).status,'UNKNOWN');});
+test('malformed and out-of-order history is discarded',()=>{const j=J.create(data,'session');answer(j);answer(j);j.events.reverse();assert.equal(J.restore(data,j,'new',true).events.length,0);});
+test('bounded journal marks lost coverage unknown',()=>{const j=J.create(data,'session');for(let i=0;i<J.LIMIT+1;i++)answer(j);assert.equal(j.events.length,J.LIMIT);assert.equal(j.truncated,true);assert.equal(J.evidence(j,item,step).status,'UNKNOWN');});
+test('invalid event cannot mutate journal',()=>{const j=J.create(data,'session');assert.throws(()=>J.append(data,j,'HINT_OPENED',item,'UNKNOWN'));assert.equal(j.events.length,0);assert.equal(j.sequence,0);});
+test('oversized answer cannot mutate journal',()=>{const j=J.create(data,'session');assert.throws(()=>J.append(data,j,'ANSWER_SUBMITTED',item,step,{answer:'x'.repeat(2100),result_status:'CORRECT'}));assert.equal(j.sequence,0);});
+test('event source and identity mismatch is rejected on restore',()=>{const j=J.create(data,'session');answer(j);j.events[0].content_version='old';assert.equal(J.restore(data,j,'new',true).events.length,0);});
+console.log(JSON.stringify({rad04_checks_passed:count,rad04_checks_total:count,browser_ui_test:false}));

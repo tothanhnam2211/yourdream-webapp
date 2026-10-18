@@ -1,0 +1,10 @@
+{
+  "package": "katex",
+  "version": "0.19.0",
+  "source": "https://registry.npmjs.org/katex/-/katex-0.19.0.tgz",
+  "npm_integrity": "sha512-v6Tznz3zJ7u3niRCoDTsumM2+HA2XXcCu+WAacCeHD2z3p9A9Ks987o5FzfTGBN0e8A0vjEgIDvLbICrXpdw/Q==",
+  "tarball_sha256": "d8e49f2fea6eeed7cdae2cf4fd48e2f1d348758aa9e5740715e4533c2c96d1ee",
+  "license": "MIT",
+  "render_options_doc": "https://katex.org/docs/options",
+  "runtime_paid_api": false
+}

@@ -1,0 +1,976 @@
+{
+  "schema_version": "yourdream.step_graph.0.1-DRAFT",
+  "package_id": "EXAM-RAD-01",
+  "version": "0.1.0-DRAFT",
+  "audience": "AUTHOR_REVIEW_ONLY",
+  "supports_secure_assessment": false,
+  "source_pilot": {
+    "drive_file_id": "1f61L3DWYUWiiWH3_RDe_Hku7Whq3wUyV",
+    "metadata_sha256": "7642307a204994102485931ffd4441c7b5364b70a755eed8091145f331aa5409",
+    "source_pdf_drive_id": "19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+    "source_pdf_sha256": "c5d255181c4b09a8b44104509b1e1dbeba3c62fd1c981f24f65ca045f7de3042",
+    "reviewed_pdf_pages": [
+      1,
+      2,
+      4
+    ]
+  },
+  "knowledge_skills": [
+    {
+      "skill_id": "DRAFT:radical.skill.square_factor",
+      "title": "Đưa thừa số chính phương ra ngoài căn",
+      "canonical_mapping": "PENDING"
+    },
+    {
+      "skill_id": "DRAFT:radical.skill.like_radicals",
+      "title": "Cộng trừ căn đồng dạng",
+      "canonical_mapping": "PENDING"
+    },
+    {
+      "skill_id": "DRAFT:radical.skill.absolute_value",
+      "title": "Căn bậc hai của bình phương và giá trị tuyệt đối",
+      "canonical_mapping": "PENDING"
+    },
+    {
+      "skill_id": "DRAFT:radical.skill.sign_condition",
+      "title": "Xét dấu theo điều kiện",
+      "canonical_mapping": "PENDING"
+    },
+    {
+      "skill_id": "DRAFT:radical.skill.domain",
+      "title": "Điều kiện của căn và mẫu",
+      "canonical_mapping": "PENDING"
+    },
+    {
+      "skill_id": "DRAFT:radical.skill.difference_squares",
+      "title": "Hiệu hai bình phương",
+      "canonical_mapping": "PENDING"
+    },
+    {
+      "skill_id": "DRAFT:radical.skill.cancellation",
+      "title": "Khử nhân tử khác 0",
+      "canonical_mapping": "PENDING"
+    },
+    {
+      "skill_id": "DRAFT:radical.skill.conjugate",
+      "title": "Biểu thức liên hợp",
+      "canonical_mapping": "PENDING"
+    }
+  ],
+  "graphs": [
+    {
+      "item_id": "RAD-001",
+      "node_id": "DRAFT:math.g9.algebra.radical_simplification",
+      "prompt": "Rút gọn M = √45 + √245 − √80.",
+      "origin": "SOURCE_EXERCISE",
+      "source_ref": {
+        "source_id": "drive:19hMI-6SpDOBDv2M9MuTtRrn2Kzmy0w89",
+        "pdf_page_index": 2,
+        "locator": "Dạng 1, Câu 1, biểu thức M"
+      },
+      "conditions": [
+        "Các số dưới căn đều không âm."
+      ],
+      "step_ids": [
+        "RAD-001:S01",
+        "RAD-001:S02",
+        "RAD-001:S03",
+        "RAD-001:S04"
+      ],
+      "terminal_step_ids": [
+        "RAD-001:S04"
+      ],
+      "edges": [
+        {
+          "from": "RAD-001:S01",
+          "to": "RAD-001:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "RAD-001:S02",
+          "to": "RAD-001:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "RAD-001:S03",
+          "to": "RAD-001:S04",
+          "kind": "REQUIRES"
+        }
+      ]
+    },
+    {
+      "item_id": "RAD-002",
+      "node_id": "DRAFT:math.g9.algebra.radical_simplification",
+      "prompt": "Rút gọn A = √((x − 2)²), với x < 2.",
+      "origin": "NEW_EDITORIAL_EXERCISE",
+      "source_ref": null,
+      "conditions": [
+        "x < 2."
+      ],
+      "step_ids": [
+        "RAD-002:S01",
+        "RAD-002:S02",
+        "RAD-002:S03"
+      ],
+      "terminal_step_ids": [
+        "RAD-002:S03"
+      ],
+      "edges": [
+        {
+          "from": "RAD-002:S01",
+          "to": "RAD-002:S02",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "RAD-002:S02",
+          "to": "RAD-002:S03",
+          "kind": "REQUIRES"
+        }
+      ]
+    },
+    {
+      "item_id": "RAD-003",
+      "node_id": "DRAFT:math.g9.algebra.radical_simplification",
+      "prompt": "Tìm điều kiện xác định và rút gọn B = (x − 1)/(√x − 1).",
+      "origin": "NEW_EDITORIAL_EXERCISE",
+      "source_ref": null,
+      "conditions": [
+        "x ≥ 0; x ≠ 1."
+      ],
+      "step_ids": [
+        "RAD-003:S01",
+        "RAD-003:S02",
+        "RAD-003:S03",
+        "RAD-003:S04"
+      ],
+      "terminal_step_ids": [
+        "RAD-003:S04"
+      ],
+      "edges": [
+        {
+          "from": "RAD-003:S01",
+          "to": "RAD-003:S02",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "RAD-003:S02",
+          "to": "RAD-003:S03",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "RAD-003:S03",
+          "to": "RAD-003:S04",
+          "kind": "REQUIRES"
+        }
+      ]
+    },
+    {
+      "item_id": "RAD-004",
+      "node_id": "DRAFT:math.g9.algebra.radical_simplification",
+      "prompt": "Trục căn thức ở mẫu của C = 1/(√3 + 1).",
+      "origin": "NEW_EDITORIAL_EXERCISE",
+      "source_ref": null,
+      "conditions": [
+        "√3 + 1 > 0; 3 − 1² = 2 ≠ 0."
+      ],
+      "step_ids": [
+        "RAD-004:S01",
+        "RAD-004:S02",
+        "RAD-004:S03",
+        "RAD-004:S04"
+      ],
+      "terminal_step_ids": [
+        "RAD-004:S04"
+      ],
+      "edges": [
+        {
+          "from": "RAD-004:S01",
+          "to": "RAD-004:S02",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "RAD-004:S02",
+          "to": "RAD-004:S03",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "RAD-004:S03",
+          "to": "RAD-004:S04",
+          "kind": "REQUIRES"
+        }
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "RAD-001:S01",
+      "item_id": "RAD-001",
+      "title": "Tách √45",
+      "before": "√45",
+      "after": "3√5",
+      "justification": "45 = 9 × 5 và √(9 × 5) = 3√5.",
+      "skill_refs": [
+        "DRAFT:radical.skill.square_factor"
+      ],
+      "requires": [],
+      "interaction": {
+        "prompt": "Điền hệ số c: √45 = c√5.",
+        "answer_type": "rational",
+        "expected": "3",
+        "choices": {},
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Tìm một thừa số chính phương của 45.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Viết 45 = 9 × 5.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "√9 = 3; hệ số cần điền là 3.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "Các số dưới căn đều không âm."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-001:S02",
+      "item_id": "RAD-001",
+      "title": "Tách √245",
+      "before": "√245",
+      "after": "7√5",
+      "justification": "245 = 49 × 5 và √(49 × 5) = 7√5.",
+      "skill_refs": [
+        "DRAFT:radical.skill.square_factor"
+      ],
+      "requires": [],
+      "interaction": {
+        "prompt": "Điền hệ số c: √245 = c√5.",
+        "answer_type": "rational",
+        "expected": "7",
+        "choices": {},
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Tìm một thừa số chính phương của 245.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Viết 245 = 49 × 5.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "√49 = 7; hệ số cần điền là 7.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "Các số dưới căn đều không âm."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-001:S03",
+      "item_id": "RAD-001",
+      "title": "Tách √80",
+      "before": "√80",
+      "after": "4√5",
+      "justification": "80 = 16 × 5 và √(16 × 5) = 4√5.",
+      "skill_refs": [
+        "DRAFT:radical.skill.square_factor"
+      ],
+      "requires": [],
+      "interaction": {
+        "prompt": "Điền hệ số c: √80 = c√5.",
+        "answer_type": "rational",
+        "expected": "4",
+        "choices": {},
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Tìm một thừa số chính phương của 80.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Viết 80 = 16 × 5.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "√16 = 4; hệ số cần điền là 4.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "Các số dưới căn đều không âm."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-001:S04",
+      "item_id": "RAD-001",
+      "title": "Gom các căn đồng dạng",
+      "before": "3√5 + 7√5 − 4√5",
+      "after": "6√5",
+      "justification": "Cộng trừ các hệ số: 3 + 7 − 4 = 6.",
+      "skill_refs": [
+        "DRAFT:radical.skill.like_radicals"
+      ],
+      "requires": [
+        "RAD-001:S01",
+        "RAD-001:S02",
+        "RAD-001:S03"
+      ],
+      "interaction": {
+        "prompt": "Điền c trong M = c√5.",
+        "answer_type": "rational",
+        "expected": "6",
+        "choices": {},
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Các hạng tử đều chứa √5.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Giữ nguyên √5, tính 3 + 7 − 4.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "3 + 7 − 4 = 6 nên M = 6√5.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "Các số dưới căn đều không âm."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-002:S01",
+      "item_id": "RAD-002",
+      "title": "Dùng căn của bình phương",
+      "before": "√((x − 2)²)",
+      "after": "|x − 2|",
+      "justification": "Với A thực, √(A²) = |A|.",
+      "skill_refs": [
+        "DRAFT:radical.skill.absolute_value"
+      ],
+      "requires": [],
+      "interaction": {
+        "prompt": "Trước khi xét điều kiện x < 2, dùng đẳng thức tổng quát nào?",
+        "answer_type": "choice",
+        "expected": "absolute",
+        "choices": {
+          "absolute": "√((x − 2)²) = |x − 2|",
+          "signed": "√((x − 2)²) = x − 2 với mọi x"
+        },
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Căn bậc hai số học luôn không âm.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Khi A âm, căn của A² bằng −A.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "Đẳng thức tổng quát là √(A²) = |A|.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Đẳng thức căn của bình phương cần giá trị tuyệt đối khi chưa xét dấu.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "x < 2."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-002:S02",
+      "item_id": "RAD-002",
+      "title": "Xét dấu từ giả thiết",
+      "before": "x < 2",
+      "after": "x − 2 < 0",
+      "justification": "Trừ 2 ở cả hai vế của x < 2.",
+      "skill_refs": [
+        "DRAFT:radical.skill.sign_condition"
+      ],
+      "requires": [
+        "RAD-002:S01"
+      ],
+      "interaction": {
+        "prompt": "Với x < 2, x − 2 mang dấu gì?",
+        "answer_type": "choice",
+        "expected": "negative",
+        "choices": {
+          "negative": "Âm",
+          "zero": "Bằng 0",
+          "positive": "Dương"
+        },
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "So sánh x với 2.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Trừ 2 ở cả hai vế.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "x − 2 < 0, nên biểu thức mang dấu âm.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "x < 2."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-002:S03",
+      "item_id": "RAD-002",
+      "title": "Bỏ giá trị tuyệt đối",
+      "before": "|x − 2| với x < 2",
+      "after": "2 − x",
+      "justification": "Vì x − 2 < 0 nên |x − 2| = −(x − 2) = 2 − x.",
+      "skill_refs": [
+        "DRAFT:radical.skill.absolute_value"
+      ],
+      "requires": [
+        "RAD-002:S02"
+      ],
+      "interaction": {
+        "prompt": "Viết kết quả dưới dạng a + bx; nhập a và b.",
+        "answer_type": "linear",
+        "expected": {
+          "constant": "2",
+          "coefficient": "-1"
+        },
+        "choices": {},
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Với u < 0 thì |u| = −u.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Đổi dấu toàn bộ x − 2.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "−(x − 2) = 2 − x; a = 2, b = −1.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "x < 2."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-003:S01",
+      "item_id": "RAD-003",
+      "title": "Khóa điều kiện ban đầu",
+      "before": "(x − 1)/(√x − 1)",
+      "after": "x ≥ 0 và x ≠ 1",
+      "justification": "Căn có nghĩa khi x ≥ 0; √x − 1 ≠ 0 tương đương x ≠ 1 trên miền đó.",
+      "skill_refs": [
+        "DRAFT:radical.skill.domain"
+      ],
+      "requires": [],
+      "interaction": {
+        "prompt": "Nhập miền x: cận dưới, có lấy cận hay không và các giá trị loại.",
+        "answer_type": "domain",
+        "expected": {
+          "variable": "x",
+          "lower": "0",
+          "lower_inclusive": true,
+          "exclusions": [
+            "1"
+          ]
+        },
+        "choices": {},
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Kiểm tra cả căn và mẫu của biểu thức gốc.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Căn cần x ≥ 0; mẫu khác 0 cần √x ≠ 1.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "Miền xác định: x ≥ 0 và x ≠ 1.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "x ≥ 0; x ≠ 1."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-003:S02",
+      "item_id": "RAD-003",
+      "title": "Phân tích tử",
+      "before": "x − 1",
+      "after": "(√x − 1)(√x + 1), với x ≥ 0",
+      "justification": "Đặt t = √x; t² − 1 = (t − 1)(t + 1).",
+      "skill_refs": [
+        "DRAFT:radical.skill.difference_squares"
+      ],
+      "requires": [
+        "RAD-003:S01"
+      ],
+      "interaction": {
+        "prompt": "Chọn phân tích đúng của tử số trên miền đã xác định.",
+        "answer_type": "choice",
+        "expected": "difference_squares",
+        "choices": {
+          "difference_squares": "(√x − 1)(√x + 1)",
+          "square_difference": "(√x − 1)²"
+        },
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Nhận ra hiệu hai bình phương.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "x = (√x)² trên miền x ≥ 0.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "x − 1 = (√x − 1)(√x + 1).",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "x ≥ 0; x ≠ 1."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-003:S03",
+      "item_id": "RAD-003",
+      "title": "Khử nhân tử hợp lệ",
+      "before": "[(√x − 1)(√x + 1)]/(√x − 1)",
+      "after": "√x + 1, với x ≥ 0 và x ≠ 1",
+      "justification": "Chỉ khử √x − 1 vì điều kiện x ≠ 1 bảo đảm nhân tử khác 0.",
+      "skill_refs": [
+        "DRAFT:radical.skill.cancellation"
+      ],
+      "requires": [
+        "RAD-003:S02"
+      ],
+      "interaction": {
+        "prompt": "Chọn biểu thức sau khi khử; điều kiện gốc vẫn giữ.",
+        "answer_type": "choice",
+        "expected": "sqrt_x_plus_1",
+        "choices": {
+          "sqrt_x_plus_1": "√x + 1",
+          "sqrt_x_minus_1": "√x − 1"
+        },
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Nhận nhân tử chung giữa tử và mẫu.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Trước khi khử, dùng x ≠ 1 để bảo đảm √x − 1 ≠ 0.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "Khử nhân tử chung được √x + 1; vẫn loại x = 1.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "x ≥ 0; x ≠ 1."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-003:S04",
+      "item_id": "RAD-003",
+      "title": "Kết luận kèm miền",
+      "before": "B = √x + 1 trên miền gốc",
+      "after": "B = √x + 1; x ≥ 0, x ≠ 1",
+      "justification": "Biến đổi không mở rộng miền của biểu thức ban đầu.",
+      "skill_refs": [
+        "DRAFT:radical.skill.domain"
+      ],
+      "requires": [
+        "RAD-003:S03"
+      ],
+      "interaction": {
+        "prompt": "Nộp kết quả và miền xác định của B.",
+        "answer_type": "domain_expression",
+        "expected": {
+          "expression": "sqrt_x_plus_1",
+          "variable": "x",
+          "lower": "0",
+          "lower_inclusive": true,
+          "exclusions": [
+            "1"
+          ]
+        },
+        "choices": {},
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Cần ghi cả biểu thức và điều kiện.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Kết quả rút gọn có thể có nghĩa tại x = 1 nhưng biểu thức gốc không có.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "B = √x + 1 với x ≥ 0 và x ≠ 1.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Hãy giữ điều kiện của biểu thức ban đầu; việc khử nhân tử không cho phép nhận lại x = 1.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "x ≥ 0; x ≠ 1."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-004:S01",
+      "item_id": "RAD-004",
+      "title": "Chọn liên hợp",
+      "before": "√3 + 1",
+      "after": "√3 − 1",
+      "justification": "Hai biểu thức liên hợp khác dấu giữa hai hạng tử.",
+      "skill_refs": [
+        "DRAFT:radical.skill.conjugate"
+      ],
+      "requires": [],
+      "interaction": {
+        "prompt": "Chọn biểu thức liên hợp của √3 + 1.",
+        "answer_type": "choice",
+        "expected": "minus",
+        "choices": {
+          "minus": "√3 − 1",
+          "plus": "√3 + 1"
+        },
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Dùng hiệu hai bình phương khi nhân hai mẫu liên hợp.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Giữ √3 và đổi dấu trước 1.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "Liên hợp cần dùng là √3 − 1.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "√3 + 1 > 0; 3 − 1² = 2 ≠ 0."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-004:S02",
+      "item_id": "RAD-004",
+      "title": "Nhân với một biểu thức bằng 1",
+      "before": "1/(√3 + 1)",
+      "after": "(√3 − 1)/[(√3 + 1)(√3 − 1)]",
+      "justification": "Nhân cả tử và mẫu với √3 − 1 ≠ 0; √3 > 1 vì 3 > 1.",
+      "skill_refs": [
+        "DRAFT:radical.skill.conjugate"
+      ],
+      "requires": [
+        "RAD-004:S01"
+      ],
+      "interaction": {
+        "prompt": "Phép nhân nào giữ nguyên giá trị phân thức?",
+        "answer_type": "choice",
+        "expected": "both",
+        "choices": {
+          "both": "Nhân cả tử và mẫu với √3 − 1",
+          "numerator_only": "Chỉ nhân tử với √3 − 1"
+        },
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Phân thức không đổi khi nhân cả tử và mẫu với cùng một số khác 0.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "√3 − 1 > 0 nên phép nhân này hợp lệ.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "Nhân cả tử và mẫu với √3 − 1.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "√3 + 1 > 0; 3 − 1² = 2 ≠ 0."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-004:S03",
+      "item_id": "RAD-004",
+      "title": "Tính mẫu mới",
+      "before": "(√3 + 1)(√3 − 1)",
+      "after": "2",
+      "justification": "Dùng (a + b)(a − b) = a² − b²: 3 − 1 = 2.",
+      "skill_refs": [
+        "DRAFT:radical.skill.difference_squares"
+      ],
+      "requires": [
+        "RAD-004:S02"
+      ],
+      "interaction": {
+        "prompt": "Mẫu mới bằng bao nhiêu?",
+        "answer_type": "rational",
+        "expected": "2",
+        "choices": {},
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Dùng hiệu hai bình phương.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "(√3)² − 1² = 3 − 1.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "Mẫu mới bằng 2.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "√3 + 1 > 0; 3 − 1² = 2 ≠ 0."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    },
+    {
+      "step_id": "RAD-004:S04",
+      "item_id": "RAD-004",
+      "title": "Kết luận",
+      "before": "(√3 − 1)/2",
+      "after": "−1/2 + (1/2)√3",
+      "justification": "Chia cả hai hạng tử ở tử cho 2; các cách viết này cùng giá trị.",
+      "skill_refs": [
+        "DRAFT:radical.skill.conjugate"
+      ],
+      "requires": [
+        "RAD-004:S03"
+      ],
+      "interaction": {
+        "prompt": "Viết kết quả dưới dạng a + b√3; nhập a và b.",
+        "answer_type": "quadratic_pair",
+        "expected": {
+          "radicand": 3,
+          "constant": "-1/2",
+          "coefficient": "1/2"
+        },
+        "choices": {},
+        "unknown_response_policy": "NEEDS_REVIEW"
+      },
+      "hints": [
+        {
+          "level": 1,
+          "text": "Tách hai hạng tử trong (√3 − 1)/2.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 2,
+          "text": "Hệ số của √3 là 1/2; hạng tử không chứa căn mang dấu âm.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        },
+        {
+          "level": 3,
+          "text": "a = −1/2 và b = 1/2.",
+          "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+        }
+      ],
+      "feedback": {
+        "correct": "Bước này phù hợp với điều kiện đã nêu.",
+        "incorrect": "Kết quả chưa khớp bước này. Em hãy kiểm tra lại phép biến đổi.",
+        "unknown": "Chưa kiểm tra được cách viết này; cần người hướng dẫn xem xét."
+      },
+      "conditions_in_context": [
+        "√3 + 1 > 0; 3 − 1² = 2 ≠ 0."
+      ],
+      "origin": "EDITORIAL_STEP_EXTENSION; not a quotation of a source solution"
+    }
+  ],
+  "policy": {
+    "agents_in_student_session": false,
+    "attempts_or_student_profiles_generated": false,
+    "hint_cost_or_xp_penalty": false,
+    "hints_open_only_on_request": true,
+    "page_views_do_not_imply_mastery": true,
+    "unknown_freeform_answer": "NEEDS_REVIEW",
+    "completion_source": "trusted evaluated step events at server integration; client claims are not authoritative",
+    "alternative_solution": "human review until supported, not automatically incorrect",
+    "assessment_export": "Expected answers and author review payload must remain server-side for future assessed sessions"
+  },
+  "quality": {
+    "TECHNICAL_VALIDATED": "PASS_BOUNDED_GRAPH_AND_RESPONSE_CHECKS",
+    "MATH_VERIFIED": "BOUNDED_REVIEW_AND_EXACT_CHECKS; NOT_LEAN",
+    "PEDAGOGICALLY_ACCEPTED": "UNCONFIRMED",
+    "DRIVE_PERSISTED": "EXTERNAL_RECEIPT_REQUIRED",
+    "APPROVED": "NOT_APPROVED"
+  },
+  "coverage": [
+    {
+      "ui_key": "algebra:0",
+      "relationship": "PARTIAL_COVERAGE",
+      "note": "No cubic-root unit"
+    },
+    {
+      "ui_key": "algebra:1",
+      "relationship": "BOUNDED_FOUR_ITEM_PILOT"
+    },
+    {
+      "ui_key": "algebra:2",
+      "relationship": "PARTIAL_COVERAGE",
+      "note": "One cancellation/domain example"
+    }
+  ]
+}

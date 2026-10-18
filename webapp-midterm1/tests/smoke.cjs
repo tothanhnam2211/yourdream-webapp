@@ -1,0 +1,2 @@
+const {LocalD1}=require('./sqlite-d1.cjs'),{options,seed,create,answer}=require('./fixtures.cjs'),{createService}=require('../src/service.cjs');
+(async()=>{const db=new LocalD1(':memory:');seed(db);const s=await createService(db,options);const r=await s.createSession({subject:'A'},create());console.log(r);console.log(await s.submit({subject:'A'},r.session_id,answer()));db.close();})().catch(e=>{console.error(e);process.exitCode=1;});
