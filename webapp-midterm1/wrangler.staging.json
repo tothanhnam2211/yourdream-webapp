@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "yourdream-webapp-staging",
+  "main": "dist/server/index.js",
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "no_bundle": true,
+  "rules": [
+    {
+      "type": "ESModule",
+      "globs": ["**/*.js", "**/*.mjs"]
+    }
+  ],
+  "assets": {
+    "directory": "dist/client",
+    "html_handling": "none"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "YOURDREAM_ENV": "staging",
+    "YOURDREAM_FIXTURE_MODE": "TEST_FIXTURE_ONLY_NOT_MIDTERM_EXAM"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "yourdream-staging-d1",
+      "database_id": "00000000-0000-4000-8000-000000000001"
+    }
+  ]
+}

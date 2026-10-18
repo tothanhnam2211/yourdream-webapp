@@ -1,7 +1,7 @@
 (function(){'use strict';
 const $=id=>document.getElementById(id),E=window.RadicalEngine,L=window.RadicalProfiles,J=window.RadicalPreviewJournal,M=window.YourdreamMath;
 const validKey=k=>typeof k==='string'&&/^[A-Za-z0-9:._-]{1,100}$/.test(k)&&!['__proto__','constructor','prototype'].includes(k);
-let profiles=[],data=null,by=Object.create(null),state=null,journal=null,key='',complete=new Set(),mode=window.innerWidth<800?'list':'map',generation=0,storageOK=true;
+let profiles=[],data=null,by=Object.create(null),state=null,journal=null,key='',complete=new Set(),mode=window.innerWidth<800?'list':'map',generation=0,storageOK=true,activeProfileId='';
 const safe=s=>M.escape(s),math=s=>M.mixed(s,window.katex),graph=()=>data?data.graphs.find(g=>g.item_id===state?.itemId):null,step=()=>state?by[state.stepId]:null;
 const ready=s=>!!s&&s.requires.every(k=>complete.has(k)),status=s=>complete.has(s.step_id)?'Đã làm đúng':ready(s)?'Sẵn sàng':'Cần bước trước';
 function showStorage(){ $('storage-status').textContent=storageOK?'Đã lưu thử trên trình duyệt này · chưa lưu máy chủ.':'Chưa lưu được trên trình duyệt; trạng thái chỉ giữ khi trang còn mở.'; }
@@ -36,14 +36,14 @@ function drawSubquestions(g){
 function drawDiagnosis(){
  const sumEl=$('diagnosis-summary'),listEl=$('diagnosis-list');if(!sumEl||!listEl||!data||!journal||typeof J.diagnoseSkills!=='function')return;
  const diag=J.diagnoseSkills(data,journal,complete);
- sumEl.textContent=`Theo dõi ${diag.skills.length} kỹ năng trên ${data.graphs.length} bài (${data.steps.length} bước): ${diag.needs_retry_count} kỹ năng cần sửa lỗi ngay · ${diag.needs_reinforcement_count} kỹ năng cần củng cố không gợi ý.`;
+ sumEl.textContent=`Theo dõi ${diag.skills.length} kỹ năng trên ${data.graphs.length} bài (${data.steps.length} bước) [policy_version: ${diag.policy_version}]: ${diag.needs_retry_count} kỹ năng cần sửa lỗi ngay · ${diag.needs_reinforcement_count} kỹ năng cần củng cố không gợi ý · ${diag.insufficient_evidence_count} chưa đủ bằng chứng · ${diag.not_started_count} chưa học · ${diag.criteria_met_count} đạt tiêu chí trong phiên.`;
  listEl.innerHTML=diag.skills.map(sk=>{
   const cls=sk.status==='NEEDS_RETRY'?'needs-retry':sk.status==='NEEDS_REINFORCEMENT'?'needs-reinforcement':sk.status==='SOLID_IN_SESSION'?'solid':'';
-  const badge=sk.status==='NEEDS_RETRY'?'Cần làm lại bước sai':sk.status==='NEEDS_REINFORCEMENT'?'Đã làm nhưng dùng gợi ý / từng sai':sk.status==='SOLID_IN_SESSION'?'Vững trong phiên (không gợi ý)':sk.status==='IN_PROGRESS'?'Đang thực hiện':'Chưa luyện';
+  const badge=sk.batch01_label_vi||(sk.status==='NEEDS_RETRY'?'Đang luyện · Cần sửa lỗi':sk.status==='NEEDS_REINFORCEMENT'?'Đang luyện · Đúng khi có gợi ý / từng sai':sk.status==='SOLID_IN_SESSION'?'Đã đạt tiêu chí trong phiên (tự giải sạch)':sk.status==='IN_PROGRESS'?'Chưa đủ bằng chứng':'Chưa học');
   const codeTxt=sk.diagnosis_codes.length?` · Mã chẩn đoán: ${safe(sk.diagnosis_codes.join(', '))}`:'';
   const t=sk.recommended_target;
   const actions=t?`<div class="skill-actions"><button type="button" data-retry-item="${safe(t.item_id)}" data-retry-step="${safe(t.step_id)}">Mở bước cần luyện</button><button type="button" data-reset-skill-item="${safe(t.item_id)}" data-reset-skill-step="${safe(t.step_id)}">Làm lại chu kỳ bài này</button></div>`:'';
-  return `<div class="skill-card ${cls}" data-skill-id="${safe(sk.skill_id)}"><div class="skill-meta"><strong>${safe(sk.title)}</strong><small>${badge} · Đạt ${sk.completed_steps}/${sk.total_steps} bước (tự giải sạch: ${sk.clean_steps})${codeTxt}</small></div>${actions}</div>`;
+  return `<div class="skill-card ${cls}" data-skill-id="${safe(sk.skill_id)}" data-batch01-state="${safe(sk.batch01_state||'')}"><div class="skill-meta"><strong>${safe(sk.title)}</strong><small>${safe(badge)} [${safe(sk.batch01_state||'NOT_STARTED')}] · Đạt ${sk.completed_steps}/${sk.total_steps} bước (tự giải sạch: ${sk.clean_steps})${codeTxt}</small></div>${actions}</div>`;
  }).join('');
  listEl.querySelectorAll('[data-retry-step]').forEach(b=>b.onclick=()=>{retrySkillStep(b.dataset.retryItem,b.dataset.retryStep,false);});
  listEl.querySelectorAll('[data-reset-skill-step]').forEach(b=>b.onclick=()=>{retrySkillStep(b.dataset.resetSkillItem,b.dataset.resetSkillStep,true);});
@@ -63,10 +63,12 @@ function retrySkillStep(itemId,stepId,resetCycle=false){
 function draw(){
  if(!data||!state)return;
  const doneGraphs=data.graphs.filter(g=>L.complete(g,complete)).length;
- $('total-progress').textContent=`${complete.size} / ${data.steps.length} bước đã làm đúng · ${doneGraphs} / ${data.graphs.length} bài hoàn thành`;
+ const fixtureTag=activeProfileId==='midterm1-fixture'?' · TEST FIXTURE (không phải đề thi giữa kỳ)':' · DRAFT';
+ if($('fixture-badge'))$('fixture-badge').textContent=activeProfileId==='midterm1-fixture'?'DRAFT · TEST FIXTURE (5 bài / 26 bước)':'DRAFT · Bản xem trước';
+ $('total-progress').textContent=`${complete.size} / ${data.steps.length} bước đã làm đúng · ${doneGraphs} / ${data.graphs.length} bài hoàn thành${fixtureTag}`;
  $('exercise-list').innerHTML=data.graphs.map((g,i)=>`<button type="button" data-item="${safe(g.item_id)}" aria-current="${g.item_id===state.itemId}"><strong>Bài ${i+1}. ${safe(g.title)}</strong><small>${g.step_ids.filter(k=>complete.has(k)).length}/${g.step_ids.length} bước${L.complete(g,complete)?' · Hoàn thành':''}</small></button>`).join('');
  $('exercise-list').querySelectorAll('[data-item]').forEach(b=>b.onclick=()=>selectItem(b.dataset.item));
- const g=graph();$('exercise-title').textContent=`Bài ${data.graphs.indexOf(g)+1} / ${data.graphs.length}`;$('exercise-prompt').innerHTML=math(g.prompt);$('exercise-domain').innerHTML=math(g.subtitle);
+ const g=graph();$('exercise-title').textContent=`Bài ${data.graphs.indexOf(g)+1} / ${data.graphs.length}${activeProfileId==='midterm1-fixture'?' (TEST FIXTURE)':''}`;$('exercise-prompt').innerHTML=math(g.prompt);$('exercise-domain').innerHTML=math(g.subtitle);
  drawSubquestions(g);drawMap();drawStep();drawDiagnosis();
 }
 function selectItem(id){if(!data||!validKey(id))return;const g=data.graphs.find(g=>g.item_id===id);if(!g)return;state.itemId=id;state.stepId=g.step_ids.find(k=>!complete.has(k)&&ready(by[k]))||g.step_ids[0];save();draw();}
@@ -97,7 +99,7 @@ function drawStep(){
  $('hint-button').disabled=!can||count>=3;$('hint-button').textContent=count>=3?'Đã mở đủ 3 gợi ý':`Mở gợi ý ${count+1} / 3`;$('hints').innerHTML=s.hints.slice(0,count).map(h=>`<li>${math(h.text)}</li>`).join('');
  $('explanation').hidden=!(complete.has(s.step_id)||count===3);$('explanation').open=complete.has(s.step_id);$('step-before').innerHTML=M.formula(s.before,window.katex);$('step-after').innerHTML=M.formula(s.after,window.katex);$('step-reason').innerHTML=math(s.justification);
  $('item-progress').textContent=L.complete(g,complete)?`Đã làm đúng ${g.step_ids.length}/${g.step_ids.length} bước. Hãy thử tự giải lại.`:`${g.step_ids.filter(k=>complete.has(k)).length}/${g.step_ids.length} bước đã làm đúng.`;
- const ev=J.evidence(journal,state.itemId,s.step_id);$('attempt-evidence').textContent=`${ev.attempts} lượt kiểm tra trong chu kỳ · ${ev.status}${ev.diagnosis_code?' ('+ev.diagnosis_code+')':''}. Đây chưa phải đánh giá thành thạo.`;
+ const ev=J.evidence(journal,state.itemId,s.step_id);$('attempt-evidence').textContent=`${ev.attempts} lượt kiểm tra trong chu kỳ · ${ev.status}${ev.diagnosis_code?' ('+ev.diagnosis_code+')':''}. Đây là bằng chứng hiện có trong phiên, chưa phải đánh giá thành thạo tuyệt đối.`;
  feedback(Object.hasOwn(state.answers,s.step_id)?L.evaluate(E,data,s.step_id,state.answers[s.step_id],[...complete]):null);
 }
 async function load(id){
@@ -107,7 +109,7 @@ async function load(id){
   const selected=profiles.find(p=>p.id===id);if(!selected)throw Error('Bộ học liệu chưa được khai báo.');
   const r=await fetch(selected.path,{credentials:'same-origin'});if(!r.ok)throw Error('Không tải được học liệu.');const raw=await r.text(),digest=[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(raw)))].map(x=>x.toString(16).padStart(2,'0')).join('');
   if(gen!==generation)return;if(digest!==selected.sha256)throw Error('Mã băm học liệu không khớp bản đã khóa.');
-  const next=L.load(JSON.parse(raw),selected.profile,E);if(gen!==generation)return;data=next;data.content_sha256=digest;by=Object.assign(Object.create(null),Object.fromEntries(data.steps.map(s=>[s.step_id,s])));key='yd-eng-gap02-preview:'+id+':'+digest;
+  const next=L.load(JSON.parse(raw),selected.profile,E);if(gen!==generation)return;activeProfileId=id;data=next;data.content_sha256=digest;by=Object.assign(Object.create(null),Object.fromEntries(data.steps.map(s=>[s.step_id,s])));key='yd-eng-gap02-preview:'+id+':'+digest;
   let stored=null;try{const raw=localStorage.getItem(key);if(raw&&raw.length<1500000)stored=JSON.parse(raw);}catch{storageOK=false;}
   if(stored?.content_sha256!==digest)stored=null;state=E.restore(data,stored);journal=J.restore(data,stored?.journal,crypto.randomUUID(),!!stored);complete=E.replay(data,state.answers);$('workspace').hidden=false;save();draw();
  }catch(e){if(gen!==generation)return;disableWorkspace();$('load-error').hidden=false;$('load-error').textContent=e.message||'Không mở được học liệu.';}

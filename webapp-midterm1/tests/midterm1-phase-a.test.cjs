@@ -167,18 +167,26 @@ test('MIDTERM1-PHASE-A · Skill Diagnosis & Retry Journal Flow (Existing Events 
     completed.add('EXAM-GRAPH-02:P03:S06');
 
     const diag = RadicalPreviewJournal.diagnoseSkills(data, j, completed);
+    assert.equal(diag.policy_version, 'PENDING');
     const cubeSkill = diag.skills.find((s) => s.skill_id === 'EXAM-GRAPH-02:skill.cube_root_numeric');
     assert.equal(cubeSkill.status, 'SOLID_IN_SESSION');
+    assert.equal(cubeSkill.batch01_state, 'CRITERIA_MET_IN_SESSION');
     assert.equal(cubeSkill.clean_steps, 3);
 
     const domainSkill = diag.skills.find((s) => s.skill_id === 'DRAFT:radical.skill.domain');
     assert.equal(domainSkill.status, 'NEEDS_RETRY');
+    assert.equal(domainSkill.batch01_state, 'IN_PRACTICE_NEEDS_RETRY');
     assert.ok(domainSkill.diagnosis_codes.includes('CONFUSE_POLYNOMIAL_DENOMINATOR_WITH_RADICAND'));
     assert.equal(domainSkill.recommended_target.step_id, 'EXAM-GRAPH-02:P02:S01');
 
     const eqSkill = diag.skills.find((s) => s.skill_id === 'EXAM-GRAPH-02:skill.target_value_equation');
     assert.equal(eqSkill.status, 'NEEDS_REINFORCEMENT');
+    assert.equal(eqSkill.batch01_state, 'IN_PRACTICE_WITH_SUPPORT');
     assert.equal(eqSkill.recommended_target.step_id, 'EXAM-GRAPH-02:P03:S06');
+
+    const unstartedSkill = diag.skills.find((s) => s.skill_id === 'EXAM-GRAPH-02:skill.evaluate_at_point');
+    assert.equal(unstartedSkill.status, 'UNATTEMPTED');
+    assert.equal(unstartedSkill.batch01_state, 'NOT_STARTED');
 
     // 4. Reset P03-B cycle and solve S06..S08 cleanly -> target_value_equation becomes SOLID_IN_SESSION
     RadicalPreviewJournal.append(data, j, 'ITEM_RESET', 'EXAM-GRAPH-02:P03-B', null);
@@ -198,6 +206,7 @@ test('MIDTERM1-PHASE-A · Skill Diagnosis & Retry Journal Flow (Existing Events 
     const diagAfterRetry = RadicalPreviewJournal.diagnoseSkills(data, j, completed);
     const eqSkillAfter = diagAfterRetry.skills.find((s) => s.skill_id === 'EXAM-GRAPH-02:skill.target_value_equation');
     assert.equal(eqSkillAfter.status, 'SOLID_IN_SESSION');
+    assert.equal(eqSkillAfter.batch01_state, 'CRITERIA_MET_IN_SESSION');
     assert.equal(eqSkillAfter.clean_steps, 3);
   });
 });
@@ -288,6 +297,8 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     };
 
     const ids = [
+      'fixture-badge',
+      'fixture-notice',
       'storage-status',
       'total-progress',
       'exercise-list',
@@ -386,18 +397,21 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     };
   }
 
-  await t.test('M1-08 Mobile viewport (375px) defaults to list mode, loads 5-exercise Midterm fixture, navigates subquestions, diagnoses skills, and retries', async () => {
+  await t.test('M1-08 Mobile viewport (375px) defaults to list mode, displays TEST FIXTURE clearly, navigates subquestions, diagnoses skills with Batch 01 states, and retries', async () => {
     const env = createMockDom(375);
     const scriptCode = fs.readFileSync(path.join(PUBLIC_DIR, 'graph02-preview.js'), 'utf8');
     vm.runInNewContext(scriptCode, env.windowObj);
 
     await env.windowObj.YourdreamPreview.ready;
 
-    // Defaults to midterm1-fixture (5 exercises / 26 steps) and mobile list mode
+    // Defaults to midterm1-fixture (5 exercises / 26 steps) and mobile list mode with TEST FIXTURE badge
     const data = env.windowObj.YourdreamPreview.getData();
     assert.ok(data);
     assert.equal(data.graphs.length, 5);
     assert.equal(data.steps.length, 26);
+    assert.match(env.elements.get('fixture-badge').textContent, /TEST FIXTURE/);
+    assert.match(env.elements.get('total-progress').textContent, /TEST FIXTURE \(không phải đề thi giữa kỳ\)/);
+    assert.match(env.elements.get('exercise-title').textContent, /TEST FIXTURE/);
     assert.equal(env.elements.get('list-mode').getAttribute('aria-pressed'), 'true');
     assert.equal(env.elements.get('step-list').hidden, false);
     assert.equal(env.elements.get('graph-scroll').hidden, true);
@@ -411,7 +425,9 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
 
     const diag1 = env.windowObj.YourdreamPreview.getSkillDiagnosis();
     assert.equal(diag1.needs_retry_count, 1);
+    assert.match(env.elements.get('diagnosis-summary').textContent, /policy_version: PENDING/);
     assert.match(env.elements.get('diagnosis-summary').textContent, /1 kỹ năng cần sửa lỗi ngay/);
+    assert.match(env.elements.get('diagnosis-list').innerHTML, /IN_PRACTICE_NEEDS_RETRY/);
 
     // Switch to Bài 5 (P04) and check subquestion tabs (shared_domain, 1, 2, 3)
     env.windowObj.YourdreamPreview.selectItem('EXAM-GRAPH-02:P04');

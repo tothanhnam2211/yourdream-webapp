@@ -31,6 +31,13 @@ function evidence(j,itemId,stepId){
  const support=latest.hint_level>0||events.some(e=>e.sequence<latest.sequence&&(e.type==='HINT_OPENED'||e.type==='EXPLANATION_OPENED'));
  return {status:support?'CORRECT_WITH_SUPPORT':j.coverage[itemId]?'CORRECT_WITHOUT_RECORDED_SUPPORT':'UNKNOWN',attempts:answers.length,diagnosis_code:latest.diagnosis_code||null,used_support:support,prior_incorrect:priorIncorrect};
 }
+const BATCH01_STATE_MAP={
+ UNATTEMPTED:{code:'NOT_STARTED',label_vi:'Chưa học'},
+ IN_PROGRESS:{code:'INSUFFICIENT_EVIDENCE',label_vi:'Chưa đủ bằng chứng'},
+ NEEDS_RETRY:{code:'IN_PRACTICE_NEEDS_RETRY',label_vi:'Đang luyện · Cần sửa lỗi'},
+ NEEDS_REINFORCEMENT:{code:'IN_PRACTICE_WITH_SUPPORT',label_vi:'Đang luyện · Đúng khi có gợi ý / từng sai'},
+ SOLID_IN_SESSION:{code:'CRITERIA_MET_IN_SESSION',label_vi:'Đã đạt tiêu chí trong phiên (tự giải sạch)'}
+};
 function diagnoseSkills(data,j,completedSet){
  const done=completedSet instanceof Set?completedSet:new Set(completedSet||[]);
  const titles=new Map((data.knowledge_nodes||[]).map(n=>[n.node_id,n.title]));
@@ -39,8 +46,9 @@ function diagnoseSkills(data,j,completedSet){
   const refs=Array.isArray(s.skill_refs)&&s.skill_refs.length?s.skill_refs:(Array.isArray(s.node_ids)?s.node_ids:[]);
   const ev=evidence(j,s.item_id,s.step_id),isDone=done.has(s.step_id);
   for(const skillId of refs){
-   if(!bySkill.has(skillId))bySkill.set(skillId,{skill_id:skillId,title:titles.get(skillId)||skillId,total_steps:0,completed_steps:0,clean_steps:0,support_steps:0,retry_steps:[],support_step_ids:[],diagnosis_codes:[],status:'UNATTEMPTED'});
+   if(!bySkill.has(skillId))bySkill.set(skillId,{skill_id:skillId,title:titles.get(skillId)||skillId,total_steps:0,attempted_steps:0,completed_steps:0,clean_steps:0,support_steps:0,retry_steps:[],support_step_ids:[],diagnosis_codes:[],status:'UNATTEMPTED'});
    const rec=bySkill.get(skillId);rec.total_steps++;
+   if(ev.attempts>0||ev.used_support||isDone)rec.attempted_steps++;
    if(isDone)rec.completed_steps++;
    if(ev.diagnosis_code&&ev.status!=='CORRECT_WITHOUT_RECORDED_SUPPORT'&&!rec.diagnosis_codes.includes(ev.diagnosis_code))rec.diagnosis_codes.push(ev.diagnosis_code);
    if(ev.status==='TRY_AGAIN'||ev.status==='NEEDS_REVIEW'){rec.retry_steps.push({item_id:s.item_id,step_id:s.step_id,title:s.title,status:ev.status,diagnosis_code:ev.diagnosis_code});}
@@ -53,11 +61,12 @@ function diagnoseSkills(data,j,completedSet){
   if(r.retry_steps.length>0)status='NEEDS_RETRY';
   else if(r.support_steps>0)status='NEEDS_REINFORCEMENT';
   else if(r.completed_steps>0&&r.completed_steps===r.total_steps&&r.clean_steps===r.total_steps)status='SOLID_IN_SESSION';
-  else if(r.completed_steps>0)status='IN_PROGRESS';
+  else if(r.attempted_steps>0||r.completed_steps>0)status='IN_PROGRESS';
+  const b01=BATCH01_STATE_MAP[status]||BATCH01_STATE_MAP.UNATTEMPTED;
   const target=r.retry_steps[0]||r.support_step_ids[0]||null;
-  return {...r,status,recommended_target:target};
+  return {...r,status,batch01_state:b01.code,batch01_label_vi:b01.label_vi,policy_version:'PENDING',recommended_target:target};
  });
- return {skills,needs_retry_count:skills.filter(s=>s.status==='NEEDS_RETRY').length,needs_reinforcement_count:skills.filter(s=>s.status==='NEEDS_REINFORCEMENT').length};
+ return {policy_version:'PENDING',skills,needs_retry_count:skills.filter(s=>s.status==='NEEDS_RETRY').length,needs_reinforcement_count:skills.filter(s=>s.status==='NEEDS_REINFORCEMENT').length,insufficient_evidence_count:skills.filter(s=>s.status==='IN_PROGRESS').length,not_started_count:skills.filter(s=>s.status==='UNATTEMPTED').length,criteria_met_count:skills.filter(s=>s.status==='SOLID_IN_SESSION').length};
 }
-return {create,restore,append,evidence,diagnoseSkills,LIMIT};
+return {create,restore,append,evidence,diagnoseSkills,BATCH01_STATE_MAP,LIMIT};
 });

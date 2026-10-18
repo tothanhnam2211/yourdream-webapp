@@ -24,7 +24,7 @@
     },
     {
       "id": "midterm1-fixture",
-      "label": "Fixture Giữa kỳ I · 5 bài / 26 bước (chờ Batch 02A)",
+      "label": "TEST FIXTURE · 5 bài / 26 bước (chưa phải đề thi giữa kỳ · chờ Batch 02A)",
       "path": "data/midterm1-fixture-preview.json",
       "profile": "lesson-contract-v01",
       "sha256": "6abeb7af79044bfc1a09f043ea2c0f7ecf5974ed3f2864ddd48e1c406749a8df"
