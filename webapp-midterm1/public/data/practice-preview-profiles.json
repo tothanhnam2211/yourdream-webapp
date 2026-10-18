@@ -1,19 +1,20 @@
 {
   "status": "DRAFT_LOCAL_PREVIEW_ONLY",
+  "default_profile": "midterm1-hanoi-01",
   "profiles": [
     {
-      "id": "legacy",
-      "label": "Gói cũ · 4 bài / 15 bước",
-      "path": "data/radical-steps-v0.1.json",
-      "profile": "legacy-rad01",
-      "sha256": "a16d43b62b2b667422778ae140f610115625843319efefa513df65b2a4be25d2"
+      "id": "midterm1-hanoi-01",
+      "label": "Đề luyện tập Giữa kỳ I Toán 9 Hà Nội — Đề số 01 (5 bài · 24 bước · Tự biên soạn DRAFT)",
+      "path": "data/midterm1-hanoi-exam01-preview.json",
+      "profile": "lesson-contract-v01",
+      "sha256": "25a9c543df43f8912176294ad4651390e8b4040aa89c281aeed2fa0a56291b99"
     },
     {
-      "id": "graph02-v1",
-      "label": "GRAPH02 v0.1 · đối chiếu",
-      "path": "data/graph02-v1-preview.json",
+      "id": "midterm1-fixture",
+      "label": "TEST FIXTURE · 5 bài / 26 bước (dữ liệu thử nghiệm kỹ thuật · tùy chọn kiểm thử)",
+      "path": "data/midterm1-fixture-preview.json",
       "profile": "lesson-contract-v01",
-      "sha256": "688c4fb1d365468cb324106f3748eec5bbd54b89f0d7d5bfdcc8d2e3f8240295"
+      "sha256": "6abeb7af79044bfc1a09f043ea2c0f7ecf5974ed3f2864ddd48e1c406749a8df"
     },
     {
       "id": "graph02-v2",
@@ -23,18 +24,18 @@
       "sha256": "7e8f443ce6ea5a1eaee267d4712c57bf65d82c53d95051fd4e583e9974ce28b4"
     },
     {
-      "id": "midterm1-fixture",
-      "label": "TEST FIXTURE · 5 bài / 26 bước (chưa phải đề thi giữa kỳ · chờ Batch 02A)",
-      "path": "data/midterm1-fixture-preview.json",
+      "id": "graph02-v1",
+      "label": "GRAPH02 v0.1 · đối chiếu",
+      "path": "data/graph02-v1-preview.json",
       "profile": "lesson-contract-v01",
-      "sha256": "6abeb7af79044bfc1a09f043ea2c0f7ecf5974ed3f2864ddd48e1c406749a8df"
+      "sha256": "688c4fb1d365468cb324106f3748eec5bbd54b89f0d7d5bfdcc8d2e3f8240295"
     },
     {
-      "id": "midterm1-hanoi-01",
-      "label": "Đề luyện tập Giữa kỳ I Toán 9 Hà Nội — Đề số 01 (5 bài · 24 bước · Tự biên soạn DRAFT)",
-      "path": "data/midterm1-hanoi-exam01-preview.json",
-      "profile": "lesson-contract-v01",
-      "sha256": "25a9c543df43f8912176294ad4651390e8b4040aa89c281aeed2fa0a56291b99"
+      "id": "legacy",
+      "label": "Gói cũ · 4 bài / 15 bước",
+      "path": "data/radical-steps-v0.1.json",
+      "profile": "legacy-rad01",
+      "sha256": "a16d43b62b2b667422778ae140f610115625843319efefa513df65b2a4be25d2"
     }
   ]
 }

@@ -38,7 +38,10 @@ function sha256File(relPath) {
 test('MIDTERM1-PHASE-A · Profile Loader, DAG Layout, Multi-Terminal Completion & Choice Feedback', async (t) => {
   const catalog = readJson('data/practice-preview-profiles.json');
   assert.equal(catalog.status, 'DRAFT_LOCAL_PREVIEW_ONLY');
+  assert.equal(catalog.default_profile, 'midterm1-hanoi-01');
   assert.equal(catalog.profiles.length, 5);
+  assert.equal(catalog.profiles[0].id, 'midterm1-hanoi-01');
+  assert.equal(catalog.profiles[1].id, 'midterm1-fixture');
 
   await t.test('M1-01 All 5 declared profiles match exact SHA256 and load cleanly', () => {
     for (const p of catalog.profiles) {
@@ -345,7 +348,13 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
 
     const windowObj = {
       innerWidth,
-      location: { search: '' },
+      location: { pathname: '/graph02-preview.html', search: '', hash: '' },
+      history: {
+        replaceState(_state, _title, nextUrl) {
+          const qIdx = String(nextUrl).indexOf('?');
+          windowObj.location.search = qIdx >= 0 ? String(nextUrl).slice(qIdx) : '';
+        },
+      },
       RadicalEngine,
       RadicalProfiles,
       RadicalPreviewJournal,
@@ -383,6 +392,7 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
       },
     };
     windowObj.document = {
+      title: '',
       getElementById: (id) => elements.get(id) || null,
     };
     windowObj.window = windowObj;
@@ -409,6 +419,8 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     assert.ok(batch02aData);
     assert.equal(batch02aData.graphs.length, 5);
     assert.equal(batch02aData.steps.length, 24);
+    assert.equal(env.elements.get('profile-select').value, 'midterm1-hanoi-01');
+    assert.equal(env.windowObj.location.search, '?profile=midterm1-hanoi-01');
     assert.deepEqual(
       Array.from(batch02aData.graphs, (g) => g.step_ids.length),
       [5, 6, 5, 5, 3]
@@ -421,12 +433,14 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     assert.equal(env.elements.get('graph-scroll').hidden, true);
     assert.equal(env.elements.get('workspace').hidden, false);
 
-    // Switch to midterm1-fixture (5 exercises / 26 steps) and verify TEST FIXTURE badge
+    // Switch to midterm1-fixture (5 exercises / 26 steps) and verify TEST FIXTURE badge + URL sync
     await env.windowObj.YourdreamPreview.loadProfile('midterm1-fixture');
     const data = env.windowObj.YourdreamPreview.getData();
     assert.ok(data);
     assert.equal(data.graphs.length, 5);
     assert.equal(data.steps.length, 26);
+    assert.equal(env.elements.get('profile-select').value, 'midterm1-fixture');
+    assert.equal(env.windowObj.location.search, '?profile=midterm1-fixture');
     assert.match(env.elements.get('fixture-badge').textContent, /TEST FIXTURE/);
     assert.match(env.elements.get('total-progress').textContent, /TEST FIXTURE \(không phải đề thi giữa kỳ\)/);
     assert.match(env.elements.get('exercise-title').textContent, /TEST FIXTURE/);

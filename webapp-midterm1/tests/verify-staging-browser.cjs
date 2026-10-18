@@ -174,7 +174,10 @@ async function runVerification() {
     assert.strictEqual(indexRes.status, 200, 'Root / should return 200');
     const previewRes = await httpRequest('GET', `${BASE_URL}/graph02-preview.html`);
     assert.strictEqual(previewRes.status, 200, '/graph02-preview.html should return 200');
-    assert.ok(previewRes.text.includes('Batch 02A DRAFT'), '/graph02-preview.html must include Batch 02A DRAFT title/banner');
+    assert.ok(
+      previewRes.text.includes('Batch 02A') && previewRes.text.includes('5 bài / 24 bước'),
+      '/graph02-preview.html must include Batch 02A and 5 bài / 24 bước title/banner'
+    );
 
     const identityRes = await httpGetJson(`${BASE_URL}/api/me/identity`);
     assert.strictEqual(identityRes.status, 401, '/api/me/identity without auth header should return 401');
@@ -236,13 +239,16 @@ async function runVerification() {
 
     console.log('[4/6] Auditing initial DOM state (Batch 02A: 5 bài / 24 bước, 13 skills, Batch 01 diagnosis)...');
     const initialSnap = await cdp.evaluate(`(() => {
+      const sel = document.getElementById('profile-select');
       return {
         url: location.href,
+        search: location.search,
         title: document.title,
         fixtureBadge: document.getElementById('fixture-badge')?.textContent?.trim(),
         fixtureNotice: document.getElementById('fixture-notice')?.textContent?.trim(),
-        profileId: document.getElementById('profile-select')?.value,
-        profileText: document.getElementById('profile-select')?.selectedOptions?.[0]?.textContent?.trim(),
+        profileId: sel?.value,
+        optionIds: sel ? [...sel.options].map((o) => o.value) : [],
+        profileText: sel?.selectedOptions?.[0]?.textContent?.trim(),
         totalProgress: document.getElementById('total-progress')?.textContent?.trim(),
         exerciseTitle: document.getElementById('exercise-title')?.textContent?.trim(),
         exerciseCount: document.getElementById('exercise-list')?.children?.length || 0,
@@ -253,6 +259,9 @@ async function runVerification() {
     })()`);
 
     assert.strictEqual(initialSnap.profileId, 'midterm1-hanoi-01', 'Default profile must be midterm1-hanoi-01 (Batch 02A)');
+    assert.strictEqual(initialSnap.optionIds[0], 'midterm1-hanoi-01', 'First option in #profile-select must be midterm1-hanoi-01');
+    assert.strictEqual(initialSnap.optionIds[1], 'midterm1-fixture', 'Second option in #profile-select must be midterm1-fixture');
+    assert.strictEqual(initialSnap.search, '?profile=midterm1-hanoi-01', 'URL search must sync to ?profile=midterm1-hanoi-01');
     assert.strictEqual(initialSnap.fixtureBadge, 'DRAFT · ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN (5 bài / 24 bước)');
     assert.ok(initialSnap.fixtureNotice.includes('Tự biên soạn mới 100% · DRAFT'), 'Notice must state editorial provenance');
     assert.strictEqual(initialSnap.exerciseCount, 5, 'Should render 5 exercise buttons');
@@ -270,6 +279,60 @@ async function runVerification() {
       'Initial diagnosis must display Batch 01 "Chưa học [NOT_STARTED]" state'
     );
     console.log('  -> Initial DOM state verified:', JSON.stringify(initialSnap, null, 2));
+
+    console.log('[4b/6] Verifying ?profile=midterm1-fixture (26 steps) option, selector switch to midterm1-hanoi-01 (24 steps), and F5 reload persistence...');
+    await cdp.send('Page.navigate', { url: `${BASE_URL}/graph02-preview.html?profile=midterm1-fixture` });
+    for (let i = 0; i < 40; i++) {
+      const fixtureLoaded = await cdp.evaluate(
+        `Boolean(document.getElementById('profile-select')?.value === 'midterm1-fixture' && document.getElementById('step-list')?.children?.length === 4)`
+      );
+      if (fixtureLoaded) break;
+      await new Promise((r) => setTimeout(r, 200));
+    }
+    const fixtureSnap = await cdp.evaluate(`(() => ({
+      search: location.search,
+      profileId: document.getElementById('profile-select')?.value,
+      fixtureBadge: document.getElementById('fixture-badge')?.textContent?.trim(),
+      totalProgress: document.getElementById('total-progress')?.textContent?.trim()
+    }))()`);
+    assert.strictEqual(fixtureSnap.profileId, 'midterm1-fixture');
+    assert.ok(fixtureSnap.fixtureBadge.includes('TEST FIXTURE'), 'midterm1-fixture must display TEST FIXTURE badge');
+    assert.ok(fixtureSnap.totalProgress.includes('0 / 26 bước đã làm đúng'), 'midterm1-fixture must display 26 steps');
+
+    // Switch #profile-select back to midterm1-hanoi-01 via user change event
+    const switchedSnap = await cdp.evaluate(`(async () => {
+      const sel = document.getElementById('profile-select');
+      sel.value = 'midterm1-hanoi-01';
+      await sel.onchange();
+      return {
+        search: location.search,
+        profileId: sel.value,
+        fixtureBadge: document.getElementById('fixture-badge')?.textContent?.trim(),
+        totalProgress: document.getElementById('total-progress')?.textContent?.trim()
+      };
+    })()`);
+    assert.strictEqual(switchedSnap.profileId, 'midterm1-hanoi-01');
+    assert.strictEqual(switchedSnap.search, '?profile=midterm1-hanoi-01', 'Switching #profile-select must update location.search via replaceState');
+    assert.strictEqual(switchedSnap.fixtureBadge, 'DRAFT · ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN (5 bài / 24 bước)');
+
+    // Reload page in Chrome and verify it stays on midterm1-hanoi-01 (does NOT revert to midterm1-fixture)
+    await cdp.send('Page.reload', { ignoreCache: false });
+    for (let i = 0; i < 40; i++) {
+      const reloaded = await cdp.evaluate(
+        `Boolean(document.getElementById('profile-select')?.value === 'midterm1-hanoi-01' && document.getElementById('step-list')?.children?.length === 5)`
+      );
+      if (reloaded) break;
+      await new Promise((r) => setTimeout(r, 200));
+    }
+    const afterReloadSnap = await cdp.evaluate(`(() => ({
+      search: location.search,
+      profileId: document.getElementById('profile-select')?.value,
+      fixtureBadge: document.getElementById('fixture-badge')?.textContent?.trim(),
+      totalProgress: document.getElementById('total-progress')?.textContent?.trim()
+    }))()`);
+    assert.strictEqual(afterReloadSnap.profileId, 'midterm1-hanoi-01', 'After Page.reload, profile must remain midterm1-hanoi-01');
+    assert.strictEqual(afterReloadSnap.fixtureBadge, 'DRAFT · ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN (5 bài / 24 bước)');
+    console.log('  -> Profile switch & reload persistence verified:', JSON.stringify({ fixtureSnap, switchedSnap, afterReloadSnap }, null, 2));
 
     console.log('[5/6] Exercising Batch 02A hints, wrong answer, retry, clean solve, rational input, and ITEM_RESET in real browser...');
     const interactionSnap = await cdp.evaluate(`(async () => {
