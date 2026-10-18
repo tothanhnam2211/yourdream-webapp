@@ -1,0 +1,2249 @@
+{
+  "schema_version": "yourdream.webapp.lesson.integration.0.1-DRAFT",
+  "package_id": "YD-G09-MIDTERM1-HANOI-PRACTICE-EXAM-01",
+  "package_version": "0.1.0-DRAFT",
+  "status": "DRAFT",
+  "scope": {
+    "subject": "TOAN",
+    "locale": "vi-VN",
+    "region": "HANOI",
+    "admission_track": "NON_SPECIALIST",
+    "target_exam_year": 2026
+  },
+  "runtime_target": "PROPOSED_ADAPTER_NOT_IMPLEMENTED",
+  "supports_secure_assessment": false,
+  "input_snapshots": [
+    {
+      "artifact_ref": "evidence/YD_G09_MIDTERM1_HANOI_SKILL_MATRIX_v0_1_DRAFT.md",
+      "sha256": "d77fd8ae80e59b5b36f2f82f98fbe35fd9f100222ca2261652a7a870058b35f3",
+      "package_id": "YD-G09-MID1-BATCH01-SKILL-MATRIX",
+      "version": "0.1-DRAFT"
+    },
+    {
+      "artifact_ref": "evidence/YD_G09_MIDTERM1_SOURCE_REGISTER_v0_1_DRAFT.md",
+      "sha256": "02577a2ff47b7d7e6cfba782346094e3a927ae791d8ddbe081f6073b7ca03354",
+      "package_id": "YD-G09-MID1-BATCH01-SOURCE-REGISTER",
+      "version": "0.1-DRAFT"
+    },
+    {
+      "artifact_ref": "evidence/YD_G09_MIDTERM1_WEBAPP_MVP_SCOPE_v0_1_DRAFT.md",
+      "sha256": "b96130633f4766d665ac0bc23cb58cbdcc2f784bb4842fc827146be0a6f791e1",
+      "package_id": "YD-G09-MID1-BATCH01-MVP-SCOPE",
+      "version": "0.1-DRAFT"
+    },
+    {
+      "artifact_ref": "evidence/YD_G09_MIDTERM1_BATCH01_QA_CHECKPOINT_v0_1_DRAFT.md",
+      "sha256": "e3830f6a6320611903980ecab30217c3b4d169151e2a0e3a4d95277530bb14b4",
+      "package_id": "YD-G09-MID1-BATCH01-QA-CHECKPOINT",
+      "version": "0.1-DRAFT"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+      "drive_file_id": "15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+      "title": "Sách giáo khoa Toán 9 Tập 1 — Kết nối tri thức với cuộc sống (NXB Giáo dục Việt Nam)",
+      "sha256": "2b08b12a48cb923fd67f478b726c0e6935e70b405f7a1a6367a61adcd438b3a1",
+      "pdf_pages_1based": [
+        6,
+        11,
+        13,
+        21,
+        27,
+        29,
+        38,
+        43,
+        67,
+        75,
+        80
+      ],
+      "locator": "Chương I (Bài 1–3, PDF tr.6–26), Chương II (Bài 4–6, PDF tr.27–44), Chương IV (Bài 11–12, PDF tr.67–83). Đề luyện tập tự biên soạn mới (NEW_EDITORIAL_PRACTICE_EXAM), không sao chép đề trường.",
+      "verification": "PRODUCER_REVIEWED"
+    },
+    {
+      "source_id": "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK",
+      "drive_file_id": "1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK",
+      "title": "YOURDREAM Source Factory Master Archive (Edit66 Batch 34–38 v0.2 DRAFT)",
+      "sha256": "63e984b71d458bf50e26a8d6ebc6b3c11dc61ff161c63970a0ad2335f588fd1d",
+      "pdf_pages_1based": [
+        11,
+        21,
+        27,
+        38,
+        67,
+        75
+      ],
+      "locator": "Kho văn bản nguồn đã biên tập của SGK Toán 9 Tập 1 KNTT (Chương I, II, III, IV).",
+      "verification": "PRODUCER_REVIEWED"
+    },
+    {
+      "source_id": "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S",
+      "drive_file_id": "1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S",
+      "title": "YOURDREAM Knowledge Factory Step 03 Adapter & Candidate Registry (CAND-G09-01..10)",
+      "sha256": "00c0108fad581fc4cc34ef140dffcd56d20e4aa5eb03cf709d9e385a73f233a5",
+      "pdf_pages_1based": [
+        71
+      ],
+      "locator": "curriculum_alignment_G09_10nodes.DRAFT.json và alias_registry.EMPTY.DRAFT.json (trang 71 CT GDPT 2018).",
+      "verification": "PRODUCER_REVIEWED"
+    },
+    {
+      "source_id": "drive:11aOVB2-kGUfkexx31987kq1rc6vMm9ve",
+      "drive_file_id": "11aOVB2-kGUfkexx31987kq1rc6vMm9ve",
+      "title": "YOURDREAM Source Factory Batch 35 — Chương IV Hệ thức lượng trong tam giác vuông",
+      "sha256": "f3493cde5353e17c3b457123956fe87820d7351fd87752921fcb4cb3d881cdab",
+      "pdf_pages_1based": [
+        67,
+        74,
+        75,
+        79,
+        80,
+        82
+      ],
+      "locator": "Bài 11 (Tỉ số lượng giác của góc nhọn) và Bài 12 (Hệ thức giữa cạnh và góc trong tam giác vuông).",
+      "verification": "PRODUCER_REVIEWED"
+    }
+  ],
+  "knowledge_nodes": [
+    {
+      "node_id": "CAND-G09-04",
+      "canonical_node_id": null,
+      "title": "[C04 | CAND-G09-04 | canonical: PENDING_ID] Nghiệm chung của hệ hai phương trình bậc nhất hai ẩn",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": "curriculum_alignment_G09_10nodes.DRAFT.json#CAND-G09-04",
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "CAND-G09-05",
+      "canonical_node_id": null,
+      "title": "[C05 | CAND-G09-05 | canonical: PENDING_ID] Giải hệ hai phương trình bậc nhất hai ẩn bằng phương pháp thế",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+      ],
+      "prerequisite_ids": [
+        "CAND-G09-04"
+      ],
+      "authoring_payload_ref": "curriculum_alignment_G09_10nodes.DRAFT.json#CAND-G09-05",
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "CAND-G09-06",
+      "canonical_node_id": null,
+      "title": "[C06 | CAND-G09-06 | canonical: PENDING_ID] Giải hệ hai phương trình bậc nhất hai ẩn bằng phương pháp cộng đại số",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+      ],
+      "prerequisite_ids": [
+        "CAND-G09-04"
+      ],
+      "authoring_payload_ref": "curriculum_alignment_G09_10nodes.DRAFT.json#CAND-G09-06",
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "CAND-G09-07",
+      "canonical_node_id": null,
+      "title": "[C07 | CAND-G09-07 | canonical: PENDING_ID] Lập hệ phương trình bậc nhất hai ẩn từ bài toán thực tế",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+      ],
+      "prerequisite_ids": [
+        "CAND-G09-05",
+        "CAND-G09-06"
+      ],
+      "authoring_payload_ref": "curriculum_alignment_G09_10nodes.DRAFT.json#CAND-G09-07",
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "DRAFT:midterm1.C08.product_equation",
+      "canonical_node_id": null,
+      "title": "[C08 | candidate: PENDING_ID | canonical: PENDING_ID] Giải phương trình tích và phương trình đưa về phương trình tích",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "DRAFT:midterm1.C09.rational_equation",
+      "canonical_node_id": null,
+      "title": "[C09 | candidate: PENDING_ID | canonical: PENDING_ID] Tìm ĐKXĐ, giải phương trình chứa ẩn ở mẫu và đối chiếu loại nghiệm ngoại lai",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+      ],
+      "prerequisite_ids": [
+        "DRAFT:midterm1.C08.product_equation"
+      ],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "EXAM-GRAPH-02:skill.linear_inequality_negative_coeff",
+      "canonical_node_id": null,
+      "title": "[C11 | candidate: PENDING_ID | canonical: PENDING_ID] Giải bất phương trình bậc nhất một ẩn (đổi chiều khi chia số âm) và tìm nghiệm nguyên",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "DRAFT:midterm1.C12.inequality_modeling",
+      "canonical_node_id": null,
+      "title": "[C12 | candidate: PENDING_ID | canonical: PENDING_ID] Mô hình hóa và giải bài toán thực tế bằng bất phương trình bậc nhất một ẩn",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+      ],
+      "prerequisite_ids": [
+        "EXAM-GRAPH-02:skill.linear_inequality_negative_coeff"
+      ],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "DRAFT:midterm1.C13.trig_ratios",
+      "canonical_node_id": null,
+      "title": "[C13 | candidate: PENDING_ID | canonical: PENDING_ID] Tính tỉ số lượng giác của góc nhọn và vận dụng hai góc phụ nhau trong tam giác vuông",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:11aOVB2-kGUfkexx31987kq1rc6vMm9ve"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "DRAFT:midterm1.C14.right_triangle_relations",
+      "canonical_node_id": null,
+      "title": "[C14 | candidate: PENDING_ID | canonical: PENDING_ID] Hệ thức giữa cạnh và góc trong tam giác vuông và ứng dụng thực tế góc nâng/góc nghiêng",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:11aOVB2-kGUfkexx31987kq1rc6vMm9ve"
+      ],
+      "prerequisite_ids": [
+        "DRAFT:midterm1.C13.trig_ratios"
+      ],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "DRAFT:midterm1.C15.geometric_similarity_relations",
+      "canonical_node_id": null,
+      "title": "[C15 | candidate: PENDING_ID | canonical: PENDING_ID] Chứng minh hệ thức hình học (AB^2 = BH.BC, đường cao AH) bằng tam giác đồng dạng và tỉ số lượng giác",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:11aOVB2-kGUfkexx31987kq1rc6vMm9ve"
+      ],
+      "prerequisite_ids": [
+        "DRAFT:midterm1.C13.trig_ratios",
+        "DRAFT:midterm1.C14.right_triangle_relations"
+      ],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "DRAFT:midterm1.C10.inequality_properties",
+      "canonical_node_id": null,
+      "title": "[C10 | candidate: PENDING_ID | canonical: PENDING_ID] Vận dụng tính chất bất đẳng thức và biến đổi tương đương chứng minh bất đẳng thức cơ bản",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+      ],
+      "prerequisite_ids": [],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    },
+    {
+      "node_id": "DRAFT:midterm1.S07.advanced_optimization",
+      "canonical_node_id": null,
+      "title": "[S07 | candidate: PENDING_ID | canonical: PENDING_ID] Câu phân loại Vận dụng cao (0,5 điểm): Bất đẳng thức 1/a + 1/b >= 4 và tìm giá trị nhỏ nhất",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+      ],
+      "prerequisite_ids": [
+        "DRAFT:midterm1.C10.inequality_properties"
+      ],
+      "authoring_payload_ref": null,
+      "authoring_schema_ref": null
+    }
+  ],
+  "knowledge_relations": [
+    {
+      "from": "CAND-G09-04",
+      "to": "CAND-G09-05",
+      "type": "PREREQUISITE"
+    },
+    {
+      "from": "CAND-G09-04",
+      "to": "CAND-G09-06",
+      "type": "PREREQUISITE"
+    },
+    {
+      "from": "CAND-G09-05",
+      "to": "CAND-G09-07",
+      "type": "PREREQUISITE"
+    },
+    {
+      "from": "CAND-G09-06",
+      "to": "CAND-G09-07",
+      "type": "PREREQUISITE"
+    },
+    {
+      "from": "DRAFT:midterm1.C08.product_equation",
+      "to": "DRAFT:midterm1.C09.rational_equation",
+      "type": "PREREQUISITE"
+    },
+    {
+      "from": "EXAM-GRAPH-02:skill.linear_inequality_negative_coeff",
+      "to": "DRAFT:midterm1.C12.inequality_modeling",
+      "type": "PREREQUISITE"
+    },
+    {
+      "from": "DRAFT:midterm1.C13.trig_ratios",
+      "to": "DRAFT:midterm1.C14.right_triangle_relations",
+      "type": "PREREQUISITE"
+    },
+    {
+      "from": "DRAFT:midterm1.C13.trig_ratios",
+      "to": "DRAFT:midterm1.C15.geometric_similarity_relations",
+      "type": "PREREQUISITE"
+    },
+    {
+      "from": "DRAFT:midterm1.C14.right_triangle_relations",
+      "to": "DRAFT:midterm1.C15.geometric_similarity_relations",
+      "type": "PREREQUISITE"
+    },
+    {
+      "from": "DRAFT:midterm1.C10.inequality_properties",
+      "to": "DRAFT:midterm1.S07.advanced_optimization",
+      "type": "PREREQUISITE"
+    }
+  ],
+  "lessons": [
+    {
+      "lesson_id": "YD-G09-MID1-01:lesson.B01_SYSTEMS",
+      "title": "Bài I (2,0 điểm) — Giải hệ phương trình bậc nhất hai ẩn [UI: equations:2]",
+      "objectives": [
+        "[BÀI I — 2,0 điểm | 5 bước | CAND-G09-04, CAND-G09-05, CAND-G09-06 | UI: equations:2] Giải hệ hai phương trình bậc nhất hai ẩn bằng phương pháp thế và phương pháp cộng đại số (có khai triển ngoặc)."
+      ],
+      "node_ids": [
+        "CAND-G09-04",
+        "CAND-G09-05",
+        "CAND-G09-06"
+      ],
+      "blocks": [
+        {
+          "block_id": "YD-G09-MID1-01:block.B01.theory",
+          "kind": "THEORY",
+          "text_vi": "Để giải hệ hai phương trình bậc nhất hai ẩn, ta có thể rút một ẩn từ phương trình có hệ số ±1 rồi thế vào phương trình còn lại (phương pháp thế), hoặc nhân hai vế để tạo hệ số đối nhau/bằng nhau của cùng một ẩn rồi cộng/trừ từng vế (phương pháp cộng đại số). Khi có dấu ngoặc, cần khai triển và thu gọn về dạng chuẩn ax + by = c trước.",
+          "latex": "\\begin{cases} a_1x + b_1y = c_1 \\\\ a_2x + b_2y = c_2 \\end{cases}",
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi"
+          ],
+          "asset_ids": []
+        },
+        {
+          "block_id": "YD-G09-MID1-01:block.B01.example",
+          "kind": "EXAMPLE",
+          "text_vi": "Khi phá ngoặc có dấu trừ phía trước như -(y - 2), phải đổi dấu mọi hạng tử bên trong thành -y + 2.",
+          "latex": "-(y - 2) = -y + 2",
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi"
+          ],
+          "asset_ids": []
+        }
+      ],
+      "graph_ids": [
+        "YD-G09-MID1-01:G01"
+      ],
+      "asset_ids": [],
+      "assessment_ids": [
+        "YD-G09-MID1-01:assessment.FULL_EXAM_10PT"
+      ]
+    },
+    {
+      "lesson_id": "YD-G09-MID1-01:lesson.B02_EQ_INEQ",
+      "title": "Bài II (2,0 điểm) — Phương trình tích, PT chứa ẩn ở mẫu & Bất phương trình bậc nhất [UI: equations:0, algebra:2]",
+      "objectives": [
+        "[BÀI II — 2,0 điểm | 6 bước | C08, C09, C11 (PENDING_ID) | UI: equations:0, algebra:2] Giải phương trình đưa về phương trình tích, tìm ĐKXĐ và loại nghiệm ngoại lai của phương trình chứa ẩn ở mẫu, giải bất phương trình bậc nhất một ẩn có chia số âm và tìm nghiệm nguyên lớn nhất."
+      ],
+      "node_ids": [
+        "DRAFT:midterm1.C08.product_equation",
+        "DRAFT:midterm1.C09.rational_equation",
+        "EXAM-GRAPH-02:skill.linear_inequality_negative_coeff"
+      ],
+      "blocks": [
+        {
+          "block_id": "YD-G09-MID1-01:block.B02.theory",
+          "kind": "THEORY",
+          "text_vi": "1) Với phương trình tích A(x)B(x) = 0, ta giải A(x) = 0 hoặc B(x) = 0 (không tự ý chia hai vế cho nhân tử chứa ẩn). 2) Với phương trình chứa ẩn ở mẫu, bắt buộc tìm ĐKXĐ (tất cả các mẫu khác 0) trước khi khử mẫu và phải đối chiếu ĐKXĐ để loại nghiệm ngoại lai. 3) Khi nhân hoặc chia hai vế của bất phương trình với một số âm, phải đổi chiều bất phương trình.",
+          "latex": "A(x)B(x) = 0 \\Leftrightarrow A(x) = 0 \\text{ hoặc } B(x) = 0",
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi"
+          ],
+          "asset_ids": []
+        }
+      ],
+      "graph_ids": [
+        "YD-G09-MID1-01:G02"
+      ],
+      "asset_ids": [],
+      "assessment_ids": [
+        "YD-G09-MID1-01:assessment.FULL_EXAM_10PT"
+      ]
+    },
+    {
+      "lesson_id": "YD-G09-MID1-01:lesson.B03_REALWORLD",
+      "title": "Bài III (2,0 điểm) — Giải bài toán thực tế bằng cách lập hệ phương trình & bất phương trình [UI: real:0, real:2]",
+      "objectives": [
+        "[BÀI III — 2,0 điểm | 5 bước | CAND-G09-07 (C07), C12 (PENDING_ID) | UI: real:0, real:2] Mô hình hóa bài toán thực tế thành hệ hai phương trình bậc nhất hai ẩn và bất phương trình bậc nhất một ẩn, giải và làm tròn nghiệm nguyên theo ngữ cảnh kinh phí tối đa."
+      ],
+      "node_ids": [
+        "CAND-G09-07",
+        "DRAFT:midterm1.C12.inequality_modeling",
+        "EXAM-GRAPH-02:skill.linear_inequality_negative_coeff"
+      ],
+      "blocks": [
+        {
+          "block_id": "YD-G09-MID1-01:block.B03.theory",
+          "kind": "THEORY",
+          "text_vi": "Các bước giải bài toán bằng cách lập hệ phương trình: Bước 1: Chọn ẩn và đặt điều kiện thích hợp cho ẩn (chú ý đơn vị). Bước 2: Biểu diễn các đại lượng chưa biết theo ẩn và lập hai phương trình từ hai mối quan hệ độc lập. Bước 3: Giải hệ phương trình, đối chiếu điều kiện và trả lời. Với câu hỏi giới hạn ngân sách 'không vượt quá M', lập bất phương trình Tổng chi phí <= M và lấy phần nguyên dưới.",
+          "latex": "\\text{Chi phí cố định} + \\text{Đơn giá} \\cdot n \\le \\text{Ngân sách tối đa}",
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi"
+          ],
+          "asset_ids": []
+        }
+      ],
+      "graph_ids": [
+        "YD-G09-MID1-01:G03"
+      ],
+      "asset_ids": [],
+      "assessment_ids": [
+        "YD-G09-MID1-01:assessment.FULL_EXAM_10PT"
+      ]
+    },
+    {
+      "lesson_id": "YD-G09-MID1-01:lesson.B04_GEOMETRY",
+      "title": "Bài IV (3,5 điểm) — Tỉ số lượng giác góc nhọn, Hệ thức cạnh–góc & Đồng dạng trong tam giác vuông [UI: geometry:1, geometry:0]",
+      "objectives": [
+        "[BÀI IV — 3,5 điểm | 5 bước | C13, C14, C15 (PENDING_ID) | UI: geometry:1, geometry:0] Vận dụng tỉ số lượng giác góc nhọn để giải toán thực tế (chiếc thang dựa tường), tính cạnh và đường cao trong tam giác vuông, chứng minh hai tam giác đồng dạng suy ra hệ thức AB^2 = BH.BC và tính độ dài hình chiếu BH."
+      ],
+      "node_ids": [
+        "DRAFT:midterm1.C13.trig_ratios",
+        "DRAFT:midterm1.C14.right_triangle_relations",
+        "DRAFT:midterm1.C15.geometric_similarity_relations"
+      ],
+      "blocks": [
+        {
+          "block_id": "YD-G09-MID1-01:block.B04.theory",
+          "kind": "THEORY",
+          "text_vi": "Trong tam giác vuông: sin = đối/huyền, cos = kề/huyền, tan = đối/kề, cot = kề/đối. Mỗi cạnh góc vuông bằng cạnh huyền nhân sin góc đối hoặc nhân cos góc kề. Khi kẻ đường cao AH vuông góc với cạnh huyền BC của tam giác vuông ABC, ta có tam giác HBA đồng dạng với tam giác ABC (g.g), suy ra AB/BC = BH/AB hay AB^2 = BH.BC.",
+          "latex": "\\sin \\alpha = \\frac{\\text{đối}}{\\text{huyền}},\\quad \\cos \\alpha = \\frac{\\text{kề}}{\\text{huyền}},\\quad AB^2 = BH \\cdot BC",
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:11aOVB2-kGUfkexx31987kq1rc6vMm9ve"
+          ],
+          "asset_ids": []
+        }
+      ],
+      "graph_ids": [
+        "YD-G09-MID1-01:G04"
+      ],
+      "asset_ids": [],
+      "assessment_ids": [
+        "YD-G09-MID1-01:assessment.FULL_EXAM_10PT"
+      ]
+    },
+    {
+      "lesson_id": "YD-G09-MID1-01:lesson.B05_ADVANCED",
+      "title": "Bài V (0,5 điểm) — Câu phân loại Vận dụng cao: Bất đẳng thức & Cực trị đại số [UI: algebra:3]",
+      "objectives": [
+        "[BÀI V — 0,5 điểm | 3 bước | C10, S07 (PENDING_ID) | UI: algebra:3] Chứng minh bất đẳng thức 1/a + 1/b >= 4/(a + b) với a, b > 0 từ hằng đẳng thức (a - b)^2 >= 0 và tìm giá trị nhỏ nhất của biểu thức."
+      ],
+      "node_ids": [
+        "DRAFT:midterm1.C10.inequality_properties",
+        "DRAFT:midterm1.S07.advanced_optimization"
+      ],
+      "blocks": [
+        {
+          "block_id": "YD-G09-MID1-01:block.B05.theory",
+          "kind": "THEORY",
+          "text_vi": "Với hai số thực dương a, b > 0, từ (a - b)^2 >= 0 ta luôn có (a + b)^2 >= 4ab. Chia cả hai vế cho ab(a + b) > 0 được 1/a + 1/b >= 4/(a + b). Dấu bằng xảy ra khi và chỉ khi a = b.",
+          "latex": "\\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b} \\quad (\\forall a, b > 0)",
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi"
+          ],
+          "asset_ids": []
+        }
+      ],
+      "graph_ids": [
+        "YD-G09-MID1-01:G05"
+      ],
+      "asset_ids": [],
+      "assessment_ids": [
+        "YD-G09-MID1-01:assessment.FULL_EXAM_10PT"
+      ]
+    }
+  ],
+  "step_graphs": [
+    {
+      "graph_id": "YD-G09-MID1-01:G01",
+      "proposal_ref": "YD-G09-MID1-01:PROP-B01",
+      "canonical_item_id": null,
+      "prompt": "[ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN — Bài I (2,0 điểm)] Giải các hệ phương trình bậc nhất hai ẩn sau:\n1) $\\begin{cases} 2x - y = 5 \\\\ 3x + 2y = 4 \\end{cases}$ (bằng phương pháp thế)\n2) $\\begin{cases} 3(x + 1) + 2(y - 2) = 10 \\\\ 2(x + 1) - (y - 2) = 9 \\end{cases}$ (thu gọn và giải bằng phương pháp cộng đại số).",
+      "original_domain": "Đề luyện tập tự biên soạn theo cấu trúc Giữa học kỳ I Toán 9 Hà Nội (không phải đề gốc của trường). Các ẩn thực $x, y \\in \\mathbb{R}$.",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+      ],
+      "subquestion_step_groups": {
+        "y_1": [
+          "YD-G09-MID1-01:G01:S01",
+          "YD-G09-MID1-01:G01:S02"
+        ],
+        "y_2": [
+          "YD-G09-MID1-01:G01:S03",
+          "YD-G09-MID1-01:G01:S04",
+          "YD-G09-MID1-01:G01:S05"
+        ]
+      },
+      "terminal_step_ids": [
+        "YD-G09-MID1-01:G01:S02",
+        "YD-G09-MID1-01:G01:S05"
+      ],
+      "completion_policy": "ALL_STEPS_CORRECT",
+      "edges": [
+        {
+          "from": "YD-G09-MID1-01:G01:S01",
+          "to": "YD-G09-MID1-01:G01:S02",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "YD-G09-MID1-01:G01:S03",
+          "to": "YD-G09-MID1-01:G01:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "YD-G09-MID1-01:G01:S04",
+          "to": "YD-G09-MID1-01:G01:S05",
+          "kind": "REQUIRES"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "YD-G09-MID1-01:G01:S01",
+          "requires": [],
+          "node_ids": [
+            "CAND-G09-05"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+          ],
+          "title": "Ý 1 — Rút ẩn y theo x và thế vào phương trình thứ hai",
+          "before": "\\begin{cases} 2x - y = 5 \\\\ 3x + 2y = 4 \\end{cases}",
+          "after": "y = 2x - 5,\\quad 3x + 2(2x - 5) = 4 \\Leftrightarrow 7x = 14",
+          "justification": "Từ phương trình (1): 2x - y = 5 \\Leftrightarrow y = 2x - 5. Thế vào phương trình (2): 3x + 2(2x - 5) = 4 \\Leftrightarrow 3x + 4x - 10 = 4 \\Leftrightarrow 7x = 14.",
+          "conditions_in_context": [
+            "Ý 1 (1,0 điểm): Giải hệ phương trình bằng phương pháp thế với x, y \\in \\mathbb{R}."
+          ],
+          "interaction": {
+            "prompt": "Ở Ý 1, từ phương trình thứ nhất $2x - y = 5$, biểu diễn $y$ theo $x$ rồi thế vào phương trình $3x + 2y = 4$ ta được phương trình một ẩn nào sau đây?",
+            "answer_type": "choice",
+            "expected": "sub_correct",
+            "choices": {
+              "sub_correct": "$y = 2x - 5$ và $3x + 2(2x - 5) = 4$",
+              "sub_sign_err": "$y = 5 - 2x$ và $3x + 2(5 - 2x) = 4$",
+              "sub_plus_err": "$y = 2x + 5$ và $3x + 2(2x + 5) = 4$",
+              "sub_no_paren": "$y = 2x - 5$ và $3x + 2 \\cdot 2x - 5 = 4$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Trong phương trình $2x - y = 5$, hệ số của $y$ là $-1$ nên rút $y$ theo $x$ là thuận lợi nhất.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Chuyển $-y$ sang vế phải và $5$ sang vế trái: $2x - 5 = y$, tức là $y = 2x - 5$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Thay $y$ bởi biểu thức $(2x - 5)$ có đóng mở ngoặc vào $3x + 2y = 4$, ta được $3x + 2(2x - 5) = 4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Rút $y = 2x - 5$ từ phương trình (1) và thế vào phương trình (2) có ngoặc ta được $3x + 2(2x - 5) = 4$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra lại dấu khi chuyển vế trong $2x - y = 5$ và nhớ đặt biểu thức của $y$ trong dấu ngoặc khi nhân với $2$.",
+            "unknown": "Phản hồi chưa xác định trong danh mục lựa chọn; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "sub_correct": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "C05_SUBSTITUTION_EXPRESSION_CORRECT",
+                "message": "Chính xác! Từ $2x - y = 5 \\Leftrightarrow y = 2x - 5$, thế vào $3x + 2y = 4$ được $3x + 2(2x - 5) = 4$."
+              },
+              "sub_sign_err": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C05_ISOLATE_NEGATIVE_Y_SIGN_ERROR",
+                "message": "Chưa đúng: trong $2x - y = 5$, trước $y$ là dấu trừ nên $-y = 5 - 2x \\Leftrightarrow y = 2x - 5$ (không phải $y = 5 - 2x$)."
+              },
+              "sub_plus_err": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C05_TRANSPOSE_CONSTANT_SIGN_ERROR",
+                "message": "Chưa đúng: khi chuyển $+5$ từ vế phải sang vế trái phải đổi dấu thành $-5$, nên $y = 2x - 5$."
+              },
+              "sub_no_paren": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C05_MISSING_PARENTHESES_ON_SUBSTITUTION",
+                "message": "Chưa đúng: hệ số $2$ nhân với toàn bộ biểu thức $y = 2x - 5$, nên phải viết $2(2x - 5)$, không được bỏ ngoặc thành $2 \\cdot 2x - 5$."
+              }
+            }
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G01:S02",
+          "requires": [
+            "YD-G09-MID1-01:G01:S01"
+          ],
+          "node_ids": [
+            "CAND-G09-05",
+            "CAND-G09-04"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+          ],
+          "title": "Ý 1 — Giải tìm nghiệm (x; y) và tính hiệu x - y",
+          "before": "7x - 10 = 4,\\quad y = 2x - 5",
+          "after": "(x; y) = (2; -1),\\quad x - y = 3",
+          "justification": "Từ 7x = 14 suy ra x = 2. Thay x = 2 vào y = 2x - 5 được y = 2 \\cdot 2 - 5 = -1. Nghiệm của hệ là (2; -1), do đó x - y = 2 - (-1) = 3.",
+          "conditions_in_context": [
+            "Phương trình thế thu gọn: 7x = 14 và y = 2x - 5."
+          ],
+          "interaction": {
+            "prompt": "Từ phương trình $3x + 2(2x - 5) = 4$, hãy tìm nghiệm $(x; y)$ của hệ ở Ý 1 và nhập giá trị của hiệu $x - y$.",
+            "answer_type": "rational",
+            "expected": "3",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Khai triển $3x + 4x - 10 = 4 \\Leftrightarrow 7x = 14$ để tìm $x$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta có $x = 2$. Thay $x = 2$ vào $y = 2x - 5$ ta tính được $y = 2 \\cdot 2 - 5 = -1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Tính hiệu $x - y = 2 - (-1) = 2 + 1 = 3$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Hệ phương trình Ý 1 có nghiệm duy nhất $(x; y) = (2; -1)$, nên $x - y = 2 - (-1) = 3$.",
+            "incorrect": "Chưa khớp. Lưu ý $x = 2$ và $y = -1$; khi tính $x - y = 2 - (-1)$ chú ý dấu trừ trước số âm.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G01:S03",
+          "requires": [],
+          "node_ids": [
+            "CAND-G09-06"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+          ],
+          "title": "Ý 2 — Khai triển dấu ngoặc đưa hệ phương trình về dạng chuẩn",
+          "before": "\\begin{cases} 3(x + 1) + 2(y - 2) = 10 \\\\ 2(x + 1) - (y - 2) = 9 \\end{cases}",
+          "after": "\\begin{cases} 3x + 2y = 11 \\\\ 2x - y = 5 \\end{cases}",
+          "justification": "Khai triển: PT(1) \\Leftrightarrow 3x + 3 + 2y - 4 = 10 \\Leftrightarrow 3x + 2y = 11; PT(2) \\Leftrightarrow 2x + 2 - y + 2 = 9 \\Leftrightarrow 2x - y = 5.",
+          "conditions_in_context": [
+            "Ý 2 (1,0 điểm): Khai triển ngoặc hoặc đặt ẩn phụ trước khi dùng phương pháp cộng đại số."
+          ],
+          "interaction": {
+            "prompt": "Ở Ý 2, sau khi khai triển dấu ngoặc và chuyển các hằng số sang vế phải, hệ phương trình trở thành hệ nào?",
+            "answer_type": "choice",
+            "expected": "sys_std_correct",
+            "choices": {
+              "sys_std_correct": "$\\begin{cases} 3x + 2y = 11 \\\\ 2x - y = 5 \\end{cases}$",
+              "sys_std_sign_y2": "$\\begin{cases} 3x + 2y = 11 \\\\ 2x - y = 9 \\end{cases}$",
+              "sys_std_const1": "$\\begin{cases} 3x + 2y = 9 \\\\ 2x - y = 5 \\end{cases}$",
+              "sys_std_plus_y": "$\\begin{cases} 3x + 2y = 11 \\\\ 2x + y = 5 \\end{cases}$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Nhân phân phối từng số hạng và đặc biệt chú ý dấu trừ đứng trước ngoặc $-(y - 2)$ ở phương trình thứ hai.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ở phương trình (1): $3x + 3 + 2y - 4 = 10 \\Leftrightarrow 3x + 2y - 1 = 10 \\Leftrightarrow 3x + 2y = 11$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Ở phương trình (2): $2x + 2 - y + 2 = 9 \\Leftrightarrow 2x - y + 4 = 9 \\Leftrightarrow 2x - y = 5$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Đúng! Khai triển cẩn thận dấu trừ trước ngoặc $-(y - 2) = -y + 2$ giúp đưa hệ về dạng chuẩn $\\begin{cases} 3x + 2y = 11 \\\\ 2x - y = 5 \\end{cases}$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra lại phép phá ngoặc $-(y - 2) = -y + 2$ ở phương trình (2) và tổng hằng số $3 - 4 = -1$ ở phương trình (1).",
+            "unknown": "Phản hồi chưa xác định; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "sys_std_correct": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "C06_EXPAND_AND_STANDARDIZE_CORRECT",
+                "message": "Chính xác: $3x + 3 + 2y - 4 = 10 \\Leftrightarrow 3x + 2y = 11$ và $2x + 2 - y + 2 = 9 \\Leftrightarrow 2x - y = 5$."
+              },
+              "sys_std_sign_y2": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C06_NEGATIVE_PAREN_SIGN_ERROR",
+                "message": "Chưa đúng: khi phá ngoặc $-(y - 2)$ phải đổi dấu thành $-y + 2$, nên $2 + 2 = 4$ ở vế trái, chuyển sang vế phải là $9 - 4 = 5$ (không phải $9$)."
+              },
+              "sys_std_const1": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C06_TRANSPOSE_CONSTANT_EQ1_ERROR",
+                "message": "Chưa đúng: ở phương trình (1), $3 - 4 = -1$ ở vế trái, chuyển sang vế phải phải cộng $1$: $10 + 1 = 11$ (không phải $10 - 1 = 9$)."
+              },
+              "sys_std_plus_y": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C06_VARIABLE_Y_SIGN_LOST",
+                "message": "Chưa đúng: ở phương trình (2) có dấu trừ trước $(y - 2)$ nên hệ số của $y$ là $-1$, tức là $2x - y = 5$."
+              }
+            }
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G01:S04",
+          "requires": [
+            "YD-G09-MID1-01:G01:S03"
+          ],
+          "node_ids": [
+            "CAND-G09-06"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+          ],
+          "title": "Ý 2 — Khử ẩn y bằng phương pháp cộng đại số để tìm x",
+          "before": "\\begin{cases} 3x + 2y = 11 \\\\ 2x - y = 5 \\end{cases}",
+          "after": "7x = 21 \\Leftrightarrow x = 3",
+          "justification": "Nhân hai vế của phương trình thứ hai với 2 ta được 4x - 2y = 10. Cộng từng vế với 3x + 2y = 11 được 7x = 21 \\Leftrightarrow x = 3.",
+          "conditions_in_context": [
+            "Hệ chuẩn Ý 2: 3x + 2y = 11 và 2x - y = 5."
+          ],
+          "interaction": {
+            "prompt": "Nhân hai vế của phương trình $2x - y = 5$ với $2$ rồi cộng từng vế với $3x + 2y = 11$, ta tìm được giá trị $x$ bằng bao nhiêu?",
+            "answer_type": "rational",
+            "expected": "3",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Nhân hai vế của $2x - y = 5$ với $2$ để hệ số của $y$ trở thành $-2$ (đối nhau với $+2$ ở phương trình trên).",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Phương trình thứ hai trở thành $4x - 2y = 10$. Cộng từng vế với $3x + 2y = 11$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Ta được $(3x + 4x) + (2y - 2y) = 11 + 10 \\Leftrightarrow 7x = 21 \\Leftrightarrow x = 3$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Sau khi nhân 2 và cộng từng vế, ta được $7x = 21 \\Leftrightarrow x = 3$.",
+            "incorrect": "Chưa đúng. Nhớ nhân cả vế phải $5 \\cdot 2 = 10$ trước khi cộng với $11$ để được $7x = 21$.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G01:S05",
+          "requires": [
+            "YD-G09-MID1-01:G01:S04"
+          ],
+          "node_ids": [
+            "CAND-G09-06",
+            "CAND-G09-04"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+          ],
+          "title": "Ý 2 — Tìm y và tính tổng x + y để kiểm tra nghiệm",
+          "before": "x = 3,\\quad 2x - y = 5",
+          "after": "y = 1,\\quad (x; y) = (3; 1),\\quad x + y = 4",
+          "justification": "Thay x = 3 vào 2x - y = 5 được 6 - y = 5 \\Leftrightarrow y = 1. Nghiệm của hệ là (3; 1), suy ra tổng x + y = 3 + 1 = 4.",
+          "conditions_in_context": [
+            "Đã tìm được x = 3 và 2x - y = 5."
+          ],
+          "interaction": {
+            "prompt": "Thay $x = 3$ vào phương trình $2x - y = 5$ để tìm $y$, sau đó nhập giá trị của tổng $x + y$.",
+            "answer_type": "rational",
+            "expected": "4",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Thay $x = 3$ vào phương trình $2x - y = 5$ ta có $2 \\cdot 3 - y = 5$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Từ $6 - y = 5$, suy ra $y = 6 - 5 = 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Nghiệm của hệ là $(x; y) = (3; 1)$, vậy $x + y = 3 + 1 = 4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Hoàn toàn chính xác! Với $x = 3, y = 1$, cặp số $(3; 1)$ thỏa mãn cả hai phương trình ban đầu và $x + y = 4$.",
+            "incorrect": "Chưa khớp. Với $x = 3$, ta có $6 - y = 5 \\Rightarrow y = 1$; hãy tính lại tổng $x + y$.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        }
+      ]
+    },
+    {
+      "graph_id": "YD-G09-MID1-01:G02",
+      "proposal_ref": "YD-G09-MID1-01:PROP-B02",
+      "canonical_item_id": null,
+      "prompt": "[ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN — Bài II (2,0 điểm)] Giải các phương trình và bất phương trình sau:\n1) $(2x - 3)(x + 1) - (2x - 3)(3x - 5) = 0$\n2) $\\frac{x + 2}{x - 2} - \\frac{1}{x} = \\frac{2}{x(x - 2)}$\n3) Giải bất phương trình $\\frac{2x + 1}{3} - \\frac{3x - 2}{2} > \\frac{1}{6}$ và tìm nghiệm nguyên lớn nhất của bất phương trình.",
+      "original_domain": "Đề luyện tập tự biên soạn Chương II (Phương trình và bất phương trình bậc nhất một ẩn). Ở ý 2 cần đặt điều kiện xác định cho mẫu thức khác 0.",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+      ],
+      "subquestion_step_groups": {
+        "y_1": [
+          "YD-G09-MID1-01:G02:S01",
+          "YD-G09-MID1-01:G02:S02"
+        ],
+        "y_2": [
+          "YD-G09-MID1-01:G02:S03",
+          "YD-G09-MID1-01:G02:S04"
+        ],
+        "y_3": [
+          "YD-G09-MID1-01:G02:S05",
+          "YD-G09-MID1-01:G02:S06"
+        ]
+      },
+      "terminal_step_ids": [
+        "YD-G09-MID1-01:G02:S02",
+        "YD-G09-MID1-01:G02:S04",
+        "YD-G09-MID1-01:G02:S06"
+      ],
+      "completion_policy": "ALL_STEPS_CORRECT",
+      "edges": [
+        {
+          "from": "YD-G09-MID1-01:G02:S01",
+          "to": "YD-G09-MID1-01:G02:S02",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "YD-G09-MID1-01:G02:S03",
+          "to": "YD-G09-MID1-01:G02:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "YD-G09-MID1-01:G02:S05",
+          "to": "YD-G09-MID1-01:G02:S06",
+          "kind": "REQUIRES"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "YD-G09-MID1-01:G02:S01",
+          "requires": [],
+          "node_ids": [
+            "DRAFT:midterm1.C08.product_equation"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+          ],
+          "title": "Ý 1 — Đặt nhân tử chung đưa về phương trình tích",
+          "before": "(2x - 3)(x + 1) - (2x - 3)(3x - 5) = 0",
+          "after": "(2x - 3)(6 - 2x) = 0",
+          "justification": "Đặt nhân tử chung (2x - 3): (2x - 3)[(x + 1) - (3x - 5)] = 0 \\Leftrightarrow (2x - 3)(x + 1 - 3x + 5) = 0 \\Leftrightarrow (2x - 3)(6 - 2x) = 0.",
+          "conditions_in_context": [
+            "Ý 1 (0,75 điểm): Phương trình đưa về phương trình tích trên \\mathbb{R}."
+          ],
+          "interaction": {
+            "prompt": "Ở Ý 1, khi đặt nhân tử chung $(2x - 3)$ ra ngoài, phương trình $(2x - 3)(x + 1) - (2x - 3)(3x - 5) = 0$ biến đổi thành phương trình tích nào?",
+            "answer_type": "choice",
+            "expected": "prod_correct",
+            "choices": {
+              "prod_correct": "$(2x - 3)(6 - 2x) = 0$",
+              "prod_sign_err": "$(2x - 3)(-2x - 4) = 0$",
+              "prod_add_err": "$(2x - 3)(4x - 4) = 0$",
+              "prod_cancel_err": "$x + 1 - 3x + 5 = 0$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Cả hai hạng tử ở vế trái đều có nhân tử chung là $(2x - 3)$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Đặt $(2x - 3)$ ra ngoài: $(2x - 3)[(x + 1) - (3x - 5)] = 0$. Chú ý đổi dấu khi bỏ ngoặc $-(3x - 5) = -3x + 5$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Thu gọn biểu thức trong ngoặc vuông: $x + 1 - 3x + 5 = 6 - 2x$, được $(2x - 3)(6 - 2x) = 0$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Đặt $(2x - 3)$ làm nhân tử chung và đổi dấu $-(3x - 5) = -3x + 5$ ta được $(2x - 3)(6 - 2x) = 0$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra dấu khi phá ngoặc $-(3x - 5)$ và không được tự ý chia hai vế cho $(2x - 3)$.",
+            "unknown": "Phản hồi chưa xác định; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "prod_correct": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "C08_FACTOR_COMMON_BINOMIAL_CORRECT",
+                "message": "Đúng: $(2x - 3)[(x + 1) - (3x - 5)] = (2x - 3)(x + 1 - 3x + 5) = (2x - 3)(6 - 2x) = 0$."
+              },
+              "prod_sign_err": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C08_SUBTRACT_BINOMIAL_SIGN_ERROR",
+                "message": "Chưa đúng: khi bỏ ngoặc $-(3x - 5)$ phải đổi dấu $-5$ thành $+5$, nên $1 + 5 = 6$ (không phải $1 - 5 = -4$)."
+              },
+              "prod_add_err": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C08_ADD_INSTEAD_OF_SUBTRACT_FACTOR",
+                "message": "Chưa đúng: giữa hai tích là phép trừ nên trong ngoặc vuông là $(x + 1) - (3x - 5)$, không phải phép cộng."
+              },
+              "prod_cancel_err": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C08_ILLEGAL_DIVISION_BY_VARIABLE_FACTOR",
+                "message": "Chưa đúng: không được chia cả hai vế cho $(2x - 3)$ vì sẽ làm mất nghiệm $2x - 3 = 0$."
+              }
+            }
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G02:S02",
+          "requires": [
+            "YD-G09-MID1-01:G02:S01"
+          ],
+          "node_ids": [
+            "DRAFT:midterm1.C08.product_equation"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+          ],
+          "title": "Ý 1 — Giải hai trường hợp của phương trình tích và tính tổng các nghiệm",
+          "before": "(2x - 3)(6 - 2x) = 0",
+          "after": "x = \\frac{3}{2} \\text{ hoặc } x = 3,\\quad S_{tong} = \\frac{9}{2}",
+          "justification": "Từ (2x - 3)(6 - 2x) = 0 suy ra 2x - 3 = 0 (x = 3/2) hoặc 6 - 2x = 0 (x = 3). Tổng hai nghiệm là 3/2 + 3 = 9/2.",
+          "conditions_in_context": [
+            "Phương trình tích: (2x - 3)(6 - 2x) = 0."
+          ],
+          "interaction": {
+            "prompt": "Giải phương trình tích $(2x - 3)(6 - 2x) = 0$ để tìm cả hai nghiệm, sau đó nhập tổng của hai nghiệm dưới dạng phân số tối giản `a/b`.",
+            "answer_type": "rational",
+            "expected": "9/2",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Cho từng nhân tử bằng $0$: $2x - 3 = 0$ hoặc $6 - 2x = 0$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Giải từng phương trình: $2x - 3 = 0 \\Leftrightarrow x = \\frac{3}{2}$ và $6 - 2x = 0 \\Leftrightarrow x = 3$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Tổng hai nghiệm là $\\frac{3}{2} + 3 = \\frac{3 + 6}{2} = \\frac{9}{2}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Phương trình có hai nghiệm $x = \\frac{3}{2}$ và $x = 3$, tổng hai nghiệm bằng $\\frac{9}{2}$.",
+            "incorrect": "Chưa khớp. Kiểm tra lại hai nghiệm $x = \\frac{3}{2}$ và $x = 3$, rồi quy đồng tính tổng $\\frac{3}{2} + 3 = \\frac{9}{2}$.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G02:S03",
+          "requires": [],
+          "node_ids": [
+            "DRAFT:midterm1.C09.rational_equation"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+          ],
+          "title": "Ý 2 — Tìm điều kiện xác định và khử mẫu phương trình chứa ẩn ở mẫu",
+          "before": "\\frac{x + 2}{x - 2} - \\frac{1}{x} = \\frac{2}{x(x - 2)}",
+          "after": "\\text{ĐKXĐ: } x \\ne 0, x \\ne 2;\\quad x(x + 2) - (x - 2) = 2 \\Leftrightarrow x(x + 1) = 0",
+          "justification": "ĐKXĐ: x \\ne 0 và x \\ne 2. Quy đồng mẫu thức chung x(x - 2) và khử mẫu: x(x + 2) - (x - 2) = 2 \\Leftrightarrow x^2 + 2x - x + 2 = 2 \\Leftrightarrow x^2 + x = 0 \\Leftrightarrow x(x + 1) = 0.",
+          "conditions_in_context": [
+            "Ý 2 (0,75 điểm): Phương trình chứa ẩn ở mẫu \\frac{x + 2}{x - 2} - \\frac{1}{x} = \\frac{2}{x(x - 2)}."
+          ],
+          "interaction": {
+            "prompt": "Ở Ý 2, điều kiện xác định (ĐKXĐ) và phương trình thu được sau khi quy đồng, khử mẫu và rút gọn của $\\frac{x + 2}{x - 2} - \\frac{1}{x} = \\frac{2}{x(x - 2)}$ là gì?",
+            "answer_type": "choice",
+            "expected": "rat_eq_correct",
+            "choices": {
+              "rat_eq_correct": "ĐKXĐ: $x \\ne 0, x \\ne 2$; phương trình thu gọn: $x(x + 1) = 0$",
+              "rat_eq_sign_err": "ĐKXĐ: $x \\ne 0, x \\ne 2$; phương trình thu gọn: $x^2 + x - 4 = 0$",
+              "rat_eq_dom_err": "ĐKXĐ: $x \\ne 2, x \\ne -2$; phương trình thu gọn: $x(x + 1) = 0$",
+              "rat_eq_num_err": "ĐKXĐ: $x \\ne 0, x \\ne 2$; phương trình thu gọn: $x^2 + 3x = 0$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Các mẫu thức trong phương trình là $x - 2$, $x$ và $x(x - 2)$, nên ĐKXĐ là $x \\ne 0$ và $x \\ne 2$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Quy đồng với mẫu thức chung $x(x - 2)$ rồi khử mẫu: $x(x + 2) - 1 \\cdot (x - 2) = 2$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Phá ngoặc: $x^2 + 2x - x + 2 = 2 \\Leftrightarrow x^2 + x = 0 \\Leftrightarrow x(x + 1) = 0$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Đúng! ĐKXĐ là $x \\ne 0, x \\ne 2$ và sau khi khử mẫu, chú ý đổi dấu $-(x - 2) = -x + 2$, ta thu gọn được $x(x + 1) = 0$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra lại các mẫu thức để tìm ĐKXĐ và chú ý dấu trừ trước phân thức $\\frac{1}{x}$ khi nhân với $(x - 2)$.",
+            "unknown": "Phản hồi chưa xác định; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "rat_eq_correct": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "C09_DOMAIN_AND_CLEAR_DENOM_CORRECT",
+                "message": "Chính xác: ĐKXĐ $x \\ne 0, x \\ne 2$; khử mẫu được $x(x + 2) - (x - 2) = 2 \\Leftrightarrow x^2 + x = 0 \\Leftrightarrow x(x + 1) = 0$."
+              },
+              "rat_eq_sign_err": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C09_SUBTRACT_NUMERATOR_PAREN_SIGN_ERROR",
+                "message": "Chưa đúng: khi khử mẫu, tử thức thứ hai là $-(x - 2) = -x + 2$ (không phải $-x - 2$), nên $+2$ ở hai vế triệt tiêu hết."
+              },
+              "rat_eq_dom_err": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C09_CONFUSE_NUMERATOR_WITH_DENOMINATOR_DOMAIN",
+                "message": "Chưa đúng: $x + 2$ là tử thức nên không cần khác $0$; hai nhân tử ở mẫu là $x$ và $x - 2$ nên ĐKXĐ là $x \\ne 0, x \\ne 2$."
+              },
+              "rat_eq_num_err": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C09_ADD_INSTEAD_OF_SUBTRACT_FRACTION",
+                "message": "Chưa đúng: trước phân thức $\\frac{1}{x}$ là dấu trừ nên ta có $x^2 + 2x - x + 2 = 2 \\Leftrightarrow x^2 + x = 0$ (không phải $x^2 + 3x = 0$)."
+              }
+            }
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G02:S04",
+          "requires": [
+            "YD-G09-MID1-01:G02:S03"
+          ],
+          "node_ids": [
+            "DRAFT:midterm1.C09.rational_equation"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+          ],
+          "title": "Ý 2 — Đối chiếu ĐKXĐ, loại nghiệm ngoại lai và kết luận nghiệm",
+          "before": "x(x + 1) = 0,\\quad \\text{ĐKXĐ: } x \\ne 0, x \\ne 2",
+          "after": "x = -1 \\text{ (thỏa mãn ĐKXĐ)};\\quad x = 0 \\text{ (loại)}",
+          "justification": "Phương trình x(x + 1) = 0 cho x = 0 hoặc x = -1. Đối chiếu ĐKXĐ (x \\ne 0, x \\ne 2): giá trị x = 0 bị loại (nghiệm ngoại lai), chỉ nhận x = -1.",
+          "conditions_in_context": [
+            "Phương trình hệ quả x(x + 1) = 0 với ĐKXĐ x \\ne 0, x \\ne 2."
+          ],
+          "interaction": {
+            "prompt": "Giải $x(x + 1) = 0$ và đối chiếu với ĐKXĐ ($x \\ne 0, x \\ne 2$), nghiệm duy nhất của phương trình ở Ý 2 là bao nhiêu?",
+            "answer_type": "rational",
+            "expected": "-1",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Từ $x(x + 1) = 0$, ta tìm được hai giá trị là $x = 0$ và $x = -1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Đối chiếu với ĐKXĐ $x \\ne 0$ và $x \\ne 2$: giá trị $x = 0$ vi phạm ĐKXĐ nên phải loại.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Giá trị $x = -1$ thỏa mãn ĐKXĐ, vậy nghiệm duy nhất của phương trình là $-1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Sau khi loại nghiệm ngoại lai $x = 0$ do vi phạm ĐKXĐ $x \\ne 0$, phương trình có nghiệm duy nhất $x = -1$.",
+            "incorrect": "Chưa đúng. Lưu ý $x = 0$ không thỏa mãn ĐKXĐ ($x \\ne 0$) nên bị loại; chỉ còn nghiệm $x = -1$.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G02:S05",
+          "requires": [],
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.linear_inequality_negative_coeff"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+          ],
+          "title": "Ý 3 — Quy đồng mẫu số dương và giải bất phương trình bậc nhất một ẩn",
+          "before": "\\frac{2x + 1}{3} - \\frac{3x - 2}{2} > \\frac{1}{6}",
+          "after": "-5x + 8 > 1 \\Leftrightarrow -5x > -7 \\Leftrightarrow x < \\frac{7}{5}",
+          "justification": "Nhân hai vế với 6 > 0: 2(2x + 1) - 3(3x - 2) > 1 \\Leftrightarrow 4x + 2 - 9x + 6 > 1 \\Leftrightarrow -5x > -7. Chia hai vế cho -5 < 0 và đổi chiều bất đẳng thức được x < 7/5.",
+          "conditions_in_context": [
+            "Ý 3 (0,5 điểm): Bất phương trình bậc nhất một ẩn có chia hai vế cho số âm."
+          ],
+          "interaction": {
+            "prompt": "Ở Ý 3, sau khi quy đồng mẫu số $6 > 0$, thu gọn và chia hai vế cho hệ số của $x$, tập nghiệm của bất phương trình $\\frac{2x + 1}{3} - \\frac{3x - 2}{2} > \\frac{1}{6}$ là gì?",
+            "answer_type": "choice",
+            "expected": "ineq_lt_7_5",
+            "choices": {
+              "ineq_lt_7_5": "$x < \\frac{7}{5}$",
+              "ineq_gt_7_5": "$x > \\frac{7}{5}$",
+              "ineq_lt_3_5": "$x < \\frac{3}{5}$",
+              "ineq_gt_3_5": "$x > \\frac{3}{5}$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Nhân cả hai vế của bất phương trình với mẫu số chung $6 > 0$ (giữ nguyên chiều bất phương trình).",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta được $2(2x + 1) - 3(3x - 2) > 1 \\Leftrightarrow 4x + 2 - 9x + 6 > 1 \\Leftrightarrow -5x + 8 > 1 \\Leftrightarrow -5x > -7$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Chia cả hai vế cho $-5 < 0$ phải đổi chiều `>` thành `<`, suy ra $x < \\frac{-7}{-5} = \\frac{7}{5}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Thu gọn được $-5x > -7$ và đổi chiều bất phương trình khi chia cho $-5 < 0$ ta được $x < \\frac{7}{5}$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra hai bẫy thường gặp: đổi dấu $-3(3x - 2) = -9x + 6$ khi phá ngoặc và đổi chiều bất phương trình khi chia cho $-5 < 0$.",
+            "unknown": "Phản hồi chưa xác định; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "ineq_lt_7_5": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "C11_NEGATIVE_DIVISION_FLIP_CORRECT",
+                "message": "Chính xác: $2(2x + 1) - 3(3x - 2) > 1 \\Leftrightarrow -5x + 8 > 1 \\Leftrightarrow -5x > -7 \\Leftrightarrow x < \\frac{7}{5}$."
+              },
+              "ineq_gt_7_5": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C11_FORGOT_TO_FLIP_INEQUALITY_SIGN",
+                "message": "Chưa đúng: khi chia hai vế của $-5x > -7$ cho số âm $-5$, bắt buộc phải đổi chiều bất phương trình từ `>` sang `<`."
+              },
+              "ineq_lt_3_5": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C11_SUBTRACT_FRACTION_PAREN_SIGN_ERROR",
+                "message": "Chưa đúng: khi nhân $-3$ với $(3x - 2)$ ta được $-9x + 6$ (không phải $-9x - 2$), nên hằng số vế trái là $2 + 6 = 8$, suy ra $-5x > -7$."
+              },
+              "ineq_gt_3_5": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C11_BOTH_PAREN_AND_FLIP_ERRORS",
+                "message": "Chưa đúng: em vừa nhầm dấu khi nhân $-3(3x - 2) = -9x + 6$, vừa quên đổi chiều bất phương trình khi chia cho $-5 < 0$."
+              }
+            }
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G02:S06",
+          "requires": [
+            "YD-G09-MID1-01:G02:S05"
+          ],
+          "node_ids": [
+            "EXAM-GRAPH-02:skill.linear_inequality_negative_coeff"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+          ],
+          "title": "Ý 3 — Tìm nghiệm nguyên lớn nhất thỏa mãn bất phương trình",
+          "before": "x < \\frac{7}{5} = 1{,}4,\\quad x \\in \\mathbb{Z}",
+          "after": "x_{\\max} = 1",
+          "justification": "Vì x < 7/5 = 1,4 và x \\in \\mathbb{Z} nên các nghiệm nguyên là ..., -1, 0, 1. Nghiệm nguyên lớn nhất là x = 1.",
+          "conditions_in_context": [
+            "Tập nghiệm bất phương trình là x < 7/5 và x \\in \\mathbb{Z}."
+          ],
+          "interaction": {
+            "prompt": "Với tập nghiệm $x < \\frac{7}{5}$, nghiệm nguyên lớn nhất của bất phương trình là bao nhiêu?",
+            "answer_type": "rational",
+            "expected": "1",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Đổi phân số $\\frac{7}{5}$ ra hỗn số hoặc số thập phân: $\\frac{7}{5} = 1{,}4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Tìm số nguyên $x \\in \\mathbb{Z}$ lớn nhất nhỏ hơn $1{,}4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Số nguyên lớn nhất nhỏ hơn $1{,}4$ là $1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Vì $\\frac{7}{5} = 1{,}4$ nên nghiệm nguyên lớn nhất thỏa mãn $x < \\frac{7}{5}$ là $x = 1$.",
+            "incorrect": "Chưa đúng. Lưu ý $\\frac{7}{5} = 1{,}4$, số nguyên lớn nhất nhỏ hơn $1{,}4$ là $1$ (không phải $2$ hay $0$).",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        }
+      ]
+    },
+    {
+      "graph_id": "YD-G09-MID1-01:G03",
+      "proposal_ref": "YD-G09-MID1-01:PROP-B03",
+      "canonical_item_id": null,
+      "prompt": "[ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN — Bài III (2,0 điểm)] Một câu lạc bộ STEM của một trường THCS tại Hà Nội tổ chức chuyến trải nghiệm tại trung tâm khám phá khoa học:\n1) (1,5 điểm) Biết rằng nếu mua $2$ vé người lớn và $3$ vé học sinh thì hết $290$ nghìn đồng; nếu mua $3$ vé người lớn và $5$ vé học sinh thì hết $460$ nghìn đồng. Tính giá tiền $1$ vé người lớn và $1$ vé học sinh (đơn vị: nghìn đồng).\n2) (0,5 điểm) Đoàn dự kiến gồm $4$ giáo viên (tính vé người lớn) và $n$ học sinh ($n \\in \\mathbb{N}^*$), đồng thời thuê xe đưa đón trọn gói hết $1\\,200$ nghìn đồng. Với tổng kinh phí không vượt quá $3\\,550$ nghìn đồng, đoàn có thể đăng ký cho tối đa bao nhiêu học sinh tham gia?",
+      "original_domain": "Đề luyện tập tự biên soạn Chương I & II. Điều kiện thực tế: $x > 0, y > 0$ (nghìn đồng) và số học sinh $n \\in \\mathbb{N}^*$.",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+      ],
+      "subquestion_step_groups": {
+        "y_1": [
+          "YD-G09-MID1-01:G03:S01",
+          "YD-G09-MID1-01:G03:S02",
+          "YD-G09-MID1-01:G03:S03"
+        ],
+        "y_2": [
+          "YD-G09-MID1-01:G03:S04",
+          "YD-G09-MID1-01:G03:S05"
+        ]
+      },
+      "terminal_step_ids": [
+        "YD-G09-MID1-01:G03:S05"
+      ],
+      "completion_policy": "ALL_STEPS_CORRECT",
+      "edges": [
+        {
+          "from": "YD-G09-MID1-01:G03:S01",
+          "to": "YD-G09-MID1-01:G03:S02",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "YD-G09-MID1-01:G03:S02",
+          "to": "YD-G09-MID1-01:G03:S03",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "YD-G09-MID1-01:G03:S03",
+          "to": "YD-G09-MID1-01:G03:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "YD-G09-MID1-01:G03:S04",
+          "to": "YD-G09-MID1-01:G03:S05",
+          "kind": "REQUIRES"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "YD-G09-MID1-01:G03:S01",
+          "requires": [],
+          "node_ids": [
+            "CAND-G09-07"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+          ],
+          "title": "Ý 1 — Chọn ẩn, đặt điều kiện và lập hệ phương trình từ dữ kiện giá vé",
+          "before": "2\\text{ vé NL} + 3\\text{ vé HS} = 290;\\quad 3\\text{ vé NL} + 5\\text{ vé HS} = 460",
+          "after": "\\begin{cases} 2x + 3y = 290 \\\\ 3x + 5y = 460 \\end{cases} \\quad (x > 0, y > 0)",
+          "justification": "Gọi x, y (nghìn đồng) lần lượt là giá 1 vé người lớn và 1 vé học sinh (x > 0, y > 0). Theo đề bài ta có hệ: 2x + 3y = 290 và 3x + 5y = 460.",
+          "conditions_in_context": [
+            "x, y (nghìn đồng) lần lượt là giá 1 vé người lớn và 1 vé học sinh (x > 0, y > 0)."
+          ],
+          "interaction": {
+            "prompt": "Gọi $x, y$ (nghìn đồng) lần lượt là giá tiền $1$ vé người lớn và $1$ vé học sinh ($x > 0, y > 0$). Hệ phương trình biểu diễn đúng hai dữ kiện ở Ý 1 là:",
+            "answer_type": "choice",
+            "expected": "model_sys_correct",
+            "choices": {
+              "model_sys_correct": "$\\begin{cases} 2x + 3y = 290 \\\\ 3x + 5y = 460 \\end{cases}$",
+              "model_sys_swap": "$\\begin{cases} 3x + 2y = 290 \\\\ 5x + 3y = 460 \\end{cases}$",
+              "model_sys_mix": "$\\begin{cases} 2x + 3y = 460 \\\\ 3x + 5y = 290 \\end{cases}$",
+              "model_sys_sub": "$\\begin{cases} 2x - 3y = 290 \\\\ 3x - 5y = 460 \\end{cases}$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Biểu diễn số tiền mua $2$ vé người lớn (giá $x$) và $3$ vé học sinh (giá $y$) bằng một tổng đại số.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Lần thứ nhất hết $290$ nghìn đồng nên $2x + 3y = 290$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Lần thứ hai mua $3$ vé người lớn và $5$ vé học sinh hết $460$ nghìn đồng nên $3x + 5y = 460$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Hệ phương trình lập được là $\\begin{cases} 2x + 3y = 290 \\\\ 3x + 5y = 460 \\end{cases}$ với $x > 0, y > 0$.",
+            "incorrect": "Chưa đúng. Lưu ý $x$ là giá vé người lớn và $y$ là giá vé học sinh; hãy gắn đúng số lượng vé với từng ẩn.",
+            "unknown": "Phản hồi chưa xác định; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "model_sys_correct": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "C07_SYSTEM_MODELING_CORRECT",
+                "message": "Chính xác: $2$ vé người lớn và $3$ vé học sinh ứng với $2x + 3y = 290$; $3$ vé người lớn và $5$ vé học sinh ứng với $3x + 5y = 460$."
+              },
+              "model_sys_swap": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C07_SWAPPED_COEFFICIENTS_OF_X_AND_Y",
+                "message": "Chưa đúng: em đã đảo ngược hệ số của vé người lớn ($x$) và vé học sinh ($y$)."
+              },
+              "model_sys_mix": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C07_SWAPPED_TOTAL_AMOUNTS",
+                "message": "Chưa đúng: tổng tiền $290$ nghìn đồng ứng với $2x + 3y$, còn $460$ nghìn đồng ứng với $3x + 5y$."
+              },
+              "model_sys_sub": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C07_SUBTRACT_INSTEAD_OF_SUM_COST",
+                "message": "Chưa đúng: tổng số tiền mua cả hai loại vé phải dùng phép cộng ($+$), không phải phép trừ ($-$)."
+              }
+            }
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G03:S02",
+          "requires": [
+            "YD-G09-MID1-01:G03:S01"
+          ],
+          "node_ids": [
+            "CAND-G09-07",
+            "CAND-G09-06"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+          ],
+          "title": "Ý 1 — Giải hệ phương trình tìm giá 1 vé học sinh (y)",
+          "before": "\\begin{cases} 6x + 9y = 870 \\\\ 6x + 10y = 920 \\end{cases}",
+          "after": "y = 50",
+          "justification": "Nhân phương trình (1) với 3 được 6x + 9y = 870; nhân phương trình (2) với 2 được 6x + 10y = 920. Trừ từng vế được y = 920 - 870 = 50 (thỏa mãn y > 0).",
+          "conditions_in_context": [
+            "Hệ phương trình: 2x + 3y = 290 và 3x + 5y = 460."
+          ],
+          "interaction": {
+            "prompt": "Khử ẩn $x$ từ hệ phương trình vừa lập, hãy tìm giá tiền $y$ của $1$ vé học sinh (đơn vị: nghìn đồng).",
+            "answer_type": "rational",
+            "expected": "50",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Nhân hai vế phương trình (1) với $3$ và nhân hai vế phương trình (2) với $2$ để hệ số của $x$ đều bằng $6$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta được hệ $\\begin{cases} 6x + 9y = 870 \\\\ 6x + 10y = 920 \\end{cases}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Lấy phương trình dưới trừ phương trình trên từng vế: $(6x + 10y) - (6x + 9y) = 920 - 870 \\Leftrightarrow y = 50$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Giá tiền $1$ vé học sinh là $y = 50$ (nghìn đồng).",
+            "incorrect": "Chưa khớp. Hãy nhân phương trình (1) với $3$ ($6x + 9y = 870$) và phương trình (2) với $2$ ($6x + 10y = 920$) rồi trừ từng vế.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G03:S03",
+          "requires": [
+            "YD-G09-MID1-01:G03:S02"
+          ],
+          "node_ids": [
+            "CAND-G09-07",
+            "CAND-G09-04"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1w5_NbsyZY9fgU4yLWt4czBYkQUwd977S"
+          ],
+          "title": "Ý 1 — Tìm giá 1 vé người lớn (x) và đối chiếu điều kiện",
+          "before": "2x + 3y = 290,\\quad y = 50",
+          "after": "2x + 150 = 290 \\Leftrightarrow x = 70",
+          "justification": "Thay y = 50 vào 2x + 3y = 290 được 2x + 150 = 290 \\Leftrightarrow 2x = 140 \\Leftrightarrow x = 70 (thỏa mãn x > 0).",
+          "conditions_in_context": [
+            "Đã tìm được y = 50 (nghìn đồng) và 2x + 3y = 290."
+          ],
+          "interaction": {
+            "prompt": "Thay $y = 50$ vào phương trình $2x + 3y = 290$, giá tiền $x$ của $1$ vé người lớn là bao nhiêu (đơn vị: nghìn đồng)?",
+            "answer_type": "rational",
+            "expected": "70",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Thay $y = 50$ vào phương trình $2x + 3y = 290$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Ta có $2x + 3 \\cdot 50 = 290 \\Leftrightarrow 2x + 150 = 290$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Suy ra $2x = 140 \\Leftrightarrow x = 70$ (thỏa mãn $x > 0$).",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Giá $1$ vé người lớn là $x = 70$ nghìn đồng và $1$ vé học sinh là $y = 50$ nghìn đồng.",
+            "incorrect": "Chưa đúng. Với $y = 50$, ta có $2x = 290 - 150 = 140$, hãy chia cho $2$ để tìm $x$.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G03:S04",
+          "requires": [
+            "YD-G09-MID1-01:G03:S03"
+          ],
+          "node_ids": [
+            "DRAFT:midterm1.C12.inequality_modeling"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+          ],
+          "title": "Ý 2 — Lập bất phương trình bậc nhất một ẩn theo giới hạn tổng kinh phí",
+          "before": "4 \\cdot 70 + 50n + 1200 \\text{ và ngân sách tối đa } 3550",
+          "after": "50n + 1480 \\le 3550 \\Leftrightarrow 50n \\le 2070",
+          "justification": "Tiền vé của 4 giáo viên là 4 \\cdot 70 = 280 (nghìn đồng); tiền thuê xe là 1200 (nghìn đồng); tiền vé của n học sinh là 50n. Vì tổng chi phí không vượt quá 3550 nghìn đồng nên 50n + 1480 \\le 3550.",
+          "conditions_in_context": [
+            "Giá vé người lớn x = 70, vé học sinh y = 50; 4 giáo viên, tiền xe 1200, tổng kinh phí tối đa 3550 (nghìn đồng)."
+          ],
+          "interaction": {
+            "prompt": "Với giá vé người lớn $70$ nghìn đồng và vé học sinh $50$ nghìn đồng, bất phương trình xác định số học sinh $n$ ($n \\in \\mathbb{N}^*$) để tổng kinh phí không vượt quá $3\\,550$ nghìn đồng là:",
+            "answer_type": "choice",
+            "expected": "budget_le_correct",
+            "choices": {
+              "budget_le_correct": "$50n + 4 \\cdot 70 + 1\\,200 \\le 3\\,550 \\Leftrightarrow 50n + 1\\,480 \\le 3\\,550$",
+              "budget_lt_strict": "$50n + 1\\,480 < 3\\,550$",
+              "budget_ge_wrong": "$50n + 1\\,480 \\ge 3\\,550$",
+              "budget_no_teacher": "$50n + 1\\,200 \\le 3\\,550$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Tính tổng chi phí cố định gồm tiền vé của $4$ giáo viên ($4 \\cdot 70 = 280$) và tiền thuê xe ($1\\,200$).",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Tổng chi phí của đoàn khi có $n$ học sinh là $50n + 280 + 1\\,200 = 50n + 1\\,480$ (nghìn đồng).",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Cụm từ 'không vượt quá $3\\,550$' được biểu diễn bởi dấu '$\\le$', tức là $50n + 1\\,480 \\le 3\\,550$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Tổng chi phí không vượt quá $3\\,550$ nghìn đồng ứng với bất phương trình $50n + 1\\,480 \\le 3\\,550$.",
+            "incorrect": "Chưa đúng. Hãy cộng đủ tiền vé của $4$ giáo viên ($280$ nghìn đồng) + tiền xe ($1\\,200$ nghìn đồng) và dùng dấu '$\\le$' cho cụm từ 'không vượt quá'.",
+            "unknown": "Phản hồi chưa xác định; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "budget_le_correct": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "C12_INEQUALITY_MODEL_AT_MOST_CORRECT",
+                "message": "Đúng: tổng chi phí gồm $50n + 4 \\cdot 70 + 1\\,200 = 50n + 1\\,480$ và 'không vượt quá $3\\,550$' ứng với dấu $\\le 3\\,550$."
+              },
+              "budget_lt_strict": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C12_CONFUSE_AT_MOST_WITH_STRICT_LESS",
+                "message": "Chưa đúng: 'không vượt quá $3\\,550$' nghĩa là có thể bằng $3\\,550$, nên phải dùng dấu $\\le$ chứ không phải dấu $<$."
+              },
+              "budget_ge_wrong": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C12_REVERSED_BUDGET_INEQUALITY_DIRECTION",
+                "message": "Chưa đúng: kinh phí tối đa là $3\\,550$ nghìn đồng nên tổng chi phí phải $\\le 3\\,550$, không phải $\\ge 3\\,550$."
+              },
+              "budget_no_teacher": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C12_OMITTED_FIXED_TEACHER_TICKET_COST",
+                "message": "Chưa đúng: em quên cộng tiền vé của $4$ giáo viên ($4 \\cdot 70 = 280$ nghìn đồng) vào tổng chi phí."
+              }
+            }
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G03:S05",
+          "requires": [
+            "YD-G09-MID1-01:G03:S04"
+          ],
+          "node_ids": [
+            "DRAFT:midterm1.C12.inequality_modeling",
+            "EXAM-GRAPH-02:skill.linear_inequality_negative_coeff"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+          ],
+          "title": "Ý 2 — Giải bất phương trình và kết luận số học sinh tối đa",
+          "before": "50n + 1480 \\le 3550,\\quad n \\in \\mathbb{N}^*",
+          "after": "n \\le \\frac{207}{5} = 41{,}4 \\Rightarrow n_{\\max} = 41",
+          "justification": "Ta có 50n \\le 3550 - 1480 = 2070 \\Leftrightarrow n \\le 2070/50 = 41,4. Vì n \\in \\mathbb{N}^* nên số học sinh tối đa tham gia được là 41 học sinh.",
+          "conditions_in_context": [
+            "Bất phương trình 50n + 1480 \\le 3550 với số học sinh n \\in \\mathbb{N}^*."
+          ],
+          "interaction": {
+            "prompt": "Giải bất phương trình $50n + 1\\,480 \\le 3\\,550$ với $n \\in \\mathbb{N}^*$, đoàn có thể đăng ký cho tối đa bao nhiêu học sinh tham gia?",
+            "answer_type": "rational",
+            "expected": "41",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Chuyển vế $1\\,480$: $50n \\le 3\\,550 - 1\\,480 = 2\\,070$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Chia hai vế cho $50 > 0$: $n \\le \\frac{2\\,070}{50} = 41{,}4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Vì số học sinh $n$ phải là số nguyên dương ($n \\in \\mathbb{N}^*$) và không vượt quá $41{,}4$, nên giá trị lớn nhất của $n$ là $41$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Vì $n \\le 41{,}4$ và $n \\in \\mathbb{N}^*$, nên đoàn có thể đăng ký tối đa $41$ học sinh (nếu lấy $42$ học sinh sẽ vượt kinh phí).",
+            "incorrect": "Chưa đúng. Lưu ý $n \\le 41{,}4$; trong bài toán giới hạn kinh phí tối đa, phải làm tròn xuống số nguyên gần nhất là $41$.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        }
+      ]
+    },
+    {
+      "graph_id": "YD-G09-MID1-01:G04",
+      "proposal_ref": "YD-G09-MID1-01:PROP-B04",
+      "canonical_item_id": null,
+      "prompt": "[ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN — Bài IV (3,5 điểm)]\n1) (1,0 điểm — Toán thực tế) Một chiếc thang dài $5\\text{ m}$ được đặt dựa vào một bức tường thẳng đứng vuông góc với mặt đất phẳng. Khi chân thang cách chân tường đúng $2{,}5\\text{ m}$, hãy tính số đo góc nghiêng $\\alpha$ tạo bởi chiếc thang và mặt đất (đơn vị: độ).\n2) (2,5 điểm) Cho tam giác $ABC$ vuông tại $A$ có $AB = 6\\text{ cm}$, $AC = 8\\text{ cm}$. Kẻ đường cao $AH$ ($H \\in BC$).\n   a) Tính độ dài cạnh $BC$ và tỉ số lượng giác $\\sin C$.\n   b) Tính độ dài đường cao $AH$.\n   c) Chứng minh $\\triangle HBA \\backsim \\triangle ABC$, từ đó suy ra $AB^2 = BH \\cdot BC$ và tính độ dài đoạn thẳng $BH$.",
+      "original_domain": "Đề luyện tập tự biên soạn Chương IV (Hệ thức lượng trong tam giác vuông). Các độ dài đoạn thẳng dương (đơn vị cm hoặc m), góc nhọn $0^\\circ < \\alpha < 90^\\circ$.",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:11aOVB2-kGUfkexx31987kq1rc6vMm9ve"
+      ],
+      "subquestion_step_groups": {
+        "y_1": [
+          "YD-G09-MID1-01:G04:S01"
+        ],
+        "y_2a": [
+          "YD-G09-MID1-01:G04:S02"
+        ],
+        "y_2b": [
+          "YD-G09-MID1-01:G04:S03"
+        ],
+        "y_2c": [
+          "YD-G09-MID1-01:G04:S04",
+          "YD-G09-MID1-01:G04:S05"
+        ]
+      },
+      "terminal_step_ids": [
+        "YD-G09-MID1-01:G04:S01",
+        "YD-G09-MID1-01:G04:S03",
+        "YD-G09-MID1-01:G04:S05"
+      ],
+      "completion_policy": "ALL_STEPS_CORRECT",
+      "edges": [
+        {
+          "from": "YD-G09-MID1-01:G04:S02",
+          "to": "YD-G09-MID1-01:G04:S03",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "YD-G09-MID1-01:G04:S02",
+          "to": "YD-G09-MID1-01:G04:S04",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "YD-G09-MID1-01:G04:S04",
+          "to": "YD-G09-MID1-01:G04:S05",
+          "kind": "REQUIRES"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "YD-G09-MID1-01:G04:S01",
+          "requires": [],
+          "node_ids": [
+            "DRAFT:midterm1.C14.right_triangle_relations",
+            "DRAFT:midterm1.C13.trig_ratios"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:11aOVB2-kGUfkexx31987kq1rc6vMm9ve"
+          ],
+          "title": "Ý 1 — Chọn tỉ số lượng giác và tính góc nghiêng của thang so với mặt đất",
+          "before": "\\text{Cạnh huyền } L = 5\\text{ m},\\quad \\text{cạnh kề } d = 2{,}5\\text{ m}",
+          "after": "\\cos \\alpha = \\frac{2{,}5}{5} = \\frac{1}{2} \\Rightarrow \\alpha = 60^\\circ",
+          "justification": "Thang, tường và mặt đất tạo thành tam giác vuông có cạnh huyền bằng 5 m và cạnh kề góc \\alpha (góc giữa thang và mặt đất) bằng 2,5 m. Do đó \\cos \\alpha = 2,5 / 5 = 1/2 \\Rightarrow \\alpha = 60^\\circ.",
+          "conditions_in_context": [
+            "Ý 1 (1,0 điểm): Chiếc thang dài 5 m (cạnh huyền), khoảng cách từ chân thang đến chân tường là 2,5 m (cạnh góc vuông kề với góc \\alpha)."
+          ],
+          "interaction": {
+            "prompt": "Ở Ý 1, với chiều dài thang là cạnh huyền $5\\text{ m}$ và khoảng cách từ chân thang đến chân tường là cạnh kề $2{,}5\\text{ m}$, công thức tỉ số lượng giác và số đo góc $\\alpha$ tạo bởi thang với mặt đất là:",
+            "answer_type": "choice",
+            "expected": "ladder_cos_60",
+            "choices": {
+              "ladder_cos_60": "$\\cos \\alpha = \\frac{2{,}5}{5} = \\frac{1}{2} \\Rightarrow \\alpha = 60^\\circ$",
+              "ladder_sin_30": "$\\sin \\alpha = \\frac{2{,}5}{5} = \\frac{1}{2} \\Rightarrow \\alpha = 30^\\circ$",
+              "ladder_tan_27": "$\\tan \\alpha = \\frac{2{,}5}{5} = \\frac{1}{2} \\Rightarrow \\alpha \\approx 26^\\circ 34'$",
+              "ladder_cos_30": "$\\cos \\alpha = \\frac{2{,}5}{5} = \\frac{1}{2} \\Rightarrow \\alpha = 30^\\circ$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Xác định vai trò các cạnh đối với góc $\\alpha$ (góc tạo bởi thang và mặt đất): chiều dài thang ($5\\text{ m}$) là cạnh huyền, khoảng cách trên mặt đất ($2{,}5\\text{ m}$) là cạnh kề.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Tỉ số giữa cạnh kề và cạnh huyền là $\\cos \\alpha = \\frac{\\text{cạnh kề}}{\\text{cạnh huyền}} = \\frac{2{,}5}{5} = \\frac{1}{2}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Góc nhọn đặc biệt có $\\cos \\alpha = \\frac{1}{2}$ là $\\alpha = 60^\\circ$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Khoảng cách trên mặt đất là cạnh kề với góc $\\alpha$, nên $\\cos \\alpha = \\frac{2{,}5}{5} = \\frac{1}{2} \\Rightarrow \\alpha = 60^\\circ$.",
+            "incorrect": "Chưa đúng. Hãy phân biệt rõ cạnh kề trên mặt đất ($2{,}5\\text{ m}$) với cạnh đối trên bức tường và tra đúng góc đặc biệt có $\\cos \\alpha = \\frac{1}{2}$.",
+            "unknown": "Phản hồi chưa xác định; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "ladder_cos_60": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "C14_LADDER_COSINE_AND_ANGLE_CORRECT",
+                "message": "Chính xác: cạnh mặt đất $2{,}5\\text{ m}$ kề với góc $\\alpha$ và thang $5\\text{ m}$ là cạnh huyền nên $\\cos \\alpha = \\frac{1}{2} \\Rightarrow \\alpha = 60^\\circ$."
+              },
+              "ladder_sin_30": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C14_CONFUSE_ADJACENT_WITH_OPPOSITE_SIDE",
+                "message": "Chưa đúng: khoảng cách từ chân thang đến chân tường ($2{,}5\\text{ m}$) nằm trên mặt đất nên là cạnh kề của góc $\\alpha$, phải dùng $\\cos \\alpha$ chứ không phải $\\sin \\alpha$."
+              },
+              "ladder_tan_27": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C14_CONFUSE_HYPOTENUSE_WITH_LEG",
+                "message": "Chưa đúng: chiều dài chiếc thang $5\\text{ m}$ là cạnh huyền (không phải cạnh góc vuông đối diện), nên không dùng $\\tan \\alpha = \\frac{2{,}5}{5}$."
+              },
+              "ladder_cos_30": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C13_SPECIAL_ANGLE_COSINE_VALUE_ERROR",
+                "message": "Chưa đúng: ta đã lập đúng $\\cos \\alpha = \\frac{1}{2}$, nhưng góc nhọn có côsin bằng $\\frac{1}{2}$ là $60^\\circ$ (còn $\\cos 30^\\circ = \\frac{\\sqrt{3}}{2}$)."
+              }
+            }
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G04:S02",
+          "requires": [],
+          "node_ids": [
+            "DRAFT:midterm1.C13.trig_ratios"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:11aOVB2-kGUfkexx31987kq1rc6vMm9ve"
+          ],
+          "title": "Ý 2a — Tính cạnh huyền BC và tỉ số lượng giác sin C",
+          "before": "\\triangle ABC \\text{ vuông tại } A,\\quad AB = 6\\text{ cm},\\quad AC = 8\\text{ cm}",
+          "after": "BC = \\sqrt{6^2 + 8^2} = 10\\text{ cm},\\quad \\sin C = \\frac{AB}{BC} = \\frac{3}{5}",
+          "justification": "Theo định lí Pythagore trong \\triangle ABC vuông tại A: BC = \\sqrt{AB^2 + AC^2} = \\sqrt{36 + 64} = 10 (cm). Khi đó \\sin C = \\frac{AB}{BC} = \\frac{6}{10} = \\frac{3}{5}.",
+          "conditions_in_context": [
+            "Tam giác ABC vuông tại A có AB = 6 cm, AC = 8 cm."
+          ],
+          "interaction": {
+            "prompt": "Trong $\\triangle ABC$ vuông tại $A$ ($AB = 6\\text{ cm}, AC = 8\\text{ cm}$), sau khi tính cạnh huyền $BC = 10\\text{ cm}$, giá trị của $\\sin C$ dưới dạng phân số tối giản `a/b` là bao nhiêu?",
+            "answer_type": "rational",
+            "expected": "3/5",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Áp dụng định lí Pythagore: $BC = \\sqrt{AB^2 + AC^2} = \\sqrt{6^2 + 8^2} = 10\\text{ (cm)}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Trong tam giác vuông $ABC$, cạnh đối diện với góc $C$ là $AB = 6\\text{ cm}$ và cạnh huyền là $BC = 10\\text{ cm}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Do đó $\\sin C = \\frac{AB}{BC} = \\frac{6}{10} = \\frac{3}{5}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Cạnh huyền $BC = 10\\text{ cm}$ và $\\sin C = \\frac{AB}{BC} = \\frac{6}{10} = \\frac{3}{5}$.",
+            "incorrect": "Chưa đúng. Lưu ý đối với góc $C$, cạnh đối là $AB = 6\\text{ cm}$ (còn $AC = 8\\text{ cm}$ là cạnh kề), nên $\\sin C = \\frac{6}{10} = \\frac{3}{5}$.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G04:S03",
+          "requires": [
+            "YD-G09-MID1-01:G04:S02"
+          ],
+          "node_ids": [
+            "DRAFT:midterm1.C14.right_triangle_relations",
+            "DRAFT:midterm1.C15.geometric_similarity_relations"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:11aOVB2-kGUfkexx31987kq1rc6vMm9ve"
+          ],
+          "title": "Ý 2b — Tính độ dài đường cao AH trong tam giác vuông ABC",
+          "before": "\\triangle AHC \\text{ vuông tại } H,\\quad AC = 8\\text{ cm},\\quad \\sin C = \\frac{3}{5}",
+          "after": "AH = AC \\cdot \\sin C = 8 \\cdot \\frac{3}{5} = \\frac{24}{5}\\text{ cm}",
+          "justification": "Trong \\triangle AHC vuông tại H, ta có AH = AC \\cdot \\sin C = 8 \\cdot \\frac{3}{5} = \\frac{24}{5} (cm) (hoặc dùng hai cách tính diện tích: AH = \\frac{AB \\cdot AC}{BC} = \\frac{48}{10} = \\frac{24}{5}\\text{ cm}).",
+          "conditions_in_context": [
+            "Đã biết AB = 6 cm, AC = 8 cm, BC = 10 cm, \\sin C = 3/5."
+          ],
+          "interaction": {
+            "prompt": "Sử dụng hệ thức cạnh và góc trong $\\triangle AHC$ vuông tại $H$ ($AH = AC \\cdot \\sin C$) hoặc công thức diện tích $\\triangle ABC$, hãy tính độ dài đường cao $AH$ (nhập phân số tối giản `a/b`, đơn vị cm).",
+            "answer_type": "rational",
+            "expected": "24/5",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Xét tam giác vuông $AHC$ vuông tại $H$: cạnh góc vuông $AH$ đối diện với góc $C$, cạnh huyền là $AC = 8\\text{ cm}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Theo hệ thức giữa cạnh và góc trong tam giác vuông: $AH = AC \\cdot \\sin C$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Thay $AC = 8$ và $\\sin C = \\frac{3}{5}$ ta được $AH = 8 \\cdot \\frac{3}{5} = \\frac{24}{5}\\text{ (cm)}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Độ dài đường cao $AH = \\frac{24}{5}\\text{ cm}$ (tức $4{,}8\\text{ cm}$).",
+            "incorrect": "Chưa khớp. Hãy áp dụng $AH = AC \\cdot \\sin C = 8 \\cdot \\frac{3}{5} = \\frac{24}{5}$ (hoặc $AH = \\frac{AB \\cdot AC}{BC} = \\frac{48}{10} = \\frac{24}{5}$).",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G04:S04",
+          "requires": [
+            "YD-G09-MID1-01:G04:S02"
+          ],
+          "node_ids": [
+            "DRAFT:midterm1.C15.geometric_similarity_relations"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:11aOVB2-kGUfkexx31987kq1rc6vMm9ve"
+          ],
+          "title": "Ý 2c — Chứng minh hai tam giác đồng dạng suy ra hệ thức AB^2 = BH . BC",
+          "before": "\\triangle HBA \\text{ và } \\triangle ABC \\text{ có } \\widehat{BHA} = \\widehat{BAC} = 90^\\circ, \\widehat{B} \\text{ chung}",
+          "after": "\\triangle HBA \\backsim \\triangle ABC \\text{ (g.g)} \\Rightarrow \\frac{AB}{BC} = \\frac{BH}{AB} \\Rightarrow AB^2 = BH \\cdot BC",
+          "justification": "Xét \\triangle HBA và \\triangle ABC có \\widehat{BHA} = \\widehat{BAC} = 90^\\circ và \\widehat{B} chung nên \\triangle HBA \\backsim \\triangle ABC (g.g). Suy ra tỉ số đồng dạng \\frac{AB}{BC} = \\frac{BH}{AB} \\Leftrightarrow AB^2 = BH \\cdot BC.",
+          "conditions_in_context": [
+            "Tam giác ABC vuông tại A, đường cao AH \\perp BC tại H."
+          ],
+          "interaction": {
+            "prompt": "Ở Ý 2c, để chứng minh hệ thức $AB^2 = BH \\cdot BC$ từ $\\triangle HBA \\backsim \\triangle ABC$ (g.g), tỉ số các cặp cạnh tương ứng nào sau đây là đúng?",
+            "answer_type": "choice",
+            "expected": "sim_ratio_correct",
+            "choices": {
+              "sim_ratio_correct": "$\\frac{AB}{BC} = \\frac{BH}{AB} \\Rightarrow AB^2 = BH \\cdot BC$",
+              "sim_ratio_hc": "$\\frac{AB}{BC} = \\frac{CH}{AB} \\Rightarrow AB^2 = CH \\cdot BC$",
+              "sim_ratio_ah": "$\\frac{AB}{AH} = \\frac{BH}{AB} \\Rightarrow AB^2 = BH \\cdot AH$",
+              "sim_ratio_ac": "$\\frac{AB}{AC} = \\frac{BH}{AB} \\Rightarrow AB^2 = BH \\cdot AC$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Viết đúng thứ tự đỉnh tương ứng của hai tam giác vuông: đỉnh góc vuông $H \\leftrightarrow A$, đỉnh góc chung $B \\leftrightarrow B$, đỉnh còn lại $A \\leftrightarrow C$, tức là $\\triangle HBA \\backsim \\triangle ABC$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Lập tỉ số giữa cạnh huyền và cạnh góc vuông kề góc $B$ của hai tam giác: trong $\\triangle HBA$ cạnh huyền là $AB$, cạnh kề góc $B$ là $BH$; trong $\\triangle ABC$ cạnh huyền là $BC$, cạnh kề góc $B$ là $AB$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Do đó $\\frac{AB}{BC} = \\frac{BH}{AB}$, nhân chéo được $AB^2 = BH \\cdot BC$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Từ $\\triangle HBA \\backsim \\triangle ABC$ (g.g), lập tỉ số $\\frac{AB}{BC} = \\frac{BH}{AB}$ suy ra $AB^2 = BH \\cdot BC$.",
+            "incorrect": "Chưa đúng. Hãy kiểm tra lại thứ tự đỉnh tương ứng giữa $\\triangle HBA$ (vuông tại $H$) và $\\triangle ABC$ (vuông tại $A$).",
+            "unknown": "Phản hồi chưa xác định; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "sim_ratio_correct": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "C15_SIMILAR_TRIANGLES_RATIO_CORRECT",
+                "message": "Chính xác: $\\triangle HBA \\backsim \\triangle ABC$ (g.g) $\\Rightarrow \\frac{AB}{BC} = \\frac{BH}{AB} \\Rightarrow AB^2 = BH \\cdot BC$."
+              },
+              "sim_ratio_hc": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C15_CONFUSE_PROJECTION_BH_WITH_CH",
+                "message": "Chưa đúng: $CH$ là cạnh của $\\triangle HAC$ (tương ứng với $AC^2 = CH \\cdot BC$), còn trong $\\triangle HBA$ cạnh tương ứng là $BH$."
+              },
+              "sim_ratio_ah": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C15_MISMATCHED_HYPOTENUSE_IN_SIMILARITY",
+                "message": "Chưa đúng: cạnh huyền của $\\triangle ABC$ là $BC$ chứ không phải đường cao $AH$."
+              },
+              "sim_ratio_ac": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "C15_SWAPPED_HYPOTENUSE_AND_LEG_AC",
+                "message": "Chưa đúng: trong $\\triangle HBA$, $AB$ là cạnh huyền nên phải tương ứng với cạnh huyền $BC$ của $\\triangle ABC$, không tương ứng với $AC$."
+              }
+            }
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G04:S05",
+          "requires": [
+            "YD-G09-MID1-01:G04:S04"
+          ],
+          "node_ids": [
+            "DRAFT:midterm1.C15.geometric_similarity_relations"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:11aOVB2-kGUfkexx31987kq1rc6vMm9ve"
+          ],
+          "title": "Ý 2c — Tính độ dài đoạn thẳng BH từ hệ thức AB^2 = BH . BC",
+          "before": "AB^2 = BH \\cdot BC,\\quad AB = 6\\text{ cm},\\quad BC = 10\\text{ cm}",
+          "after": "BH = \\frac{AB^2}{BC} = \\frac{36}{10} = \\frac{18}{5}\\text{ cm}",
+          "justification": "Thay AB = 6 cm và BC = 10 cm vào hệ thức AB^2 = BH \\cdot BC ta được 6^2 = BH \\cdot 10 \\Leftrightarrow BH = 36/10 = 18/5 (cm).",
+          "conditions_in_context": [
+            "Hệ thức đã chứng minh: AB^2 = BH \\cdot BC với AB = 6 cm, BC = 10 cm."
+          ],
+          "interaction": {
+            "prompt": "Áp dụng hệ thức $AB^2 = BH \\cdot BC$ với $AB = 6\\text{ cm}$ và $BC = 10\\text{ cm}$, hãy tính độ dài đoạn thẳng $BH$ (nhập phân số tối giản `a/b`, đơn vị cm).",
+            "answer_type": "rational",
+            "expected": "18/5",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Từ $AB^2 = BH \\cdot BC$, rút ra $BH = \\frac{AB^2}{BC}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Thay $AB = 6$ và $BC = 10$: $BH = \\frac{6^2}{10} = \\frac{36}{10}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Rút gọn phân số $\\frac{36}{10}$ cho $2$ ta được $BH = \\frac{18}{5}\\text{ (cm)}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Độ dài hình chiếu $BH = \\frac{36}{10} = \\frac{18}{5}\\text{ cm}$ (tức $3{,}6\\text{ cm}$).",
+            "incorrect": "Chưa đúng. Nhớ bình phương $AB^2 = 6^2 = 36$ rồi chia cho $BC = 10$ để được $\\frac{36}{10} = \\frac{18}{5}$.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        }
+      ]
+    },
+    {
+      "graph_id": "YD-G09-MID1-01:G05",
+      "proposal_ref": "YD-G09-MID1-01:PROP-B05",
+      "canonical_item_id": null,
+      "prompt": "[ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN — Bài V (0,5 điểm — Vận dụng cao)] Cho hai số thực dương $a, b > 0$ thỏa mãn $a + b \\le 1$.\n1) Chứng minh rằng $\\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b}$.\n2) Tìm giá trị nhỏ nhất của biểu thức $P = \\frac{1}{a} + \\frac{1}{b} + 2022$ và xác định giá trị của $a$ khi $P$ đạt giá trị nhỏ nhất.",
+      "original_domain": "Đề luyện tập tự biên soạn — Câu phân loại 0,5 điểm cuối đề. Điều kiện: $a > 0, b > 0$ và $a + b \\le 1$.",
+      "source_ids": [
+        "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+        "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+      ],
+      "subquestion_step_groups": {
+        "y_1": [
+          "YD-G09-MID1-01:G05:S01"
+        ],
+        "y_2": [
+          "YD-G09-MID1-01:G05:S02",
+          "YD-G09-MID1-01:G05:S03"
+        ]
+      },
+      "terminal_step_ids": [
+        "YD-G09-MID1-01:G05:S03"
+      ],
+      "completion_policy": "ALL_STEPS_CORRECT",
+      "edges": [
+        {
+          "from": "YD-G09-MID1-01:G05:S01",
+          "to": "YD-G09-MID1-01:G05:S02",
+          "kind": "REQUIRES"
+        },
+        {
+          "from": "YD-G09-MID1-01:G05:S02",
+          "to": "YD-G09-MID1-01:G05:S03",
+          "kind": "REQUIRES"
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "YD-G09-MID1-01:G05:S01",
+          "requires": [],
+          "node_ids": [
+            "DRAFT:midterm1.C10.inequality_properties",
+            "DRAFT:midterm1.S07.advanced_optimization"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+          ],
+          "title": "Ý 1 — Chứng minh bất đẳng thức phụ 1/a + 1/b >= 4/(a + b) bằng biến đổi tương đương",
+          "before": "(a - b)^2 \\ge 0 \\quad (\\forall a, b > 0)",
+          "after": "(a + b)^2 \\ge 4ab \\Rightarrow \\frac{a + b}{ab} \\ge \\frac{4}{a + b} \\Leftrightarrow \\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b}",
+          "justification": "Với mọi a, b > 0, ta có (a - b)^2 \\ge 0 \\Leftrightarrow a^2 - 2ab + b^2 \\ge 0 \\Leftrightarrow (a + b)^2 \\ge 4ab. Chia cả hai vế cho số dương ab(a + b) > 0 được \\frac{a + b}{ab} \\ge \\frac{4}{a + b} \\Leftrightarrow \\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b}.",
+          "conditions_in_context": [
+            "Hai số thực dương a > 0, b > 0 nên ab > 0 và a + b > 0."
+          ],
+          "interaction": {
+            "prompt": "Để chứng minh $\\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b}$ với $a, b > 0$, chuỗi biến đổi tương đương nào xuất phát từ hằng đẳng thức $(a - b)^2 \\ge 0$ là hoàn toàn chính xác?",
+            "answer_type": "choice",
+            "expected": "ineq_proof_correct",
+            "choices": {
+              "ineq_proof_correct": "$(a - b)^2 \\ge 0 \\Leftrightarrow (a + b)^2 \\ge 4ab \\Leftrightarrow \\frac{a + b}{ab} \\ge \\frac{4}{a + b} \\Leftrightarrow \\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b}$",
+              "ineq_proof_2ab": "$(a - b)^2 \\ge 0 \\Leftrightarrow (a + b)^2 \\ge 2ab \\Leftrightarrow \\frac{1}{a} + \\frac{1}{b} \\ge \\frac{2}{a + b}$",
+              "ineq_proof_rev": "$(a - b)^2 \\ge 0 \\Leftrightarrow (a + b)^2 \\le 4ab \\Leftrightarrow \\frac{1}{a} + \\frac{1}{b} \\le \\frac{4}{a + b}$",
+              "ineq_proof_add": "$\\frac{1}{a} + \\frac{1}{b} = \\frac{1}{a + b} \\ge \\frac{4}{a + b}$"
+            },
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Xuất phát từ bất đẳng thức luôn đúng $(a - b)^2 \\ge 0$, khai triển $a^2 - 2ab + b^2 \\ge 0$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Cộng $4ab$ vào cả hai vế ta được $a^2 + 2ab + b^2 \\ge 4ab \\Leftrightarrow (a + b)^2 \\ge 4ab$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Vì $a, b > 0$ nên $ab(a + b) > 0$; chia cả hai vế cho $ab(a + b)$ ta được $\\frac{a + b}{ab} \\ge \\frac{4}{a + b} \\Leftrightarrow \\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Từ $(a - b)^2 \\ge 0 \\Leftrightarrow (a + b)^2 \\ge 4ab$, chia hai vế cho $ab(a + b) > 0$ ta suy ra $\\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b}$, dấu '$=$' xảy ra khi $a = b$.",
+            "incorrect": "Chưa đúng. Lưu ý $(a + b)^2 - (a - b)^2 = 4ab$, nên $(a - b)^2 \\ge 0 \\Leftrightarrow (a + b)^2 \\ge 4ab$.",
+            "unknown": "Phản hồi chưa xác định; chuyển trạng thái NEEDS_REVIEW.",
+            "by_choice": {
+              "ineq_proof_correct": {
+                "expected_status": "CORRECT",
+                "diagnosis_code": "S07_CAUCHY_SCHWARZ_2VAR_PROOF_CORRECT",
+                "message": "Chính xác: $(a - b)^2 \\ge 0 \\Leftrightarrow (a + b)^2 \\ge 4ab$; chia hai vế cho $ab(a + b) > 0$ được $\\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b}$."
+              },
+              "ineq_proof_2ab": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "S07_EXPAND_SQUARE_COEFFICIENT_2AB_ERROR",
+                "message": "Chưa đúng: $a^2 + b^2 \\ge 2ab$, khi cộng thêm $2ab$ vào cả hai vế để tạo thành $(a + b)^2$ thì vế phải phải là $4ab$ (không phải $2ab$)."
+              },
+              "ineq_proof_rev": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "S07_REVERSED_SQUARE_INEQUALITY",
+                "message": "Chưa đúng: bình phương của một hiệu luôn không âm $(a - b)^2 \\ge 0$, nên $(a + b)^2 \\ge 4ab$ chứ không phải $\\le 4ab$."
+              },
+              "ineq_proof_add": {
+                "expected_status": "TRY_AGAIN",
+                "diagnosis_code": "S07_ILLEGAL_FRACTION_DENOMINATOR_ADDITION",
+                "message": "Chưa đúng: khi cộng hai phân thức $\\frac{1}{a} + \\frac{1}{b}$ phải quy đồng mẫu chung $\\frac{a + b}{ab}$, tuyệt đối không bằng $\\frac{1}{a + b}$."
+              }
+            }
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G05:S02",
+          "requires": [
+            "YD-G09-MID1-01:G05:S01"
+          ],
+          "node_ids": [
+            "DRAFT:midterm1.S07.advanced_optimization",
+            "DRAFT:midterm1.C10.inequality_properties"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+          ],
+          "title": "Ý 2 — Đánh giá từ điều kiện a + b <= 1 để tìm giá trị nhỏ nhất của P",
+          "before": "P = \\frac{1}{a} + \\frac{1}{b} + 2022 \\ge \\frac{4}{a + b} + 2022,\\quad 0 < a + b \\le 1",
+          "after": "P \\ge \\frac{4}{1} + 2022 = 2026",
+          "justification": "Vì 0 < a + b \\le 1 nên \\frac{4}{a + b} \\ge \\frac{4}{1} = 4. Do đó P \\ge 4 + 2022 = 2026.",
+          "conditions_in_context": [
+            "Đã chứng minh 1/a + 1/b \\ge 4/(a + b) và giả thiết cho 0 < a + b \\le 1."
+          ],
+          "interaction": {
+            "prompt": "Kết hợp $\\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b}$ với điều kiện $0 < a + b \\le 1$, giá trị nhỏ nhất của biểu thức $P = \\frac{1}{a} + \\frac{1}{b} + 2022$ bằng bao nhiêu?",
+            "answer_type": "rational",
+            "expected": "2026",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Vì $0 < a + b \\le 1$ nên khi lấy nghịch đảo, chiều bất đẳng thức đổi thành $\\frac{1}{a + b} \\ge 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Nhân hai vế với $4 > 0$ được $\\frac{4}{a + b} \\ge 4$, suy ra $\\frac{1}{a} + \\frac{1}{b} \\ge 4$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Cộng $2022$ vào hai vế: $P = \\frac{1}{a} + \\frac{1}{b} + 2022 \\ge 4 + 2022 = 2026$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Chính xác! Vì $\\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b} \\ge 4$ nên $P \\ge 4 + 2022 = 2026$.",
+            "incorrect": "Chưa khớp. Từ $\\frac{1}{a} + \\frac{1}{b} \\ge 4$, hãy cộng thêm hằng số $2022$ trong biểu thức $P$.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        },
+        {
+          "step_id": "YD-G09-MID1-01:G05:S03",
+          "requires": [
+            "YD-G09-MID1-01:G05:S02"
+          ],
+          "node_ids": [
+            "DRAFT:midterm1.S07.advanced_optimization"
+          ],
+          "source_ids": [
+            "drive:15dcvd4O9x3G_onNK65DeCpuC2OK7GExi",
+            "drive:1KTO2uLdkyosWhbmn6fmmxDeRhShW3ZbK"
+          ],
+          "title": "Ý 2 — Xác định điều kiện xảy ra dấu bằng (điểm rơi a = b = 1/2)",
+          "before": "\\begin{cases} a = b \\\\ a + b = 1 \\end{cases}",
+          "after": "a = b = \\frac{1}{2}",
+          "justification": "Dấu '=' ở cả hai đánh giá đồng thời xảy ra khi và chỉ khi a = b và a + b = 1, tức là a = b = 1/2 (thỏa mãn a, b > 0). Vậy min P = 2026 khi a = b = 1/2.",
+          "conditions_in_context": [
+            "P đạt giá trị nhỏ nhất bằng 2026 khi đồng thời xảy ra dấu '=' ở (a - b)^2 = 0 và a + b = 1."
+          ],
+          "interaction": {
+            "prompt": "Biểu thức $P$ đạt giá trị nhỏ nhất bằng $2026$ khi $a = b$ và $a + b = 1$. Hãy nhập giá trị của $a$ (dưới dạng phân số tối giản `p/q`) khi dấu bằng xảy ra.",
+            "answer_type": "rational",
+            "expected": "1/2",
+            "choices": {},
+            "unknown_response_policy": "NEEDS_REVIEW"
+          },
+          "hints": [
+            {
+              "level": 1,
+              "text": "Dấu bằng ở $\\frac{1}{a} + \\frac{1}{b} \\ge \\frac{4}{a + b}$ xảy ra khi $(a - b)^2 = 0 \\Leftrightarrow a = b$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 2,
+              "text": "Dấu bằng ở $\\frac{4}{a + b} \\ge 4$ xảy ra khi $a + b = 1$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            },
+            {
+              "level": 3,
+              "text": "Thay $b = a$ vào $a + b = 1$ ta được $2a = 1 \\Leftrightarrow a = b = \\frac{1}{2}$.",
+              "reveal_when": "EXPLICIT_HINT_REQUEST_IN_PRACTICE"
+            }
+          ],
+          "feedback": {
+            "correct": "Hoàn toàn chính xác! Dấu '$=$' xảy ra khi và chỉ khi $a = b = \\frac{1}{2}$, kết thúc trọn vẹn bài toán Vận dụng cao.",
+            "incorrect": "Chưa đúng. Giải hệ điều kiện dấu bằng $a = b$ và $a + b = 1$, ta có $2a = 1 \\Rightarrow a = \\frac{1}{2}$.",
+            "unknown": "Định dạng câu trả lời chưa phải số hữu tỉ hợp lệ; chuyển trạng thái NEEDS_REVIEW."
+          }
+        }
+      ]
+    }
+  ],
+  "assets": [],
+  "videos": [],
+  "assessments": [
+    {
+      "assessment_id": "YD-G09-MID1-01:assessment.FULL_EXAM_10PT",
+      "kind": "END_LESSON_CHECK",
+      "objective_refs": [
+        "MVP-F01: Làm đề luyện tập tự biên soạn Giữa học kỳ I Toán 9 Hà Nội (5 bài — 10,0 điểm — 24 bước giải) theo đồ thị bước giải không chu trình (Step DAG).",
+        "MVP-F02: Nhận phản hồi tức thì theo từng phương án (feedback.by_choice kèm diagnosis_code), gợi ý Socratic 3 mức và lời giải chi tiết từng bước.",
+        "MVP-F03: Chẩn đoán kỹ năng yếu dựa trên bằng chứng nhật ký sự kiện (NEEDS_REMEDIATION, ASSISTED_PASS, UNASSISTED_PASS, UNTESTED).",
+        "MVP-F04: Luyện tập lại có mục tiêu qua sự kiện ITEM_RESET (tăng cycle_id) và điều hướng về Bản đồ 32 chủ đề (equations:0, equations:2, real:0..3, geometry:0..1, algebra:2..3)."
+      ],
+      "graph_ids": [
+        "YD-G09-MID1-01:G01",
+        "YD-G09-MID1-01:G02",
+        "YD-G09-MID1-01:G03",
+        "YD-G09-MID1-01:G04",
+        "YD-G09-MID1-01:G05"
+      ],
+      "delivery_policy": "GUIDED_PRACTICE_NOT_SECURE_EXAM",
+      "scoring_policy_ref": "YD_G09_MIDTERM1_BATCH02A_MANIFEST_v0_1_DRAFT.json#mvp_f01_f04_specification"
+    }
+  ],
+  "review": {
+    "source": {
+      "status": "PENDING",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Đề luyện tập tự biên soạn mới (NEW_EDITORIAL_PRACTICE_EXAM) đối chiếu theo SGK Toán 9 Tập 1 KNTT và Ma trận Kỹ năng Batch 01; không gắn nhãn đề gốc của trường. Chờ phê duyệt nguồn trước khi phát hành."
+    },
+    "technical": {
+      "status": "PENDING",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Đã kiểm tra tự động PASS 100% qua validate_contract.py và replay 24/24 bước trên radicals-profiles.js + radicals-engine.cjs; giữ trạng thái PENDING theo quy tắc không tự phê duyệt."
+    },
+    "math": {
+      "status": "PENDING",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Đã kiểm chứng độc lập toàn bộ 24 bước giải bằng SymPy; giữ trạng thái PENDING chờ thẩm định độc lập."
+    },
+    "visual": {
+      "status": "NOT_APPLICABLE",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Gói dữ liệu văn bản và công thức KaTeX (assets = [], videos = []); đã kiểm tra an toàn cú pháp YourdreamMath.formula/mixed."
+    },
+    "pedagogy": {
+      "status": "PENDING",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Đã biên soạn đủ 3 mức gợi ý Socratic, lời giải chi tiết và phản hồi theo lựa chọn (feedback.by_choice) cho từng bước; chờ phê duyệt sư phạm."
+    },
+    "release": {
+      "status": "PENDING",
+      "reviewer_or_process": null,
+      "reviewed_at": null,
+      "input_sha256": null,
+      "evidence_ref": null,
+      "note": "Gói DRAFT bàn giao cho Webapp Studio (Batch 02A); không tự phê duyệt phát hành."
+    }
+  }
+}

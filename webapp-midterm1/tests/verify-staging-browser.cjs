@@ -1,13 +1,16 @@
 const { spawn } = require('child_process');
 const http = require('http');
+const https = require('https');
 const net = require('net');
 const WebSocket = require('ws');
 const assert = require('assert');
 const path = require('path');
 
 const STAGING_PORT = 8788;
-const CDP_PORT = 9235;
-const BASE_URL = `http://127.0.0.1:${STAGING_PORT}`;
+const CDP_PORT = 9236;
+const REMOTE_URL = process.env.STAGING_BASE_URL || 'https://yourdream-webapp-staging.tothanhnam.workers.dev';
+const USE_LOCAL = process.argv.includes('--local');
+const BASE_URL = USE_LOCAL ? `http://127.0.0.1:${STAGING_PORT}` : REMOTE_URL;
 const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 
 function waitForPort(port, timeoutMs = 15000) {
@@ -42,30 +45,15 @@ function waitForPort(port, timeoutMs = 15000) {
   });
 }
 
-function httpGetJson(url) {
-  return new Promise((resolve, reject) => {
-    http.get(url, (res) => {
-      let data = '';
-      res.on('data', (chunk) => (data += chunk));
-      res.on('end', () => {
-        try {
-          resolve({ status: res.statusCode, body: JSON.parse(data), headers: res.headers });
-        } catch (err) {
-          reject(new Error(`Invalid JSON from ${url}: ${data.slice(0, 200)}`));
-        }
-      });
-    }).on('error', reject);
-  });
-}
-
 function httpRequest(method, url, payload = null) {
   return new Promise((resolve, reject) => {
     const u = new URL(url);
+    const mod = u.protocol === 'https:' ? https : http;
     const bodyStr = payload ? JSON.stringify(payload) : null;
-    const req = http.request(
+    const req = mod.request(
       {
         hostname: u.hostname,
-        port: u.port,
+        port: u.port || (u.protocol === 'https:' ? 443 : 80),
         path: u.pathname + u.search,
         method,
         headers: bodyStr
@@ -82,6 +70,15 @@ function httpRequest(method, url, payload = null) {
     if (bodyStr) req.write(bodyStr);
     req.end();
   });
+}
+
+async function httpGetJson(url) {
+  const res = await httpRequest('GET', url);
+  try {
+    return { status: res.status, body: JSON.parse(res.text), headers: res.headers };
+  } catch {
+    throw new Error(`Invalid JSON from ${url}: ${res.text.slice(0, 200)}`);
+  }
 }
 
 class CDPClient {
@@ -144,38 +141,40 @@ class CDPClient {
 
 async function runVerification() {
   let wranglerProc = null;
-  let edgeProc = null;
+  let chromeProc = null;
   try {
-    console.log('[1/6] Starting local Cloudflare Worker staging server (wrangler.staging.json on 127.0.0.1:8788)...');
-    wranglerProc = spawn(
-      process.execPath,
-      [
-        path.resolve(__dirname, '../node_modules/wrangler/bin/wrangler.js'),
-        'dev',
-        '--config',
-        'wrangler.staging.json',
-        '--port',
-        String(STAGING_PORT),
-        '--ip',
-        '127.0.0.1',
-        '--persist-to',
-        '.wrangler/staging-state'
-      ],
-      {
-        cwd: path.resolve(__dirname, '..'),
-        stdio: ['ignore', 'pipe', 'pipe']
-      }
-    );
+    if (USE_LOCAL) {
+      console.log(`[1/6] Starting local Cloudflare Worker staging server (${BASE_URL})...`);
+      wranglerProc = spawn(
+        process.execPath,
+        [
+          path.resolve(__dirname, '../node_modules/wrangler/bin/wrangler.js'),
+          'dev',
+          '--config',
+          'wrangler.staging.json',
+          '--port',
+          String(STAGING_PORT),
+          '--ip',
+          '127.0.0.1',
+          '--persist-to',
+          '.wrangler/staging-state'
+        ],
+        {
+          cwd: path.resolve(__dirname, '..'),
+          stdio: ['ignore', 'pipe', 'pipe']
+        }
+      );
+      await waitForPort(STAGING_PORT, 20000);
+    } else {
+      console.log(`[1/6] Targeting live remote Cloudflare Worker staging URL: ${BASE_URL}`);
+    }
 
-    await waitForPort(STAGING_PORT, 20000);
-    console.log('  -> Worker staging server listening on', BASE_URL);
-
-    console.log('[2/6] Verifying Worker routes & isolated D1 API endpoints...');
+    console.log('[2/6] Verifying Worker routes & real D1 staging API endpoints...');
     const indexRes = await httpRequest('GET', `${BASE_URL}/`);
     assert.strictEqual(indexRes.status, 200, 'Root / should return 200');
     const previewRes = await httpRequest('GET', `${BASE_URL}/graph02-preview.html`);
     assert.strictEqual(previewRes.status, 200, '/graph02-preview.html should return 200');
-    assert.ok(previewRes.text.includes('TEST FIXTURE'), '/graph02-preview.html must include TEST FIXTURE banner');
+    assert.ok(previewRes.text.includes('Batch 02A DRAFT'), '/graph02-preview.html must include Batch 02A DRAFT title/banner');
 
     const identityRes = await httpGetJson(`${BASE_URL}/api/me/identity`);
     assert.strictEqual(identityRes.status, 401, '/api/me/identity without auth header should return 401');
@@ -184,11 +183,11 @@ async function runVerification() {
     const progressRes = await httpGetJson(`${BASE_URL}/api/me/progress`);
     assert.strictEqual(progressRes.status, 401, '/api/me/progress without auth header should return 401');
     assert.ok(progressRes.body && typeof progressRes.body === 'object', '/api/me/progress should return JSON object');
-    console.log('  -> Worker + isolated D1 API (/api/me/identity, /api/me/progress) verified:', JSON.stringify(identityRes.body));
+    console.log('  -> Worker + D1 API (/api/me/identity, /api/me/progress) verified:', JSON.stringify(identityRes.body));
 
     console.log('[3/6] Launching headless Google Chrome for real browser DOM & JS verification...');
     const userDataDir = path.resolve(__dirname, `../.wrangler/chrome-staging-profile-${Date.now()}`);
-    edgeProc = spawn(
+    chromeProc = spawn(
       CHROME_PATH,
       [
         '--headless=new',
@@ -198,7 +197,7 @@ async function runVerification() {
         '--remote-allow-origins=*',
         `--user-data-dir=${userDataDir}`,
         `--remote-debugging-port=${CDP_PORT}`,
-        `${BASE_URL}/graph02-preview.html?profile=MIDTERM1_FIXTURE_5BAI_26BUOC`
+        `${BASE_URL}/graph02-preview.html`
       ],
       { stdio: ['ignore', 'pipe', 'pipe'] }
     );
@@ -214,9 +213,7 @@ async function runVerification() {
     if (!pageTarget) {
       const newRes = await httpRequest(
         'PUT',
-        `http://127.0.0.1:${CDP_PORT}/json/new?${encodeURIComponent(
-          `${BASE_URL}/graph02-preview.html?profile=MIDTERM1_FIXTURE_5BAI_26BUOC`
-        )}`
+        `http://127.0.0.1:${CDP_PORT}/json/new?${encodeURIComponent(`${BASE_URL}/graph02-preview.html`)}`
       );
       pageTarget = JSON.parse(newRes.text);
     }
@@ -225,48 +222,48 @@ async function runVerification() {
     const cdp = new CDPClient(pageTarget.webSocketDebuggerUrl);
     await cdp.connect();
     if (!pageTarget.url.includes('graph02-preview.html')) {
-      await cdp.send('Page.navigate', {
-        url: `${BASE_URL}/graph02-preview.html?profile=MIDTERM1_FIXTURE_5BAI_26BUOC`
-      });
+      await cdp.send('Page.navigate', { url: `${BASE_URL}/graph02-preview.html` });
     }
 
-    // Wait until fixture is loaded in DOM
-    for (let i = 0; i < 40; i++) {
+    // Wait until Batch 02A (5 exercises, Exercise 1 has 5 steps) is loaded in DOM
+    for (let i = 0; i < 50; i++) {
       const ready = await cdp.evaluate(
-        `Boolean(document.getElementById('step-list')?.children?.length === 4 && document.getElementById('exercise-list')?.children?.length === 5)`
+        `Boolean(document.getElementById('step-list')?.children?.length === 5 && document.getElementById('exercise-list')?.children?.length === 5)`
       );
       if (ready) break;
-      await new Promise((r) => setTimeout(r, 200));
+      await new Promise((r) => setTimeout(r, 250));
     }
 
-    console.log('[4/6] Auditing initial DOM state (TEST FIXTURE labels, 5 exercises, 26 steps, Batch 01 diagnosis)...');
+    console.log('[4/6] Auditing initial DOM state (Batch 02A: 5 bài / 24 bước, 13 skills, Batch 01 diagnosis)...');
     const initialSnap = await cdp.evaluate(`(() => {
       return {
+        url: location.href,
         title: document.title,
         fixtureBadge: document.getElementById('fixture-badge')?.textContent?.trim(),
         fixtureNotice: document.getElementById('fixture-notice')?.textContent?.trim(),
+        profileId: document.getElementById('profile-select')?.value,
         profileText: document.getElementById('profile-select')?.selectedOptions?.[0]?.textContent?.trim(),
         totalProgress: document.getElementById('total-progress')?.textContent?.trim(),
         exerciseTitle: document.getElementById('exercise-title')?.textContent?.trim(),
         exerciseCount: document.getElementById('exercise-list')?.children?.length || 0,
         stepCountEx1: document.getElementById('step-list')?.children?.length || 0,
+        diagnosisSummary: document.getElementById('diagnosis-summary')?.textContent?.trim(),
         diagnosisText: document.getElementById('skill-diagnosis')?.textContent?.trim()
       };
     })()`);
 
-    assert.ok(initialSnap.title.includes('TEST FIXTURE'), 'Document title must contain TEST FIXTURE');
-    assert.strictEqual(initialSnap.fixtureBadge, 'DRAFT · TEST FIXTURE (5 bài / 26 bước)');
-    assert.ok(initialSnap.fixtureNotice.includes('TEST FIXTURE'), 'Fixture notice must state TEST FIXTURE');
-    assert.ok(initialSnap.profileText.includes('TEST FIXTURE'), 'Profile selector must state TEST FIXTURE');
+    assert.strictEqual(initialSnap.profileId, 'midterm1-hanoi-01', 'Default profile must be midterm1-hanoi-01 (Batch 02A)');
+    assert.strictEqual(initialSnap.fixtureBadge, 'DRAFT · ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN (5 bài / 24 bước)');
+    assert.ok(initialSnap.fixtureNotice.includes('Tự biên soạn mới 100% · DRAFT'), 'Notice must state editorial provenance');
     assert.strictEqual(initialSnap.exerciseCount, 5, 'Should render 5 exercise buttons');
-    assert.strictEqual(initialSnap.stepCountEx1, 4, 'Exercise 1 should render 4 step buttons (4+5+6+5+6=26)');
+    assert.strictEqual(initialSnap.stepCountEx1, 5, 'Exercise 1 (Bài I) should render 5 step buttons (5+6+5+5+3=24)');
     assert.ok(
-      initialSnap.totalProgress.includes('0 / 26 bước đã làm đúng · 0 / 5 bài hoàn thành · TEST FIXTURE'),
+      initialSnap.totalProgress.includes('0 / 24 bước đã làm đúng · 0 / 5 bài hoàn thành · ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN (Batch 02A DRAFT)'),
       `Unexpected totalProgress: ${initialSnap.totalProgress}`
     );
     assert.ok(
-      initialSnap.exerciseTitle.includes('(TEST FIXTURE)'),
-      `Exercise title must include (TEST FIXTURE): ${initialSnap.exerciseTitle}`
+      initialSnap.diagnosisSummary.includes('Theo dõi 13 kỹ năng trên 5 bài (24 bước) [policy_version: PENDING]'),
+      `Unexpected diagnosisSummary: ${initialSnap.diagnosisSummary}`
     );
     assert.ok(
       initialSnap.diagnosisText.includes('Chưa học [NOT_STARTED]'),
@@ -274,12 +271,13 @@ async function runVerification() {
     );
     console.log('  -> Initial DOM state verified:', JSON.stringify(initialSnap, null, 2));
 
-    console.log('[5/6] Exercising hints, wrong answer, retry, clean solve, rational input, and ITEM_RESET in real browser...');
+    console.log('[5/6] Exercising Batch 02A hints, wrong answer, retry, clean solve, rational input, and ITEM_RESET in real browser...');
     const interactionSnap = await cdp.evaluate(`(async () => {
-      // 1. Exercise 1 Step 1 (rational, expected "3"): submit wrong value "9" first
-      const step1Input = document.querySelector('input[name="value"]');
-      step1Input.value = '9';
-      step1Input.dispatchEvent(new Event('input', { bubbles: true }));
+      // 1. Bài I (G01) Step 1 (choice, expected "sub_correct"): submit wrong choice first
+      const choices = [...document.querySelectorAll('input[name="choice"]')];
+      const wrongRadio = choices.find((r) => r.value !== 'sub_correct');
+      wrongRadio.checked = true;
+      wrongRadio.dispatchEvent(new Event('input', { bubbles: true }));
       document.getElementById('answer-form').requestSubmit();
 
       const afterWrong = {
@@ -288,16 +286,16 @@ async function runVerification() {
         diagnosisText: document.getElementById('skill-diagnosis')?.textContent?.trim()
       };
 
-      // 2. Open Hint 1, Hint 2, Hint 3 on Exercise 1 Step 1
+      // 2. Open Hint 1, Hint 2, Hint 3 on G01:S01
       document.getElementById('hint-button').click();
       document.getElementById('hint-button').click();
       document.getElementById('hint-button').click();
       const hintCount = document.getElementById('hints')?.children?.length || 0;
 
-      // 3. Submit equivalent rational value "6/2" (= 3) on Exercise 1 Step 1 (after wrong + hints -> IN_PRACTICE_WITH_SUPPORT)
-      const step1RetryInput = document.querySelector('input[name="value"]');
-      step1RetryInput.value = '6/2';
-      step1RetryInput.dispatchEvent(new Event('input', { bubbles: true }));
+      // 3. Submit correct choice "sub_correct" on G01:S01 (after wrong + hints -> IN_PRACTICE_WITH_SUPPORT)
+      const rightRadio = document.querySelector('input[name="choice"][value="sub_correct"]');
+      rightRadio.checked = true;
+      rightRadio.dispatchEvent(new Event('input', { bubbles: true }));
       document.getElementById('answer-form').requestSubmit();
 
       const afterSupportedPass = {
@@ -306,55 +304,39 @@ async function runVerification() {
         diagnosisText: document.getElementById('skill-diagnosis')?.textContent?.trim()
       };
 
-      // 4. Advance to Exercise 1 Step 2 (rational, expected "-4") and solve cleanly -> 1/2 steps on cube_root_power_identity = INSUFFICIENT_EVIDENCE
+      // 4. Advance to G01:S02 (rational, expected "3") and solve with equivalent fraction "6/2"
       document.getElementById('next-step').click();
-      const step2Input = document.querySelector('input[name="value"]');
-      step2Input.value = '-4';
-      step2Input.dispatchEvent(new Event('input', { bubbles: true }));
+      const s02Input = document.querySelector('input[name="value"]');
+      s02Input.value = '6/2';
+      s02Input.dispatchEvent(new Event('input', { bubbles: true }));
       document.getElementById('answer-form').requestSubmit();
 
-      const afterPartialSkillPass = {
-        totalProgress: document.getElementById('total-progress')?.textContent?.trim(),
-        diagnosisText: document.getElementById('skill-diagnosis')?.textContent?.trim()
-      };
-
-      // Complete Step 3 (rational, expected "-4") and Step 4 (rational, expected "3") cleanly -> 2/2 steps on cube_root_power_identity = CRITERIA_MET_IN_SESSION
-      document.getElementById('next-step').click();
-      const step3Input = document.querySelector('input[name="value"]');
-      step3Input.value = '-4';
-      step3Input.dispatchEvent(new Event('input', { bubbles: true }));
-      document.getElementById('answer-form').requestSubmit();
-
-      document.getElementById('next-step').click();
-      const step4Input = document.querySelector('input[name="value"]');
-      step4Input.value = '3';
-      step4Input.dispatchEvent(new Event('input', { bubbles: true }));
-      document.getElementById('answer-form').requestSubmit();
-
-      const afterCleanPass = {
-        totalProgress: document.getElementById('total-progress')?.textContent?.trim(),
-        diagnosisText: document.getElementById('skill-diagnosis')?.textContent?.trim()
-      };
-
-      // 5. Switch to Exercise 2 (index 1) -> Step 1 (choice, expected "x_ne_1") and Step 2 (choice, expected "rad_gt_0")
-      document.querySelectorAll('#exercise-list [data-item]')[1].click();
-      const ex2Step1Right = document.querySelector('input[name="choice"][value="x_ne_1"]');
-      ex2Step1Right.checked = true;
-      ex2Step1Right.dispatchEvent(new Event('input', { bubbles: true }));
-      document.getElementById('answer-form').requestSubmit();
-
-      document.getElementById('next-step').click();
-      const ex2Step2Right = document.querySelector('input[name="choice"][value="rad_gt_0"]');
-      ex2Step2Right.checked = true;
-      ex2Step2Right.dispatchEvent(new Event('input', { bubbles: true }));
-      document.getElementById('answer-form').requestSubmit();
-
-      const afterChoicePass = {
+      const afterRationalPass = {
         feedbackClass: document.getElementById('feedback')?.className,
-        totalProgress: document.getElementById('total-progress')?.textContent?.trim()
+        totalProgress: document.getElementById('total-progress')?.textContent?.trim(),
+        diagnosisText: document.getElementById('skill-diagnosis')?.textContent?.trim()
       };
 
-      // 6. Trigger ITEM_RESET on Exercise 2 ("Làm lại bài")
+      // 5. Switch to Bài II (G02, index 1) and solve S01 ("prod_correct") + S02 ("9/2") cleanly -> C08 reaches 2/2 clean steps = CRITERIA_MET_IN_SESSION
+      document.querySelectorAll('#exercise-list [data-item]')[1].click();
+      const g02s01 = document.querySelector('input[name="choice"][value="prod_correct"]');
+      g02s01.checked = true;
+      g02s01.dispatchEvent(new Event('input', { bubbles: true }));
+      document.getElementById('answer-form').requestSubmit();
+
+      document.getElementById('next-step').click();
+      const g02s02 = document.querySelector('input[name="value"]');
+      g02s02.value = '9/2';
+      g02s02.dispatchEvent(new Event('input', { bubbles: true }));
+      document.getElementById('answer-form').requestSubmit();
+
+      const afterCleanSkillPass = {
+        feedbackClass: document.getElementById('feedback')?.className,
+        totalProgress: document.getElementById('total-progress')?.textContent?.trim(),
+        diagnosisText: document.getElementById('skill-diagnosis')?.textContent?.trim()
+      };
+
+      // 6. Trigger ITEM_RESET on Bài II ("Làm lại bài")
       document.getElementById('reset-item').click();
       const afterItemReset = {
         totalProgress: document.getElementById('total-progress')?.textContent?.trim()
@@ -364,60 +346,52 @@ async function runVerification() {
         afterWrong,
         hintCount,
         afterSupportedPass,
-        afterPartialSkillPass,
-        afterCleanPass,
-        afterChoicePass,
+        afterRationalPass,
+        afterCleanSkillPass,
         afterItemReset
       };
     })()`);
 
-    assert.strictEqual(interactionSnap.afterWrong.feedbackClass, 'incorrect', 'Wrong answer should render incorrect feedback');
+    assert.strictEqual(interactionSnap.afterWrong.feedbackClass, 'incorrect', 'Wrong choice should render incorrect feedback');
     assert.ok(
       interactionSnap.afterWrong.diagnosisText.includes('Đang luyện · Cần sửa lỗi [IN_PRACTICE_NEEDS_RETRY]'),
       'Wrong attempt must show Batch 01 state "Đang luyện · Cần sửa lỗi [IN_PRACTICE_NEEDS_RETRY]"'
     );
     assert.strictEqual(interactionSnap.hintCount, 3, 'Clicking hint button 3 times should reveal 3 hints');
-    assert.strictEqual(
-      interactionSnap.afterSupportedPass.feedbackClass,
-      'correct',
-      'Rational input "6/2" for answer "3" should pass equivalence check'
-    );
+    assert.strictEqual(interactionSnap.afterSupportedPass.feedbackClass, 'correct', 'Correct choice should pass');
     assert.ok(
       interactionSnap.afterSupportedPass.diagnosisText.includes('Đang luyện · Đúng khi có gợi ý / từng sai [IN_PRACTICE_WITH_SUPPORT]'),
       'Solving after hint/wrong must show Batch 01 state "Đang luyện · Đúng khi có gợi ý / từng sai [IN_PRACTICE_WITH_SUPPORT]"'
     );
-    assert.ok(
-      interactionSnap.afterPartialSkillPass.diagnosisText.includes('Chưa đủ bằng chứng [INSUFFICIENT_EVIDENCE]'),
-      'Partial skill progress (1/2 steps) must show Batch 01 state "Chưa đủ bằng chứng [INSUFFICIENT_EVIDENCE]"'
-    );
-    assert.ok(
-      interactionSnap.afterCleanPass.diagnosisText.includes('Đã đạt tiêu chí trong phiên (tự giải sạch) [CRITERIA_MET_IN_SESSION]'),
-      'Clean solve of all steps in skill must show Batch 01 state "Đã đạt tiêu chí trong phiên (tự giải sạch) [CRITERIA_MET_IN_SESSION]"'
-    );
-    assert.ok(
-      interactionSnap.afterCleanPass.totalProgress.includes('4 / 26 bước đã làm đúng · 1 / 5 bài hoàn thành'),
-      'Total progress should be 4 / 26 and 1 / 5 exercise completed after Exercise 1 solved'
-    );
     assert.strictEqual(
-      interactionSnap.afterChoicePass.feedbackClass,
+      interactionSnap.afterRationalPass.feedbackClass,
       'correct',
-      'Choice selection on Exercise 2 should pass'
+      'Rational input "6/2" for answer "3" should pass equivalence check'
     );
     assert.ok(
-      interactionSnap.afterChoicePass.totalProgress.includes('6 / 26 bước đã làm đúng'),
-      'Total progress should be 6 / 26 after Exercise 2 Steps 1-2 solved'
+      interactionSnap.afterRationalPass.diagnosisText.includes('Chưa đủ bằng chứng [INSUFFICIENT_EVIDENCE]'),
+      'Partial skill progress (1/3 steps on C04) must show Batch 01 state "Chưa đủ bằng chứng [INSUFFICIENT_EVIDENCE]"'
+    );
+    assert.strictEqual(interactionSnap.afterCleanSkillPass.feedbackClass, 'correct', 'G02:S02 rational input "9/2" should pass');
+    assert.ok(
+      interactionSnap.afterCleanSkillPass.diagnosisText.includes('Đã đạt tiêu chí trong phiên (tự giải sạch) [CRITERIA_MET_IN_SESSION]'),
+      'Clean solve of all steps in C08 (G02:S01 + G02:S02) must show Batch 01 state "Đã đạt tiêu chí trong phiên (tự giải sạch) [CRITERIA_MET_IN_SESSION]"'
     );
     assert.ok(
-      interactionSnap.afterItemReset.totalProgress.includes('4 / 26 bước đã làm đúng · 1 / 5 bài hoàn thành'),
-      'After ITEM_RESET on Exercise 2, total progress should return to 4 / 26 while preserving Exercise 1'
+      interactionSnap.afterCleanSkillPass.totalProgress.includes('4 / 24 bước đã làm đúng'),
+      'Total progress should be 4 / 24 after 2 steps in Bài I and 2 steps in Bài II solved'
+    );
+    assert.ok(
+      interactionSnap.afterItemReset.totalProgress.includes('2 / 24 bước đã làm đúng'),
+      'After ITEM_RESET on Bài II, total progress should return to 2 / 24 while preserving Bài I'
     );
     assert.strictEqual(cdp.pageErrors.length, 0, `Unexpected browser runtime errors: ${cdp.pageErrors.join('; ')}`);
 
-    console.log('[6/6] Real browser verification PASSED with 0 runtime errors!');
+    console.log(`[6/6] Real browser verification against ${BASE_URL} PASSED with 0 runtime errors!`);
     console.log(JSON.stringify(interactionSnap, null, 2));
     cdp.close();
   } finally {
-    if (edgeProc) edgeProc.kill();
+    if (chromeProc) chromeProc.kill();
     if (wranglerProc) wranglerProc.kill();
   }
 }

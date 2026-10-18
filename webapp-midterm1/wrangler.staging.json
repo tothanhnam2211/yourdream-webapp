@@ -20,13 +20,14 @@
   },
   "vars": {
     "YOURDREAM_ENV": "staging",
-    "YOURDREAM_FIXTURE_MODE": "TEST_FIXTURE_ONLY_NOT_MIDTERM_EXAM"
+    "YOURDREAM_DEFAULT_PROFILE": "midterm1-hanoi-01",
+    "YOURDREAM_BATCH02A_PACKAGE_ID": "YD-G09-MIDTERM1-HANOI-PRACTICE-EXAM-01"
   },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "yourdream-staging-d1",
-      "database_id": "00000000-0000-4000-8000-000000000001"
+      "database_id": "4f22972a-ffe0-47d2-aeab-2304b26359d0"
     }
   ]
 }

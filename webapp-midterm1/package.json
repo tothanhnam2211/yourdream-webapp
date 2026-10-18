@@ -12,6 +12,7 @@
     "start": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js dev --config dist/server/wrangler.json --local --persist-to .wrangler/state --ip 127.0.0.1 --inspector-port 0",
     "start:staging": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js dev --config wrangler.staging.json --local --persist-to .wrangler/staging-state --ip 127.0.0.1 --port 8788 --inspector-port 0",
     "db:migrate:staging-local": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config wrangler.staging.json --persist-to .wrangler/staging-state --file drizzle/0000_sour_miracleman.sql",
+    "db:migrate:staging-remote": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --remote --config wrangler.staging.json --file drizzle/0000_sour_miracleman.sql -y",
     "deploy:staging:dry-run": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js deploy --config wrangler.staging.json --dry-run",
     "deploy:staging": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js deploy --config wrangler.staging.json",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",

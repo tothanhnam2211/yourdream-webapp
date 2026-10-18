@@ -38,9 +38,9 @@ function sha256File(relPath) {
 test('MIDTERM1-PHASE-A · Profile Loader, DAG Layout, Multi-Terminal Completion & Choice Feedback', async (t) => {
   const catalog = readJson('data/practice-preview-profiles.json');
   assert.equal(catalog.status, 'DRAFT_LOCAL_PREVIEW_ONLY');
-  assert.equal(catalog.profiles.length, 4);
+  assert.equal(catalog.profiles.length, 5);
 
-  await t.test('M1-01 All 4 declared profiles match exact SHA256 and load cleanly', () => {
+  await t.test('M1-01 All 5 declared profiles match exact SHA256 and load cleanly', () => {
     for (const p of catalog.profiles) {
       assert.equal(sha256File(p.path), p.sha256, `SHA256 mismatch for ${p.id}`);
       const raw = readJson(p.path);
@@ -397,14 +397,32 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     };
   }
 
-  await t.test('M1-08 Mobile viewport (375px) defaults to list mode, displays TEST FIXTURE clearly, navigates subquestions, diagnoses skills with Batch 01 states, and retries', async () => {
+  await t.test('M1-08 Mobile viewport (375px) defaults to Batch 02A (5 bài / 24 bước) in list mode, supports switching to TEST FIXTURE (5 bài / 26 bước), navigates subquestions, diagnoses skills with Batch 01 states, and retries', async () => {
     const env = createMockDom(375);
     const scriptCode = fs.readFileSync(path.join(PUBLIC_DIR, 'graph02-preview.js'), 'utf8');
     vm.runInNewContext(scriptCode, env.windowObj);
 
     await env.windowObj.YourdreamPreview.ready;
 
-    // Defaults to midterm1-fixture (5 exercises / 26 steps) and mobile list mode with TEST FIXTURE badge
+    // Defaults to midterm1-hanoi-01 (Batch 02A: 5 exercises / 24 steps) and mobile list mode
+    const batch02aData = env.windowObj.YourdreamPreview.getData();
+    assert.ok(batch02aData);
+    assert.equal(batch02aData.graphs.length, 5);
+    assert.equal(batch02aData.steps.length, 24);
+    assert.deepEqual(
+      Array.from(batch02aData.graphs, (g) => g.step_ids.length),
+      [5, 6, 5, 5, 3]
+    );
+    assert.match(env.elements.get('fixture-badge').textContent, /ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN \(5 bài \/ 24 bước\)/);
+    assert.match(env.elements.get('total-progress').textContent, /0 \/ 24 bước đã làm đúng · 0 \/ 5 bài hoàn thành · ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN \(Batch 02A DRAFT\)/);
+    assert.match(env.elements.get('exercise-title').textContent, /Bài 1 \/ 5 \(Đề luyện tập tự biên soạn · DRAFT\)/);
+    assert.equal(env.elements.get('list-mode').getAttribute('aria-pressed'), 'true');
+    assert.equal(env.elements.get('step-list').hidden, false);
+    assert.equal(env.elements.get('graph-scroll').hidden, true);
+    assert.equal(env.elements.get('workspace').hidden, false);
+
+    // Switch to midterm1-fixture (5 exercises / 26 steps) and verify TEST FIXTURE badge
+    await env.windowObj.YourdreamPreview.loadProfile('midterm1-fixture');
     const data = env.windowObj.YourdreamPreview.getData();
     assert.ok(data);
     assert.equal(data.graphs.length, 5);
@@ -412,10 +430,6 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     assert.match(env.elements.get('fixture-badge').textContent, /TEST FIXTURE/);
     assert.match(env.elements.get('total-progress').textContent, /TEST FIXTURE \(không phải đề thi giữa kỳ\)/);
     assert.match(env.elements.get('exercise-title').textContent, /TEST FIXTURE/);
-    assert.equal(env.elements.get('list-mode').getAttribute('aria-pressed'), 'true');
-    assert.equal(env.elements.get('step-list').hidden, false);
-    assert.equal(env.elements.get('graph-scroll').hidden, true);
-    assert.equal(env.elements.get('workspace').hidden, false);
 
     // Submit wrong choice on Bài 2 (P02:S01)
     env.windowObj.YourdreamPreview.selectItem('EXAM-GRAPH-02:P02');

@@ -28,6 +28,13 @@
       "path": "data/midterm1-fixture-preview.json",
       "profile": "lesson-contract-v01",
       "sha256": "6abeb7af79044bfc1a09f043ea2c0f7ecf5974ed3f2864ddd48e1c406749a8df"
+    },
+    {
+      "id": "midterm1-hanoi-01",
+      "label": "Đề luyện tập Giữa kỳ I Toán 9 Hà Nội — Đề số 01 (5 bài · 24 bước · Tự biên soạn DRAFT)",
+      "path": "data/midterm1-hanoi-exam01-preview.json",
+      "profile": "lesson-contract-v01",
+      "sha256": "25a9c543df43f8912176294ad4651390e8b4040aa89c281aeed2fa0a56291b99"
     }
   ]
 }
