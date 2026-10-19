@@ -26,6 +26,7 @@ const RadicalProfiles = loadUmd('radicals-profiles.js', 'RadicalProfiles');
 const RadicalPreviewJournal = loadUmd('radicals-preview-journal.js', 'RadicalPreviewJournal');
 const YourdreamErrorScaffolding = loadUmd('midterm1-error-scaffolding.js', 'YourdreamErrorScaffolding');
 const YourdreamMath = loadUmd('safe-math.js', 'YourdreamMath');
+const PaperSheetModule = loadUmd('paper-sheet-module.js', 'YourdreamPreview');
 const katex = loadUmd('vendor/katex/katex.min.js', 'katex');
 
 function readJson(relPath) {
@@ -230,8 +231,9 @@ test('MIDTERM1-PHASE-A · Safe Math & XSS / KaTeX Hardening', async (t) => {
 });
 
 test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exercises / 26 Steps)', async (t) => {
-  function createMockDom(innerWidth = 375) {
+  function createMockDom(innerWidth = 375, sharedStorage = null) {
     const elements = new Map();
+    let lastFocusedId = null;
     const makeEl = (id, tag = 'div') => {
       const el = {
         id,
@@ -257,7 +259,9 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
         getAttribute(k) {
           return this.attributes.get(k) ?? null;
         },
-        focus() {},
+        focus() {
+          lastFocusedId = this.id;
+        },
         querySelectorAll(selector) {
           return this._children || [];
         },
@@ -268,7 +272,7 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
         },
         set(val) {
           this._innerHTML = String(val);
-          // Parse data-item, data-step, data-sub, data-retry-step, data-reset-skill-step buttons/nodes for interaction testing
+          // Parse data-* buttons/nodes for interaction testing
           const children = [];
           const btnRe = /<(button|g|input|select)\b([^>]*)>/gi;
           let m;
@@ -276,10 +280,16 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
             const tagFound = m[1].toLowerCase();
             const attrs = m[2];
             const child = makeEl('', tagFound);
+            child.parentElement = this;
             for (const [attrName, propName] of [
               ['data-item', 'item'],
               ['data-step', 'step'],
               ['data-sub', 'sub'],
+              ['data-sub-item', 'subItem'],
+              ['data-paper-item', 'paperItem'],
+              ['data-paper-part', 'paperPart'],
+              ['data-part-step', 'partStep'],
+              ['data-action', 'action'],
               ['data-retry-item', 'retryItem'],
               ['data-retry-step', 'retryStep'],
               ['data-reset-skill-item', 'resetSkillItem'],
@@ -305,12 +315,16 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
       'fixture-notice',
       'storage-status',
       'total-progress',
+      'paper-sheet-shell',
+      'exam-paper-heading',
+      'sheet-header',
       'exercise-list',
       'workspace',
       'exercise-title',
       'exercise-prompt',
       'exercise-domain',
       'subquestion-tabs',
+      'step-map-details',
       'map-mode',
       'list-mode',
       'graph-scroll',
@@ -367,7 +381,7 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     for (const id of ids) elements.set(id, makeEl(id));
     elements.get('answer-form').querySelectorAll = () => elements.get('answer-fields')._children || [];
 
-    const storage = new Map();
+    const storage = sharedStorage || new Map();
     let currentFormData = {};
 
     const windowObj = {
@@ -384,6 +398,7 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
       RadicalPreviewJournal,
       YourdreamErrorScaffolding,
       YourdreamMath,
+      YourdreamPreview: Object.assign({}, PaperSheetModule),
       katex,
       localStorage: {
         getItem: (k) => (storage.has(k) ? storage.get(k) : null),
@@ -426,6 +441,7 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
       windowObj,
       elements,
       storage,
+      getLastFocusedId: () => lastFocusedId,
       setFormData(obj) {
         currentFormData = obj;
       },
@@ -452,7 +468,7 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     );
     assert.match(env.elements.get('fixture-badge').textContent, /ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN \(5 bài \/ 24 bước\)/);
     assert.match(env.elements.get('total-progress').textContent, /0 \/ 24 bước đã làm đúng · 0 \/ 5 bài hoàn thành · ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN \(Batch 02A DRAFT\)/);
-    assert.match(env.elements.get('exercise-title').textContent, /Bài 1 \/ 5 \(Đề luyện tập tự biên soạn · DRAFT\)/);
+    assert.match(env.elements.get('exercise-title').textContent, /Bài 1 \/ 5 .* \(Đề luyện tập tự biên soạn · DRAFT\)/);
     assert.equal(env.elements.get('list-mode').getAttribute('aria-pressed'), 'true');
     assert.equal(env.elements.get('step-list').hidden, false);
     assert.equal(env.elements.get('graph-scroll').hidden, true);
@@ -610,4 +626,83 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     assert.ok(examDiag);
     assert.match(env.elements.get('model-solution-note').textContent, /Lời giải mẫu hoàn chỉnh gồm 5 bước/);
   });
+
+  await t.test('M1-12 WEBAPP-PAPER-UX-001 (A-F): Exam Paper primary view, subquestion_step_groups (including y_2a/y_2b/y_2c of G04), draft/answer persistence across part switches & reload, collapsed support panels, and scoped PaperSheetModule without duplicate listeners', async () => {
+    const sharedStorage = new Map();
+    const env = createMockDom(375, sharedStorage);
+    const scriptCode = fs.readFileSync(path.join(PUBLIC_DIR, 'graph02-preview.js'), 'utf8');
+    vm.runInNewContext(scriptCode, env.windowObj);
+    await env.windowObj.YourdreamPreview.ready;
+
+    // Criterion A: Initial view is Exam Paper ('paper') with all 5 exercises and subquestion_step_groups rendered
+    assert.equal(env.windowObj.YourdreamPreview.getActiveView(), 'paper');
+    assert.equal(env.elements.get('paper-sheet-shell').getAttribute('data-mobile-view'), 'paper');
+    assert.equal(env.elements.get('exam-paper-panel').hidden, false);
+    assert.match(env.elements.get('storage-status').textContent, /Đã lưu thử trên trình duyệt này · chưa lưu máy chủ/);
+
+    const paperBtns = env.elements.get('exam-paper-list')._children.filter((c) => c.dataset.paperPart);
+    // Batch 02A has parts: G01(2) + G02(3) + G03(2) + G04(4: y_1, y_2a, y_2b, y_2c) + G05(2) = 13 part buttons
+    assert.equal(paperBtns.length, 13);
+    const g04Parts = paperBtns.filter((c) => c.dataset.paperItem === 'YD-G09-MID1-01:G04').map((c) => c.dataset.paperPart);
+    assert.deepEqual(g04Parts, ['y_1', 'y_2a', 'y_2b', 'y_2c']);
+
+    // Criterion E: All support panels are collapsed (open === false) by default
+    for (const pid of ['step-map-details', 'exercise-mindmap', 'error-decision-tree', 'exercise-trap-library', 'model-solution-panel', 'skill-diagnosis']) {
+      assert.equal(env.elements.get(pid).open, false, `${pid} must default to closed`);
+    }
+
+    // Criterion B: Enter a draft on Bài 1 · y_1 (G01:S01) without submitting
+    env.setFormData({ choice: 'sub_correct' });
+    env.elements.get('answer-form').onchange();
+    assert.equal(env.windowObj.YourdreamPreview.getState().drafts['YD-G09-MID1-01:G01:S01'], 'sub_correct');
+
+    // Student manually opens exercise-mindmap on Bài 1, then clicks Bài 4 · y_2b on Exam Paper
+    env.elements.get('exercise-mindmap').open = true;
+    const g04y2bBtn = paperBtns.find((c) => c.dataset.paperItem === 'YD-G09-MID1-01:G04' && c.dataset.paperPart === 'y_2b');
+    assert.ok(g04y2bBtn);
+    g04y2bBtn.onclick();
+
+    // Verify Answer Sheet opened for Bài 4 · Ý 2b [y_2b], focused #exercise-title, and collapsed support panels
+    assert.equal(env.windowObj.YourdreamPreview.getActiveView(), 'sheet');
+    assert.equal(env.elements.get('paper-sheet-shell').getAttribute('data-mobile-view'), 'sheet');
+    assert.equal(env.windowObj.YourdreamPreview.getState().itemId, 'YD-G09-MID1-01:G04');
+    assert.equal(env.windowObj.YourdreamPreview.getState().activePartKey, 'y_2b');
+    assert.equal(env.windowObj.YourdreamPreview.getState().stepId, 'YD-G09-MID1-01:G04:S03');
+    assert.equal(env.getLastFocusedId(), 'exercise-title');
+    assert.match(env.elements.get('exercise-title').textContent, /Bài 4 \/ 5 · Ý 2b/);
+    assert.match(env.elements.get('sheet-header').innerHTML, /Đang làm: Bài 4 · Ý 2b/);
+    assert.equal(env.elements.get('exercise-mindmap').open, false, 'Switching exercise must not keep help panels open');
+
+    // Click "← Quay lại tờ đề" inside sheet-header -> switches back to 'paper' and focuses #exam-paper-heading
+    const backBtn = env.elements.get('sheet-header')._children.find((c) => c.dataset.action === 'back-to-paper');
+    assert.ok(backBtn);
+    backBtn.onclick();
+    assert.equal(env.windowObj.YourdreamPreview.getActiveView(), 'paper');
+    assert.equal(env.elements.get('paper-sheet-shell').getAttribute('data-mobile-view'), 'paper');
+    assert.equal(env.getLastFocusedId(), 'exam-paper-heading');
+
+    // Switch across parts 15 times to verify zero duplicate listeners on PaperSheetModule
+    for (let i = 0; i < 15; i++) {
+      env.windowObj.YourdreamPreview.selectPart('YD-G09-MID1-01:G04', i % 2 === 0 ? 'y_2a' : 'y_2c');
+    }
+    const mod = env.windowObj.YourdreamPreview.getPaperSheetModule();
+    assert.ok(mod);
+    assert.equal(mod.getListenerMountCount(), 1, 'PaperSheetModule must attach delegated listeners only once');
+
+    // Simulate F5 reload with sharedStorage and verify draft on G01:S01 and activePartKey on G04 are preserved
+    const envReload = createMockDom(375, sharedStorage);
+    vm.runInNewContext(scriptCode, envReload.windowObj);
+    await envReload.windowObj.YourdreamPreview.ready;
+
+    const restoredState = envReload.windowObj.YourdreamPreview.getState();
+    assert.equal(restoredState.drafts['YD-G09-MID1-01:G01:S01'], 'sub_correct', 'Draft must survive part switches and F5 reload');
+    assert.equal(restoredState.itemId, 'YD-G09-MID1-01:G04');
+    assert.equal(restoredState.activePartKey, 'y_2a');
+    assert.equal(
+      sha256File('data/midterm1-hanoi-exam01-preview.json'),
+      '25a9c543df43f8912176294ad4651390e8b4040aa89c281aeed2fa0a56291b99',
+      'Batch 02A JSON SHA256 must remain untouched'
+    );
+  });
 });
+
