@@ -39,13 +39,27 @@ This is a client-side practice-exam UI boundary. Static JSON still contains expe
 - JavaScript syntax and diff whitespace checks: PASS. The prepared browser runner's 28 static page expressions also parse.
 - Two earlier combined runs hit fixed-delay timing assertions in existing server-sync tests under parallel build load; the final serial full run passed. No tests were removed or weakened.
 
-## Browser acceptance: explicit limits
+## Current staging browser acceptance — operator-reported
 
-The real cloud browser opened the internal HTTP preview and verified the common shell, disabled STEM/journal labels, lesson/tab selection, the correct RAD-001 practice URL, and return to exactly `branch=algebra&topic=1&tab=1` with the Example tab selected. Screenshot: `../navigation-preview-verified.jpg` (internal preview, not deployed staging).
+Received 19/10/2026 at 17:41 (+07:00): the operator supplied Wrangler deployment output for Worker version `43546fbc-9d36-422a-a4cd-dfa7fb8d650a` at https://yourdream-webapp-staging.tothanhnam.workers.dev and all 10 A–E PASS lines, at 1280 px and 375 px. These are operator-provided results, not an independent browser rerun in this environment. Raw machine JSON/screenshots and the source-to-deployment commit binding have not been read back.
+
+| Flow | 1280 px | 375 px |
+| --- | --- | --- |
+| A — map → lesson → practice → exact topic/tab return | PASS | PASS |
+| B — exam paper → correct part → paper | PASS | PASS |
+| C — draft → guidance → sheet → reload | PASS | PASS |
+| D — unavailable STEM/journal have no active links | PASS | PASS |
+| E — reload, direct/other-profile/back gate; submit unlocks | PASS | PASS |
+
+Flow D verifies unavailable-state navigation only. It does not certify an implemented STEM activity or learning-journal screen. The client-side exam-security limitation above remains unchanged. See `STAGING_ACCEPTANCE_RECEIPT_20261019.json` for the exact supplied terminal evidence.
+
+## Historical internal preview verification
+
+The real cloud browser opened the internal HTTP preview and verified the common shell, disabled STEM/journal labels, lesson/tab selection, the correct RAD-001 practice URL, and return to exactly `branch=algebra&topic=1&tab=1` with the Example tab selected. A screenshot of the internal preview was delivered in the conversation; it does not represent the deployed staging version.
 
 The practice controller could not initialize on that HTTP origin: `crypto.randomUUID is not a function`. The graph controller also relies on secure-context Web Crypto for content hashes. No production crypto behavior was weakened to work around the preview environment.
 
-| Requested flow | Current evidence |
+| Requested flow | Earlier internal-preview evidence (superseded by the staging results above) |
 | --- | --- |
 | A | PARTIAL real-browser verification; practice execution blocked by HTTP crypto context |
 | B | PASS in DOM/controller regression; HTTPS browser acceptance pending |
@@ -53,18 +67,12 @@ The practice controller could not initialize on that HTTP origin: `crypto.random
 | D | NOT APPLICABLE: no implemented STEM activity; no fake route added |
 | E | PASS in session/controller tests for reload, wrong profile, locked support and submission; HTTPS browser acceptance pending |
 
-`tests/verify-navigation-browser.cjs` is prepared for isolated Chrome on Windows, against the exact staging hostname, at 1280 px and 375 px. It records A–E checks, screenshots and runtime exceptions under `qa/navigation-staging`. It has **not been run** here: local Chrome is absent, and the new code is not deployed to HTTPS staging.
+`tests/verify-navigation-browser.cjs` ran on the operator's Windows workstation against the staging hostname. The supplied output reports 10/10 PASS. The earlier HTTP preview limitation is no longer a staging deployment blocker.
 
-## Deployment blocker and concrete continuation
+## Current delivery state
 
-Wrangler `whoami`: **not authenticated**. No deployment was attempted, and there is no new deployment/version ID. Sites' older hosted source was not substituted for this Worker.
+**STAGING DEPLOYED · 10/10 BROWSER CHECKS PASS (OPERATOR-REPORTED) · PENDING USER ACCEPTANCE.**
 
-After fetching/fast-forwarding this fix into the existing workstation checkout, run:
-
-```powershell
-node D:\YOURDREAM.VN\webapp-midterm1\scripts\complete-navigation-staging.cjs
-```
-
-The runner stops on failure and performs serial Node tests, build, the existing `deploy:staging` command, then real Chrome acceptance against staging. It validates the authorized Worker and staging DB IDs before proceeding. It writes logs and an INCOMPLETE or STAGING_DEPLOYED_BROWSER_VALIDATED result; it never grants APPROVED or RELEASE.
-
-Current state: **IMPLEMENTED · PARTIALLY VALIDATED · NOT DEPLOYED · NOT APPROVED**.
+Worker version: `43546fbc-9d36-422a-a4cd-dfa7fb8d650a`.
+Implementation source commit: `8b3b615aac942d878c72afb9ce1086903434fa80`; its binding to the deployed Worker has not been independently checked.
+No production/DNS/database-migration action was performed in this task. APPROVED and RELEASE have not been granted.

@@ -1,0 +1,64 @@
+{
+  "task": "YOURDREAM P0 NAVIGATION & LEARNING FLOW FIX",
+  "evidence_received_at": "2026-10-19T17:41:19+07:00",
+  "evidence_source": "User-pasted terminal output",
+  "worker": "yourdream-webapp-staging",
+  "url": "https://yourdream-webapp-staging.tothanhnam.workers.dev",
+  "worker_version_id": "43546fbc-9d36-422a-a4cd-dfa7fb8d650a",
+  "browser_checks": [
+    {
+      "flow": "A",
+      "viewport_width": 1280,
+      "status": "PASS_OPERATOR_REPORTED"
+    },
+    {
+      "flow": "B",
+      "viewport_width": 1280,
+      "status": "PASS_OPERATOR_REPORTED"
+    },
+    {
+      "flow": "C",
+      "viewport_width": 1280,
+      "status": "PASS_OPERATOR_REPORTED"
+    },
+    {
+      "flow": "D",
+      "viewport_width": 1280,
+      "status": "PASS_OPERATOR_REPORTED"
+    },
+    {
+      "flow": "E",
+      "viewport_width": 1280,
+      "status": "PASS_OPERATOR_REPORTED"
+    },
+    {
+      "flow": "A",
+      "viewport_width": 375,
+      "status": "PASS_OPERATOR_REPORTED"
+    },
+    {
+      "flow": "B",
+      "viewport_width": 375,
+      "status": "PASS_OPERATOR_REPORTED"
+    },
+    {
+      "flow": "C",
+      "viewport_width": 375,
+      "status": "PASS_OPERATOR_REPORTED"
+    },
+    {
+      "flow": "D",
+      "viewport_width": 375,
+      "status": "PASS_OPERATOR_REPORTED"
+    },
+    {
+      "flow": "E",
+      "viewport_width": 375,
+      "status": "PASS_OPERATOR_REPORTED"
+    }
+  ],
+  "flow_D_scope": "Unavailable STEM/journal have no active links; no implemented STEM activity was tested",
+  "raw_log": "Uploaded yourdream-webapp-staging (9.71 sec)\nDeployed yourdream-webapp-staging triggers (1.12 sec)\n  https://yourdream-webapp-staging.tothanhnam.workers.dev\nCurrent Version ID: 43546fbc-9d36-422a-a4cd-dfa7fb8d650a\nPASS A 1280 · map → lesson → practice → exact topic/tab\nPASS B 1280 · exam paper → correct part → paper\nPASS C 1280 · draft → guidance → sheet → reload\nPASS D 1280 · unavailable STEM/journal have no active links\nPASS E 1280 · exam reload, direct route, other-profile, back-navigation gate; submit unlocks\nPASS A 375 · map → lesson → practice → exact topic/tab\nPASS B 375 · exam paper → correct part → paper\nPASS C 375 · draft → guidance → sheet → reload\nPASS D 375 · unavailable STEM/journal have no active links\nPASS E 375 · exam reload, direct route, other-profile, back-navigation gate; submit unlocks\nPS C:\\Users\\Admin>",
+  "raw_machine_reports_read": false,
+  "approval": "NOT_GRANTED"
+}

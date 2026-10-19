@@ -4,7 +4,7 @@
   "implementation_branch": "fix/p0-navigation-learning-flow",
   "checkpoint": "NAV-P0-001 DRAFT",
   "created_at": "2026-10-19T10:25:24.354501+00:00",
-  "status": "IMPLEMENTED_NOT_DEPLOYED",
+  "status": "STAGING_DEPLOYED_BROWSER_CHECKS_PASS_OPERATOR_REPORTED",
   "technical_validation": {
     "node_tests": "40/40 PASS; contract runner also exercises 33 invariants",
     "final_targeted_tests": "22/22 PASS",
@@ -13,23 +13,34 @@
     "protected_files": "ALL_UNCHANGED"
   },
   "browser": {
-    "environment": "http://terminal.local:4173 (internal preview)",
-    "home_shell_and_exact_topic_tab_return": "PASS",
-    "full_A_B_C_E": "BLOCKED_HTTP_CRYPTO_API_UNAVAILABLE",
-    "D": "NO_ACTIVITY_ROUTE; DESIGN_ONLY",
-    "staging_e2e": "NOT_RUN",
-    "windows_chrome_runner": "PREPARED_NOT_RUN"
+    "environment": "HTTPS Cloudflare staging",
+    "evidence_source": "User-pasted Windows terminal output; not independently rerun in this environment",
+    "staging_e2e": "10/10 PASS_OPERATOR_REPORTED",
+    "viewports": [
+      1280,
+      375
+    ],
+    "full_A_B_C_E": "PASS_OPERATOR_REPORTED_AT_BOTH_VIEWPORTS",
+    "D": "PASS_UNAVAILABLE_STEM_JOURNAL_HAVE_NO_ACTIVE_LINKS; ACTUAL_STEM_ACTIVITY_NOT_IMPLEMENTED",
+    "windows_chrome_runner": "EXECUTED_BY_OPERATOR; 10 PASS lines and return to PowerShell prompt supplied",
+    "runtime_errors": "No error shown in supplied terminal excerpt; raw browser-results.json not read"
   },
   "deployment": {
     "target": "yourdream-webapp-staging",
-    "new_deployment_id": null,
-    "blocker": "WRANGLER_NOT_AUTHENTICATED"
+    "url": "https://yourdream-webapp-staging.tothanhnam.workers.dev",
+    "worker_version_id": "43546fbc-9d36-422a-a4cd-dfa7fb8d650a",
+    "evidence_source": "User-pasted Wrangler deployment output",
+    "expected_source_commit": "8b3b615aac942d878c72afb9ce1086903434fa80",
+    "deployment_commit_binding": "NOT_INDEPENDENTLY_VERIFIED",
+    "blocker": null
   },
-  "approval": "NOT_GRANTED",
+  "approval": "PENDING_USER_ACCEPTANCE_NOT_APPROVED_OR_RELEASED",
   "production": "UNCHANGED",
   "limits": [
     "Client-side exam UI gate; static expected answers remain in downloadable JSON.",
     "No canonical lesson/chapter/activity mappings invented.",
     "STEM Hub and journal view are unavailable status labels, without active links."
-  ]
+  ],
+  "evidence_received_at": "2026-10-19T17:41:19+07:00",
+  "implementation_commit": "8b3b615aac942d878c72afb9ce1086903434fa80"
 }
