@@ -1,34 +1,36 @@
 # YOURDREAM — Tờ đề trước, mở phần làm bài khi chọn
 
-Trạng thái: mã đã sửa và kiểm tra kỹ thuật; chưa deploy bản giao diện này lên staging.
+Trạng thái: đã deploy staging và 10/10 kiểm tra trình duyệt PASS theo log người dùng; chờ nghiệm thu cập nhật giao diện.
 
 ## Hành vi
 
-- Mở từ menu Đề giữa kỳ: chỉ hiện tờ đề, khu vực làm bài bị ẩn trên cả desktop và mobile.
+- Mở từ menu Đề giữa kỳ: chỉ hiện tờ đề; khu vực làm bài ẩn ở cả desktop và mobile.
 - Chọn một Ý: mở đúng giấy làm bài. Desktop giữ tờ đề bên trái; mobile chuyển sang giấy làm bài.
-- Hướng dẫn, sơ đồ, lời giải và các phần chẩn đoán ẩn hoàn toàn cho đến khi bấm nút tương ứng; mỗi lần chỉ mở một phần hỗ trợ.
-- Quay lại tờ đề: ẩn khu vực làm bài và hỗ trợ, giữ nguyên bản nháp/câu trả lời.
-- URL có graph/part/step hợp lệ vẫn khôi phục đúng vị trí khi tải lại; mở mới từ menu luôn ưu tiên tờ đề.
-- Thi thử chưa nộp tiếp tục khóa toàn bộ hỗ trợ. Đây vẫn là giới hạn phía client.
+- Hướng dẫn, sơ đồ, lời giải và các phần chẩn đoán ẩn cho đến khi bấm nút tương ứng; mỗi lần mở một phần hỗ trợ.
+- Quay lại tờ đề: ẩn giấy làm bài và hỗ trợ, giữ bản nháp/câu trả lời.
+- URL có graph/part/step hợp lệ vẫn khôi phục vị trí khi tải lại; mở mới từ menu luôn ưu tiên tờ đề.
+- Thi thử chưa nộp tiếp tục khóa hỗ trợ. Đây vẫn là giới hạn phía client.
 
-## Xác minh
+## Xác minh kỹ thuật
 
-- 42/42 Node tests PASS, gồm hai luồng mô phỏng DOM mới ở kích thước 1280/375.
-- Build PASS và staging dry-run PASS (chưa upload/deploy).
-- Đối chiếu nguồn trước sửa với GitHub HEAD `0dad6b12470b43b50e6edecdba53bb18a0efa944` và Drive: 5/5 khớp sau chuẩn hóa CRLF/LF.
-- Gói áp dụng: xác minh SHA-256, sao lưu trước khi thay thế, từ chối khi có thay đổi cục bộ khác; đã thử áp dụng và thử từ chối trên bản sao tạm.
-- Không chạy browser QA trong môi trường này vì không có control-browser. Runner Chrome staging đã bổ sung kiểm tra giao diện mới tại 1280/375, chờ chạy trên máy Windows.
-- Cloudflare CLI trong môi trường này chưa được xác thực. Bản staging được nghiệm thu trước đó (Worker version `43546fbc-9d36-422a-a4cd-dfa7fb8d650a`) chưa được thay thế bởi cập nhật này.
-- Không sửa engine, adapters, JSON học liệu, dữ liệu journal hay cấu hình production.
+- 42/42 Node tests PASS, gồm hai luồng mô phỏng DOM ở 1280/375.
+- Build PASS, staging dry-run PASS.
+- Nguồn trước sửa đối chiếu GitHub HEAD `0dad6b12470b43b50e6edecdba53bb18a0efa944` và Drive: 5/5 khớp sau chuẩn hóa CRLF/LF.
+- Gói áp dụng kiểm tra SHA-256, sao lưu tệp trước khi thay thế và từ chối thay đổi cục bộ khác; đã thử áp dụng và thử từ chối trên bản sao tạm.
+- Không sửa engine, adapters, JSON học liệu, journal hoặc cấu hình production.
 
-## Hoàn tất trên máy Windows đã đăng nhập Cloudflare
+## Biên nhận staging — 2026-10-19
 
-Tải `YOURDREAM_PAPER_FIRST.zip`, giải nén toàn bộ, mở PowerShell trong thư mục vừa giải nén:
+Người dùng đã gửi log sau khi chạy lại riêng `npm run deploy:staging` để khôi phục lỗi kết nối ban đầu, rồi chạy Chrome runner `tests/verify-navigation-browser.cjs`.
 
-```powershell
-node .\complete-paper-first-staging.cjs "D:\YOURDREAM.VN\webapp-midterm1"
-```
+- Worker: `yourdream-webapp-staging`.
+- URL: https://yourdream-webapp-staging.tothanhnam.workers.dev
+- Worker version: `de59aa04-0c18-450a-ac80-5999fc58dde9`.
+- Nguồn dự kiến: `ebf7b58da2cf9c14ded8fd510e9b45002000209d`; liên kết commit với bản deploy chưa kiểm chứng độc lập.
+- Chrome: A/B/C/D/E đều PASS ở 1280 và 375 px, tổng 10/10. D xác nhận các mục STEM/nhật ký chưa triển khai không có liên kết hoạt động.
+- Nguồn bằng chứng: log người dùng, lưu tại `staging-operator.log`; không chạy lại độc lập trong môi trường này, chưa đọc `browser-results.json` gốc.
+- Biên nhận: `STAGING_DEPLOYMENT_RECEIPT_20261019.json`.
 
-Gói kiểm tra nguồn, sao lưu và cập nhật đúng 5 tệp; sau đó chạy tests, build, deploy staging và Chrome browser runner. Kết quả ở `qa/paper-first-staging/completion-results.json`; các log và ảnh minh chứng cùng thư mục. Nếu có sửa đổi cục bộ ngoài bản đã đối chiếu, gói dừng trước khi ghi tệp. Không tự merge Git hay deploy production.
+Lần chạy script tổng hợp đầu tiên dừng ở lỗi mạng; log deploy lại và browser runner xác nhận bước khôi phục thành công. `completion-results.json` do script tổng hợp tạo trên máy có thể vẫn ghi lần chạy cũ; checkpoint và biên nhận này ghi nhận lần khôi phục thủ công.
 
-Nghiệm thu P0 trước đây chỉ áp dụng cho bản staging cũ. Cập nhật giao diện này chờ deploy, browser QA và người dùng kiểm nghiệm.
+Cập nhật hồ sơ này không thay đổi runtime, không cần deploy lại. Nghiệm thu P0 cũ không tự áp dụng cho giao diện mới; chờ Namto kiểm nghiệm và duyệt.
