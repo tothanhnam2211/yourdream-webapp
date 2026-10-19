@@ -2,9 +2,9 @@
   "task": "YOURDREAM P0 NAVIGATION & LEARNING FLOW FIX",
   "baseline_commit": "82d06f65866fd49b858e813e24c25e8808f49b07",
   "implementation_branch": "fix/p0-navigation-learning-flow",
-  "checkpoint": "NAV-P0-001 DRAFT",
+  "checkpoint": "NAV-P0-001 ACCEPTED_ON_STAGING",
   "created_at": "2026-10-19T10:25:24.354501+00:00",
-  "status": "STAGING_DEPLOYED_BROWSER_CHECKS_PASS_OPERATOR_REPORTED",
+  "status": "STAGING_P0_ACCEPTED_BY_USER",
   "technical_validation": {
     "node_tests": "40/40 PASS; contract runner also exercises 33 invariants",
     "final_targeted_tests": "22/22 PASS",
@@ -34,7 +34,7 @@
     "deployment_commit_binding": "NOT_INDEPENDENTLY_VERIFIED",
     "blocker": null
   },
-  "approval": "PENDING_USER_ACCEPTANCE_NOT_APPROVED_OR_RELEASED",
+  "approval": "APPROVED_BY_USER_FOR_P0_STAGING",
   "production": "UNCHANGED",
   "limits": [
     "Client-side exam UI gate; static expected answers remain in downloadable JSON.",
@@ -42,5 +42,21 @@
     "STEM Hub and journal view are unavailable status labels, without active links."
   ],
   "evidence_received_at": "2026-10-19T17:41:19+07:00",
-  "implementation_commit": "8b3b615aac942d878c72afb9ce1086903434fa80"
+  "implementation_commit": "8b3b615aac942d878c72afb9ce1086903434fa80",
+  "acceptance": {
+    "status": "APPROVED_BY_USER_FOR_P0_STAGING",
+    "accepted_at": "2026-10-19T19:25:59+07:00",
+    "approver": "Namto (user)",
+    "authorization_source": "Direct user message in this conversation",
+    "user_statement": "tôi duyệt nghiệm thu sản phẩm",
+    "scope": "YOURDREAM P0 Navigation & Learning Flow Fix on the current Cloudflare staging version",
+    "staging_url": "https://yourdream-webapp-staging.tothanhnam.workers.dev",
+    "worker_version_id": "43546fbc-9d36-422a-a4cd-dfa7fb8d650a",
+    "implementation_commit": "8b3b615aac942d878c72afb9ce1086903434fa80",
+    "production_release_authorized": false,
+    "production_deployment_authorized": false,
+    "github_merge_authorized": false,
+    "domain_audits": "No separate math/security/pedagogical certification is inferred from this product acceptance",
+    "runtime_change": false
+  }
 }

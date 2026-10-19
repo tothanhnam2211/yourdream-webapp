@@ -1,4 +1,4 @@
-# YOURDREAM — P0 Navigation & Learning Flow Fix — DRAFT
+# YOURDREAM — P0 Navigation & Learning Flow Fix — ACCEPTED ON STAGING
 
 Baseline: `82d06f65866fd49b858e813e24c25e8808f49b07`, branch `feat/webapp-midterm1-phase-a`.
 Implementation branch: `fix/p0-navigation-learning-flow`.
@@ -71,8 +71,14 @@ The practice controller could not initialize on that HTTP origin: `crypto.random
 
 ## Current delivery state
 
-**STAGING DEPLOYED · 10/10 BROWSER CHECKS PASS (OPERATOR-REPORTED) · PENDING USER ACCEPTANCE.**
+**STAGING DEPLOYED · 10/10 BROWSER CHECKS PASS · USER ACCEPTANCE GRANTED FOR P0 STAGING.**
 
 Worker version: `43546fbc-9d36-422a-a4cd-dfa7fb8d650a`.
 Implementation source commit: `8b3b615aac942d878c72afb9ce1086903434fa80`; its binding to the deployed Worker has not been independently checked.
-No production/DNS/database-migration action was performed in this task. APPROVED and RELEASE have not been granted.
+No production/DNS/database-migration action was performed in this task. Namto granted product acceptance for P0 staging at 19:25:59 (+07:00) on 19/10/2026. Production release and deployment have not been authorized.
+
+## User acceptance
+
+Namto explicitly approved the product with the message “tôi duyệt nghiệm thu sản phẩm” at 19:25:59 (+07:00), 19/10/2026. Acceptance applies to P0 Navigation & Learning Flow Fix on staging Worker version `43546fbc-9d36-422a-a4cd-dfa7fb8d650a`, implementation commit `8b3b615aac942d878c72afb9ce1086903434fa80`. See `USER_ACCEPTANCE_RECEIPT_20261019.json`.
+
+This records the user's decision; it is not self-approval. No production deployment, GitHub merge, or separate domain certification is authorized by this acceptance record. This documentation-only update requires no redeployment.
