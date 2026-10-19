@@ -48,11 +48,18 @@ async function main(){
    assert.equal(await cdp.eval('document.querySelector("[data-tab=\\"1\\"]").getAttribute("aria-selected")'),'true');
   });
   await check('B '+width+' · exam paper → correct part → paper',async()=>{
-   await cdp.go(BASE+'/graph02-preview.html?profile=midterm1-hanoi-01&view=paper');await examReady();
+   await cdp.go(BASE+'/graph02-preview.html?profile=midterm1-hanoi-01');await examReady();
+   assert.equal(await cdp.eval('document.querySelector("#workspace").hidden'),true,'Menu entry shows only the paper, including with saved progress');
+   assert.equal(await cdp.eval('document.querySelector("#workspace").getBoundingClientRect().width'),0);
+   assert.equal(await cdp.eval('document.querySelectorAll("#exam-paper-list .exam-paper-item").length'),5);
+   await cdp.shot('paper-first-'+width);
    await cdp.click('[data-paper-item="YD-G09-MID1-01:G04"][data-paper-part="y_2b"]');
+   assert.equal(await cdp.eval('document.querySelector("#workspace").hidden'),false);
+   assert.equal(await cdp.eval('Array.from(document.querySelectorAll("#workspace > details")).every(p=>p.hidden && !p.open)'),true);
    assert.deepEqual(await selectedPart(),{item:'YD-G09-MID1-01:G04',part:'y_2b',step:'YD-G09-MID1-01:G04:S03'});
    await cdp.click('[data-action="back-to-paper"]');
    assert.equal(await cdp.eval('document.querySelector("#paper-sheet-shell").dataset.mobileView'),'paper');
+   assert.equal(await cdp.eval('document.querySelector("#workspace").hidden'),true);
   });
   await check('C '+width+' · draft → guidance → sheet → reload',async()=>{
    await cdp.click('[data-paper-item="YD-G09-MID1-01:G01"][data-paper-part="y_1"]');
@@ -60,8 +67,12 @@ async function main(){
    const draft=await cdp.eval(`(()=>{const input=document.querySelector('#answer-fields input[name="choice"]');input.checked=true;input.dispatchEvent(new Event('change',{bubbles:true}));return input.value;})()`);
    await cdp.click('[data-yd-support="exercise-mindmap"]');
    assert.equal(await cdp.eval('document.querySelector("#exercise-mindmap").open'),true);
+   assert.equal(await cdp.eval('document.querySelector("#exercise-mindmap").hidden'),false);
+   assert.equal(await cdp.eval('document.querySelector("#model-solution-panel").hidden'),true);
    await cdp.click('[data-yd-return]');assert.deepEqual(await selectedPart(),selected);
+   assert.equal(await cdp.eval('document.querySelector("#exercise-mindmap").hidden'),true);
    await cdp.navigate('Page.reload');await examReady();
+   assert.equal(await cdp.eval('document.querySelector("#workspace").hidden'),false,'A valid sheet URL restores the selected part on reload');
    assert.deepEqual(await selectedPart(),selected);
    assert.equal(await cdp.eval('document.querySelector("#answer-fields input[name=choice]:checked")?.value'),draft);
    assert.equal(await cdp.eval('document.documentElement.scrollWidth<=innerWidth'),true,'No horizontal page overflow');
@@ -89,6 +100,7 @@ async function main(){
    await cdp.shot('navigation-exam-locked-'+width);
    await cdp.click('#submit-exam-btn');
    assert.equal(await cdp.eval('document.querySelector("#practice-mode-btn").disabled'),false);
+   await cdp.click('[data-paper-item="YD-G09-MID1-01:G01"][data-paper-part="y_1"]');
    await cdp.click('[data-yd-support="model-solution-panel"]');assert.equal(await cdp.eval('document.querySelector("#model-solution-panel").open'),true);
    await cdp.go(BASE+'/');await pageReady();await cdp.wait('!!document.querySelector("#panel")');
   });
