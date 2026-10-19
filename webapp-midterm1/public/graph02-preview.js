@@ -1,5 +1,6 @@
 (function(){'use strict';
 const $=id=>document.getElementById(id),E=window.RadicalEngine,L=window.RadicalProfiles,J=window.RadicalPreviewJournal,M=window.YourdreamMath,S=window.YourdreamErrorScaffolding,P=window.YourdreamPreview||{};
+const N=window.YourdreamNavigation;
 const validKey=k=>typeof k==='string'&&/^[A-Za-z0-9:._-]{1,100}$/.test(k)&&!['__proto__','constructor','prototype'].includes(k);
 let profiles=[],data=null,by=Object.create(null),state=null,journal=null,key='',complete=new Set(),mode=window.innerWidth<800?'list':'map',examMode='practice',examSubmitted=false,examPaperOpen=true,mobileView='paper',generation=0,storageOK=true,activeProfileId='',paperSheetModule=null;
 const safe=s=>M.escape(s),math=s=>M.mixed(s,window.katex),graph=()=>data?data.graphs.find(g=>g.item_id===state?.itemId):null,step=()=>state?by[state.stepId]:null;
@@ -61,7 +62,18 @@ function disableWorkspace(){
  if($('trap-library-list'))$('trap-library-list').innerHTML='';
  collapseSupportPanels();
 }
-function save(){if(!data||!state||!journal)return;try{localStorage.setItem(key,JSON.stringify({...state,activePartKey:state.activePartKey||null,mobileView,geometryChecks:state.geometryChecks||{},version:data.version,content_sha256:data.content_sha256,journal}));storageOK=true;}catch{storageOK=false;}showStorage();}
+function save(){if(!data||!state||!journal)return;updateNavigation();try{localStorage.setItem(key,JSON.stringify({...state,activePartKey:state.activePartKey||null,mobileView,geometryChecks:state.geometryChecks||{},examMode,examSubmitted,version:data.version,content_sha256:data.content_sha256,journal}));storageOK=true;}catch{storageOK=false;}showStorage();}
+function updateNavigation(){
+ if(!N||!data||!state)return;
+ const g=graph();if(!g)return;
+ N.setURL({profile:activeProfileId,graph_id:g.item_id,part:state.activePartKey==='main'?null:state.activePartKey,step_id:state.stepId,view:mobileView});
+ N.setContext({title:`${examMode==='exam'&&!examSubmitted?'Đang thi thử':'Đang học'} · Bài ${data.graphs.indexOf(g)+1} · ${subLabel(state.activePartKey)}`,crumbs:[activeProfileId==='midterm1-hanoi-01'?'Đề giữa kỳ I':'Bộ luyện theo bước',`Bài ${data.graphs.indexOf(g)+1}`,subLabel(state.activePartKey),`Bước ${g.step_ids.indexOf(state.stepId)+1}`]});
+ let bar=$('yd-support-actions');if(!bar){bar=document.createElement('div');bar.id='yd-support-actions';bar.className='yd-support-actions';$('workspace').prepend(bar);}
+ const locked=examMode==='exam'&&!examSubmitted;
+ bar.innerHTML='<button type="button" data-yd-return>Giấy làm bài</button>'+[['step-map-details','Hướng dẫn từng bước'],['exercise-mindmap','Sơ đồ tư duy'],['model-solution-panel','Lời giải mẫu']].map(([id,label])=>`<button type="button" data-yd-support="${id}" ${locked?'disabled':''}>${label}${locked?' · Khóa khi thi':''}</button>`).join('');
+ bar.querySelector('[data-yd-return]').onclick=()=>{history.replaceState(null,'',location.pathname+location.search);$('practice').scrollIntoView({block:'start'});};
+ bar.querySelectorAll('[data-yd-support]').forEach(b=>b.onclick=()=>{if(locked)return;history.replaceState(null,'',location.pathname+location.search+'#'+b.dataset.ydSupport);N.openSupport(b.dataset.ydSupport);});
+}
 function record(type,id,details={}){if(!data||!journal||!state)return;J.append(data,journal,type,state.itemId,id,details);}
 function ensurePaperSheetModule(){
  if(paperSheetModule)return paperSheetModule;
@@ -154,7 +166,8 @@ function drawSubquestions(g){
 }
 function drawExamPaper(){
  const panel=$('exam-paper-panel'),listEl=$('exam-paper-list'),noteEl=$('exam-mode-status'),subBtn=$('submit-exam-btn'),pBtn=$('practice-mode-btn'),eBtn=$('exam-mode-btn'),tBtn=$('toggle-exam-paper');
- if(pBtn)pBtn.setAttribute('aria-pressed',String(examMode==='practice'));
+ if(pBtn){pBtn.setAttribute('aria-pressed',String(examMode==='practice'));pBtn.disabled=examMode==='exam'&&!examSubmitted;}
+ if($('profile-select'))$('profile-select').disabled=examMode==='exam'&&!examSubmitted;
  if(eBtn)eBtn.setAttribute('aria-pressed',String(examMode==='exam'));
  const showPanel=examPaperOpen||(examMode==='exam'&&!examSubmitted);
  if(tBtn)tBtn.setAttribute('aria-expanded',String(showPanel));
@@ -287,8 +300,8 @@ function draw(){
  if($('profile-select')&&activeProfileId)$('profile-select').value=activeProfileId;
  if($('fixture-badge'))$('fixture-badge').textContent=isFixture?'DRAFT · TEST FIXTURE (5 bài / 26 bước)':isBatch02A?'DRAFT · ĐỀ LUYỆN TẬP TỰ BIÊN SOẠN (5 bài / 24 bước)':'DRAFT · Bản xem trước';
  if($('fixture-notice'))$('fixture-notice').innerHTML=isFixture?'<strong>TEST FIXTURE (Dữ liệu thử nghiệm kỹ thuật — không phải đề thi giữa kỳ chính thức):</strong> Bộ TEST FIXTURE 5 bài / 26 bước ghép từ các bước giải đã kiểm định trong <code>EXAM-GRAPH-02 v0.2</code>. Đáp án có trong dữ liệu; tiến trình thử chỉ lưu trên trình duyệt, chưa đồng bộ máy chủ.':isBatch02A?'<strong>ĐỀ LUYỆN TẬP GIỮA HỌC KỲ I TOÁN 9 HÀ NỘI — ĐỀ SỐ 01 (Tự biên soạn mới 100% · DRAFT):</strong> Biên soạn theo SGK Toán 9 Tập 1 (Kết nối tri thức với cuộc sống) và Ma trận Kỹ năng Batch 01 (5 bài · 10,0 điểm · 24 bước giải); không gắn nhãn đề gốc của bất kỳ trường học nào. Đáp án có trong dữ liệu; tiến trình thử chỉ lưu trên trình duyệt, chưa đồng bộ máy chủ.':'<strong>Bản xem trước học liệu (DRAFT):</strong> Đáp án có trong dữ liệu; tiến trình thử chỉ lưu trên trình duyệt, chưa đồng bộ máy chủ.';
- $('total-progress').textContent=`${complete.size} / ${data.steps.length} bước đã làm đúng · ${doneGraphs} / ${data.graphs.length} bài hoàn thành${fixtureTag}`;
- $('exercise-list').innerHTML=data.graphs.map((g,i)=>`<button type="button" data-item="${safe(g.item_id)}" aria-current="${g.item_id===state.itemId}"><strong>Bài ${i+1} (${orderedParts(g).length} ý)</strong><small>${g.step_ids.filter(k=>complete.has(k)).length}/${g.step_ids.length} bước${L.complete(g,complete)?' · Hoàn thành':''}</small></button>`).join('');
+ $('total-progress').textContent=examMode==='exam'&&!examSubmitted?`${Object.keys(state.answers).length} / ${data.steps.length} bước đã ghi bài làm`:`${complete.size} / ${data.steps.length} bước đã làm đúng · ${doneGraphs} / ${data.graphs.length} bài hoàn thành${fixtureTag}`;
+ $('exercise-list').innerHTML=data.graphs.map((g,i)=>`<button type="button" data-item="${safe(g.item_id)}" aria-current="${g.item_id===state.itemId}"><strong>Bài ${i+1} (${orderedParts(g).length} ý)</strong><small>${examMode==='exam'&&!examSubmitted?g.step_ids.filter(k=>Object.hasOwn(state.answers,k)).length:g.step_ids.filter(k=>complete.has(k)).length}/${g.step_ids.length} bước${examMode!=='exam'&&L.complete(g,complete)?' · Hoàn thành':''}</small></button>`).join('');
  $('exercise-list').querySelectorAll('[data-item]').forEach(b=>b.onclick=()=>selectItem(b.dataset.item));
  const g=graph();
  state.activePartKey=resolvePartKey(g,state.stepId,state.activePartKey);
@@ -393,14 +406,16 @@ function drawStep(){
  $('hint-button').disabled=!can||count>=3||inUnsubmittedExam;
  $('hint-button').textContent=inUnsubmittedExam?'Gợi ý khóa khi Thi thử':count>=3?'Đã mở đủ 3 gợi ý':`Mở gợi ý ${count+1} / 3`;
  $('hints').innerHTML=inUnsubmittedExam?'':s.hints.slice(0,count).map(h=>`<li>${math(h.text)}</li>`).join('');
- $('explanation').hidden=inUnsubmittedExam||!(complete.has(s.step_id)||count===3);if(inUnsubmittedExam)$('explanation').open=false;$('step-before').innerHTML=M.formula(s.before,window.katex);$('step-after').innerHTML=M.formula(s.after,window.katex);$('step-reason').innerHTML=math(s.justification);
- $('item-progress').textContent=L.complete(g,complete)?`Đã làm đúng ${g.step_ids.length}/${g.step_ids.length} bước. Hãy thử tự giải lại.`:`${g.step_ids.filter(k=>complete.has(k)).length}/${g.step_ids.length} bước đã làm đúng.`;
+ $('explanation').hidden=inUnsubmittedExam||!(complete.has(s.step_id)||count===3);if(inUnsubmittedExam)$('explanation').open=false;$('step-before').innerHTML=inUnsubmittedExam?'':M.formula(s.before,window.katex);$('step-after').innerHTML=inUnsubmittedExam?'':M.formula(s.after,window.katex);$('step-reason').innerHTML=inUnsubmittedExam?'':math(s.justification);
+ $('item-progress').textContent=inUnsubmittedExam?`${g.step_ids.filter(k=>Object.hasOwn(state.answers,k)).length}/${g.step_ids.length} bước đã ghi bài làm`:L.complete(g,complete)?`Đã làm đúng ${g.step_ids.length}/${g.step_ids.length} bước. Hãy thử tự giải lại.`:`${g.step_ids.filter(k=>complete.has(k)).length}/${g.step_ids.length} bước đã làm đúng.`;
  const ev=J.evidence(journal,state.itemId,s.step_id);
  const errTag=errMap[s.step_id]?` · Nhóm lỗi: ${errMap[s.step_id].error_type}`:'';
- $('attempt-evidence').textContent=`${ev.attempts} lượt kiểm tra trong chu kỳ · ${ev.status}${ev.diagnosis_code?' ('+ev.diagnosis_code+')':''}${errTag}. Đây là bằng chứng hiện có trong phiên, chưa phải đánh giá thành thạo tuyệt đối.`;
+ $('attempt-evidence').textContent=inUnsubmittedExam?'Kết quả được mở sau khi nộp bài thi thử.':`${ev.attempts} lượt kiểm tra trong chu kỳ · ${ev.status}${ev.diagnosis_code?' ('+ev.diagnosis_code+')':''}${errTag}. Đây là bằng chứng hiện có trong phiên, chưa phải đánh giá thành thạo tuyệt đối.`;
  feedback(Object.hasOwn(state.answers,s.step_id)?L.evaluate(E,data,s.step_id,state.answers[s.step_id],[...complete]):null);
 }
 async function load(id){
+ const lock=N?.examSession(localStorage);if(lock)id=lock.profileId;
+ const requestedContext=new URLSearchParams(location.search);
  const gen=++generation;disableWorkspace();$('load-error').hidden=true;
  try{
   if(!validKey(id))throw Error('Bộ học liệu chưa được khai báo.');
@@ -412,17 +427,29 @@ async function load(id){
   const next=L.load(JSON.parse(raw),selected.profile,E);if(gen!==generation)return;activeProfileId=id;if($('profile-select'))$('profile-select').value=id;
   data=next;data.content_sha256=digest;by=Object.assign(Object.create(null),Object.fromEntries(data.steps.map(s=>[s.step_id,s])));key='yd-eng-gap02-preview:'+id+':'+digest;
   let stored=null;try{const raw=localStorage.getItem(key);if(raw&&raw.length<1500000)stored=JSON.parse(raw);}catch{storageOK=false;}
-  if(stored?.content_sha256!==digest)stored=null;state=E.restore(data,stored);state.geometryChecks=stored?.geometryChecks&&typeof stored.geometryChecks==='object'?stored.geometryChecks:Object.create(null);state.activePartKey=resolvePartKey(graph(),state.stepId,stored?.activePartKey);mobileView=stored?.mobileView==='sheet'?'sheet':'paper';examPaperOpen=true;journal=J.restore(data,stored?.journal,crypto.randomUUID(),!!stored);complete=E.replay(data,state.answers);collapseSupportPanels();if($('exam-paper-panel'))$('exam-paper-panel').hidden=false;$('workspace').hidden=false;save();draw();
+  if(stored?.content_sha256!==digest)stored=null;state=E.restore(data,stored);state.geometryChecks=stored?.geometryChecks&&typeof stored.geometryChecks==='object'?stored.geometryChecks:Object.create(null);state.activePartKey=resolvePartKey(graph(),state.stepId,stored?.activePartKey);mobileView=stored?.mobileView==='sheet'?'sheet':'paper';examPaperOpen=true;
+  const lockNow=N?.examSession(localStorage);
+  examMode=lockNow||stored?.examMode==='exam'?'exam':'practice';examSubmitted=!lockNow&&examMode==='exam';
+  if(examMode==='exam'&&!examSubmitted&&N&&!lockNow&&!N.startExam(localStorage,id,digest))throw Error('Không lưu được phiên thi thử; hãy cho phép lưu trên trình duyệt rồi thử lại.');
+  if(lockNow&&lockNow.contentHash!==digest)throw Error('Học liệu đã đổi trong phiên thi thử. Cần khôi phục đúng phiên bản trước khi tiếp tục.');
+  const target=N?.resolveGraphContext(data,requestedContext);
+  if(target){mobileView='sheet';state.itemId=target.itemId;state.stepId=target.stepId;state.activePartKey=resolvePartKey(graph(),target.stepId,target.part);}
+  if(requestedContext.get('view')==='sheet')mobileView='sheet';else if(requestedContext.get('view')==='paper')mobileView='paper';
+  journal=J.restore(data,stored?.journal,crypto.randomUUID(),!!stored);complete=E.replay(data,state.answers);collapseSupportPanels();if($('exam-paper-panel'))$('exam-paper-panel').hidden=false;$('workspace').hidden=false;save();draw();if(N)N.openSupport(location.hash.slice(1));
  }catch(e){if(gen!==generation)return;disableWorkspace();$('load-error').hidden=false;$('load-error').textContent=e.message||'Không mở được học liệu.';}
 }
 function setExamMode(nextMode){
  if(nextMode!=='practice'&&nextMode!=='exam')return false;
+ if(!data||!state)return false;
+ if(nextMode==='practice'&&N?.examSession(localStorage))return false;
+ if(nextMode==='exam'&&N&&!N.startExam(localStorage,activeProfileId,data.content_sha256)){if($('exam-mode-status'))$('exam-mode-status').textContent='Chưa lưu được phiên thi thử. Hãy cho phép lưu trên trình duyệt rồi thử lại.';return false;}
  examMode=nextMode;
  if(examMode==='exam'){examSubmitted=false;examPaperOpen=true;collapseSupportPanels();}
- draw();return true;
+ save();draw();return true;
 }
 function submitMockExam(){
- if(!data||!state)return null;
+ if(!data||!state||examMode!=='exam'||examSubmitted)return null;
+ if(N&&!N.finishExam(localStorage,activeProfileId,data.content_sha256))return null;
  examSubmitted=true;complete=E.replay(data,state.answers);save();draw();
  return S&&typeof S.diagnoseStudentErrors==='function'?S.diagnoseStudentErrors(data,journal,complete,state.itemId):null;
 }
@@ -440,11 +467,12 @@ $('explanation').ontoggle=()=>{if(!data||!state||(examMode==='exam'&&!examSubmit
 $('reset-item').onclick=()=>{if(!data||!state)return;const g=graph();if(!g)return;record('ITEM_RESET',null);for(const k of g.step_ids){delete state.answers[k];delete state.drafts[k];delete state.hints[k];}state.stepId=g.step_ids[0];state.activePartKey=resolvePartKey(g,state.stepId,null);complete=E.replay(data,state.answers);save();draw();};
 $('map-mode').onclick=()=>{if(!data||!state)return;mode='map';drawMap();};$('list-mode').onclick=()=>{if(!data||!state)return;mode='list';drawMap();};
 $('next-step').onclick=()=>{if(!data||!state)return;const g=graph();if(!g)return;const next=g.step_ids.find(k=>!complete.has(k)&&ready(by[k]));if(next)selectStep(next);else selectItem(data.graphs[(data.graphs.indexOf(g)+1)%data.graphs.length].item_id);};
+if(N)window.addEventListener('yd-exam-session-changed',()=>{if(!data||!state)return;const lock=N?.examSession(localStorage);if(lock){if(lock.profileId!==activeProfileId){N.enforce(window);return;}examMode='exam';examSubmitted=false;collapseSupportPanels();save();draw();}else if(examMode==='exam'&&!examSubmitted){examSubmitted=true;save();draw();}});
 $('profile-select').onchange=()=>load($('profile-select').value);
 if($('practice-mode-btn'))$('practice-mode-btn').onclick=()=>setExamMode('practice');
 if($('exam-mode-btn'))$('exam-mode-btn').onclick=()=>setExamMode('exam');
 if($('toggle-exam-paper'))$('toggle-exam-paper').onclick=()=>openPaperView();
 if($('submit-exam-btn'))$('submit-exam-btn').onclick=()=>submitMockExam();
-async function init(){try{const r=await fetch('data/practice-preview-profiles.json',{credentials:'same-origin',cache:'no-store'});if(!r.ok)throw Error('Không tải được danh mục.');const meta=await r.json();if(meta.status!=='DRAFT_LOCAL_PREVIEW_ONLY')throw Error('Danh mục không hợp lệ.');profiles=meta.profiles;const allowed=['data/radical-steps-v0.1.json','data/graph02-v1-preview.json','data/graph02-v2-preview.json','data/midterm1-fixture-preview.json','data/midterm1-hanoi-exam01-preview.json'];if(!Array.isArray(profiles)||!profiles.length||profiles.some(p=>!allowed.includes(p.path)||!['legacy-rad01','lesson-contract-v01'].includes(p.profile)||!/^[a-f0-9]{64}$/.test(p.sha256)))throw Error('Đường dẫn profile không được phép.');const requested=new URLSearchParams(location.search).get('profile'),defaultId=(validKey(meta.default_profile)&&profiles.some(p=>p.id===meta.default_profile))?meta.default_profile:(profiles.some(p=>p.id==='midterm1-hanoi-01')?'midterm1-hanoi-01':profiles[0].id),id=profiles.some(p=>p.id===requested)?requested:defaultId;$('profile-select').innerHTML=profiles.map(p=>`<option value="${safe(p.id)}"${p.id===id?' selected':''}>${safe(p.label)}</option>`).join('');$('profile-select').disabled=false;$('profile-select').value=id;await load(id);}catch(e){disableWorkspace();$('load-error').hidden=false;$('load-error').textContent=e.message;}}
+async function init(){try{const r=await fetch('data/practice-preview-profiles.json',{credentials:'same-origin',cache:'no-store'});if(!r.ok)throw Error('Không tải được danh mục.');const meta=await r.json();if(meta.status!=='DRAFT_LOCAL_PREVIEW_ONLY')throw Error('Danh mục không hợp lệ.');profiles=meta.profiles;const allowed=['data/radical-steps-v0.1.json','data/graph02-v1-preview.json','data/graph02-v2-preview.json','data/midterm1-fixture-preview.json','data/midterm1-hanoi-exam01-preview.json'];if(!Array.isArray(profiles)||!profiles.length||profiles.some(p=>!allowed.includes(p.path)||!['legacy-rad01','lesson-contract-v01'].includes(p.profile)||!/^[a-f0-9]{64}$/.test(p.sha256)))throw Error('Đường dẫn profile không được phép.');const requested=N?.examSession(localStorage)?.profileId||new URLSearchParams(location.search).get('profile'),defaultId=(validKey(meta.default_profile)&&profiles.some(p=>p.id===meta.default_profile))?meta.default_profile:(profiles.some(p=>p.id==='midterm1-hanoi-01')?'midterm1-hanoi-01':profiles[0].id),id=profiles.some(p=>p.id===requested)?requested:defaultId;$('profile-select').innerHTML=profiles.map(p=>`<option value="${safe(p.id)}"${p.id===id?' selected':''}>${safe(p.label)}</option>`).join('');$('profile-select').disabled=false;$('profile-select').value=id;await load(id);}catch(e){disableWorkspace();$('load-error').hidden=false;$('load-error').textContent=e.message;}}
 window.YourdreamPreview=Object.assign(window.YourdreamPreview||{},{ready:null,getData:()=>data,getState:()=>state,getJournal:()=>journal,getCompleted:()=>[...complete],getActiveView:()=>mobileView,getPaperSheetModule:()=>paperSheetModule,getSkillDiagnosis:()=>data&&journal?J.diagnoseSkills(data,journal,complete):null,getErrorDiagnosis:()=>data&&journal&&S?S.diagnoseStudentErrors(data,journal,complete,state?.itemId):null,getExerciseTrapLibrary:itemId=>data&&S?S.getExerciseTrapLibrary(data,itemId||state?.itemId):[],getStudyGuide:itemId=>data&&S?S.buildExerciseStudyGuide(data,itemId||state?.itemId):null,setExamMode,submitMockExam,toggleGeometryCheck,selectItem,selectPart,selectStep,openPaperView,retrySkillStep,loadProfile:load});window.YourdreamPreview.ready=init();
 })();

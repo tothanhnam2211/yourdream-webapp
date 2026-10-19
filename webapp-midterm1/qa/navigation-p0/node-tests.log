@@ -1,0 +1,200 @@
+{
+  "suite": "EXAM-CORE-02",
+  "passed": 33,
+  "total": 33,
+  "results": [
+    {
+      "name": "AUTH01 anonymous and service-only identity denied without writes",
+      "status": "PASS"
+    },
+    {
+      "name": "AUTH02 cross-learner reads and writes denied",
+      "status": "PASS"
+    },
+    {
+      "name": "AUTH03 client role learner and result fields rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "AUTH04 unconfigured subject does not auto-enroll",
+      "status": "PASS"
+    },
+    {
+      "name": "AUTH05 teacher parent and student cannot preview real DRAFT",
+      "status": "PASS"
+    },
+    {
+      "name": "AUTH06 wrong-site subject not resolved",
+      "status": "PASS"
+    },
+    {
+      "name": "AUTH07 grant revoked after preflight aborts whole batch",
+      "status": "PASS"
+    },
+    {
+      "name": "TX01 create retry returns original receipt without duplicates",
+      "status": "PASS"
+    },
+    {
+      "name": "TX02 event retry after response lost returns original revision",
+      "status": "PASS"
+    },
+    {
+      "name": "TX03 same event ID different payload conflicts",
+      "status": "PASS"
+    },
+    {
+      "name": "TX04 stale revision adds no orphan event",
+      "status": "PASS"
+    },
+    {
+      "name": "TX05 injected failure rolls back event revision and projection",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA01 wrong SHA rejected and seed stays DRAFT",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA02 withdrawal blocks mutation and keeps history readable",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA03 withdrawal between preflight and batch is rechecked",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA04 actual checker accepts exact equivalent fraction and rejects wrong answer",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA05 unsupported answer is needs review not correct",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA06 dependent final step blocked before prerequisites",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA07 actual full graph and predecessor invalidation",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA08 reset keeps receipts and starts empty cycle",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA09 server-derived hints and explanation support",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA10 unsupported and oversized requests do not write",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA11 cross-item step rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA12 hash mismatch in supplied source fails initialization",
+      "status": "PASS"
+    },
+    {
+      "name": "READ01 progress is owned and bounded pagination",
+      "status": "PASS"
+    },
+    {
+      "name": "TX06 creation key cannot be reused for answer",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA13 all fifteen actual authored steps run through persisted service",
+      "status": "PASS"
+    },
+    {
+      "name": "AUTH08 disabled learner cannot read own records",
+      "status": "PASS"
+    },
+    {
+      "name": "DATA14 registry checker mismatch fails closed",
+      "status": "PASS"
+    },
+    {
+      "name": "TX07 failure during session creation leaves no session or event",
+      "status": "PASS"
+    },
+    {
+      "name": "RACE01 two connections same revision yield one success and one conflict",
+      "status": "PASS"
+    },
+    {
+      "name": "RACE02 two connections duplicate event return same receipt",
+      "status": "PASS"
+    },
+    {
+      "name": "READ02 reconnect resumes persisted state",
+      "status": "PASS"
+    }
+  ],
+  "backend": "Node SQLite adapter exercising D1-shaped prepared batch SQL",
+  "hosted_d1_tested": false,
+  "real_student_records": false
+}
+✔ tests/contract.test.cjs (6465.644518ms)
+▶ EXAM-CORE-03 Migration & Domain Service Integration
+  ✔ M-01 Drizzle migration is schema-only (zero rows in all 8 tables) (3.093174ms)
+  ✔ M-02 Separate content seed registers EXAM-RAD-01 as DRAFT (never APPROVED) (2.433129ms)
+  ✔ M-03 Drizzle-migrated DB passes idempotency, revision conflict, and atomic rollback invariants (41.468258ms)
+✔ EXAM-CORE-03 Migration & Domain Service Integration (50.096637ms)
+▶ EXAM-CORE-03 HTTP Edge Security, Identity, CSRF & Bounds
+  ✔ H-01 Rejects unauthenticated requests (401 AUTH_REQUIRED) and service-token-only requests across all 4 routes (18.667534ms)
+  ✔ H-02 Rejects synthetic test identities (A/B/S/T/P) and workspace project_id in hosted mode (10.019646ms)
+  ✔ H-03 Rejects spoofed learner_id, role, email, or account_id in headers, query, or body (400) (20.094914ms)
+  ✔ H-04 Enforces CSRF / Same-Origin (403), JSON Content-Type (415), and 16 KiB request size cap (413) (30.397025ms)
+  ✔ H-05 Never grants first-visitor-admin; requires verified operator configuration and creates per-request D1 sessions (28.400591ms)
+  ✔ H-06 Sanitizes 500 INTERNAL_ERROR responses and never logs student answer payloads (3.922816ms)
+✔ EXAM-CORE-03 HTTP Edge Security, Identity, CSRF & Bounds (112.458777ms)
+▶ EXAM-CORE-03 Frontend Regression & Server Sync Behavior
+  ✔ F-01 Content JSON and radicals-engine.js SHA256 hashes match canonical EXAM-RAD-04 / CORE-02 bytes (2.76306ms)
+  ✔ F-02 All 41 original EXAM-RAD-04 DOM IDs and 9 sync/conflict DOM IDs exist in radicals.html and resolve from radicals.js (1.18578ms)
+  ✔ F-03 Client sync: keeps pre-existing local progress separate, gates "Đã lưu máy chủ" on receipt, preserves draft on 409 conflict, and isolates queue per account (236.147816ms)
+  ✔ F-04 EXAM-RAD-04 frontend regression: DAG validation, 15-step evaluation, and 300-event local journal invariants (9.466513ms)
+  ✔ F-05 FIX-01 (C03-R01): mid-flight account switch at session create/resume and in-flight POST /events aborts stale flow, preserves queue A, and prevents cross-account write or UI leak (126.885793ms)
+  ✔ F-06 FIX-01 (C03-R02): 401 logout, 403 forbidden, and network failure never copy authenticated state/journal to anonymous storage or leak across views (93.479462ms)
+  ✔ F-07 FIX-01: 409 conflict refresh returning a different account scope and overlapping initServerSync() calls prevent cross-account state/UI contamination (190.587764ms)
+  ✔ F-08 Per-item sync badge: distinguishes "Đã tải từ máy chủ" vs "Đã lưu máy chủ", shows revision of selected item on 01 <-> 04 switch, and ignores late receipts from another item (280.654287ms)
+✔ EXAM-CORE-03 Frontend Regression & Server Sync Behavior (942.718414ms)
+✔ Navigation returns only to real same-origin routes (7.967165ms)
+✔ Graph deep link resolves actual part membership and rejects conflicting or invented IDs (1.037178ms)
+✔ Exam lock survives a new page instance; another package cannot release it (1.750046ms)
+✔ Exam UI cannot start if durable session write fails (2.38401ms)
+✔ Active exam redirects learning, design and other-profile routes before their UI renders (2.182636ms)
+▶ MIDTERM1-PHASE-A · Profile Loader, DAG Layout, Multi-Terminal Completion & Choice Feedback
+  ✔ M1-01 All 5 declared profiles match exact SHA256 and load cleanly (129.93166ms)
+  ✔ M1-02 Midterm 1 fixture loads 5 exercises and 26 steps with finite DAG coordinates and subquestion groups (15.363096ms)
+  ✔ M1-03 Multi-terminal completion policy (ALL_STEPS_CORRECT) requires S02 even if S09 is finished (5.563712ms)
+  ✔ M1-04 Choice evaluation returns per-choice feedback and diagnosis_code; unknown choice returns NEEDS_REVIEW (12.800004ms)
+  ✔ M1-05 Rejects tampered contract metadata, cycles, dangling refs, and prototype keys (17.170632ms)
+✔ MIDTERM1-PHASE-A · Profile Loader, DAG Layout, Multi-Terminal Completion & Choice Feedback (217.521761ms)
+▶ MIDTERM1-PHASE-A · Skill Diagnosis & Retry Journal Flow (Existing Events Only)
+  ✔ M1-06 Tracks ANSWER_SUBMITTED, HINT_OPENED, EXPLANATION_OPENED, ITEM_RESET and computes skill diagnosis (6.70214ms)
+✔ MIDTERM1-PHASE-A · Skill Diagnosis & Retry Journal Flow (Existing Events Only) (16.545903ms)
+▶ MIDTERM1-PHASE-A · Safe Math & XSS / KaTeX Hardening
+  ✔ M1-07 Renders valid LaTeX with KaTeX and falls back safely on dangerous commands or HTML injection (32.491047ms)
+✔ MIDTERM1-PHASE-A · Safe Math & XSS / KaTeX Hardening (34.634086ms)
+▶ MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exercises / 26 Steps)
+  ✔ M1-08 Mobile viewport (375px) defaults to Batch 02A (5 bài / 24 bước) in list mode, supports switching to TEST FIXTURE (5 bài / 26 bước), navigates subquestions, diagnoses skills with Batch 01 states, and retries (998.175111ms)
+  ✔ M1-09 Five Core Student Error Types (COPYING_ERROR, SIGN_ERROR, ARITHMETIC_ERROR, METHOD_GAP, DIAGRAM_ERROR) distinguish origin layers and populate every exercise trap library (18.289756ms)
+  ✔ M1-10 Scaffolding Decision Tree allows multiple concurrent errors but assigns ONLY 1 priority task per turn (earliest step with evidence first) (551.555537ms)
+  ✔ M1-11 Geometry exercise (Bài IV) displays Pre-Solve Hypothesis/Symbol/Diagram Checklist, classifies DIAGRAM_ERROR, and supports Mock Exam Mode (673.594648ms)
+  ✔ M1-12 WEBAPP-PAPER-UX-001 (A-F): Exam Paper primary view, subquestion_step_groups (including y_2a/y_2b/y_2c of G04), draft/answer persistence across part switches & reload, collapsed support panels, and scoped PaperSheetModule without duplicate listeners (1376.352369ms)
+  ✔ P0 navigation · deep-linked part, draft restore, exam reload and cross-profile gate (308.075995ms)
+✔ MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exercises / 26 Steps) (3931.084139ms)
+ℹ tests 40
+ℹ suites 3
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15453.363075
