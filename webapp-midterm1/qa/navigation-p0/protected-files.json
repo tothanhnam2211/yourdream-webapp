@@ -1,0 +1,62 @@
+[
+  {
+    "path": "public/radicals-engine.js",
+    "unchanged": true,
+    "sha256": "59b295a52be0cc9233a012397b4078ac44ca7a27a5247a69691629fe22c7f91f"
+  },
+  {
+    "path": "public/radicals-profiles.js",
+    "unchanged": true,
+    "sha256": "e6a7f8c95b7e96239af721ffe0c2488fa2f57adce322fd7420af8aa5a17cdead"
+  },
+  {
+    "path": "public/radicals-preview-journal.js",
+    "unchanged": true,
+    "sha256": "758d8f47b61dd0b7b2eebf667439e218d39aa7fb5fb7e862215926214064cac7"
+  },
+  {
+    "path": "public/radicals-journal.js",
+    "unchanged": true,
+    "sha256": "41fae3ccdf9b048f451355ea7f8d5c8be6df22840b395a2e3604c0f5673ca2df"
+  },
+  {
+    "path": "public/paper-sheet-module.js",
+    "unchanged": true,
+    "sha256": "b820f3918623d92d3480dc303a3c6ea4f6b795f5e94468fc0fd1c72d25ccf536"
+  },
+  {
+    "path": "public/midterm1-error-scaffolding.js",
+    "unchanged": true,
+    "sha256": "40651f286d329741c70da8d35eab2fc47fa87f1b06f40c331ef14f6572f22793"
+  },
+  {
+    "path": "public/data/midterm1-fixture-preview.json",
+    "unchanged": true,
+    "sha256": "6abeb7af79044bfc1a09f043ea2c0f7ecf5974ed3f2864ddd48e1c406749a8df"
+  },
+  {
+    "path": "public/data/practice-preview-profiles.json",
+    "unchanged": true,
+    "sha256": "8618784a5ff1c9082cfdbd34c6647223cb1af5371fa7f566e36277393a8d8e75"
+  },
+  {
+    "path": "public/data/graph02-v2-preview.json",
+    "unchanged": true,
+    "sha256": "7e8f443ce6ea5a1eaee267d4712c57bf65d82c53d95051fd4e583e9974ce28b4"
+  },
+  {
+    "path": "public/data/graph02-v1-preview.json",
+    "unchanged": true,
+    "sha256": "688c4fb1d365468cb324106f3748eec5bbd54b89f0d7d5bfdcc8d2e3f8240295"
+  },
+  {
+    "path": "public/data/midterm1-hanoi-exam01-preview.json",
+    "unchanged": true,
+    "sha256": "25a9c543df43f8912176294ad4651390e8b4040aa89c281aeed2fa0a56291b99"
+  },
+  {
+    "path": "public/data/radical-steps-v0.1.json",
+    "unchanged": true,
+    "sha256": "a16d43b62b2b667422778ae140f610115625843319efefa513df65b2a4be25d2"
+  }
+]

@@ -1,0 +1,34 @@
+✔ Navigation returns only to real same-origin routes (2.64137ms)
+✔ Graph deep link resolves actual part membership and rejects conflicting or invented IDs (0.499951ms)
+✔ Exam lock survives a new page instance; another package cannot release it (1.186808ms)
+✔ Exam UI cannot start if durable session write fails (0.298184ms)
+✔ Active exam redirects learning, design and other-profile routes before their UI renders (1.092172ms)
+▶ MIDTERM1-PHASE-A · Profile Loader, DAG Layout, Multi-Terminal Completion & Choice Feedback
+  ✔ M1-01 All 5 declared profiles match exact SHA256 and load cleanly (60.311458ms)
+  ✔ M1-02 Midterm 1 fixture loads 5 exercises and 26 steps with finite DAG coordinates and subquestion groups (13.624027ms)
+  ✔ M1-03 Multi-terminal completion policy (ALL_STEPS_CORRECT) requires S02 even if S09 is finished (7.99158ms)
+  ✔ M1-04 Choice evaluation returns per-choice feedback and diagnosis_code; unknown choice returns NEEDS_REVIEW (8.20417ms)
+  ✔ M1-05 Rejects tampered contract metadata, cycles, dangling refs, and prototype keys (22.612214ms)
+✔ MIDTERM1-PHASE-A · Profile Loader, DAG Layout, Multi-Terminal Completion & Choice Feedback (121.035377ms)
+▶ MIDTERM1-PHASE-A · Skill Diagnosis & Retry Journal Flow (Existing Events Only)
+  ✔ M1-06 Tracks ANSWER_SUBMITTED, HINT_OPENED, EXPLANATION_OPENED, ITEM_RESET and computes skill diagnosis (18.562126ms)
+✔ MIDTERM1-PHASE-A · Skill Diagnosis & Retry Journal Flow (Existing Events Only) (47.323771ms)
+▶ MIDTERM1-PHASE-A · Safe Math & XSS / KaTeX Hardening
+  ✔ M1-07 Renders valid LaTeX with KaTeX and falls back safely on dangerous commands or HTML injection (43.638628ms)
+✔ MIDTERM1-PHASE-A · Safe Math & XSS / KaTeX Hardening (47.092348ms)
+▶ MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exercises / 26 Steps)
+  ✔ M1-08 Mobile viewport (375px) defaults to Batch 02A (5 bài / 24 bước) in list mode, supports switching to TEST FIXTURE (5 bài / 26 bước), navigates subquestions, diagnoses skills with Batch 01 states, and retries (8096.607439ms)
+  ✔ M1-09 Five Core Student Error Types (COPYING_ERROR, SIGN_ERROR, ARITHMETIC_ERROR, METHOD_GAP, DIAGRAM_ERROR) distinguish origin layers and populate every exercise trap library (37.441708ms)
+  ✔ M1-10 Scaffolding Decision Tree allows multiple concurrent errors but assigns ONLY 1 priority task per turn (earliest step with evidence first) (527.476764ms)
+  ✔ M1-11 Geometry exercise (Bài IV) displays Pre-Solve Hypothesis/Symbol/Diagram Checklist, classifies DIAGRAM_ERROR, and supports Mock Exam Mode (449.749279ms)
+  ✔ M1-12 WEBAPP-PAPER-UX-001 (A-F): Exam Paper primary view, subquestion_step_groups (including y_2a/y_2b/y_2c of G04), draft/answer persistence across part switches & reload, collapsed support panels, and scoped PaperSheetModule without duplicate listeners (1232.012396ms)
+  ✔ P0 navigation · deep-linked part, draft restore, exam reload and cross-profile gate (578.081944ms)
+✔ MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exercises / 26 Steps) (10931.247679ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12558.808227

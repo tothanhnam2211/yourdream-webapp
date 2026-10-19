@@ -1,0 +1,16 @@
+{
+  "status": "APPROVED_BY_USER_FOR_P0_STAGING",
+  "accepted_at": "2026-10-19T19:25:59+07:00",
+  "approver": "Namto (user)",
+  "authorization_source": "Direct user message in this conversation",
+  "user_statement": "tôi duyệt nghiệm thu sản phẩm",
+  "scope": "YOURDREAM P0 Navigation & Learning Flow Fix on the current Cloudflare staging version",
+  "staging_url": "https://yourdream-webapp-staging.tothanhnam.workers.dev",
+  "worker_version_id": "43546fbc-9d36-422a-a4cd-dfa7fb8d650a",
+  "implementation_commit": "8b3b615aac942d878c72afb9ce1086903434fa80",
+  "production_release_authorized": false,
+  "production_deployment_authorized": false,
+  "github_merge_authorized": false,
+  "domain_audits": "No separate math/security/pedagogical certification is inferred from this product acceptance",
+  "runtime_change": false
+}

@@ -1,5 +1,6 @@
 (function(){'use strict';
 const $=id=>document.getElementById(id),E=window.RadicalEngine,J=window.RadicalJournal;
+const N=window.YourdreamNavigation;
 const revision='a16d43b62b2b',titles={'RAD-001':'Tách và gom căn','RAD-002':'Hiểu giá trị tuyệt đối','RAD-003':'Giữ điều kiện xác định','RAD-004':'Dùng biểu thức liên hợp'},subtitles={'RAD-001':'Căn đồng dạng','RAD-002':'Xét dấu với x < 2','RAD-003':'Khử nhân tử đúng miền','RAD-004':'Trục căn ở mẫu'};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let data,by,state,storageKey,completed=new Set(),mode=window.innerWidth<750?'list':'map',storageAvailable=true,journal,hadLocalProgressAtBoot=false;
@@ -213,6 +214,7 @@ function renderSyncStatus(){
 }
 
 function save(){
+ if(N&&data&&state){const g=graph();if(g){N.setURL({item:g.item_id,step_id:state.stepId});N.setContext({title:'Đang luyện · '+titles[g.item_id],crumbs:['Biểu thức & căn thức',titles[g.item_id],`Bước ${g.step_ids.indexOf(state.stepId)+1}`]});}}
  if(server.mode!=='authenticated'){
   if(anonDomain&&state===anonDomain.state&&journal===anonDomain.journal){
    try{localStorage.setItem(storageKey,JSON.stringify({...anonDomain.state,version:data.version,journal:anonDomain.journal}));storageAvailable=true;}catch{storageAvailable=false;}
@@ -775,11 +777,13 @@ async function init(){
   journal=J.restore(data,stored?.journal,crypto.randomUUID(),!!stored);
   anonDomain={state,journal};
   $('explanation').ontoggle=recordExplanation;
-  const requested=new URLSearchParams(location.search).get('item');
+  const requestedParams=new URLSearchParams(location.search);
+  const requested=requestedParams.get('item');
   if(requested&&data.graphs.some(g=>g.item_id===requested)){
    state.itemId=requested;
    state.stepId=data.graphs.find(g=>g.item_id===requested).step_ids[0];
   }
+  const requestedStep=requestedParams.get('step_id');if(requestedStep&&by[requestedStep]?.item_id===state.itemId)state.stepId=requestedStep;
   completed=E.replay(data,state.answers);
   render();
   save();

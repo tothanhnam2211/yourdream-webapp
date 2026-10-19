@@ -1,0 +1,36 @@
+{
+  "version": "paperfirst1",
+  "base_commit": "0dad6b12470b43b50e6edecdba53bb18a0efa944",
+  "files": [
+    {
+      "path": "public/graph02-preview.html",
+      "sha256": "7827534e9bbc32b3d10627e0eb7edd0c209a89bc41886474c256ebaa12c55ea2",
+      "base_sha256": "336346e6a7dc5bcd6bb95e2a99379763b3773b081d7e940a1caf080342e9da33",
+      "base_git_blob": "1e19998ee0137c7fdada3ac177d5de8d3991f667"
+    },
+    {
+      "path": "public/graph02-preview.css",
+      "sha256": "65b1e0818f88bd022ec7ceb9ca852c16fe798e3ca75ebc911b9ea8c725cab83d",
+      "base_sha256": "061aedec4642bec4667d5eaf9c66783ed6070f86cc355b43e2bb29041ce158e2",
+      "base_git_blob": "33ca5bc781d7a52d21c9ff0531fd8f7d21039b4f"
+    },
+    {
+      "path": "public/graph02-preview.js",
+      "sha256": "b19c1a386ed9881dd5e483349be183ea633c40b8e246d42a2ec0e347d9434577",
+      "base_sha256": "5324d8f6914f2b2362e9d47a46e16162e04adb322c7b2e447f743425ec44abaf",
+      "base_git_blob": "10c65ca76dfbb84207840dda4f920b87c3eef44b"
+    },
+    {
+      "path": "tests/midterm1-phase-a.test.cjs",
+      "sha256": "d4c883ecc0fbf0432641fd2609013d4b4c8fd94215308aae0258cffa29bd76d3",
+      "base_sha256": "3f696310c1a712321845a0813d4691892a8d56497c25b46227181f9c5e7903bb",
+      "base_git_blob": "e27f1a5b34fbd479c36bc9332f1ff36d3fa652ce"
+    },
+    {
+      "path": "tests/verify-navigation-browser.cjs",
+      "sha256": "800c6e045853e9d1cd5c32c0b51d6fd648c5b20310bff7180212707d51a2a063",
+      "base_sha256": "bf4ac4b9dfa5603bbad89f6e738f1c5f465e948bf8674ac388d53ab710050696",
+      "base_git_blob": "2d72496abc97cd6cc0fd69a46f23d878530b58d7"
+    }
+  ]
+}

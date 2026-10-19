@@ -472,7 +472,7 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     assert.equal(env.elements.get('list-mode').getAttribute('aria-pressed'), 'true');
     assert.equal(env.elements.get('step-list').hidden, false);
     assert.equal(env.elements.get('graph-scroll').hidden, true);
-    assert.equal(env.elements.get('workspace').hidden, false);
+    assert.equal(env.elements.get('workspace').hidden, true);
 
     // Switch to midterm1-fixture (5 exercises / 26 steps) and verify TEST FIXTURE badge + URL sync
     await env.windowObj.YourdreamPreview.loadProfile('midterm1-fixture');
@@ -627,6 +627,51 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     assert.match(env.elements.get('model-solution-note').textContent, /Lời giải mẫu hoàn chỉnh gồm 5 bước/);
   });
 
+  for (const width of [1280, 375]) await t.test(`Paper-first ${width}: entry hides workspace; clicks reveal one support panel; return/reload preserve drafts; exam blocks support`, async () => {
+    const storage = new Map();
+    const env = createMockDom(width, storage);
+    const code = fs.readFileSync(path.join(PUBLIC_DIR, 'graph02-preview.js'), 'utf8');
+    vm.runInNewContext(code, env.windowObj);
+    await env.windowObj.YourdreamPreview.ready;
+    const app = env.windowObj.YourdreamPreview;
+    assert.equal(env.elements.get('workspace').hidden, true);
+    assert.equal(env.elements.get('exam-paper-panel').hidden, false);
+    const supportIds = ['step-map-details', 'exercise-mindmap', 'error-decision-tree', 'exercise-trap-library', 'model-solution-panel', 'skill-diagnosis'];
+    for (const id of supportIds) assert.equal(env.elements.get(id).hidden, true);
+    const part = env.elements.get('exam-paper-list')._children.find(b => b.dataset.paperItem === 'YD-G09-MID1-01:G01' && b.dataset.paperPart === 'y_1');
+    part.onclick();
+    assert.equal(env.elements.get('workspace').hidden, false);
+    env.setFormData({choice: 'sub_correct'});
+    env.elements.get('answer-form').onchange();
+    const stepId = app.getState().stepId;
+    assert.equal(app.openSupportPanel('exercise-mindmap'), true);
+    assert.equal(env.elements.get('exercise-mindmap').hidden, false);
+    assert.equal(env.elements.get('exercise-mindmap').open, true);
+    assert.equal(app.openSupportPanel('model-solution-panel'), true);
+    assert.equal(env.elements.get('exercise-mindmap').hidden, true);
+    assert.equal(env.elements.get('model-solution-panel').hidden, false);
+    assert.equal(app.getState().stepId, stepId);
+    assert.equal(app.getState().drafts[stepId], 'sub_correct');
+    app.openPaperView();
+    assert.equal(env.elements.get('workspace').hidden, true);
+    for (const id of supportIds) assert.equal(env.elements.get(id).hidden, true);
+    // Reopening from the menu must start on the paper even after a sheet was saved.
+    app.selectPart('YD-G09-MID1-01:G01', 'y_1');
+    const reopened = createMockDom(width, storage);
+    vm.runInNewContext(code, reopened.windowObj);
+    await reopened.windowObj.YourdreamPreview.ready;
+    assert.equal(reopened.elements.get('workspace').hidden, true);
+    assert.equal(reopened.windowObj.YourdreamPreview.getState().drafts[stepId], 'sub_correct');
+    assert.equal(app.setExamMode('exam'), true);
+    for (const id of supportIds) {
+      assert.equal(app.openSupportPanel(id), false);
+      assert.equal(env.elements.get(id).hidden, true);
+    }
+    assert.ok(app.submitMockExam());
+    assert.equal(app.openSupportPanel('model-solution-panel'), true);
+    assert.equal(env.elements.get('model-solution-panel').hidden, false);
+  });
+
   await t.test('M1-12 WEBAPP-PAPER-UX-001 (A-F): Exam Paper primary view, subquestion_step_groups (including y_2a/y_2b/y_2c of G04), draft/answer persistence across part switches & reload, collapsed support panels, and scoped PaperSheetModule without duplicate listeners', async () => {
     const sharedStorage = new Map();
     const env = createMockDom(375, sharedStorage);
@@ -704,5 +749,45 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
       'Batch 02A JSON SHA256 must remain untouched'
     );
   });
+  await t.test('P0 navigation · deep-linked part, draft restore, exam reload and cross-profile gate', async () => {
+    const Navigation=loadUmd('learning-navigation.js','YourdreamNavigation');
+    const sharedStorage=new Map();
+    const scriptCode=fs.readFileSync(path.join(PUBLIC_DIR,'graph02-preview.js'),'utf8');
+    async function open(search){
+      const env=createMockDom(375,sharedStorage);
+      env.windowObj.location.search=search;
+      env.windowObj.addEventListener=()=>{};
+      env.windowObj.YourdreamNavigation=Navigation;
+      env.windowObj.localStorage.removeItem=k=>sharedStorage.delete(k);
+      env.elements.set('yd-support-actions',{innerHTML:'',querySelector:()=>({}),querySelectorAll:()=>[]});
+      vm.runInNewContext(scriptCode,env.windowObj);await env.windowObj.YourdreamPreview.ready;
+      assert.equal(env.elements.get('load-error').hidden,true,env.elements.get('load-error').textContent);
+      return env;
+    }
+    const env=await open('?profile=midterm1-hanoi-01&graph_id=YD-G09-MID1-01:G04&part=y_2b&view=sheet');
+    const api=env.windowObj.YourdreamPreview;
+    assert.equal(api.getState().itemId,'YD-G09-MID1-01:G04');
+    assert.equal(api.getState().activePartKey,'y_2b');
+    assert.equal(api.getState().stepId,'YD-G09-MID1-01:G04:S03');
+    api.selectPart('YD-G09-MID1-01:G01','y_1');env.setFormData({choice:'sub_correct'});env.elements.get('answer-form').oninput();
+    assert.equal(api.setExamMode('exam'),true);
+    assert.equal(api.setExamMode('practice'),false);
+    assert.equal(env.elements.get('practice-mode-btn').disabled,true);
+    const reloaded=await open('?profile=legacy');
+    const next=reloaded.windowObj.YourdreamPreview;
+    assert.equal(next.getData().package_id,'YD-G09-MIDTERM1-HANOI-PRACTICE-EXAM-01');
+    assert.equal(next.getState().drafts['YD-G09-MID1-01:G01:S01'],'sub_correct');
+    assert.equal(reloaded.elements.get('hint-button').disabled,true);
+    assert.equal(reloaded.elements.get('step-after').innerHTML,'');
+    assert.equal(reloaded.elements.get('profile-select').disabled,true);
+    assert.match(reloaded.elements.get('total-progress').textContent,/đã ghi bài làm/);
+    await next.loadProfile('legacy');
+    assert.equal(next.getData().package_id,'YD-G09-MIDTERM1-HANOI-PRACTICE-EXAM-01');
+    assert.equal(next.setExamMode('practice'),false);
+    next.submitMockExam();
+    assert.equal(Navigation.examSession(reloaded.windowObj.localStorage),null);
+    assert.equal(next.setExamMode('practice'),true);
+  });
+
 });
 

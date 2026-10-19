@@ -1,0 +1,43 @@
+{
+  "task": "YOURDREAM — paper-first progressive disclosure UI",
+  "version": "paperfirst1",
+  "baseline_commit": "0dad6b12470b43b50e6edecdba53bb18a0efa944",
+  "status": "STAGING_DEPLOYED_BROWSER_VALIDATED_OPERATOR_REPORTED",
+  "technical_validation": {
+    "node_tests": "42/42 PASS",
+    "build": "PASS",
+    "staging_dry_run": "PASS",
+    "baseline_drive_and_github": "5/5 MATCH_NORMALIZED_NEWLINES",
+    "patch_bundle": "APPLY_AND_CONFLICT_REJECTION_VERIFIED"
+  },
+  "browser_validation": {
+    "status": "10/10 PASS_OPERATOR_REPORTED",
+    "viewports": [
+      1280,
+      375
+    ],
+    "flows": [
+      "A: map → lesson → practice → exact topic/tab",
+      "B: paper-first entry → selected part → sheet → paper",
+      "C: draft → support → sheet → reload",
+      "D: unavailable STEM/journal have no active links",
+      "E: unsubmitted exam route/reload/profile/back-navigation gate; submit unlocks"
+    ],
+    "runtime_errors": "No error shown in supplied log; browser-results.json not read",
+    "stem_activity_flow": "NOT_APPLICABLE_DESIGN_ONLY"
+  },
+  "deployment": {
+    "status": "DEPLOYED_OPERATOR_REPORTED",
+    "url": "https://yourdream-webapp-staging.tothanhnam.workers.dev",
+    "worker_version_id": "de59aa04-0c18-450a-ac80-5999fc58dde9",
+    "expected_source_commit": "ebf7b58da2cf9c14ded8fd510e9b45002000209d",
+    "deployment_commit_binding": "NOT_INDEPENDENTLY_VERIFIED"
+  },
+  "previous_staging_worker_version": "43546fbc-9d36-422a-a4cd-dfa7fb8d650a",
+  "approval": "NOT_GRANTED_FOR_THIS_UI_UPDATE",
+  "production": "UNCHANGED",
+  "next_step": "Namto verifies the deployed paper-first interface; no redeploy required for this receipt-only update",
+  "exam_boundary": "Existing client-side gate preserved; no server-security claim",
+  "evidence_received_at": "2026-10-19T20:21:09+07:00",
+  "evidence_receipt": "qa/paper-first/STAGING_DEPLOYMENT_RECEIPT_20261019.json"
+}
