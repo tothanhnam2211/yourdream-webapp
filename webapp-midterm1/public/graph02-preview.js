@@ -6,9 +6,10 @@ let profiles=[],data=null,by=Object.create(null),state=null,journal=null,key='',
 const safe=s=>M.escape(s),math=s=>M.mixed(s,window.katex),graph=()=>data?data.graphs.find(g=>g.item_id===state?.itemId):null,step=()=>state?by[state.stepId]:null;
 const ready=s=>!!s&&(examMode==='exam'&&!examSubmitted?true:s.requires.every(k=>complete.has(k)));
 const SUPPORT_PANEL_IDS=['step-map-details','exercise-mindmap','error-decision-tree','exercise-trap-library','model-solution-panel','skill-diagnosis'];
-function collapseSupportPanels(){
+function collapseSupportPanels(clearRoute=false){
  for(const pid of SUPPORT_PANEL_IDS){const el=$(pid);if(el){el.open=false;el.hidden=true;}}
  if($('explanation'))$('explanation').open=false;
+ if(clearRoute&&SUPPORT_PANEL_IDS.includes(location.hash.slice(1)))history.replaceState(null,'',location.pathname+location.search);
 }
 function openSupportPanel(panel){
  if(!data||!state||!SUPPORT_PANEL_IDS.includes(panel)||(examMode==='exam'&&!examSubmitted)||N?.examSession(localStorage))return false;
@@ -330,7 +331,7 @@ function selectPart(itemId,partKey){
  const entry=validKey(partKey)?entries.find(([k])=>k===partKey):entries[0];
  if(!entry)return false;
  const [resolvedKey,partStepIds]=entry;
- collapseSupportPanels();
+ collapseSupportPanels(true);
  state.itemId=g.item_id;
  state.activePartKey=resolvedKey;
  const targetStep=partStepIds.find(k=>!complete.has(k)&&ready(by[k]))||partStepIds[0];
@@ -353,7 +354,7 @@ function openPaperView(){
 function selectItem(id){
  if(!data||!validKey(id))return false;
  const g=data.graphs.find(g=>g.item_id===id);if(!g)return false;
- collapseSupportPanels();
+ collapseSupportPanels(true);
  state.itemId=id;
  state.stepId=g.step_ids.find(k=>!complete.has(k)&&ready(by[k]))||g.step_ids[0];
  state.activePartKey=resolvePartKey(g,state.stepId,null);
