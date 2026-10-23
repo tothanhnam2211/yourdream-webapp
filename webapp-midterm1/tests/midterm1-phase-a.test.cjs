@@ -389,8 +389,9 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
       location: { pathname: '/graph02-preview.html', search: '', hash: '' },
       history: {
         replaceState(_state, _title, nextUrl) {
-          const qIdx = String(nextUrl).indexOf('?');
-          windowObj.location.search = qIdx >= 0 ? String(nextUrl).slice(qIdx) : '';
+          const next = new URL(String(nextUrl), 'https://yourdream.test');
+          windowObj.location.search = next.search;
+          windowObj.location.hash = next.hash;
         },
       },
       RadicalEngine,
@@ -753,9 +754,10 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     const Navigation=loadUmd('learning-navigation.js','YourdreamNavigation');
     const sharedStorage=new Map();
     const scriptCode=fs.readFileSync(path.join(PUBLIC_DIR,'graph02-preview.js'),'utf8');
-    async function open(search){
+    async function open(search, hash=''){
       const env=createMockDom(375,sharedStorage);
       env.windowObj.location.search=search;
+      env.windowObj.location.hash=hash;
       env.windowObj.addEventListener=()=>{};
       env.windowObj.YourdreamNavigation=Navigation;
       env.windowObj.localStorage.removeItem=k=>sharedStorage.delete(k);
@@ -769,6 +771,18 @@ test('MIDTERM1-PHASE-A · Mobile UI & Preview Controller DOM Simulation (5 Exerc
     assert.equal(api.getState().itemId,'YD-G09-MID1-01:G04');
     assert.equal(api.getState().activePartKey,'y_2b');
     assert.equal(api.getState().stepId,'YD-G09-MID1-01:G04:S03');
+    // A support link belongs to the current selection. Switching part/item closes
+    // it durably, while an explicitly opened support deep link still restores.
+    const sheetRoute='?profile=midterm1-hanoi-01&graph_id=YD-G09-MID1-01:G04&part=y_2b&view=sheet';
+    for(const switchSelection of [()=>api.selectPart('YD-G09-MID1-01:G04','y_2a'),()=>api.selectItem('YD-G09-MID1-01:G01')]){
+      env.windowObj.location.hash='#exercise-mindmap';
+      switchSelection();
+      assert.equal(env.windowObj.location.hash,'','closed support must not reopen on reload');
+      const restored=await open(sheetRoute,env.windowObj.location.hash);
+      assert.equal(restored.elements.get('exercise-mindmap').hidden,true);
+    }
+    const supportLink=await open(sheetRoute,'#exercise-mindmap');
+    assert.equal(supportLink.elements.get('exercise-mindmap').hidden,false,'explicit support link still opens');
     api.selectPart('YD-G09-MID1-01:G01','y_1');env.setFormData({choice:'sub_correct'});env.elements.get('answer-form').oninput();
     assert.equal(api.setExamMode('exam'),true);
     assert.equal(api.setExamMode('practice'),false);
