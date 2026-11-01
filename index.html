@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>YOURDREAM WebApp — Cổng Học Liệu Sống Toán 6–9 & Luyện Thi Vào 10</title>
+<style>
+  :root {
+    --bg-dark: #0b1120;
+    --panel-dark: #1e293b;
+    --border-dark: #334155;
+    --paper-bg: #FFFDF7;
+    --paper-line: rgba(59, 130, 246, 0.14);
+    --margin-red: #dc2626;
+    --jade: #0d474a;
+    --gold: #f59e0b;
+    --cyan: #38bdf8;
+    --emerald: #10b981;
+    --rose: #f43f5e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg-dark);
+    color: #f8fafc;
+    height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .top-hud {
+    height: 60px;
+    background: linear-gradient(90deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    border-bottom: 2px solid var(--border-dark);
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .brand-group { display: flex; align-items: center; gap: 12px; }
+  .brand-logo {
+    background: linear-gradient(135deg, #f59e0b, #fde047);
+    color: #0f172a;
+    font-weight: 900;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+  }
+  .grade-tabs { display: flex; gap: 6px; }
+  .grade-btn {
+    background: #0f172a;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .grade-btn.active {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #7dd3fc;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+  }
+  .hud-stats { display: flex; align-items: center; gap: 14px; }
+  .stat-pill {
+    background: #0f172a;
+    border: 1px solid #334155;
+    padding: 5px 12px;
+    border-radius: 99px;
+    font-size: 12.5px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stat-pill .val { color: #fde047; font-size: 14px; }
+  .main-workspace {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 58% 42%;
+    overflow: hidden;
+  }
+  @media (max-width: 1024px) {
+    body { height: auto; overflow-y: auto; }
+    .main-workspace { grid-template-columns: 1fr; }
+  }
+  .left-zone {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: radial-gradient(circle at 30% 20%, #1e293b 0%, #0b1120 85%);
+    border-right: 2px solid var(--border-dark);
+    overflow: hidden;
+  }
+  .daily-feed-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid #334155;
+    border-left: 4px solid var(--gold);
+    padding: 8px 12px;
+    border-radius: 8px;
+    gap: 8px;
+  }
+  .feed-tag {
+    font-size: 11px;
+    font-weight: 800;
+    color: #fde047;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .feed-title { font-size: 13.5px; font-weight: 700; color: #f8fafc; }
+  .tier-Row { display: flex; gap: 6px; }
+  .tier-chip {
+    padding: 4px 10px;
+    font-size: 11.5px;
+    font-weight: 700;
+    border-radius: 6px;
+    background: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid #475569;
+    cursor: pointer;
+  }
+  .tier-chip.active {
+    background: var(--emerald);
+    color: #052e16;
+    border-color: #a7f3d0;
+  }
+  .canvas-card {
+    flex: 1;
+    background: #0f172a;
+    border: 1.5px solid #334155;
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    min-height: 250px;
+  }
+  .canvas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .archetype-badge {
+    font-size: 11px;
+    font-family: monospace;
+    background: #1e293b;
+    color: #38bdf8;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid #0284c7;
+  }
+  .svg-stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 8px;
+    color: #0f172a;
+  }
+  .slider-row {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12.5px;
+    color: #cbd5e1;
+    background: #1e293b;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
+  .slider-row input[type="range"] { flex: 1; accent-color: #f59e0b; cursor: pointer; }
+  .dragon-dock {
+    height: 118px;
+    background: linear-gradient(135deg, rgba(13, 71, 74, 0.9), rgba(15, 23, 42, 0.95));
+    border: 1.5px solid #0d9488;
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 14px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .dragon-avatar {
+    width: 92px;
+    height: 92px;
+    background: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
+    border: 2px solid #f59e0b;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .dragon-stage-tag {
+    position: absolute;
+    bottom: -8px;
+    background: #f59e0b;
+    color: #0f172a;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 1px 6px;
+    border-radius: 99px;
+  }
+  .dragon-speech { display: flex; flex-direction: column; gap: 4px; }
+  .dragon-name {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: #fde047;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dragon-msg { font-size: 13px; line-height: 1.45; color: #f8fafc; }
+  .right-paper-zone {
+    background-color: var(--paper-bg);
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 26px,
+      var(--paper-line) 27px
+    );
+    color: #0f172a;
+    border-left: 5px double var(--margin-red);
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+  }
+  .paper-top { display: flex; flex-direction: column; gap: 10px; }
+  .paper-hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--jade);
+    padding-bottom: 6px;
+  }
+  .paper-hdr h2 { font-size: 15px; color: var(--jade); text-transform: uppercase; }
+  .cloze-toggle-btn {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #f59e0b;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .problem-card {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1.5px solid #94a3b8;
+    border-left: 4px solid var(--jade);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .kw-hl {
+    background: #fef08a;
+    padding: 0 4px;
+    border-radius: 3px;
+    font-weight: 700;
+    border-bottom: 2px solid #eab308;
+  }
+  .checkpoint-list { display: flex; flex-direction: column; gap: 8px; }
+  .cp-box {
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 12.8px;
+  }
+  .cp-box.solved { border-color: #16a34a; background: #f0fdf4; }
+  .cp-title {
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .opt-btn {
+    background: #f8fafc;
+    border: 1.5px solid #94a3b8;
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 12.5px;
+    color: #0f172a;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+  }
+  .opt-btn:hover { border-color: #0284c7; background: #e0f2fe; }
+  .opt-btn.correct {
+    background: #dcfce7;
+    border-color: #16a34a;
+    color: #14532d;
+    font-weight: 700;
+  }
+  .opt-btn.wrong {
+    background: #ffe4e6;
+    border-color: #e11d48;
+    color: #881337;
+  }
+  .math-frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 3px;
+    line-height: 1.1;
+    font-weight: 700;
+  }
+  .math-frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .math-frac .den { padding: 1px 4px 0; }
+  .math-sqrt { display: inline-flex; align-items: baseline; font-weight: 700; }
+  .math-sqrt .radicand { border-top: 1.5px solid currentColor; padding-top: 1px; }
+  .paper-footer {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed #94a3b8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 11.5px;
+  }
+  .print-btn {
+    background: var(--jade);
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 11.5px;
+    cursor: pointer;
+  }
+  .dev-bar {
+    height: 36px;
+    background: #020617;
+    border-top: 1px solid #1e293b;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11.5px;
+    color: #94a3b8;
+    flex-shrink: 0;
+  }
+  .dev-btns { display: flex; gap: 6px; }
+  .dev-btn {
+    background: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid #334155;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+  }
+  .dev-btn:hover { background: #334155; color: #fff; }
+</style>
+</head>
+<body>
+<header class="top-hud">
+  <div class="brand-group">
+    <div class="brand-logo">YOURDREAM K–12</div>
+    <div class="grade-tabs">
+      <button class="grade-btn" onclick="switchGrade(6)" id="tabG6">Toán 6</button>
+      <button class="grade-btn" onclick="switchGrade(7)" id="tabG7">Toán 7</button>
+      <button class="grade-btn" onclick="switchGrade(8)" id="tabG8">Toán 8</button>
+      <button class="grade-btn active" onclick="switchGrade(9)" id="tabG9">Toán 9 (Thi vào 10)</button>
+    </div>
+  </div>
+  <div class="hud-stats">
+    <div class="stat-pill"><span>Gói Hôm Nay:</span><span class="val" id="hudReleaseId">REL_20261102_G09</span></div>
+    <div class="stat-pill"><span>Điểm Chiến Thuật:</span><span class="val" id="hudScore">7.5 / 10</span></div>
+    <div class="stat-pill"><span>Khiên Gợi Ý:</span><span class="val" id="hudShield">3</span></div>
+  </div>
+</header>
+<main class="main-workspace">
+  <section class="left-zone">
+    <div class="daily-feed-bar">
+      <div>
+        <div class="feed-tag" id="feedTag">NHIỆM VỤ HÔM NAY • CÂU IV ĐỀ HÀ NỘI (3,0 ĐIỂM)</div>
+        <div class="feed-title" id="feedTitle">Đường tròn, Tiếp tuyến, Cát tuyến &amp; Tứ giác Nội tiếp</div>
+      </div>
+      <div class="tier-Row">
+        <span class="tier-chip active" onclick="setTier(1, this)">1. _NEW</span>
+        <span class="tier-chip" onclick="setTier(2, this)">2. _REM</span>
+        <span class="tier-chip" onclick="setTier(3, this)">3. _FLU</span>
+        <span class="tier-chip" onclick="setTier(4, this)">4. _APP_EXAM</span>
+      </div>
+    </div>
+    <div class="canvas-card">
+      <div class="canvas-header">
+        <span class="archetype-badge" id="archetypeBadge">Archetype: ARC_GEO_2D_EUCLID_EXACT</span>
+        <span style="font-size:12px; color:#fde047; font-weight:700;" id="invariantLabel">Bất biến Phương tích: MA² = MC · MD = MH · MO = 108 cm²</span>
+      </div>
+      <div class="svg-stage" id="svgStage"></div>
+      <div class="slider-row">
+        <span id="sliderLabel">Kéo thử góc cát tuyến MCD (10° → 25°):</span>
+        <input type="range" id="paramSlider" min="10" max="25" value="18" oninput="updateVisualFromSlider(this.value)" />
+        <strong id="sliderValDisplay" style="color:#fde047;">18°</strong>
+      </div>
+    </div>
+    <div class="dragon-dock">
+      <div class="dragon-avatar" id="dragonAvatarBox">
+        <div id="dragonSvgHolder"></div>
+        <span class="dragon-stage-tag" id="dragonStageTag">CẤP 3 • THANH LONG</span>
+      </div>
+      <div class="dragon-speech">
+        <div class="dragon-name">
+          <span id="dragonTitle">Rồng Chiến Thuật Á Đông (Cấp 3/4)</span>
+          <span style="font-size:11px; background:#0f172a; padding:2px 8px; border-radius:99px; color:#38bdf8;">Radar Khóa Bẫy Đang Bật</span>
+        </div>
+        <div class="dragon-msg" id="dragonMsg">"Chào em! Hãy nhìn hình bên trên: dù em kéo cát tuyến MCD nghiêng đi đâu thì tích <strong>MC · MD</strong> vẫn bằng <strong>MH · MO</strong>. Hãy hoàn thành 3 mắt xích bên tờ giấy thi để tiến hóa lên <strong>Thần Long Cấp 4</strong> nhé!"</div>
+      </div>
+    </div>
+  </section>
+  <section class="right-paper-zone">
+    <div class="paper-top">
+      <div class="paper-hdr">
+        <h2 id="paperHeaderTitle">PHIẾU B REAL PAPER • SƠ ĐỒ SUY LUẬN NGƯỢC</h2>
+        <button class="cloze-toggle-btn" onclick="askDragonHint()">Xin Gợi Ý Rồng (-1 Khiên)</button>
+      </div>
+      <div class="problem-card" id="problemStatementBox"></div>
+      <div class="checkpoint-list" id="checkpointList"></div>
+    </div>
+    <div class="paper-footer">
+      <span style="color:#475569; font-weight:600;">Chuẩn Hiển thị Toán học Native • SymPy Verified</span>
+      <div style="display:flex; gap:6px;">
+        <button class="print-btn" onclick="alert('Đã mở Phiếu A (Bản in A4 có dòng kẻ cho học sinh)!')">Tải Phiếu A (In A4)</button>
+        <button class="print-btn" style="background:#b45309;" onclick="alert('Đã mở Phiếu B Real Paper & Sơ đồ tư duy MP14!')">Tải Phiếu B (Tự học)</button>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="dev-bar">
+  <span>Chế độ Kiểm thử Nhanh (Developer Preview — Bấm để xem 4 cấp độ tiến hóa Rồng):</span>
+  <div class="dev-btns">
+    <button class="dev-btn" onclick="setDragonStage(1)">Cấp 1: Trứng Linh Thạch (0–4đ)</button>
+    <button class="dev-btn" onclick="setDragonStage(2)">Cấp 2: Ấu Long Học Giả (5–6đ)</button>
+    <button class="dev-btn" onclick="setDragonStage(3)">Cấp 3: Thanh Long Hộ Vệ (7–8đ)</button>
+    <button class="dev-btn" onclick="setDragonStage(4)">Cấp 4: Thần Long Vũ Môn (9–10đ)</button>
+  </div>
+</footer>
+<script>
+  let currentGrade = 9;
+  let score = 7.5;
+  let shields = 3;
+  const GRADE_DATA = {
+    6: {
+      releaseId: "REL_20261102_G06",
+      tag: "NHIỆM VỤ HÔM NAY • TOÁN 6 (CẢNH 3D BƯỚC 1 - 3DS-14)",
+      title: "Quy tắc Dấu ngoặc & Cân Thăng Bằng Đại Số",
+      archetype: "Archetype: 3DS-14_BALANCE_SCALE",
+      invariant: "Đòn cân thăng bằng: 2 khay (x + 4) + 6g = 22g",
+      sliderLabel: "Thử thay đổi số quả cân bên trái (x = 1 → 8):",
+      problemHtml: `Trên bàn cân thăng bằng <span class="kw-hl">3DS-14</span>, đĩa trái có <span class="kw-hl">2 hộp (x + 4) gam</span> và <span class="kw-hl">6 quả cân 1 gam</span>; đĩa phải có <span class="kw-hl">22 gam</span>. Tìm khối lượng x.`,
+      checkpoints: [
+        { q: "Bước 1 (Lập phương trình từ bàn cân):", opts: [
+          { text: "2(x + 4) + 6 = 22", ok: true, msg: "Chính xác! 2 hộp (x + 4) cộng thêm 6g khớp hoàn toàn với đĩa cân trái." },
+          { text: "2x + 4 + 6 = 22", ok: false, msg: "Bẫy nhân phân phối! Có 2 hộp nên cả (x + 4) phải nằm trong ngoặc: 2(x + 4)." }
+        ]},
+        { q: "Bước 2 (Bỏ ngoặc & Rút gọn):", opts: [
+          { text: "2x + 8 + 6 = 22 ⇒ 2x = 8", ok: true, msg: "Tuyệt vời! Em đã nhân 2 × 4 = 8 rất cẩn thận trước khi chuyển vế." },
+          { text: "2x + 4 = 16 ⇒ 2x = 12", ok: false, msg: "Cẩn thận! Khi bỏ ngoặc 2(x + 4) phải thành 2x + 8 chứ không phải 2x + 4." }
+        ]},
+        { q: "Bước 3 (Kết luận giá trị x):", opts: [
+          { text: "x = 4 (gam)", ok: true, msg: "Hoàn hảo! Thay x = 4 vào cân: 2(4 + 4) + 6 = 22 (cân nằm ngang 0°)." },
+          { text: "x = 6 (gam)", ok: false, msg: "Thử lại nhé: nếu x = 6 thì 2(6 + 4) + 6 = 26 ≠ 22." }
+        ]}
+      ]
+    },
+    7: {
+      releaseId: "REL_20261102_G07",
+      tag: "NHIỆM VỤ HÔM NAY • TOÁN 7 (TỈ LỆ THỨC & DÃY TỈ SỐ BẰNG NHAU)",
+      title: "Chia số cây trồng của 3 lớp theo Tỉ lệ thức",
+      archetype: "Archetype: ARC_ALG_PROPORTION_BARS",
+      invariant: "Tỉ số không đổi: x/3 = y/4 = z/5 = (x+y+z)/12",
+      sliderLabel: "Thử thay đổi hệ số tỉ lệ k (2 → 10):",
+      problemHtml: `Ba lớp 7A, 7B, 7C trồng được tổng cộng <span class="kw-hl">120 cây xanh</span>. Biết số cây của ba lớp tỉ lệ với <span class="kw-hl">3 : 4 : 5</span>. Tính số cây mỗi lớp.`,
+      checkpoints: [
+        { q: "Bước 1 (Biểu diễn dãy tỉ số bằng nhau):", opts: [
+          { text: `<span class="math-frac"><span class="num">x</span><span class="den">3</span></span> = <span class="math-frac"><span class="num">y</span><span class="den">4</span></span> = <span class="math-frac"><span class="num">z</span><span class="den">5</span></span> và x + y + z = 120`, ok: true, msg: "Chuẩn xác! Viết dưới dạng phân số có vạch ngang giúp em không bao giờ nhầm tử và mẫu." },
+          { text: "3x = 4y = 5z và x + y + z = 120", ok: false, msg: "Bẫy kinh điển Lớp 7! 'Tỉ lệ với 3 : 4 : 5' nghĩa là chia cho 3, 4, 5 chứ không phải nhân 3x = 4y = 5z." }
+        ]},
+        { q: "Bước 2 (Áp dụng tính chất dãy tỉ số bằng nhau):", opts: [
+          { text: `k = <span class="math-frac"><span class="num">x + y + z</span><span class="den">3 + 4 + 5</span></span> = <span class="math-frac"><span class="num">120</span><span class="den">12</span></span> = 10`, ok: true, msg: "Xuất sắc! Hệ số tỉ lệ k = 10." },
+          { text: `k = <span class="math-frac"><span class="num">120</span><span class="den">3 &middot; 4 &middot; 5</span></span> = 2`, ok: false, msg: "Trên tử cộng x + y + z thì dưới mẫu cũng phải cộng 3 + 4 + 5 = 12 nhé!" }
+        ]},
+        { q: "Bước 3 (Tính số cây của 3 lớp):", opts: [
+          { text: "x = 30 cây; y = 40 cây; z = 50 cây", ok: true, msg: "Chính xác 100%! Tổng 30 + 40 + 50 = 120 cây." },
+          { text: "x = 13 cây; y = 14 cây; z = 15 cây", ok: false, msg: "Khi x/3 = 10 thì x = 10 × 3 = 30 chứ không phải 10 + 3." }
+        ]}
+      ]
+    },
+    8: {
+      releaseId: "REL_20261102_G08",
+      tag: "NHIỆM VỤ HÔM NAY • TOÁN 8 (PHÂN THỨC ĐẠI SỐ & HẰNG ĐẲNG THỨC)",
+      title: "Quy đồng Phân thức & Khóa Bẫy Đổi Dấu Mẫu Thức",
+      archetype: "Archetype: ARC_ALG_STEP_TRANSFORM_FLOW",
+      invariant: "Hằng đẳng thức: x² − 16 = (x − 4)(x + 4) và (4 − x) = −(x − 4)",
+      sliderLabel: "Kiểm tra giá trị biểu thức tại x (5 → 15):",
+      problemHtml: `Rút gọn biểu thức <span class="kw-hl">A = <span class="math-frac"><span class="num">x</span><span class="den">x &minus; 4</span></span> + <span class="math-frac"><span class="num">4</span><span class="den">4 &minus; x</span></span></span> với điều kiện xác định <span class="kw-hl">x &ne; 4</span>.`,
+      checkpoints: [
+        { q: "Bước 1 (Xử lý mẫu số ngược dấu 4 − x):", opts: [
+          { text: `Đổi <span class="math-frac"><span class="num">4</span><span class="den">4 &minus; x</span></span> = &minus; <span class="math-frac"><span class="num">4</span><span class="den">x &minus; 4</span></span>`, ok: true, msg: "Quá tỉnh táo! Em đã hóa giải thành công bẫy đổi dấu (4 − x) = −(x − 4)." },
+          { text: "Giữ nguyên dấu + và lấy mẫu chung là (x − 4)", ok: false, msg: "Sập bẫy dấu! Vì (4 − x) ngược dấu với (x − 4) nên phải đổi dấu phép cộng thành phép trừ." }
+        ]},
+        { q: "Bước 2 (Cộng trừ hai phân thức cùng mẫu):", opts: [
+          { text: `A = <span class="math-frac"><span class="num">x &minus; 4</span><span class="den">x &minus; 4</span></span> = 1 (với x &ne; 4)`, ok: true, msg: "Chính xác! Tử và mẫu đều là (x − 4) nên rút gọn bằng 1." },
+          { text: `A = <span class="math-frac"><span class="num">x + 4</span><span class="den">x &minus; 4</span></span>`, ok: false, msg: "Kiểm tra lại dấu trên tử sau khi đổi dấu phân thức thứ hai nhé!" }
+        ]},
+        { q: "Bước 3 (Tính giá trị của A tại x = 2026):", opts: [
+          { text: "Thỏa mãn ĐKXĐ (2026 ≠ 4) nên A = 1", ok: true, msg: "Tuyệt đối điểm tối đa! Luôn đối chiếu ĐKXĐ trước khi kết luận." },
+          { text: "Không cần kiểm tra ĐKXĐ, ghi ngay A = 1", ok: false, msg: "Trong phòng thi, thiếu câu 'x = 2026 thỏa mãn ĐKXĐ' sẽ bị trừ 0,25 điểm trình bày!" }
+        ]}
+      ]
+    },
+    9: {
+      releaseId: "REL_20261102_G09",
+      tag: "NHIỆM VỤ HÔM NAY • CÂU IV ĐỀ HÀ NỘI (3,0 ĐIỂM)",
+      title: "Đường tròn, Tiếp tuyến, Cát tuyến & Tứ giác Nội tiếp",
+      archetype: "Archetype: ARC_GEO_2D_EUCLID_EXACT",
+      invariant: "Bất biến Phương tích: MA² = MC · MD = MH · MO = 108 cm²",
+      sliderLabel: "Kéo thử góc cát tuyến MCD (10° → 25°):",
+      problemHtml: `Cho <span class="kw-hl">(O; 6 cm)</span>, điểm M cách O một khoảng <span class="kw-hl">OM = 12 cm</span>. Kẻ hai tiếp tuyến MA, MB; OM cắt AB tại H; kẻ cát tuyến MCD. Chứng minh <span class="kw-hl">MA<sup>2</sup> = MC &middot; MD = MH &middot; MO</span> và tứ giác <span class="kw-hl">CHOD nội tiếp</span>.`,
+      checkpoints: [
+        { q: "Mắt xích 1 (Ý a & b — Hệ thức lượng trong ΔMAO vuông tại A):", opts: [
+          { text: "OM ⊥ AB tại H ⇒ MA² = MH · MO", ok: true, msg: "Chính xác! Đường cao AH trong tam giác vuông MAO cho ta cầu nối MA² = MH · MO." },
+          { text: "MA² = OH · OM", ok: false, msg: "Bẫy hệ thức lượng! OH · OM = OA² = R², còn bình phương cạnh góc vuông MA² phải bằng chiếu MH nhân cạnh huyền MO." }
+        ]},
+        { q: "Mắt xích 2 (Ý b — Cặp tam giác đồng dạng tạo tích MC · MD):", opts: [
+          { text: `ΔMAC ~ ΔMDA (g.g) ⇒ <span class="math-frac"><span class="num">MA</span><span class="den">MD</span></span> = <span class="math-frac"><span class="num">MC</span><span class="den">MA</span></span>`, ok: true, msg: "Đúng thứ tự đỉnh! Từ đó suy ra MA² = MC · MD." },
+          { text: "ΔMAC ~ ΔMAD (g.g)", ok: false, msg: "Cẩn thận thứ tự đỉnh! Góc ∠MAC bằng góc ∠MDA nên đỉnh A phải tương ứng với đỉnh D (ΔMAC ~ ΔMDA)." }
+        ]},
+        { q: "Mắt xích 3 (Ý c — Trường hợp đồng dạng chứng minh CHOD nội tiếp):", opts: [
+          { text: `ΔMCH ~ ΔMOD (c.g.c) vì <span class="math-frac"><span class="num">MC</span><span class="den">MO</span></span> = <span class="math-frac"><span class="num">MH</span><span class="den">MD</span></span> và ∠OMD chung`, ok: true, msg: "Đỉnh cao! Em đã vượt qua bẫy câu phân loại để tiến hóa lên Thần Long Cấp 4!" },
+          { text: "ΔMCH ~ ΔMOD (g.g)", ok: false, msg: "Bẫy kinh điển câu c! Lúc này mới chỉ có 1 góc chung ∠OMD, bắt buộc phải dùng tỉ số cạnh (c.g.c) chứ không được ghi (g.g)!" }
+        ]}
+      ]
+    }
+  };
+  function renderDragonAvatar(stage) {
+    const stages = {
+      1: { tag: "CẤP 1 • TRỨNG LINH", title: "Trứng Linh Thạch Thức Tỉnh (Cấp 1/4)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><ellipse cx="32" cy="36" rx="18" ry="22" fill="#38bdf8" stroke="#fde047" stroke-width="3"/><path d="M22 32 L30 38 L36 30 L44 36" fill="none" stroke="#fef08a" stroke-width="2.5"/><circle cx="28" cy="24" r="3" fill="#fff"/></svg>` },
+      2: { tag: "CẤP 2 • ẤU LONG", title: "Ấu Long Học Giả Socratic (Cấp 2/4)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="34" r="18" fill="#0ea5e9" stroke="#fde047" stroke-width="2.5"/><polygon points="18,20 24,10 28,20" fill="#f59e0b"/><polygon points="46,20 40,10 36,20" fill="#f59e0b"/><circle cx="26" cy="32" r="4" fill="#fff"/><circle cx="26" cy="32" r="2" fill="#0f172a"/><circle cx="38" cy="32" r="4" fill="#fff"/><circle cx="38" cy="32" r="2" fill="#0f172a"/><circle cx="38" cy="32" r="6" fill="none" stroke="#fde047" stroke-width="2"/></svg>` },
+      3: { tag: "CẤP 3 • THANH LONG", title: "Thanh Long Hộ Vệ Phá Bẫy (Cấp 3/4)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><path d="M12 46 Q32 10 52 46 Z" fill="#0284c7" stroke="#fde047" stroke-width="2.5"/><polygon points="20,18 26,6 32,18" fill="#f59e0b"/><polygon points="44,18 38,6 32,18" fill="#f59e0b"/><circle cx="26" cy="32" r="3.5" fill="#fef08a"/><circle cx="38" cy="32" r="3.5" fill="#fef08a"/><path d="M24 42 Q32 48 40 42" fill="none" stroke="#fff" stroke-width="2.5"/></svg>` },
+      4: { tag: "CẤP 4 • THẦN LONG", title: "Thần Long Vượt Vũ Môn (Cấp 4/4 — Tối Thượng)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="rgba(245, 158, 11, 0.25)" stroke="#fde047" stroke-width="2" stroke-dasharray="4,2"/><polygon points="10,38 22,14 32,26 42,14 54,38 32,52" fill="#f59e0b" stroke="#fff" stroke-width="2"/><circle cx="26" cy="32" r="3.5" fill="#fff"/><circle cx="38" cy="32" r="3.5" fill="#fff"/></svg>` }
+    };
+    const st = stages[stage] || stages[3];
+    document.getElementById("dragonSvgHolder").innerHTML = st.svg;
+    document.getElementById("dragonStageTag").textContent = st.tag;
+    document.getElementById("dragonTitle").textContent = st.title;
+  }
+  function setDragonStage(stage) {
+    renderDragonAvatar(stage);
+    const msgs = {
+      1: "Cấp 1 (Trứng Linh Thạch): Bắt đầu làm quen với các dữ kiện gốc và điều kiện xác định.",
+      2: "Cấp 2 (Ấu Long Học Giả): Đang bật kính lúp dò tìm các bẫy đổi dấu và thứ tự đỉnh tam giác!",
+      3: "Cấp 3 (Thanh Long Hộ Vệ): Đã nắm vững hệ thức lượng và tỉ số đồng dạng, sẵn sàng chinh phục câu phân loại!",
+      4: "Cấp 4 (Thần Long Vũ Môn): Tuyệt đỉnh! Em đã làm chủ trọn vẹn sơ đồ suy luận ngược 9+ điểm!"
+    };
+    document.getElementById("dragonMsg").innerHTML = msgs[stage];
+  }
+  function renderVisualCanvas(grade, sliderVal) {
+    const stage = document.getElementById("svgStage");
+    if (grade === 9) {
+      const angleRad = (sliderVal * Math.PI) / 180;
+      const mx = 55, my = 125, ox = 225, oy = 125, r = 75;
+      const dx = Math.cos(-angleRad), dy = Math.sin(-angleRad);
+      const fx = mx - ox, fy = my - oy;
+      const b = 2 * (fx * dx + fy * dy);
+      const c = fx * fx + fy * fy - r * r;
+      const disc = Math.max(0, b * b - 4 * c);
+      const t1 = (-b - Math.sqrt(disc)) / 2;
+      const t2 = (-b + Math.sqrt(disc)) / 2;
+      const cx = mx + t1 * dx, cy = my + t1 * dy;
+      const px = mx + t2 * dx, py = my + t2 * dy;
+      const hx = 191.9, hy = 125, ax = 191.9, ay = 57.7, bx = 191.9, by = 192.3;
+      stage.innerHTML = `<svg viewBox="0 0 340 245" width="100%" height="225"><circle cx="140" cy="125" r="85" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,4"/><circle cx="${ox}" cy="${oy}" r="${r}" fill="rgba(14,165,233,0.08)" stroke="#0f172a" stroke-width="2"/><polygon points="${cx},${cy} ${hx},${hy} ${ox},${oy} ${px},${py}" fill="rgba(245,158,11,0.18)" stroke="#d97706" stroke-width="1.6"/><line x1="${mx}" y1="${my}" x2="${ox}" y2="${oy}" stroke="#0f172a" stroke-width="1.8"/><line x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}" stroke="#0d474a" stroke-width="1.8"/><line x1="${mx}" y1="${my}" x2="${ax}" y2="${ay}" stroke="#0f172a" stroke-width="1.6"/><line x1="${mx}" y1="${my}" x2="${bx}" y2="${by}" stroke="#0f172a" stroke-width="1.6"/><line x1="${mx}" y1="${my}" x2="${px}" y2="${py}" stroke="#1d4ed8" stroke-width="2"/><circle cx="${mx}" cy="${my}" r="3.5" fill="#0f172a"/><text x="${mx-16}" y="${my+4}" font-size="12" font-weight="bold">M</text><circle cx="${ox}" cy="${oy}" r="3.5" fill="#0f172a"/><text x="${ox+6}" y="${oy+14}" font-size="12" font-weight="bold">O</text><circle cx="${ax}" cy="${ay}" r="3.5" fill="#dc2626"/><text x="${ax-5}" y="${ay-7}" font-size="12" font-weight="bold" fill="#dc2626">A</text><circle cx="${bx}" cy="${by}" r="3.5" fill="#dc2626"/><text x="${bx-5}" y="${by+15}" font-size="12" font-weight="bold" fill="#dc2626">B</text><circle cx="${hx}" cy="${hy}" r="3" fill="#0d474a"/><text x="${hx+4}" y="${hy+13}" font-size="11" font-weight="bold" fill="#0d474a">H</text><circle cx="${cx}" cy="${cy}" r="3.5" fill="#1d4ed8"/><text x="${cx-10}" y="${cy-6}" font-size="12" font-weight="bold" fill="#1d4ed8">C</text><circle cx="${px}" cy="${py}" r="3.5" fill="#1d4ed8"/><text x="${px+6}" y="${py-4}" font-size="12" font-weight="bold" fill="#1d4ed8">D</text></svg>`;
+    } else if (grade === 6) {
+      stage.innerHTML = `<svg viewBox="0 0 340 210" width="100%" height="205"><rect x="155" y="135" width="30" height="55" fill="#475569" rx="4"/><polygon points="130,190 210,190 190,175 150,175" fill="#1e293b"/><line x1="55" y1="135" x2="285" y2="135" stroke="#d97706" stroke-width="6" stroke-linecap="round"/><rect x="45" y="115" width="90" height="8" fill="#0d474a" rx="3"/><rect x="52" y="80" width="36" height="35" fill="#0284c7" rx="4"/><text x="56" y="102" fill="#fff" font-size="11" font-weight="bold">x+4</text><rect x="92" y="80" width="36" height="35" fill="#0284c7" rx="4"/><text x="96" y="102" fill="#fff" font-size="11" font-weight="bold">x+4</text><circle cx="90" cy="66" r="11" fill="#f59e0b"/><text x="82" y="70" fill="#0f172a" font-size="10" font-weight="bold">+6g</text><rect x="205" y="115" width="90" height="8" fill="#0d474a" rx="3"/><rect x="220" y="72" width="60" height="43" fill="#16a34a" rx="6"/><text x="234" y="98" fill="#fff" font-size="14" font-weight="bold">22 g</text></svg>`;
+    } else if (grade === 7) {
+      stage.innerHTML = `<svg viewBox="0 0 340 200" width="100%" height="195"><text x="20" y="32" font-size="12" font-weight="bold" fill="#0f172a">Sơ đồ Thanh Tỉ Lệ (Tổng = 12 phần = 120 cây):</text><rect x="20" y="48" width="90" height="28" fill="#0284c7" rx="4"/><text x="30" y="66" fill="#fff" font-size="12" font-weight="bold">Lớp 7A (3 phần)</text><rect x="20" y="90" width="120" height="28" fill="#0d9488" rx="4"/><text x="30" y="108" fill="#fff" font-size="12" font-weight="bold">Lớp 7B (4 phần)</text><rect x="20" y="132" width="150" height="28" fill="#d97706" rx="4"/><text x="30" y="150" fill="#fff" font-size="12" font-weight="bold">Lớp 7C (5 phần)</text><text x="185" y="108" font-size="13" font-weight="bold" fill="#dc2626">⇒ 1 phần (k) = 120 : 12 = 10 cây</text></svg>`;
+    } else {
+      stage.innerHTML = `<svg viewBox="0 0 340 200" width="100%" height="195"><rect x="18" y="25" width="135" height="65" fill="#e0f2fe" stroke="#0284c7" stroke-width="2" rx="8"/><text x="30" y="52" font-size="12" font-weight="bold" fill="#0369a1">Mẫu số thứ hai:</text><text x="48" y="74" font-size="15" font-weight="bold" fill="#dc2626">4 − x</text><text x="162" y="62" font-size="20" font-weight="bold" fill="#0d474a">⇒</text><rect x="190" y="25" width="135" height="65" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="8"/><text x="202" y="52" font-size="12" font-weight="bold" fill="#15803d">Đổi dấu chuẩn:</text><text x="208" y="74" font-size="15" font-weight="bold" fill="#15803d">− (x − 4)</text><rect x="18" y="112" width="307" height="58" fill="#fffbeb" stroke="#d97706" stroke-width="1.5" rx="8"/><text x="30" y="138" font-size="12.5" font-weight="bold" fill="#92400e">Kết quả rút gọn với x ≠ 4:</text><text x="30" y="158" font-size="13.5" font-weight="bold" fill="#0f172a">A = (x − 4) / (x − 4) = 1 (Hằng số tại x = ${sliderVal})</text></svg>`;
+    }
+  }
+  function switchGrade(grade) {
+    currentGrade = grade;
+    [6, 7, 8, 9].forEach(g => document.getElementById("tabG" + g).classList.toggle("active", g === grade));
+    const d = GRADE_DATA[grade];
+    document.getElementById("hudReleaseId").textContent = d.releaseId;
+    document.getElementById("feedTag").textContent = d.tag;
+    document.getElementById("feedTitle").textContent = d.title;
+    document.getElementById("archetypeBadge").textContent = d.archetype;
+    document.getElementById("invariantLabel").textContent = d.invariant;
+    document.getElementById("sliderLabel").textContent = d.sliderLabel;
+    document.getElementById("problemStatementBox").innerHTML = d.problemHtml;
+    const cpContainer = document.getElementById("checkpointList");
+    cpContainer.innerHTML = d.checkpoints.map((cp, idx) => `<div class="cp-box" id="cpBox_${idx}"><div class="cp-title"><span>${cp.q}</span><span id="cpStatus_${idx}" style="color:#64748b; font-size:11px;">[ ? ] Chưa mở khóa</span></div><div class="opt-grid">${cp.opts.map((o, oIdx) => `<button class="opt-btn" onclick="checkOption(${idx}, ${oIdx}, this)">${o.text}</button>`).join("")}</div></div>`).join("");
+    renderVisualCanvas(grade, document.getElementById("paramSlider").value);
+  }
+  function checkOption(cpIdx, optIdx, btnEl) {
+    const cp = GRADE_DATA[currentGrade].checkpoints[cpIdx];
+    const chosen = cp.opts[optIdx];
+    const box = document.getElementById("cpBox_" + cpIdx);
+    const status = document.getElementById("cpStatus_" + cpIdx);
+    if (chosen.ok) {
+      btnEl.classList.add("correct");
+      box.classList.add("solved");
+      status.textContent = "✓ Đã khóa chuẩn";
+      status.style.color = "#15803d";
+      score = Math.min(10, +(score + 0.8).toFixed(1));
+      document.getElementById("hudScore").textContent = score + " / 10";
+      document.getElementById("dragonMsg").innerHTML = `<strong style="color:#86efac;">CHÍNH XÁC:</strong> ${chosen.msg}`;
+      if (score >= 9.0) renderDragonAvatar(4);
+      else if (score >= 7.0) renderDragonAvatar(3);
+    } else {
+      btnEl.classList.add("wrong");
+      document.getElementById("dragonMsg").innerHTML = `<strong style="color:#fda4af;">CẢNH BÁO BẪY PHÒNG THI:</strong> ${chosen.msg}`;
+    }
+  }
+  function updateVisualFromSlider(val) {
+    document.getElementById("sliderValDisplay").textContent = val + (currentGrade === 9 ? "°" : "");
+    renderVisualCanvas(currentGrade, Number(val));
+  }
+  function setTier(tierNum, el) {
+    document.querySelectorAll(".tier-chip").forEach(c => c.classList.remove("active"));
+    el.classList.add("active");
+    const names = {
+      1: "Đang chọn Mức 1 (_NEW): Khám phá khái niệm & nhận diện hình ảnh trực quan.",
+      2: "Đang chọn Mức 2 (_REM): Chữa mất gốc & khóa các bẫy đổi dấu, quên ĐKXĐ.",
+      3: "Đang chọn Mức 3 (_FLU): Rèn luyện thành thạo kỹ năng trình bày chuẩn biểu điểm.",
+      4: "Đang chọn Mức 4 (_APP_EXAM): Vận dụng thực chiến câu phân loại Đề thi vào 10 Hà Nội."
+    };
+    document.getElementById("dragonMsg").innerHTML = names[tierNum];
+  }
+  function askDragonHint() {
+    if (shields <= 0) {
+      document.getElementById("dragonMsg").innerHTML = "Em đã dùng hết Khiên Gợi Ý! Hãy đọc kỹ các từ khóa tô vàng trên đề bài nhé.";
+      return;
+    }
+    shields--;
+    document.getElementById("hudShield").textContent = shields;
+    document.getElementById("dragonMsg").innerHTML = "<strong>Gợi ý Socratic từ Rồng:</strong> Hãy nhìn vào các cụm từ được tô vàng trên đề bài bên phải, đối chiếu với đại lượng bất biến trên hình vẽ bên trái trước khi chọn đáp án!";
+  }
+  renderDragonAvatar(3);
+  switchGrade(9);
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "release_id": "REL_20261102_G09_GEO_IV",
+  "grade": 9,
+  "unit_id": "U_G09_V2_CIRCLE",
+  "skill_id": "S_G09_B29",
+  "archetype_id": "ARC_GEO_2D_EUCLID_EXACT",
+  "theme": "REAL_PAPER_WARM_FFFDF7",
+  "sympy_verified": true,
+  "parametric_geometry_default": {
+    "circle_center": [230, 150],
+    "radius_R": 90,
+    "distance_OM": 180,
+    "computed_OH": 45,
+    "computed_MA": 155.88,
+    "secant_angle_deg": 18,
+    "invariant_check": "MA^2 = MC * MD = MH * MO = 24300"
+  }
+}

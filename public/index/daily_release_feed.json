@@ -1,0 +1,30 @@
+{
+  "schema": "YD_WEBAPP_DAILY_FEED_V1",
+  "updated_at": "2026-11-02T01:30:00+07:00",
+  "total_releases": 1,
+  "releases": [
+    {
+      "release_id": "REL_20261102_G09_GEO_IV",
+      "published_date": "2026-11-02",
+      "grade": 9,
+      "unit_id": "U_G09_V2_CIRCLE",
+      "skill_id": "S_G09_B29",
+      "title_vi": "Đường tròn, Tiếp tuyến, Cát tuyến & Tứ giác Nội tiếp (Câu IV Thi vào 10 Hà Nội)",
+      "archetype_id": "ARC_GEO_2D_EUCLID_EXACT",
+      "visual_studio_mode": "MP14-MINDMAP",
+      "dragon_evolution_stage": 3,
+      "exercises_included": [
+        "EX_S_G09_B29_01_NEW",
+        "EX_S_G09_B29_02_REM",
+        "EX_S_G09_B29_03_FLU",
+        "EX_S_G09_B29_04_APP_EXAM"
+      ],
+      "lesson_json_path": "lessons/G09/S_G09_B29/content.json",
+      "qa_gates": {
+        "math_verified": "PASS",
+        "technical_validated_240dpi": "PASS",
+        "drive_readback": "PASS"
+      }
+    }
+  ]
+}
