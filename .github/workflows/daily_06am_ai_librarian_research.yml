@@ -1,0 +1,43 @@
+name: Daily 06:00 AM AI Librarian Research & Workspace Sync
+
+on:
+  schedule:
+    # 23:00 UTC = 06:00 AM Hanoi Time (UTC+7)
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  daily-research-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run Daily 06:00 AM Research Engine
+        run: |
+          python3 scripts/daily_ai_librarian_research.py
+
+      - name: Commit & Sync Changes
+        run: |
+          git config user.name "AI-Librarian-Sentinel"
+          git config user.email "librarian@yourdream.edu.vn"
+          git add -A
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(librarian): daily 06:00 AM research and gap analysis report [skip ci]"
+            git push origin main || echo "Push skipped or branch protected"
+          fi
