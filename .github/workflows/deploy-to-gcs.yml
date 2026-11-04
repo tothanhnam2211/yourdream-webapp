@@ -1,0 +1,46 @@
+name: Deploy YOURDREAM & Master Thúy Studio v2.0 to GCS Bucket
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'public/**'
+      - '.github/workflows/deploy-to-gcs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy-gcs:
+    name: Publish Static Bundle to gs://ai-studio-bucket-336999988003-asia-southeast1
+    runs-on: ubuntu-latest
+    env:
+      GCS_BUCKET: gs://ai-studio-bucket-336999988003-asia-southeast1
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        if: ${{ secrets.GCP_SA_KEY != '' }}
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        if: ${{ secrets.GCP_SA_KEY != '' }}
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy master-thuy-studio/, control/index.html, and student/v1.html to GCS
+        if: ${{ secrets.GCP_SA_KEY != '' }}
+        run: |
+          echo "[1/3] Deploying master-thuy-studio/ to ${GCS_BUCKET}/master-thuy-studio/ ..."
+          gcloud storage rsync public/master-thuy-studio "${GCS_BUCKET}/master-thuy-studio" --recursive --cache-control="no-cache, max-age=0"
+
+          echo "[2/3] Deploying control/index.html to ${GCS_BUCKET}/control/index.html ..."
+          gcloud storage cp public/control/index.html "${GCS_BUCKET}/control/index.html" --cache-control="no-cache, max-age=0"
+
+          echo "[3/3] Deploying student/v1.html to ${GCS_BUCKET}/student/v1.html ..."
+          gcloud storage cp public/student/v1.html "${GCS_BUCKET}/student/v1.html" --cache-control="no-cache, max-age=0"
